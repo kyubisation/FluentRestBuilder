@@ -1,8 +1,12 @@
-﻿namespace KyubiCode.FluentRest.Test.ChainPipes.Update
+﻿// <copyright file="EntityUpdatePipeTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.ChainPipes.Update
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRest.ChainPipes.Update;
+    using Core.ChainPipes.Update;
     using Microsoft.EntityFrameworkCore;
     using Mocks;
     using Xunit;

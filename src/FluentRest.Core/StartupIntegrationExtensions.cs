@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest
+﻿// <copyright file="StartupIntegrationExtensions.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core
 {
     using System.Linq;
     using ChainPipes.ClaimValidation;

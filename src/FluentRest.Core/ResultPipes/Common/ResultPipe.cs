@@ -1,8 +1,12 @@
-﻿namespace KyubiCode.FluentRest.ResultPipes.Common
+﻿// <copyright file="ResultPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ResultPipes.Common
 {
     using System;
     using System.Threading.Tasks;
-    using FluentRest.Common;
+    using Core.Common;
     using Microsoft.AspNetCore.Mvc;
 
     public abstract class ResultPipe<TInput> : InputPipe<TInput>, IInputPipe<TInput>

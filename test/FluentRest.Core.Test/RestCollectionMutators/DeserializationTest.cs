@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.Test.RestCollectionMutators
+﻿// <copyright file="DeserializationTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.RestCollectionMutators
 {
     using System.Collections.Generic;
     using Newtonsoft.Json;

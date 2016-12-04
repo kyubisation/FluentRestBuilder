@@ -1,9 +1,14 @@
-﻿// ReSharper disable once CheckNamespace
-namespace KyubiCode.FluentRest
+﻿// <copyright file="Integration.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+// ReSharper disable once CheckNamespace
+namespace FluentRest
 {
     using System;
     using System.Security.Claims;
-    using ChainPipes.ClaimValidation;
+    using Core;
+    using Core.ChainPipes.ClaimValidation;
     using Microsoft.Extensions.DependencyInjection;
 
     public static partial class Integration

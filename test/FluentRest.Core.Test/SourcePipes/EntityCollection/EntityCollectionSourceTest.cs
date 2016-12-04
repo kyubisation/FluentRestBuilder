@@ -1,9 +1,13 @@
-﻿namespace KyubiCode.FluentRest.Test.SourcePipes.EntityCollection
+﻿// <copyright file="EntityCollectionSourceTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.SourcePipes.EntityCollection
 {
     using System.Linq;
     using System.Threading.Tasks;
     using Common;
-    using FluentRest.SourcePipes.EntityCollection;
+    using Core.SourcePipes.EntityCollection;
     using Mocks;
     using Xunit;
 

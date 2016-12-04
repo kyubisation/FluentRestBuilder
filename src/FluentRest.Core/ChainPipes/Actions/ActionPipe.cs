@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.Actions
+﻿// <copyright file="ActionPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.Actions
 {
     using System;
     using System.Threading.Tasks;

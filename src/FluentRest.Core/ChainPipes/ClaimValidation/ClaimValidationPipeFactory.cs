@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.ClaimValidation
+﻿// <copyright file="ClaimValidationPipeFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.ClaimValidation
 {
     using System;
     using System.Security.Claims;

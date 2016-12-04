@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.RestCollectionMutators.Pagination
+﻿// <copyright file="RestCollectionPagination.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.RestCollectionMutators.Pagination
 {
     using System;
     using System.Linq;
@@ -8,10 +12,10 @@
     {
         private const int FirstPage = 1;
         private const int MinimumEntriesPerPage = 1;
-        private readonly IQueryCollection queryCollection;
-        private readonly IQueryArgumentKeys queryArgumentKeys;
-        private readonly Lazy<int> actualPage;
         private readonly Lazy<int> actualEntriesPerPage;
+        private readonly Lazy<int> actualPage;
+        private readonly IQueryArgumentKeys queryArgumentKeys;
+        private readonly IQueryCollection queryCollection;
 
         public RestCollectionPagination(
             IQueryCollection queryCollection,

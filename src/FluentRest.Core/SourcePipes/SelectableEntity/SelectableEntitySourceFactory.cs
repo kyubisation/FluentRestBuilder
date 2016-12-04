@@ -1,14 +1,18 @@
-﻿namespace KyubiCode.FluentRest.SourcePipes.SelectableEntity
+﻿// <copyright file="SelectableEntitySourceFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.SourcePipes.SelectableEntity
 {
     using System;
     using System.Linq.Expressions;
-    using FluentRest.Common;
+    using Core.Common;
 
     public class SelectableEntitySourceFactory<TEntity> : ISelectableEntitySourceFactory<TEntity>
         where TEntity : class
     {
-        private readonly IServiceProvider serviceProvider;
         private readonly IQueryableFactory<TEntity> queryableFactory;
+        private readonly IServiceProvider serviceProvider;
 
         public SelectableEntitySourceFactory(
             IServiceProvider serviceProvider,

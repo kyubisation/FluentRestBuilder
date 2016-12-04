@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.SourcePipes.Common
+﻿// <copyright file="EntitySource.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.SourcePipes.Common
 {
     using System;
     using System.Linq;

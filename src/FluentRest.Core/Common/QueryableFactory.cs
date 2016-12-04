@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.Common
+﻿// <copyright file="QueryableFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Common
 {
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
@@ -17,7 +21,9 @@
             this.context.Set<TEntity>();
     }
 
+#pragma warning disable SA1402 // File may only contain a single class
     public class QueryableFactory<TEntity> : IQueryableFactory<TEntity>
+#pragma warning restore SA1402 // File may only contain a single class
         where TEntity : class
     {
         public QueryableFactory(IQueryableFactory queryableFactory)

@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.CollectionTransformation
+﻿// <copyright file="ICollectionTransformationPipeFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.CollectionTransformation
 {
     using System;
     using System.Linq;

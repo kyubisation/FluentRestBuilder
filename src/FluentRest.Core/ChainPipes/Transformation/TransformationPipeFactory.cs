@@ -1,7 +1,11 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.Transformation
+﻿// <copyright file="TransformationPipeFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.Transformation
 {
     using System;
-    using FluentRest.Common;
+    using Core.Common;
     using Transformers;
 
     public class TransformationPipeFactory<TInput, TOutput> :
@@ -9,8 +13,8 @@
         where TInput : class
         where TOutput : class
     {
-        private readonly LazyResolver<ITransformerFactory<TInput>> transformerFactory;
         private readonly LazyResolver<ITransformationBuilder<TInput>> transformationBuilder;
+        private readonly LazyResolver<ITransformerFactory<TInput>> transformerFactory;
 
         public TransformationPipeFactory(
             LazyResolver<ITransformerFactory<TInput>> transformerFactory,

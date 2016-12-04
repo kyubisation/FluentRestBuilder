@@ -1,8 +1,12 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.EntityCollectionSource
+﻿// <copyright file="IEntityCollectionSourcePipeFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.EntityCollectionSource
 {
     using System;
     using System.Linq;
-    using FluentRest.Common;
+    using Core.Common;
 
     public interface IEntityCollectionSourcePipeFactory<TInput, TOutput>
         where TOutput : class

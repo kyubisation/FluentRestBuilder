@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.Common
+﻿// <copyright file="InputPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Common
 {
     using System;
     using System.Threading.Tasks;

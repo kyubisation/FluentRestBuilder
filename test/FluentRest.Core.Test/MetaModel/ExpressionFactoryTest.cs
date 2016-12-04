@@ -1,8 +1,12 @@
-﻿namespace KyubiCode.FluentRest.Test.MetaModel
+﻿// <copyright file="ExpressionFactoryTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.MetaModel
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRest.MetaModel;
+    using Core.MetaModel;
     using Microsoft.EntityFrameworkCore;
     using Mocks;
     using Xunit;

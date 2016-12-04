@@ -1,9 +1,14 @@
-﻿// ReSharper disable once CheckNamespace
-namespace KyubiCode.FluentRest
+﻿// <copyright file="Integration.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+// ReSharper disable once CheckNamespace
+namespace FluentRest
 {
     using System;
     using System.Threading.Tasks;
-    using ChainPipes.EntityValidation;
+    using Core;
+    using Core.ChainPipes.EntityValidation;
     using Microsoft.AspNetCore.Http;
 
     public static partial class Integration
@@ -55,7 +60,7 @@ namespace KyubiCode.FluentRest
         public static EntityValidationPipe<TEntity> NotFoundWhenEmpty<TEntity>(
             this IOutputPipe<TEntity> pipe, object error = null)
             where TEntity : class =>
-            InvalidWhen(
+            InvalidWhen<TEntity>(
                 pipe, e => e == null, StatusCodes.Status404NotFound, error);
 
         public static EntityValidationPipe<TEntity> NotFoundWhen<TEntity>(

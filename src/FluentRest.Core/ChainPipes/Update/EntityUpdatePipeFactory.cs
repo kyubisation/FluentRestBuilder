@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.Update
+﻿// <copyright file="EntityUpdatePipeFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.Update
 {
     using Microsoft.EntityFrameworkCore;
 

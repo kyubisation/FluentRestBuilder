@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.RestCollectionMutators.OrderBy
+﻿// <copyright file="RestCollectionOrderBy.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.RestCollectionMutators.OrderBy
 {
     using System;
     using System.Linq;
@@ -9,9 +13,9 @@
 
     public class RestCollectionOrderBy<TEntity> : IRestCollectionOrderBy<TEntity>
     {
-        private readonly IQueryCollection queryCollection;
         private readonly IExpressionFactory<TEntity> expressionFactory;
         private readonly IQueryArgumentKeys queryArgumentKeys;
+        private readonly IQueryCollection queryCollection;
 
         public RestCollectionOrderBy(
             IQueryCollection queryCollection,

@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.Transformers
+﻿// <copyright file="TransformerFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Transformers
 {
     using System;
     using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +20,9 @@
             this.serviceProvider.GetRequiredService<ITransformerFactory<TInput>>();
     }
 
+#pragma warning disable SA1402 // File may only contain a single class
     public class TransformerFactory<TInput> : ITransformerFactory<TInput>
+#pragma warning restore SA1402 // File may only contain a single class
     {
         private readonly IServiceProvider serviceProvider;
 

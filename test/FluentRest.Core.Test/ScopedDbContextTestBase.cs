@@ -1,7 +1,11 @@
-﻿namespace KyubiCode.FluentRest.Test
+﻿// <copyright file="ScopedDbContextTestBase.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test
 {
     using Common;
-    using FluentRest.MetaModel;
+    using Core.MetaModel;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;

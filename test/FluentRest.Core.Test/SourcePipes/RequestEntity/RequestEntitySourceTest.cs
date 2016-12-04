@@ -1,7 +1,11 @@
-﻿namespace KyubiCode.FluentRest.Test.SourcePipes.RequestEntity
+﻿// <copyright file="RequestEntitySourceTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.SourcePipes.RequestEntity
 {
     using System.Threading.Tasks;
-    using FluentRest.SourcePipes.RequestEntity;
+    using Core.SourcePipes.RequestEntity;
     using Mocks;
     using Xunit;
 

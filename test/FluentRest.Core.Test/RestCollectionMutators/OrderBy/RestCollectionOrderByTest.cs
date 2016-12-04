@@ -1,10 +1,14 @@
-﻿namespace KyubiCode.FluentRest.Test.RestCollectionMutators.OrderBy
+﻿// <copyright file="RestCollectionOrderByTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.RestCollectionMutators.OrderBy
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRest.RestCollectionMutators;
-    using FluentRest.RestCollectionMutators.OrderBy;
+    using Core.RestCollectionMutators;
+    using Core.RestCollectionMutators.OrderBy;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.Transformers.Hal
+﻿// <copyright file="NamedLink.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Transformers.Hal
 {
     using System.Collections.Generic;
     using System.Linq;

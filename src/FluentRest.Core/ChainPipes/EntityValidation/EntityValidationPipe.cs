@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.EntityValidation
+﻿// <copyright file="EntityValidationPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.EntityValidation
 {
     using System;
     using System.Threading.Tasks;

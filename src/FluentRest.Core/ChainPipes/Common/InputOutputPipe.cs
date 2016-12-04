@@ -1,7 +1,11 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.Common
+﻿// <copyright file="InputOutputPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.Common
 {
     using System.Threading.Tasks;
-    using FluentRest.Common;
+    using Core.Common;
     using Microsoft.AspNetCore.Mvc;
 
     public abstract class InputOutputPipe<TInput> :

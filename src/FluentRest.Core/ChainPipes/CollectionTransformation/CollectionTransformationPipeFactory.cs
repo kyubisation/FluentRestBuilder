@@ -1,16 +1,20 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.CollectionTransformation
+﻿// <copyright file="CollectionTransformationPipeFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.CollectionTransformation
 {
     using System;
     using System.Linq;
-    using FluentRest.Common;
+    using Core.Common;
     using Transformers;
 
     public class CollectionTransformationPipeFactory<TInput, TOutput> :
         ICollectionTransformationPipeFactory<TInput, TOutput>
     {
         private readonly IRestCollectionLinkGenerator linkGenerator;
-        private readonly LazyResolver<ITransformerFactory<TInput>> transformerFactory;
         private readonly LazyResolver<ITransformationBuilder<TInput>> transformationBuilder;
+        private readonly LazyResolver<ITransformerFactory<TInput>> transformerFactory;
 
         public CollectionTransformationPipeFactory(
             IRestCollectionLinkGenerator linkGenerator,

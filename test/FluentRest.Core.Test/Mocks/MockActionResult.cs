@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.Test.Mocks
+﻿// <copyright file="MockActionResult.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.Mocks
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;

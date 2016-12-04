@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.MetaModel.OrderBy
+﻿// <copyright file="IOrderByBuilder.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.MetaModel.OrderBy
 {
     using System;
     using System.Linq.Expressions;

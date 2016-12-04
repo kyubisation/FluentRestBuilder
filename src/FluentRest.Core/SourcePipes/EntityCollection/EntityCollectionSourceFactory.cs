@@ -1,13 +1,17 @@
-﻿namespace KyubiCode.FluentRest.SourcePipes.EntityCollection
+﻿// <copyright file="EntityCollectionSourceFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.SourcePipes.EntityCollection
 {
     using System;
-    using FluentRest.Common;
+    using Core.Common;
 
     public class EntityCollectionSourceFactory<TEntity> : IEntityCollectionSourceFactory<TEntity>
         where TEntity : class
     {
-        private readonly IServiceProvider serviceProvider;
         private readonly IQueryableFactory<TEntity> queryableFactory;
+        private readonly IServiceProvider serviceProvider;
 
         public EntityCollectionSourceFactory(
             IServiceProvider serviceProvider,

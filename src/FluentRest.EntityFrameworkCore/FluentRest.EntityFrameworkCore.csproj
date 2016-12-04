@@ -1,24 +1,30 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
-  
-  <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+  <PropertyGroup Label="Configuration">
+    <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
-
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="**\*.cs" />
     <EmbeddedResource Include="**\*.resx" />
   </ItemGroup>
-
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NETStandard.Library">
-      <Version>1.6</Version>
+      <Version>1.6.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Sdk">
       <Version>1.0.0-alpha-20161104-2</Version>
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\FluentRest.Core\FluentRest.Core.csproj" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

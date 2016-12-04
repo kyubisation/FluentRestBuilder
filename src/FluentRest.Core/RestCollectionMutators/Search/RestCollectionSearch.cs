@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.RestCollectionMutators.Search
+﻿// <copyright file="RestCollectionSearch.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.RestCollectionMutators.Search
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -9,10 +13,10 @@
 
     public class RestCollectionSearch<TEntity> : IRestCollectionSearch<TEntity>
     {
-        private readonly IQueryCollection queryCollection;
         private readonly IExpressionFactory<TEntity> expressionFactory;
-        private readonly IQueryArgumentKeys queryArgumentKeys;
         private readonly List<IFilterBuilder<TEntity>> filters;
+        private readonly IQueryArgumentKeys queryArgumentKeys;
+        private readonly IQueryCollection queryCollection;
 
         public RestCollectionSearch(
             IQueryCollection queryCollection,

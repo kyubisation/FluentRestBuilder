@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.Common
+﻿// <copyright file="ValidationPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.Common
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
@@ -7,8 +11,8 @@
     public abstract class ValidationPipe<TInput> : InputOutputPipe<TInput>
         where TInput : class
     {
-        private readonly int statusCode;
         private readonly object error;
+        private readonly int statusCode;
 
         protected ValidationPipe(
             int statusCode,

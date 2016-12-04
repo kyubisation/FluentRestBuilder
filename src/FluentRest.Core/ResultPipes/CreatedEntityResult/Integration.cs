@@ -1,10 +1,15 @@
-﻿// ReSharper disable once CheckNamespace
-namespace KyubiCode.FluentRest
+﻿// <copyright file="Integration.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+// ReSharper disable once CheckNamespace
+namespace FluentRest
 {
     using System;
     using System.Threading.Tasks;
+    using Core;
+    using Core.ResultPipes.CreatedEntityResult;
     using Microsoft.AspNetCore.Mvc;
-    using ResultPipes.CreatedEntityResult;
 
     public static partial class Integration
     {
@@ -15,7 +20,7 @@ namespace KyubiCode.FluentRest
             where TInput : class
         {
             var createdEntityResultPipe = new CreatedEntityResultPipe<TInput>(
-                (IPipe p) => routeValuesGenerator(pipe.GetItem<TLookup>()),
+                (IPipe p) => routeValuesGenerator(ItemProviderExtensions.GetItem<TLookup>((IItemProvider)pipe)),
                 routeName,
                 pipe);
             return ((IPipe)createdEntityResultPipe).Execute();

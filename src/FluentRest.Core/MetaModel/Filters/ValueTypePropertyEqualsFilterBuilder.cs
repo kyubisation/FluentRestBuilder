@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.MetaModel.Filters
+﻿// <copyright file="ValueTypePropertyEqualsFilterBuilder.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.MetaModel.Filters
 {
     using System;
     using System.Linq.Expressions;

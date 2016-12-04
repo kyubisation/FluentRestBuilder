@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.SourcePipes.EntityCollection
+﻿// <copyright file="PaginationMetaInfo.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.SourcePipes.EntityCollection
 {
     public class PaginationMetaInfo
     {

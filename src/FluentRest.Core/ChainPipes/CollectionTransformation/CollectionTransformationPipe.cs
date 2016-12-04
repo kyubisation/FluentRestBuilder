@@ -1,10 +1,14 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.CollectionTransformation
+﻿// <copyright file="CollectionTransformationPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.CollectionTransformation
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRest.Common;
+    using Core.Common;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using SourcePipes.EntityCollection;
@@ -15,8 +19,8 @@
         IInputPipe<IQueryable<TInput>>,
         IOutputPipe<RestEntityCollection>
     {
-        private readonly Func<TInput, TOutput> transformation;
         private readonly IRestCollectionLinkGenerator linkGenerator;
+        private readonly Func<TInput, TOutput> transformation;
         private IInputPipe<RestEntityCollection> child;
         private RestEntityCollection restEntityCollection;
 
@@ -30,12 +34,6 @@
             this.linkGenerator = linkGenerator;
         }
 
-        TPipe IOutputPipe<RestEntityCollection>.Attach<TPipe>(TPipe pipe)
-        {
-            this.child = pipe;
-            return pipe;
-        }
-
         async Task<IActionResult> IInputPipe<IQueryable<TInput>>.Execute(IQueryable<TInput> input)
         {
             NoPipeAttachedException.Check(this.child);
@@ -46,6 +44,12 @@
             this.GenerateLinks();
 
             return await this.child.Execute(this.restEntityCollection);
+        }
+
+        TPipe IOutputPipe<RestEntityCollection>.Attach<TPipe>(TPipe pipe)
+        {
+            this.child = pipe;
+            return pipe;
         }
 
         private void GenerateEmbeddedEntities(IEnumerable<TInput> entities)

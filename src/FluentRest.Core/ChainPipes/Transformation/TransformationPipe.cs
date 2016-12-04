@@ -1,8 +1,12 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.Transformation
+﻿// <copyright file="TransformationPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.Transformation
 {
     using System;
     using System.Threading.Tasks;
-    using FluentRest.Common;
+    using Core.Common;
     using Microsoft.AspNetCore.Mvc;
 
     public class TransformationPipe<TInput, TOutput> :

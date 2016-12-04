@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.ResultPipes.NoContentResult
+﻿// <copyright file="NoContentResultPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ResultPipes.NoContentResult
 {
     using Common;
     using Microsoft.AspNetCore.Mvc;

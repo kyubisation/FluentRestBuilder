@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.MetaModel
+﻿// <copyright file="ModelContainer.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.MetaModel
 {
     using System.Collections.Generic;
     using System.Collections.Immutable;

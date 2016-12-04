@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.ResultPipes.CreatedEntityResult
+﻿// <copyright file="CreatedEntityResultPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ResultPipes.CreatedEntityResult
 {
     using System;
     using Common;
@@ -7,8 +11,8 @@
     public class CreatedEntityResultPipe<TInput> : ResultPipe<TInput>
         where TInput : class
     {
-        private readonly Func<TInput, object> routeValuesGenerator;
         private readonly string routeName;
+        private readonly Func<TInput, object> routeValuesGenerator;
 
         public CreatedEntityResultPipe(
             Func<IPipe, object> routeValuesGenerator,

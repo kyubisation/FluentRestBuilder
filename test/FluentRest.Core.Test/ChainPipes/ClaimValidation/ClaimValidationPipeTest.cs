@@ -1,8 +1,12 @@
-﻿namespace KyubiCode.FluentRest.Test.ChainPipes.ClaimValidation
+﻿// <copyright file="ClaimValidationPipeTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.ChainPipes.ClaimValidation
 {
     using System.Security.Principal;
     using System.Threading.Tasks;
-    using FluentRest.ChainPipes.ClaimValidation;
+    using Core.ChainPipes.ClaimValidation;
     using Mocks;
     using Xunit;
 

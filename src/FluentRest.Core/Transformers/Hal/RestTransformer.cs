@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.Transformers.Hal
+﻿// <copyright file="RestTransformer.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Transformers.Hal
 {
     using System;
     using System.Collections.Generic;
@@ -7,8 +11,8 @@
     public class RestTransformer<TInput, TOutput> : ITransformer<TInput, TOutput>
         where TOutput : RestEntity
     {
-        private readonly Func<TInput, TOutput> transformation;
         private readonly IDictionary<string, object> embeddedResources = new Dictionary<string, object>();
+        private readonly Func<TInput, TOutput> transformation;
         private readonly IUrlHelper urlHelper;
 
         public RestTransformer(
@@ -31,13 +35,13 @@
             return target;
         }
 
-        public RestTransformer<TInput, TOutput> Embed(string name, object value)
+        ITransformer<TInput, TOutput> ITransformer<TInput, TOutput>.Embed(string name, object value)
         {
             this.embeddedResources.Add(name, value);
             return this;
         }
 
-        ITransformer<TInput, TOutput> ITransformer<TInput, TOutput>.Embed(string name, object value)
+        public RestTransformer<TInput, TOutput> Embed(string name, object value)
         {
             this.embeddedResources.Add(name, value);
             return this;

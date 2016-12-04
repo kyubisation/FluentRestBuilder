@@ -1,13 +1,17 @@
-﻿// ReSharper disable once CheckNamespace
-namespace KyubiCode.FluentRest
+﻿// <copyright file="Integration.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+// ReSharper disable once CheckNamespace
+namespace FluentRest
 {
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
-    using MetaModel;
+    using Core.MetaModel;
+    using Core.SourcePipes.SelectableEntity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
-    using SourcePipes.SelectableEntity;
 
     public static partial class Integration
     {
@@ -37,7 +41,7 @@ namespace KyubiCode.FluentRest
             var filterExpression = controller.HttpContext.RequestServices
                 .GetRequiredService<IExpressionFactory<TEntity>>()
                 .CreatePrimaryKeyFilterExpression(keyArguments);
-            return controller.SelectEntity(filterExpression);
+            return controller.SelectEntity<TEntity>(filterExpression);
         }
     }
 }

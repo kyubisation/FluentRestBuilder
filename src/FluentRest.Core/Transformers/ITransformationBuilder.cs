@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.Transformers
+﻿// <copyright file="ITransformationBuilder.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Transformers
 {
     using System;
 

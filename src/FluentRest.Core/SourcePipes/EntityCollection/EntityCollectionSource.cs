@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.SourcePipes.EntityCollection
+﻿// <copyright file="EntityCollectionSource.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.SourcePipes.EntityCollection
 {
     using System;
     using System.Linq;
@@ -32,6 +36,23 @@
             : base(queryable)
         {
             this.serviceProvider = serviceProvider;
+        }
+
+        object IServiceProvider.GetService(Type serviceType) =>
+            this.serviceProvider.GetService(serviceType);
+
+        object IItemProvider.GetItem(Type itemType) =>
+            itemType == typeof(PaginationMetaInfo) ? this.paginationMetaInfo : null;
+
+        TPipe IOutputPipe<IQueryable<TEntity>>.Attach<TPipe>(TPipe pipe)
+        {
+            this.child = pipe;
+            return pipe;
+        }
+
+        async Task<IActionResult> IPipe.Execute()
+        {
+            return await this.ExecuteAsync();
         }
 
         public EntityCollectionSource<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
@@ -76,23 +97,6 @@
 
         public EntityCollectionSource<TEntity> ApplySearch() =>
             this.ApplySearch(this.GetRequiredService<IRestCollectionSearch<TEntity>>());
-
-        object IServiceProvider.GetService(Type serviceType) =>
-            this.serviceProvider.GetService(serviceType);
-
-        object IItemProvider.GetItem(Type itemType) =>
-            itemType == typeof(PaginationMetaInfo) ? this.paginationMetaInfo : null;
-
-        TPipe IOutputPipe<IQueryable<TEntity>>.Attach<TPipe>(TPipe pipe)
-        {
-            this.child = pipe;
-            return pipe;
-        }
-
-        async Task<IActionResult> IPipe.Execute()
-        {
-            return await this.ExecuteAsync();
-        }
 
         protected async Task<IActionResult> ExecuteAsync()
         {

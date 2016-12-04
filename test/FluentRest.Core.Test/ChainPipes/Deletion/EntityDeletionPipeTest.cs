@@ -1,8 +1,12 @@
-﻿namespace KyubiCode.FluentRest.Test.ChainPipes.Deletion
+﻿// <copyright file="EntityDeletionPipeTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.ChainPipes.Deletion
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRest.ChainPipes.Deletion;
+    using Core.ChainPipes.Deletion;
     using Mocks;
     using Xunit;
 

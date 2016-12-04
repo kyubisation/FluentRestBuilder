@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.EntityCollectionSource
+﻿// <copyright file="EntityCollectionSourcePipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.EntityCollectionSource
 {
     using System;
     using System.Linq;
@@ -11,8 +15,8 @@
         IInputPipe<TInput>
         where TOutput : class
     {
-        private readonly Func<IQueryable<TOutput>, TInput, IQueryable<TOutput>> queryablePipe;
         private readonly IOutputPipe<TInput> parent;
+        private readonly Func<IQueryable<TOutput>, TInput, IQueryable<TOutput>> queryablePipe;
 
         public EntityCollectionSourcePipe(
             Func<IQueryable<TOutput>, TInput, IQueryable<TOutput>> queryablePipe,

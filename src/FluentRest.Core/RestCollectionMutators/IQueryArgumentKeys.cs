@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.RestCollectionMutators
+﻿// <copyright file="IQueryArgumentKeys.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.RestCollectionMutators
 {
     public interface IQueryArgumentKeys
     {

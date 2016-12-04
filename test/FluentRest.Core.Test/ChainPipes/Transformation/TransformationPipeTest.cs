@@ -1,7 +1,11 @@
-﻿namespace KyubiCode.FluentRest.Test.ChainPipes.Transformation
+﻿// <copyright file="TransformationPipeTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.ChainPipes.Transformation
 {
     using System.Threading.Tasks;
-    using FluentRest.ChainPipes.Transformation;
+    using Core.ChainPipes.Transformation;
     using Mocks;
     using Xunit;
 

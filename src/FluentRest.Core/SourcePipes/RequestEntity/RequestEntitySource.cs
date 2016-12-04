@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.SourcePipes.RequestEntity
+﻿// <copyright file="RequestEntitySource.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.SourcePipes.RequestEntity
 {
     using System;
     using System.Threading.Tasks;

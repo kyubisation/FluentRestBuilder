@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.Insertion
+﻿// <copyright file="IEntityInsertionPipeFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.Insertion
 {
     public interface IEntityInsertionPipeFactory<TInput>
         where TInput : class

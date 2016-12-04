@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.Transformers.Hal
+﻿// <copyright file="Integration.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Transformers.Hal
 {
     using System;
     using Microsoft.AspNetCore.Mvc;

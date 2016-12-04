@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.ResultPipes.OkResult
+﻿// <copyright file="OkResultPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ResultPipes.OkResult
 {
     using Common;
     using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.Transformers
+﻿// <copyright file="TransformationBuilder.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Transformers
 {
     using System;
     using System.Collections.Generic;
@@ -6,10 +10,11 @@
 
     public class TransformationBuilder<TInput> : ITransformationBuilder<TInput>
     {
-        private readonly ITransformerFactory transformerFactory;
-        private readonly ITransformerFactory<TInput> inputTransformerFactory;
         private readonly IDictionary<string, Func<TInput, object>> embeddedResourceBuilders =
             new Dictionary<string, Func<TInput, object>>();
+
+        private readonly ITransformerFactory<TInput> inputTransformerFactory;
+        private readonly ITransformerFactory transformerFactory;
 
         public TransformationBuilder(
             ITransformerFactory transformerFactory,

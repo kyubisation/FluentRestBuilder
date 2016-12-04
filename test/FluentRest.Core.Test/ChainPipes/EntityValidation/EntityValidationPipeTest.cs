@@ -1,9 +1,13 @@
-﻿namespace KyubiCode.FluentRest.Test.ChainPipes.EntityValidation
+﻿// <copyright file="EntityValidationPipeTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.ChainPipes.EntityValidation
 {
     using System;
     using System.Diagnostics;
     using System.Threading.Tasks;
-    using FluentRest.ChainPipes.EntityValidation;
+    using Core.ChainPipes.EntityValidation;
     using Microsoft.AspNetCore.Mvc;
     using Mocks;
     using Xunit;

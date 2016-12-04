@@ -1,8 +1,12 @@
-﻿namespace KyubiCode.FluentRest.Test.ChainPipes.Insertion
+﻿// <copyright file="EntityInsertionPipeTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.ChainPipes.Insertion
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRest.ChainPipes.Insertion;
+    using Core.ChainPipes.Insertion;
     using Mocks;
     using Xunit;
 

@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.ChainPipes.CollectionTransformation
+﻿// <copyright file="RestEntityCollection.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.ChainPipes.CollectionTransformation
 {
     using System.Collections.Generic;
     using Transformers.Hal;

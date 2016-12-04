@@ -1,10 +1,14 @@
-﻿namespace KyubiCode.FluentRest.Test.RestCollectionMutators.Pagination
+﻿// <copyright file="RestCollectionPaginationTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.RestCollectionMutators.Pagination
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRest.RestCollectionMutators;
-    using FluentRest.RestCollectionMutators.Pagination;
+    using Core.RestCollectionMutators;
+    using Core.RestCollectionMutators.Pagination;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.EntityFrameworkCore;

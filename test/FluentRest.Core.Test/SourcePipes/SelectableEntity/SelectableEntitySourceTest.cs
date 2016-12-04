@@ -1,9 +1,13 @@
-﻿namespace KyubiCode.FluentRest.Test.SourcePipes.SelectableEntity
+﻿// <copyright file="SelectableEntitySourceTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.SourcePipes.SelectableEntity
 {
     using System.Linq;
     using System.Threading.Tasks;
     using Common;
-    using FluentRest.SourcePipes.SelectableEntity;
+    using Core.SourcePipes.SelectableEntity;
     using Mocks;
     using Xunit;
 

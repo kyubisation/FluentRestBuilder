@@ -1,10 +1,14 @@
-﻿namespace KyubiCode.FluentRest.Test.RestCollectionMutators.Filter
+﻿// <copyright file="RestCollectionFilterTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.RestCollectionMutators.Filter
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRest.RestCollectionMutators;
-    using FluentRest.RestCollectionMutators.Filter;
+    using Core.RestCollectionMutators;
+    using Core.RestCollectionMutators.Filter;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Primitives;

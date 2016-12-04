@@ -1,8 +1,12 @@
-﻿namespace KyubiCode.FluentRest.Test.ChainPipes.Actions
+﻿// <copyright file="ActionPipeTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.ChainPipes.Actions
 {
     using System;
     using System.Threading.Tasks;
-    using FluentRest.ChainPipes.Actions;
+    using Core.ChainPipes.Actions;
     using Mocks;
     using Xunit;
 

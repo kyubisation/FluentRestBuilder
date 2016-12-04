@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.SourcePipes.SelectableEntity
+﻿// <copyright file="ISelectableEntitySourceFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.SourcePipes.SelectableEntity
 {
     using System;
     using System.Linq.Expressions;

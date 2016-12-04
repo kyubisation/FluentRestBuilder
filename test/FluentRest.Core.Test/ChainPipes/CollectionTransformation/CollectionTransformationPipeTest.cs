@@ -1,10 +1,14 @@
-﻿namespace KyubiCode.FluentRest.Test.ChainPipes.CollectionTransformation
+﻿// <copyright file="CollectionTransformationPipeTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.ChainPipes.CollectionTransformation
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRest.ChainPipes.CollectionTransformation;
-    using FluentRest.SourcePipes.EntityCollection;
+    using Core.ChainPipes.CollectionTransformation;
+    using Core.SourcePipes.EntityCollection;
     using Mocks;
     using Transformers.Hal;
     using Xunit;

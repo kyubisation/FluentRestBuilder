@@ -1,10 +1,14 @@
-﻿namespace KyubiCode.FluentRest.Test.RestCollectionMutators.Search
+﻿// <copyright file="RestCollectionSearchTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test.RestCollectionMutators.Search
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRest.RestCollectionMutators;
-    using FluentRest.RestCollectionMutators.Search;
+    using Core.RestCollectionMutators;
+    using Core.RestCollectionMutators.Search;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.EntityFrameworkCore;

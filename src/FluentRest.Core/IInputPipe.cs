@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest
+﻿// <copyright file="IInputPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;

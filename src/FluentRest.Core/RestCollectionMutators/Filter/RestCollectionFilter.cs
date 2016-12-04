@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.RestCollectionMutators.Filter
+﻿// <copyright file="RestCollectionFilter.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.RestCollectionMutators.Filter
 {
     using System;
     using System.Collections.Generic;
@@ -12,9 +16,9 @@
 
     public class RestCollectionFilter<TEntity> : IRestCollectionFilter<TEntity>
     {
-        private readonly IQueryCollection queryCollection;
         private readonly IExpressionFactory<TEntity> expressionFactory;
         private readonly IQueryArgumentKeys queryArgumentKeys;
+        private readonly IQueryCollection queryCollection;
 
         public RestCollectionFilter(
             IQueryCollection queryCollection,

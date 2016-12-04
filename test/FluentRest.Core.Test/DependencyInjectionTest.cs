@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.Test
+﻿// <copyright file="DependencyInjectionTest.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.Test
 {
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;

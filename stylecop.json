@@ -1,7 +1,10 @@
 {
   "settings": {
     "documentationRules": {
-      "companyName": "KyubiCode"
+      "companyName": "Kyubisation",
+      "documentInterfaces": false,
+      "documentExposedElements": false,
+      "documentInternalElements": false
     }
   }
 }

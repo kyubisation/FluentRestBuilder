@@ -1,4 +1,8 @@
-﻿namespace KyubiCode.FluentRest.MetaModel.OrderBy
+﻿// <copyright file="PropertyOrderByBuilder.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRest.Core.MetaModel.OrderBy
 {
     using System;
     using System.Linq.Expressions;
@@ -7,9 +11,9 @@
 
     public class PropertyOrderByBuilder<TEntity> : IOrderByBuilder<TEntity>
     {
+        private readonly ParameterExpression parameter;
         private readonly IProperty property;
         private readonly MemberExpression propertyExpression;
-        private readonly ParameterExpression parameter;
 
         public PropertyOrderByBuilder(IProperty property)
         {
