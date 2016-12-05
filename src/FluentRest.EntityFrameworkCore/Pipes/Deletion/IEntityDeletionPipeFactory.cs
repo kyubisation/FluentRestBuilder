@@ -2,9 +2,9 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Pipes.Deletion
+namespace FluentRest.EntityFrameworkCore.Pipes.Deletion
 {
-    using EntityFrameworkCore.Pipes.Deletion;
+    using Core;
 
     public interface IEntityDeletionPipeFactory<TInput>
         where TInput : class

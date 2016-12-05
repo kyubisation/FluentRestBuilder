@@ -8,8 +8,8 @@ namespace FluentRest
     using System;
     using System.Linq;
     using Core;
-    using Core.Pipes.CollectionTransformation;
     using Core.Transformers;
+    using EntityFrameworkCore.Pipes.CollectionTransformation;
     using Microsoft.Extensions.DependencyInjection;
 
     public static partial class Integration

@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Test.RestCollectionMutators
+namespace FluentRest.EntityFrameworkCore.Test.RestCollectionMutators
 {
     using System.Collections.Generic;
     using Newtonsoft.Json;

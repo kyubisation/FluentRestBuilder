@@ -6,6 +6,7 @@ namespace FluentRest.EntityFrameworkCore.Test.Pipes.Update
 {
     using System.Linq;
     using System.Threading.Tasks;
+    using Core.Storage;
     using EntityFrameworkCore.Pipes.Update;
     using Microsoft.EntityFrameworkCore;
     using Mocks;
@@ -25,7 +26,8 @@ namespace FluentRest.EntityFrameworkCore.Test.Pipes.Update
             var resultPipe = MockSourcePipe<Entity>.CreateCompleteChain(
                 entity,
                 this.ServiceProvider,
-                source => new EntityUpdatePipe<Entity>(scopedContext, source));
+                source => new EntityUpdatePipe<Entity>(
+                    scopedContext, new ScopedStorage<Entity>(), source));
             await resultPipe.Execute();
             using (var context = this.CreateContext())
             {

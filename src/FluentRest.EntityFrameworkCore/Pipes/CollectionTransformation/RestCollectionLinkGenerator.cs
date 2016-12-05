@@ -8,7 +8,6 @@ namespace FluentRest.EntityFrameworkCore.Pipes.CollectionTransformation
     using System.Collections.Generic;
     using System.Linq;
     using Core.Common;
-    using Core.Pipes.CollectionTransformation;
     using Core.Transformers.Hal;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Extensions;

@@ -2,17 +2,18 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Pipes.CollectionTransformation
+namespace FluentRest.EntityFrameworkCore.Pipes.CollectionTransformation
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Core;
     using Core.Common;
-    using EntityFrameworkCore.Pipes.CollectionTransformation;
+    using Core.Storage;
+    using Core.Transformers.Hal;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Transformers.Hal;
 
     public class CollectionTransformationPipe<TInput, TOutput> :
         InputPipe<IQueryable<TInput>>,
@@ -20,6 +21,7 @@ namespace FluentRest.Core.Pipes.CollectionTransformation
         IOutputPipe<RestEntityCollection>
     {
         private readonly IRestCollectionLinkGenerator linkGenerator;
+        private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
         private readonly Func<TInput, TOutput> transformation;
         private IInputPipe<RestEntityCollection> child;
         private RestEntityCollection restEntityCollection;
@@ -27,11 +29,13 @@ namespace FluentRest.Core.Pipes.CollectionTransformation
         public CollectionTransformationPipe(
             Func<TInput, TOutput> transformation,
             IRestCollectionLinkGenerator linkGenerator,
+            IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
             IOutputPipe<IQueryable<TInput>> parent)
             : base(parent)
         {
             this.transformation = transformation;
             this.linkGenerator = linkGenerator;
+            this.paginationMetaInfoStorage = paginationMetaInfoStorage;
         }
 
         async Task<IActionResult> IInputPipe<IQueryable<TInput>>.Execute(IQueryable<TInput> input)
@@ -60,8 +64,7 @@ namespace FluentRest.Core.Pipes.CollectionTransformation
 
         private void GenerateLinks()
         {
-            var paginationMetaInfo = this.GetItem<PaginationMetaInfo>();
-            var links = this.linkGenerator.GenerateLinks(paginationMetaInfo);
+            var links = this.linkGenerator.GenerateLinks(this.paginationMetaInfoStorage.Value);
             this.restEntityCollection.Links = NamedLink.BuildLinks(links);
         }
     }

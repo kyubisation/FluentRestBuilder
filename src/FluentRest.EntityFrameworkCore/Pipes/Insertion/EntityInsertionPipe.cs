@@ -4,32 +4,29 @@
 
 namespace FluentRest.EntityFrameworkCore.Pipes.Insertion
 {
-    using System;
     using System.Threading.Tasks;
     using Core;
     using Core.Pipes.Common;
+    using Core.Storage;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
-    public class EntityInsertionPipe<TInput> : InputOutputPipe<TInput>, IItemProvider
+    public class EntityInsertionPipe<TInput> : InputOutputPipe<TInput>
         where TInput : class
     {
         private readonly DbContext context;
-        private readonly IOutputPipe<TInput> parent;
-        private TInput storedEntity;
+        private readonly IScopedStorage<TInput> storage;
 
         public EntityInsertionPipe(
             DbContext context,
+            IScopedStorage<TInput> storage,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
             this.context = context;
-            this.parent = parent;
+            this.storage = storage;
         }
-
-        object IItemProvider.GetItem(Type itemType) =>
-            itemType == typeof(TInput) ? this.storedEntity : this.parent.GetItem(itemType);
 
         protected override async Task<IActionResult> ExecuteAsync(TInput entity)
         {
@@ -43,7 +40,7 @@ namespace FluentRest.EntityFrameworkCore.Pipes.Insertion
                 return new StatusCodeResult(StatusCodes.Status409Conflict);
             }
 
-            this.storedEntity = entity;
+            this.storage.Value = entity;
             return null;
         }
     }

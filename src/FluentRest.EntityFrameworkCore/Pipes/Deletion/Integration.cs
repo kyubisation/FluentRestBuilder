@@ -6,14 +6,14 @@
 namespace FluentRest
 {
     using Core;
-    using Core.Pipes.Deletion;
     using EntityFrameworkCore.Pipes.Deletion;
+    using Microsoft.Extensions.DependencyInjection;
 
     public static partial class Integration
     {
         public static EntityDeletionPipe<TInput> DeleteEntity<TInput>(this IOutputPipe<TInput> pipe)
             where TInput : class =>
-            pipe.GetRequiredItem<IEntityDeletionPipeFactory<TInput>>()
+            pipe.GetRequiredService<IEntityDeletionPipeFactory<TInput>>()
                 .Resolve(pipe);
     }
 }

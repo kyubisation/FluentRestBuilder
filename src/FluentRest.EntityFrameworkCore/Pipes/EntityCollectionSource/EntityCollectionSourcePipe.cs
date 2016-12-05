@@ -8,6 +8,8 @@ namespace FluentRest.EntityFrameworkCore.Pipes.EntityCollectionSource
     using System.Linq;
     using System.Threading.Tasks;
     using Core;
+    using Core.Common;
+    using Core.Storage;
     using Microsoft.AspNetCore.Mvc;
     using Sources.EntityCollection;
 
@@ -22,8 +24,9 @@ namespace FluentRest.EntityFrameworkCore.Pipes.EntityCollectionSource
         public EntityCollectionSourcePipe(
             Func<IQueryable<TOutput>, TInput, IQueryable<TOutput>> queryablePipe,
             IQueryable<TOutput> queryable,
+            IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
             IOutputPipe<TInput> parent)
-            : base(queryable, parent)
+            : base(queryable, paginationMetaInfoStorage, parent)
         {
             this.queryablePipe = queryablePipe;
             this.parent = parent;

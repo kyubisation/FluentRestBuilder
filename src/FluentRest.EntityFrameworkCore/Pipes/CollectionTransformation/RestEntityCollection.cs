@@ -2,10 +2,10 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Pipes.CollectionTransformation
+namespace FluentRest.EntityFrameworkCore.Pipes.CollectionTransformation
 {
     using System.Collections.Generic;
-    using Transformers.Hal;
+    using Core.Transformers.Hal;
 
     public class RestEntityCollection : RestEntity
     {

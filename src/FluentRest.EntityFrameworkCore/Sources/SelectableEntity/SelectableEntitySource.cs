@@ -10,7 +10,8 @@ namespace FluentRest.EntityFrameworkCore.Sources.SelectableEntity
     using System.Threading.Tasks;
     using Common;
     using Core;
-    using Core.Sources.Common;
+    using Core.Storage;
+    using EntityFrameworkCore.Common;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
@@ -20,16 +21,18 @@ namespace FluentRest.EntityFrameworkCore.Sources.SelectableEntity
         IOutputPipe<TEntity>
         where TEntity : class
     {
+        private readonly IScopedStorage<TEntity> entityStorage;
         private readonly IServiceProvider serviceProvider;
         private IInputPipe<TEntity> child;
-        private TEntity storedEntity;
 
         public SelectableEntitySource(
             Expression<Func<TEntity, bool>> selectionFilter,
             IQueryable<TEntity> queryable,
+            IScopedStorage<TEntity> entityStorage,
             IServiceProvider serviceProvider)
             : base(queryable)
         {
+            this.entityStorage = entityStorage;
             this.serviceProvider = serviceProvider;
             this.Queryable = this.Queryable.Where(selectionFilter);
         }
@@ -40,26 +43,12 @@ namespace FluentRest.EntityFrameworkCore.Sources.SelectableEntity
             new SelectableEntitySource<TEntity>(
                 selectionFilter,
                 serviceProvider.GetService<IQueryableFactory<TEntity>>().Queryable,
+                serviceProvider.GetService<IScopedStorage<TEntity>>(),
                 serviceProvider);
 
         object IServiceProvider.GetService(Type serviceType)
         {
             return this.serviceProvider.GetService(serviceType);
-        }
-
-        object IItemProvider.GetItem(Type itemType)
-        {
-            if (itemType == typeof(TEntity))
-            {
-                return this.storedEntity;
-            }
-
-            if (itemType == typeof(IQueryable<TEntity>))
-            {
-                return this.Queryable;
-            }
-
-            return null;
         }
 
         TPipe IOutputPipe<TEntity>.Attach<TPipe>(TPipe pipe)
@@ -71,8 +60,9 @@ namespace FluentRest.EntityFrameworkCore.Sources.SelectableEntity
         async Task<IActionResult> IPipe.Execute()
         {
             NoPipeAttachedException.Check(this.child);
-            this.storedEntity = await this.Queryable.SingleOrDefaultAsync();
-            return await this.child.Execute(this.storedEntity);
+            var entity = await this.Queryable.SingleOrDefaultAsync();
+            this.entityStorage.Value = entity;
+            return await this.child.Execute(entity);
         }
     }
 }

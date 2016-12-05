@@ -2,27 +2,31 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Pipes.CollectionTransformation
+namespace FluentRest.EntityFrameworkCore.Pipes.CollectionTransformation
 {
     using System;
     using System.Linq;
+    using Core;
     using Core.Common;
-    using EntityFrameworkCore.Pipes.CollectionTransformation;
-    using Transformers;
+    using Core.Storage;
+    using Core.Transformers;
 
     public class CollectionTransformationPipeFactory<TInput, TOutput> :
         ICollectionTransformationPipeFactory<TInput, TOutput>
     {
         private readonly IRestCollectionLinkGenerator linkGenerator;
+        private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
         private readonly LazyResolver<ITransformationBuilder<TInput>> transformationBuilder;
         private readonly LazyResolver<ITransformerFactory<TInput>> transformerFactory;
 
         public CollectionTransformationPipeFactory(
             IRestCollectionLinkGenerator linkGenerator,
+            IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
             LazyResolver<ITransformerFactory<TInput>> transformerFactory,
             LazyResolver<ITransformationBuilder<TInput>> transformationBuilder)
         {
             this.linkGenerator = linkGenerator;
+            this.paginationMetaInfoStorage = paginationMetaInfoStorage;
             this.transformerFactory = transformerFactory;
             this.transformationBuilder = transformationBuilder;
         }
@@ -30,7 +34,7 @@ namespace FluentRest.Core.Pipes.CollectionTransformation
         public CollectionTransformationPipe<TInput, TOutput> Resolve(
                 Func<TInput, TOutput> transformation, IOutputPipe<IQueryable<TInput>> parent) =>
             new CollectionTransformationPipe<TInput, TOutput>(
-                transformation, this.linkGenerator, parent);
+                transformation, this.linkGenerator, this.paginationMetaInfoStorage, parent);
 
         public CollectionTransformationPipe<TInput, TOutput> ResolveTransformer(
             Func<ITransformerFactory<TInput>, ITransformer<TInput, TOutput>> selection,

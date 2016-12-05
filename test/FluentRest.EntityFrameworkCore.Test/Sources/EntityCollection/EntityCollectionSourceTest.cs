@@ -7,6 +7,8 @@ namespace FluentRest.EntityFrameworkCore.Test.Sources.EntityCollection
     using System.Linq;
     using System.Threading.Tasks;
     using Common;
+    using Core.Common;
+    using Core.Storage;
     using EntityFrameworkCore.Sources.EntityCollection;
     using Mocks;
     using Xunit;
@@ -27,6 +29,7 @@ namespace FluentRest.EntityFrameworkCore.Test.Sources.EntityCollection
         {
             return new EntityCollectionSource<Entity>(
                 this.ResolveScoped<IQueryableFactory<Entity>>().Queryable,
+                new ScopedStorage<PaginationMetaInfo>(),
                 this.ServiceProvider);
         }
     }

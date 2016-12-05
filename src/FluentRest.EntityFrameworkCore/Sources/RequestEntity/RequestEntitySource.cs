@@ -27,8 +27,6 @@ namespace FluentRest.EntityFrameworkCore.Sources.RequestEntity
         object IServiceProvider.GetService(Type serviceType) =>
             this.serviceProvider.GetService(serviceType);
 
-        object IItemProvider.GetItem(Type itemType) => null;
-
         TPipe IOutputPipe<TEntity>.Attach<TPipe>(TPipe pipe)
         {
             this.child = pipe;

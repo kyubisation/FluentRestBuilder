@@ -2,17 +2,18 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Test.Pipes.EntityCollectionSource
+namespace FluentRest.EntityFrameworkCore.Test.Pipes.EntityCollectionSource
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Common;
-    using EntityFrameworkCore.Common;
+    using Core.Common;
+    using Core.Storage;
     using EntityFrameworkCore.Pipes.EntityCollectionSource;
-    using EntityFrameworkCore.Test;
-    using EntityFrameworkCore.Test.Mocks;
     using Microsoft.EntityFrameworkCore;
+    using Mocks;
+    using Test;
     using Xunit;
 
     public class EntityCollectionSourcePipeTest : ScopedDbContextTestBase
@@ -26,7 +27,10 @@ namespace FluentRest.Core.Test.Pipes.EntityCollectionSource
                 parent,
                 this.ServiceProvider,
                 p => new EntityCollectionSourcePipe<Parent, Child>(
-                    null, this.ResolveScoped<IQueryableFactory<Child>>().Queryable, p));
+                    null,
+                    this.ResolveScoped<IQueryableFactory<Child>>().Queryable,
+                    new ScopedStorage<PaginationMetaInfo>(),
+                    p));
             await result.Execute();
             Assert.NotNull(result.Input);
             Assert.Equal(
@@ -45,6 +49,7 @@ namespace FluentRest.Core.Test.Pipes.EntityCollectionSource
                 pipe => new EntityCollectionSourcePipe<Parent, Child>(
                     (q, p) => q.Where(c => c.ParentId == p.Id),
                     this.ResolveScoped<IQueryableFactory<Child>>().Queryable,
+                    new ScopedStorage<PaginationMetaInfo>(),
                     pipe));
             await result.Execute();
             Assert.NotNull(result.Input);

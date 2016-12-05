@@ -8,9 +8,10 @@ namespace FluentRest.EntityFrameworkCore.Sources.EntityCollection
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
+    using Common;
     using Core;
     using Core.Common;
-    using Core.Sources.Common;
+    using Core.Storage;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using RestCollectionMutators.Common;
@@ -24,27 +25,26 @@ namespace FluentRest.EntityFrameworkCore.Sources.EntityCollection
         IOutputPipe<IQueryable<TEntity>>
         where TEntity : class
     {
+        private readonly IScopedStorage<PaginationMetaInfo> storage;
         private readonly IServiceProvider serviceProvider;
         private IInputPipe<IQueryable<TEntity>> child;
         private IRestCollectionFilter<TEntity> collectionFilter;
         private IRestCollectionOrderBy<TEntity> collectionOrderBy;
         private IRestCollectionPagination<TEntity> collectionPagination;
         private IRestCollectionSearch<TEntity> collectionSearch;
-        private PaginationMetaInfo paginationMetaInfo;
 
         public EntityCollectionSource(
             IQueryable<TEntity> queryable,
+            IScopedStorage<PaginationMetaInfo> storage,
             IServiceProvider serviceProvider)
             : base(queryable)
         {
+            this.storage = storage;
             this.serviceProvider = serviceProvider;
         }
 
         object IServiceProvider.GetService(Type serviceType) =>
             this.serviceProvider.GetService(serviceType);
-
-        object IItemProvider.GetItem(Type itemType) =>
-            itemType == typeof(PaginationMetaInfo) ? this.paginationMetaInfo : null;
 
         TPipe IOutputPipe<IQueryable<TEntity>>.Attach<TPipe>(TPipe pipe)
         {
@@ -124,7 +124,7 @@ namespace FluentRest.EntityFrameworkCore.Sources.EntityCollection
         {
             var totalEntities = queryable.Count();
             var totalPages = (double)totalEntities / this.collectionPagination.ActualEntriesPerPage;
-            this.paginationMetaInfo = new PaginationMetaInfo(
+            this.storage.Value = new PaginationMetaInfo(
                 totalEntities,
                 this.collectionPagination.ActualPage,
                 this.collectionPagination.ActualEntriesPerPage,

@@ -2,14 +2,14 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Test.Pipes.Insertion
+namespace FluentRest.EntityFrameworkCore.Test.Pipes.Insertion
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using Core.Pipes.Insertion;
+    using Core.Storage;
     using EntityFrameworkCore.Pipes.Insertion;
-    using EntityFrameworkCore.Test;
-    using EntityFrameworkCore.Test.Mocks;
+    using Mocks;
+    using Test;
     using Xunit;
 
     public class EntityInsertionPipeTest : ScopedDbContextTestBase
@@ -19,7 +19,9 @@ namespace FluentRest.Core.Test.Pipes.Insertion
         {
             var entity = new Entity { Id = 1, Name = "test" };
             var resultPipe = MockSourcePipe<Entity>.CreateCompleteChain(
-                entity, this.ServiceProvider, p => new EntityInsertionPipe<Entity>(this.Context, p));
+                entity,
+                this.ServiceProvider,
+                p => new EntityInsertionPipe<Entity>(this.Context, new ScopedStorage<Entity>(), p));
             await resultPipe.Execute();
             using (var context = this.CreateContext())
             {

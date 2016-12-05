@@ -8,7 +8,7 @@ namespace FluentRest.EntityFrameworkCore.Test.Pipes.CollectionTransformation
     using System.Linq;
     using System.Threading.Tasks;
     using Core.Common;
-    using Core.Pipes.CollectionTransformation;
+    using Core.Storage;
     using Core.Transformers.Hal;
     using EntityFrameworkCore.Pipes.CollectionTransformation;
     using Mocks;
@@ -25,7 +25,7 @@ namespace FluentRest.EntityFrameworkCore.Test.Pipes.CollectionTransformation
                 this.Context.Entities,
                 this.ServiceProvider,
                 source => new CollectionTransformationPipe<Entity, string>(
-                    e => e.Name, new MockLinkGenerator(), source));
+                    e => e.Name, new MockLinkGenerator(), new ScopedStorage<PaginationMetaInfo>(), source));
             await resultPipe.Execute();
             Assert.NotNull(resultPipe.Input);
             Assert.Contains("items", resultPipe.Input.Embedded.Keys);

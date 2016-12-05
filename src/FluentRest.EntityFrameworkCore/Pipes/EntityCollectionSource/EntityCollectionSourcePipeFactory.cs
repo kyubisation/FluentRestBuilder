@@ -8,16 +8,22 @@ namespace FluentRest.EntityFrameworkCore.Pipes.EntityCollectionSource
     using System.Linq;
     using Common;
     using Core;
+    using Core.Common;
+    using Core.Storage;
 
     public class EntityCollectionSourcePipeFactory<TInput, TOutput> :
         IEntityCollectionSourcePipeFactory<TInput, TOutput>
         where TOutput : class
     {
         private readonly IQueryableFactory queryableFactory;
+        private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
 
-        public EntityCollectionSourcePipeFactory(IQueryableFactory queryableFactory)
+        public EntityCollectionSourcePipeFactory(
+            IQueryableFactory queryableFactory,
+            IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage)
         {
             this.queryableFactory = queryableFactory;
+            this.paginationMetaInfoStorage = paginationMetaInfoStorage;
         }
 
         public EntityCollectionSourcePipe<TInput, TOutput> Resolve(
@@ -25,6 +31,6 @@ namespace FluentRest.EntityFrameworkCore.Pipes.EntityCollectionSource
                 Func<IQueryable<TOutput>, TInput, IQueryable<TOutput>> queryablePipe,
                 IOutputPipe<TInput> pipe) =>
             new EntityCollectionSourcePipe<TInput, TOutput>(
-                queryablePipe, selection(this.queryableFactory), pipe);
+                queryablePipe, selection(this.queryableFactory), this.paginationMetaInfoStorage, pipe);
     }
 }

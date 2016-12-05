@@ -9,7 +9,9 @@ namespace FluentRest
     using System.Threading.Tasks;
     using Core;
     using Core.Results.CreatedEntityResult;
+    using Core.Storage;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
 
     public static partial class Integration
     {
@@ -19,8 +21,9 @@ namespace FluentRest
             Func<TLookup, object> routeValuesGenerator)
             where TInput : class
         {
+            var storage = pipe.GetService<IScopedStorage<TLookup>>();
             var createdEntityResultPipe = new CreatedEntityResultPipe<TInput>(
-                (IPipe p) => routeValuesGenerator(ItemProviderExtensions.GetItem<TLookup>((IItemProvider)pipe)),
+                (IPipe p) => routeValuesGenerator(storage.Value),
                 routeName,
                 pipe);
             return ((IPipe)createdEntityResultPipe).Execute();

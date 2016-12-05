@@ -8,6 +8,7 @@ namespace FluentRest.EntityFrameworkCore.Test.Sources.SelectableEntity
     using System.Threading.Tasks;
     using Common;
     using Core;
+    using Core.Storage;
     using EntityFrameworkCore.Sources.SelectableEntity;
     using Mocks;
     using Xunit;
@@ -56,6 +57,7 @@ namespace FluentRest.EntityFrameworkCore.Test.Sources.SelectableEntity
             return new SelectableEntitySource<Entity>(
                 e => e.Id == this.entity.Id,
                 this.ResolveScoped<IQueryableFactory<Entity>>().Queryable,
+                new ScopedStorage<Entity>(),
                 this.ServiceProvider);
         }
     }

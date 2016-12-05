@@ -21,8 +21,6 @@ namespace FluentRest.Core.Common
         object IServiceProvider.GetService(Type serviceType) =>
             this.parent.GetService(serviceType);
 
-        object IItemProvider.GetItem(Type itemType) => this.parent.GetItem(itemType);
-
         Task<IActionResult> IInputPipe<TInput>.Execute(TInput input)
         {
             throw new NotImplementedException();

@@ -14,6 +14,7 @@ namespace FluentRest.Core
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Pipes.ClaimValidation;
     using Pipes.Transformation;
+    using Storage;
     using Transformers;
 
     public class FluentRestBuilder : IFluentRestBuilder
@@ -45,6 +46,7 @@ namespace FluentRest.Core
 
         private static void RegisterUtilities(IServiceCollection collection)
         {
+            collection.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
             collection.TryAddScoped(
                 s => s.GetRequiredService<IHttpContextAccessor>().HttpContext.Request.Query);
             collection.TryAddTransient(typeof(LazyResolver<>));

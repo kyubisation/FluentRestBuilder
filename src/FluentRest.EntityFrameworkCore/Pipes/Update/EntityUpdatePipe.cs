@@ -4,34 +4,31 @@
 
 namespace FluentRest.EntityFrameworkCore.Pipes.Update
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Core;
     using Core.Pipes.Common;
+    using Core.Storage;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 
-    public class EntityUpdatePipe<TInput> : InputOutputPipe<TInput>, IItemProvider
+    public class EntityUpdatePipe<TInput> : InputOutputPipe<TInput>
         where TInput : class
     {
         private readonly DbContext context;
-        private readonly IOutputPipe<TInput> parent;
-        private TInput storedEntity;
+        private readonly IScopedStorage<TInput> storage;
 
         public EntityUpdatePipe(
             DbContext context,
+            IScopedStorage<TInput> storage,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
             this.context = context;
-            this.parent = parent;
+            this.storage = storage;
         }
-
-        object IItemProvider.GetItem(Type itemType) =>
-            itemType == typeof(TInput) ? this.storedEntity : this.parent.GetItem(itemType);
 
         protected override async Task<IActionResult> ExecuteAsync(TInput entity)
         {
@@ -47,7 +44,7 @@ namespace FluentRest.EntityFrameworkCore.Pipes.Update
             var queryable = this.GetService<IQueryable<TInput>>();
             if (queryable != null)
             {
-                this.storedEntity = await queryable.SingleAsync();
+                this.storage.Value = await queryable.SingleAsync();
             }
 
             return null;

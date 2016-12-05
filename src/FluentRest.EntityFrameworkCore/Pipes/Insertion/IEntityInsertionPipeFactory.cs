@@ -2,9 +2,9 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Pipes.Insertion
+namespace FluentRest.EntityFrameworkCore.Pipes.Insertion
 {
-    using EntityFrameworkCore.Pipes.Insertion;
+    using Core;
 
     public interface IEntityInsertionPipeFactory<TInput>
         where TInput : class

@@ -6,7 +6,6 @@
 namespace FluentRest
 {
     using Core;
-    using Core.Pipes.Update;
     using EntityFrameworkCore.Pipes.Update;
     using Microsoft.Extensions.DependencyInjection;
 

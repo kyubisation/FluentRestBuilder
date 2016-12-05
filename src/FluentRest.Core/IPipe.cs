@@ -8,7 +8,7 @@ namespace FluentRest.Core
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
-    public interface IPipe : IServiceProvider, IItemProvider
+    public interface IPipe : IServiceProvider
     {
         Task<IActionResult> Execute();
     }

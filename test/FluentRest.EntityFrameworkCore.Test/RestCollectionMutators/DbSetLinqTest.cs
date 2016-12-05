@@ -2,11 +2,11 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Test.RestCollectionMutators
+namespace FluentRest.EntityFrameworkCore.Test.RestCollectionMutators
 {
     using System;
     using System.Linq;
-    using EntityFrameworkCore.Test.Mocks;
+    using Mocks;
     using Xunit;
 
     public class DbSetLinqTest : IDisposable
