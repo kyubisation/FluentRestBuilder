@@ -7,7 +7,7 @@ namespace FluentRest
 {
     using System.Threading.Tasks;
     using Core;
-    using Core.Results.OkResult;
+    using Core.Results.Ok;
     using Microsoft.AspNetCore.Mvc;
 
     public static partial class Integration

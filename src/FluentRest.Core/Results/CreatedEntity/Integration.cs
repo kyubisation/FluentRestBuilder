@@ -8,7 +8,7 @@ namespace FluentRest
     using System;
     using System.Threading.Tasks;
     using Core;
-    using Core.Results.CreatedEntityResult;
+    using Core.Results.CreatedEntity;
     using Core.Storage;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;

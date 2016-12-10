@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Results.AcceptedResult
+namespace FluentRest.Core.Results.Accepted
 {
     using Common;
     using Microsoft.AspNetCore.Http;

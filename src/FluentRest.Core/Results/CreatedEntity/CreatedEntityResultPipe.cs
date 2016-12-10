@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Results.CreatedEntityResult
+namespace FluentRest.Core.Results.CreatedEntity
 {
     using System;
     using Common;
