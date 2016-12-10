@@ -9,17 +9,18 @@ namespace FluentRest
     using System.Threading.Tasks;
     using Core;
     using Core.Pipes.Actions;
+    using Microsoft.Extensions.DependencyInjection;
 
     public static partial class Integration
     {
         public static ActionPipe<TInput> Do<TInput>(
             this IOutputPipe<TInput> pipe, Action<TInput> action)
             where TInput : class =>
-            new ActionPipe<TInput>(action, pipe);
+            pipe.GetService<IActionPipeFactory<TInput>>().Resolve(action, pipe);
 
         public static ActionPipe<TInput> Do<TInput>(
             this IOutputPipe<TInput> pipe, Func<TInput, Task> action)
             where TInput : class =>
-            new ActionPipe<TInput>(action, pipe);
+            pipe.GetService<IActionPipeFactory<TInput>>().Resolve(action, pipe);
     }
 }

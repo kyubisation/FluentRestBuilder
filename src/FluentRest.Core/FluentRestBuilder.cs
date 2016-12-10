@@ -12,8 +12,13 @@ namespace FluentRest.Core
     using Microsoft.AspNetCore.Mvc.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Pipes.Actions;
     using Pipes.ClaimValidation;
+    using Pipes.EntityValidation;
     using Pipes.Transformation;
+    using Pipes.Validation;
+    using Sources.LazySource;
+    using Sources.Source;
     using Storage;
     using Transformers;
 
@@ -32,9 +37,19 @@ namespace FluentRest.Core
         private static void RegisterPipeFactories(IServiceCollection collection)
         {
             collection.TryAddScoped(
+                typeof(ISourcePipeFactory<>), typeof(SourcePipeFactory<>));
+            collection.TryAddScoped(
+                typeof(ILazySourcePipeFactory<>), typeof(LazySourcePipeFactory<>));
+            collection.TryAddScoped(
+                typeof(IActionPipeFactory<>), typeof(ActionPipeFactory<>));
+            collection.TryAddScoped(
                 typeof(IClaimValidationPipeFactory<>), typeof(ClaimValidationPipeFactory<>));
             collection.TryAddScoped(
+                typeof(IEntityValidationPipeFactory<>), typeof(EntityValidationPipeFactory<>));
+            collection.TryAddScoped(
                 typeof(ITransformationPipeFactory<,>), typeof(TransformationPipeFactory<,>));
+            collection.TryAddScoped(
+                typeof(IValidationPipeFactory<>), typeof(ValidationPipeFactory<>));
         }
 
         private static void RegisterTransformations(IServiceCollection collection)

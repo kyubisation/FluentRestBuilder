@@ -10,6 +10,7 @@ namespace FluentRest
     using Core;
     using Core.Pipes.EntityValidation;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.DependencyInjection;
 
     public static partial class Integration
     {
@@ -19,7 +20,8 @@ namespace FluentRest
             int statusCode,
             object error = null)
             where TEntity : class =>
-            new EntityValidationPipe<TEntity>(invalidCheck, statusCode, error, pipe);
+            pipe.GetService<IEntityValidationPipeFactory<TEntity>>()
+                .Resolve(invalidCheck, statusCode, error, pipe);
 
         public static EntityValidationPipe<TEntity> InvalidWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,
@@ -27,7 +29,8 @@ namespace FluentRest
             int statusCode,
             object error = null)
             where TEntity : class =>
-            new EntityValidationPipe<TEntity>(invalidCheck, statusCode, error, pipe);
+            pipe.GetService<IEntityValidationPipeFactory<TEntity>>()
+                .Resolve(invalidCheck, statusCode, error, pipe);
 
         public static EntityValidationPipe<TEntity> ForbiddenWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,

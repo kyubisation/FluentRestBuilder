@@ -10,6 +10,7 @@ namespace FluentRest
     using Core;
     using Core.Pipes.Validation;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.DependencyInjection;
 
     public static partial class Integration
     {
@@ -19,7 +20,8 @@ namespace FluentRest
             int statusCode,
             object error = null)
             where TInput : class =>
-            new ValidationPipe<TInput>(invalidCheck, statusCode, error, pipe);
+            pipe.GetService<IValidationPipeFactory<TInput>>()
+                .Resolve(invalidCheck, statusCode, error, pipe);
 
         public static ValidationPipe<TInput> InvalidWhen<TInput>(
             this IOutputPipe<TInput> pipe,
@@ -27,48 +29,49 @@ namespace FluentRest
             int statusCode,
             object error = null)
             where TInput : class =>
-            new ValidationPipe<TInput>(invalidCheck, statusCode, error, pipe);
+            pipe.GetService<IValidationPipeFactory<TInput>>()
+                .Resolve(invalidCheck, statusCode, error, pipe);
 
         public static ValidationPipe<TInput> ForbiddenWhen<TInput>(
             this IOutputPipe<TInput> pipe,
             Func<bool> invalidCheck,
             object error = null)
             where TInput : class =>
-            InvalidWhen<TInput>(pipe, invalidCheck, StatusCodes.Status403Forbidden, error);
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status403Forbidden, error);
 
         public static ValidationPipe<TInput> ForbiddenWhen<TInput>(
             this IOutputPipe<TInput> pipe,
             Func<Task<bool>> invalidCheck,
             object error = null)
             where TInput : class =>
-            InvalidWhen<TInput>(pipe, invalidCheck, StatusCodes.Status403Forbidden, error);
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status403Forbidden, error);
 
         public static ValidationPipe<TInput> BadRequestWhen<TInput>(
             this IOutputPipe<TInput> pipe,
             Func<bool> invalidCheck,
             object error = null)
             where TInput : class =>
-            InvalidWhen<TInput>(pipe, invalidCheck, StatusCodes.Status400BadRequest, error);
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status400BadRequest, error);
 
         public static ValidationPipe<TInput> BadRequestWhen<TInput>(
             this IOutputPipe<TInput> pipe,
             Func<Task<bool>> invalidCheck,
             object error = null)
             where TInput : class =>
-            InvalidWhen<TInput>(pipe, invalidCheck, StatusCodes.Status400BadRequest, error);
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status400BadRequest, error);
 
         public static ValidationPipe<TInput> NotFoundWhen<TInput>(
             this IOutputPipe<TInput> pipe,
             Func<bool> invalidCheck,
             object error = null)
             where TInput : class =>
-            InvalidWhen<TInput>(pipe, invalidCheck, StatusCodes.Status404NotFound, error);
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status404NotFound, error);
 
         public static ValidationPipe<TInput> NotFoundWhen<TInput>(
             this IOutputPipe<TInput> pipe,
             Func<Task<bool>> invalidCheck,
             object error = null)
             where TInput : class =>
-            InvalidWhen<TInput>(pipe, invalidCheck, StatusCodes.Status404NotFound, error);
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status404NotFound, error);
     }
 }
