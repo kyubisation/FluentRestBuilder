@@ -15,7 +15,7 @@ namespace FluentRest.Core.Results.CreatedEntityResult
         private readonly Func<TInput, object> routeValuesGenerator;
 
         public CreatedEntityResultPipe(
-            Func<IPipe, object> routeValuesGenerator,
+            Func<IServiceProvider, object> routeValuesGenerator,
             string routeName,
             IOutputPipe<TInput> parent)
             : base(parent)
