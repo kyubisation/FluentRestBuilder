@@ -16,8 +16,8 @@ namespace FluentRest
             this IOutputPipe<TInput> pipe)
             where TInput : class
         {
-            var resultPipe = new NoContentResultPipe<TInput>(pipe);
-            return ((IPipe)resultPipe).Execute();
+            IPipe resultPipe = new NoContentResultPipe<TInput>(pipe);
+            return resultPipe.Execute();
         }
     }
 }

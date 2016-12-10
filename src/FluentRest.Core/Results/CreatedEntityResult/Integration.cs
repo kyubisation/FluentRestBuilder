@@ -22,11 +22,11 @@ namespace FluentRest
             where TInput : class
         {
             var storage = pipe.GetService<IScopedStorage<TLookup>>();
-            var createdEntityResultPipe = new CreatedEntityResultPipe<TInput>(
+            IPipe createdEntityResultPipe = new CreatedEntityResultPipe<TInput>(
                 (IPipe p) => routeValuesGenerator(storage.Value),
                 routeName,
                 pipe);
-            return ((IPipe)createdEntityResultPipe).Execute();
+            return createdEntityResultPipe.Execute();
         }
 
         public static Task<IActionResult> ToCreatedAtRouteResult<TInput>(
@@ -35,11 +35,11 @@ namespace FluentRest
             Func<TInput, object> routeValuesGenerator)
             where TInput : class
         {
-            var createdEntityResultPipe = new CreatedEntityResultPipe<TInput>(
+            IPipe createdEntityResultPipe = new CreatedEntityResultPipe<TInput>(
                 routeValuesGenerator,
                 routeName,
                 pipe);
-            return ((IPipe)createdEntityResultPipe).Execute();
+            return createdEntityResultPipe.Execute();
         }
     }
 }

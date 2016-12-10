@@ -16,8 +16,8 @@ namespace FluentRest
             this IOutputPipe<TInput> pipe)
             where TInput : class
         {
-            var resultPipe = new OkResultPipe<TInput>(pipe);
-            return ((IPipe)resultPipe).Execute();
+            IPipe resultPipe = new OkResultPipe<TInput>(pipe);
+            return resultPipe.Execute();
         }
     }
 }
