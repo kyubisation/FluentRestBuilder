@@ -6,6 +6,7 @@ namespace FluentRest.Core
 {
     using System.Linq;
     using Common;
+    using FluentRest.Core.Results.Options;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -61,10 +62,11 @@ namespace FluentRest.Core
 
         private static void RegisterUtilities(IServiceCollection collection)
         {
+            collection.TryAddTransient(typeof(LazyResolver<>));
+            collection.TryAddScoped(typeof(IAllowedOptionsBuilder<>), typeof(AllowedOptionsBuilder<>));
             collection.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
             collection.TryAddScoped(
                 s => s.GetRequiredService<IHttpContextAccessor>().HttpContext.Request.Query);
-            collection.TryAddTransient(typeof(LazyResolver<>));
 
             collection.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             if (collection.All(d => d.ServiceType != typeof(IUrlHelper)))
