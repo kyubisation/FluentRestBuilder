@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0-*",
+  "dependencies": {
+    "NETStandard.Library": "1.6.1",
+    "Microsoft.AspNetCore.Mvc.Core": "1.1.0",
+    "Microsoft.CodeAnalysis.FxCopAnalyzers": "1.1.0",
+    "Microsoft.Extensions.DependencyInjection": "1.1.0",
+    "Newtonsoft.Json": "9.0.1",
+    "StyleCop.Analyzers": "1.0.0" 
+  },
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  },
+  "buildOptions": {
+    "xmlDoc": true,
+    "define": [],
+    "nowarn": [ "1591" ],
+    "additionalArguments": [ "/additionalfile:../../stylecop.json" ]
+  }
+}

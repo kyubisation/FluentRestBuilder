@@ -6,7 +6,6 @@ namespace FluentRest.Core
 {
     using System.Linq;
     using Common;
-    using FluentRest.Core.Results.Options;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -18,6 +17,7 @@ namespace FluentRest.Core
     using Pipes.EntityValidation;
     using Pipes.Transformation;
     using Pipes.Validation;
+    using Results.Options;
     using Sources.LazySource;
     using Sources.Source;
     using Storage;

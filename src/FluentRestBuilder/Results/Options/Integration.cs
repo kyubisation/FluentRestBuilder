@@ -9,7 +9,7 @@ namespace FluentRest
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Core;
-    using FluentRest.Core.Results.Options;
+    using Core.Results.Options;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;

@@ -8,7 +8,7 @@ namespace FluentRest.Core.Results.Options
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using FluentRest.Core.Results.Common;
+    using Common;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Primitives;
