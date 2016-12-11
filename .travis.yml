@@ -1,4 +1,6 @@
 language: csharp
+sudo: required
+dist: trusty
 solution: FluentRestBuilder.sln
 mono: none
 dotnet: 1.0.0-preview2-003131
