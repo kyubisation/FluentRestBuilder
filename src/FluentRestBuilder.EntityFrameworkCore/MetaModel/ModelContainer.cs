@@ -4,6 +4,7 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.MetaModel
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.Immutable;
     using Microsoft.EntityFrameworkCore;
@@ -12,11 +13,11 @@ namespace FluentRestBuilder.EntityFrameworkCore.MetaModel
 
     public class ModelContainer<TEntity> : IModelContainer<TEntity>
     {
-        public ModelContainer(IServiceScopeFactory factory)
+        public ModelContainer(DbContextOptions contextOptions, IServiceProvider serviceProvider)
         {
-            using (var scope = factory.CreateScope())
+            using (var scope = serviceProvider.CreateScope())
             {
-                var context = scope.ServiceProvider.GetService<DbContext>();
+                var context = (DbContext)scope.ServiceProvider.GetService(contextOptions.ContextType);
                 this.EntityType = context.Model.FindEntityType(typeof(TEntity));
                 this.PrimaryKey = this.EntityType.FindPrimaryKey();
                 this.Properties = this.EntityType.GetProperties().ToImmutableList();

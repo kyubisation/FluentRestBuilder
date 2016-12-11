@@ -42,7 +42,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test
         {
             services.AddScoped(s => new MockDbContext(this.options))
                 .AddScoped<DbContext>(s => s.GetRequiredService<MockDbContext>())
-                .AddScoped<IQueryableFactory, QueryableFactory>()
+                .AddScoped<IQueryableFactory, ContextQueryableFactory<MockDbContext>>()
                 .AddScoped(typeof(IQueryableFactory<>), typeof(QueryableFactory<>))
                 .AddSingleton(typeof(IModelContainer<>), typeof(ModelContainer<>))
                 .AddSingleton(typeof(ExpressionFactory<>));
