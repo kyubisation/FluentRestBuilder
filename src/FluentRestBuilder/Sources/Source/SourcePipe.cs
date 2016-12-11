@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Sources.Source
+namespace FluentRestBuilder.Sources.Source
 {
     using System;
     using System.Threading.Tasks;

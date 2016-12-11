@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.RestCollectionMutators.Filter
+namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Filter
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -13,7 +13,6 @@ namespace FluentRest.EntityFrameworkCore.Test.RestCollectionMutators.Filter
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Primitives;
     using Mocks;
-    using Test;
     using Xunit;
 
     public class RestCollectionFilterTest : ScopedDbContextTestBase

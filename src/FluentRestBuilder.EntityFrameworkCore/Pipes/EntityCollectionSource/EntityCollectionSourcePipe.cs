@@ -2,16 +2,15 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Pipes.EntityCollectionSource
+namespace FluentRestBuilder.EntityFrameworkCore.Pipes.EntityCollectionSource
 {
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Core;
-    using Core.Common;
-    using Core.Storage;
+    using FluentRestBuilder.Common;
     using Microsoft.AspNetCore.Mvc;
     using Sources.EntityCollection;
+    using Storage;
 
     public class EntityCollectionSourcePipe<TInput, TOutput> :
         EntityCollectionSource<TOutput>,

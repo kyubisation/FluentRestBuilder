@@ -2,15 +2,15 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.Sources.EntityCollection
+namespace FluentRestBuilder.EntityFrameworkCore.Test.Sources.EntityCollection
 {
     using System.Linq;
     using System.Threading.Tasks;
     using Common;
-    using Core.Common;
-    using Core.Storage;
     using EntityFrameworkCore.Sources.EntityCollection;
+    using FluentRestBuilder.Common;
     using Mocks;
+    using Storage;
     using Xunit;
 
     public class EntityCollectionSourceTest : ScopedDbContextTestBase

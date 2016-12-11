@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.MetaModel
+namespace FluentRestBuilder.EntityFrameworkCore.MetaModel
 {
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore.Metadata;

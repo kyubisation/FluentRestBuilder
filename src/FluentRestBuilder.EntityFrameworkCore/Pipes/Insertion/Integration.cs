@@ -3,9 +3,8 @@
 // </copyright>
 
 // ReSharper disable once CheckNamespace
-namespace FluentRest
+namespace FluentRestBuilder
 {
-    using Core;
     using EntityFrameworkCore.Pipes.Insertion;
     using Microsoft.Extensions.DependencyInjection;
 

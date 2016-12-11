@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.MetaModel.OrderBy
+namespace FluentRestBuilder.EntityFrameworkCore.MetaModel.OrderBy
 {
     using System;
     using System.Linq.Expressions;

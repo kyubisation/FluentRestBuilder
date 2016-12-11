@@ -2,12 +2,12 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Sources.EntityCollection
+namespace FluentRestBuilder.EntityFrameworkCore.Sources.EntityCollection
 {
     using System;
-    using Core.Common;
-    using Core.Storage;
     using EntityFrameworkCore.Common;
+    using FluentRestBuilder.Common;
+    using Storage;
 
     public class EntityCollectionSourceFactory<TEntity> : IEntityCollectionSourceFactory<TEntity>
         where TEntity : class

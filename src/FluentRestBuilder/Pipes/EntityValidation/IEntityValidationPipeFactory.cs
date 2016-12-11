@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Pipes.EntityValidation
+namespace FluentRestBuilder.Pipes.EntityValidation
 {
     using System;
     using System.Threading.Tasks;

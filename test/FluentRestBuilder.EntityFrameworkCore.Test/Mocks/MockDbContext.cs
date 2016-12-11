@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.Mocks
+namespace FluentRestBuilder.EntityFrameworkCore.Test.Mocks
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;

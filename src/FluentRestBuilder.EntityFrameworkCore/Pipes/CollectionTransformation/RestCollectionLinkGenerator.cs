@@ -2,17 +2,17 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Pipes.CollectionTransformation
+namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Core.Common;
-    using Core.Transformers.Hal;
+    using FluentRestBuilder.Common;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.AspNetCore.WebUtilities;
     using RestCollectionMutators;
+    using Transformers.Hal;
 
     public class RestCollectionLinkGenerator : IRestCollectionLinkGenerator
     {

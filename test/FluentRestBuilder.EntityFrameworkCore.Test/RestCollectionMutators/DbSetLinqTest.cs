@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.RestCollectionMutators
+namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators
 {
     using System;
     using System.Linq;

@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.RestCollectionMutators.OrderBy
+namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.OrderBy
 {
     using System;
     using System.Linq;

@@ -2,12 +2,12 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Test.Pipes.EntityValidation
+namespace FluentRestBuilder.Test.Pipes.EntityValidation
 {
     using System;
     using System.Diagnostics;
     using System.Threading.Tasks;
-    using Core.Pipes.EntityValidation;
+    using FluentRestBuilder.Pipes.EntityValidation;
     using Microsoft.AspNetCore.Mvc;
     using Mocks;
     using Xunit;

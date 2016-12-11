@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Pipes.Transformation
+namespace FluentRestBuilder.Pipes.Transformation
 {
     using System;
     using Transformers;

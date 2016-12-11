@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.RestCollectionMutators.Search
+namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Search
 {
     using System.Collections.Generic;
     using System.Linq;

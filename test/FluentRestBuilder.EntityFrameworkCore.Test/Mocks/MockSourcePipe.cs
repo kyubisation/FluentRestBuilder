@@ -2,11 +2,10 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.Mocks
+namespace FluentRestBuilder.EntityFrameworkCore.Test.Mocks
 {
     using System;
     using System.Threading.Tasks;
-    using Core;
     using Microsoft.AspNetCore.Mvc;
 
     public class MockSourcePipe<TEntity> : IOutputPipe<TEntity>

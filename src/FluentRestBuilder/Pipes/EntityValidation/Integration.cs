@@ -3,12 +3,12 @@
 // </copyright>
 
 // ReSharper disable once CheckNamespace
-namespace FluentRest
+namespace FluentRestBuilder
 {
     using System;
     using System.Threading.Tasks;
-    using Core;
-    using Core.Pipes.EntityValidation;
+    using FluentRestBuilder;
+    using FluentRestBuilder.Pipes.EntityValidation;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -63,8 +63,7 @@ namespace FluentRest
         public static EntityValidationPipe<TEntity> NotFoundWhenEmpty<TEntity>(
             this IOutputPipe<TEntity> pipe, object error = null)
             where TEntity : class =>
-            InvalidWhen<TEntity>(
-                pipe, e => e == null, StatusCodes.Status404NotFound, error);
+            InvalidWhen(pipe, e => e == null, StatusCodes.Status404NotFound, error);
 
         public static EntityValidationPipe<TEntity> NotFoundWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,

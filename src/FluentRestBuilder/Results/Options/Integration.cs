@@ -3,13 +3,13 @@
 // </copyright>
 
 // ReSharper disable once CheckNamespace
-namespace FluentRest
+namespace FluentRestBuilder
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Core;
-    using Core.Results.Options;
+    using FluentRestBuilder;
+    using FluentRestBuilder.Results.Options;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -35,7 +35,6 @@ namespace FluentRest
             params HttpVerb[] verbs)
             where TInput : class
         {
-            var allowedOptionsBuilder = pipe.GetService<IAllowedOptionsBuilder<TInput>>();
             var httpContextAccessor = pipe.GetService<IHttpContextAccessor>();
             IPipe resultPipe = new OptionsResultPipe<TInput>(
                 input => verbs, httpContextAccessor, pipe);

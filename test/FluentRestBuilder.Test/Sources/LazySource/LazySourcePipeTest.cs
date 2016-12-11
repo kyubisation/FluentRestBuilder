@@ -2,10 +2,10 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Test.Sources.LazySource
+namespace FluentRestBuilder.Test.Sources.LazySource
 {
     using System.Threading.Tasks;
-    using Core.Sources.LazySource;
+    using FluentRestBuilder.Sources.LazySource;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;
     using Xunit;

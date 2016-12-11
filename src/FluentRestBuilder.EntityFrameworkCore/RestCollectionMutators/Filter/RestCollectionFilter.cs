@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.RestCollectionMutators.Filter
+namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Filter
 {
     using System;
     using System.Collections.Generic;

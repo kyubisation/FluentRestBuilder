@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Test.Mocks
+namespace FluentRestBuilder.Test.Mocks
 {
     using System;
     using System.Threading.Tasks;

@@ -3,7 +3,7 @@
 // </copyright>
 
 // ReSharper disable once CheckNamespace
-namespace FluentRest
+namespace FluentRestBuilder
 {
     using System;
     using System.Collections.Generic;
@@ -41,7 +41,7 @@ namespace FluentRest
             var filterExpression = controller.HttpContext.RequestServices
                 .GetRequiredService<IExpressionFactory<TEntity>>()
                 .CreatePrimaryKeyFilterExpression(keyArguments);
-            return controller.SelectEntity<TEntity>(filterExpression);
+            return controller.SelectEntity(filterExpression);
         }
     }
 }

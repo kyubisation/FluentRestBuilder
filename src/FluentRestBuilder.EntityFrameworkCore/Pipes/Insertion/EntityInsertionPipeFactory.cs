@@ -2,11 +2,10 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Pipes.Insertion
+namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Insertion
 {
-    using Core;
-    using Core.Storage;
     using Microsoft.EntityFrameworkCore;
+    using Storage;
 
     public class EntityInsertionPipeFactory<TInput> : IEntityInsertionPipeFactory<TInput>
         where TInput : class

@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Sources.EntityCollection
+namespace FluentRestBuilder.EntityFrameworkCore.Sources.EntityCollection
 {
     public interface IEntityCollectionSourceFactory<TEntity>
         where TEntity : class

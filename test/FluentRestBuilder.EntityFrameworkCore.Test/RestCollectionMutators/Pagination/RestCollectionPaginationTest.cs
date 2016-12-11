@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.RestCollectionMutators.Pagination
+namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Pagination
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -14,7 +14,6 @@ namespace FluentRest.EntityFrameworkCore.Test.RestCollectionMutators.Pagination
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Primitives;
     using Mocks;
-    using Test;
     using Xunit;
 
     public class RestCollectionPaginationTest : ScopedDbContextTestBase

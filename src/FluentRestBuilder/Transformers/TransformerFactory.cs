@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Transformers
+namespace FluentRestBuilder.Transformers
 {
     using System;
     using Microsoft.Extensions.DependencyInjection;

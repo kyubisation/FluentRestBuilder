@@ -2,14 +2,13 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.Pipes.Insertion
+namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Insertion
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using Core.Storage;
     using EntityFrameworkCore.Pipes.Insertion;
     using Mocks;
-    using Test;
+    using Storage;
     using Xunit;
 
     public class EntityInsertionPipeTest : ScopedDbContextTestBase

@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.MetaModel.Filters
+namespace FluentRestBuilder.EntityFrameworkCore.MetaModel.Filters
 {
     using System.Linq.Expressions;
     using System.Reflection;

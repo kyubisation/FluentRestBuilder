@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Sources.Common
+namespace FluentRestBuilder.EntityFrameworkCore.Sources.Common
 {
     using System;
     using System.Linq;

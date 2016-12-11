@@ -2,15 +2,14 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.Sources.SelectableEntity
+namespace FluentRestBuilder.EntityFrameworkCore.Test.Sources.SelectableEntity
 {
     using System.Linq;
     using System.Threading.Tasks;
     using Common;
-    using Core;
-    using Core.Storage;
     using EntityFrameworkCore.Sources.SelectableEntity;
     using Mocks;
+    using Storage;
     using Xunit;
 
     public class SelectableEntitySourceTest : ScopedDbContextTestBase

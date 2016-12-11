@@ -2,10 +2,9 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.Sources.RequestEntity
+namespace FluentRestBuilder.EntityFrameworkCore.Test.Sources.RequestEntity
 {
     using System.Threading.Tasks;
-    using Core;
     using EntityFrameworkCore.Sources.RequestEntity;
     using Mocks;
     using Xunit;

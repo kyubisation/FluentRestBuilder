@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Results.Ok
+namespace FluentRestBuilder.Results.Ok
 {
     using Common;
     using Microsoft.AspNetCore.Mvc;

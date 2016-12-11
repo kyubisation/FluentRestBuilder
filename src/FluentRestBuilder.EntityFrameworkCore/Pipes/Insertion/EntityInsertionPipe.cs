@@ -2,15 +2,14 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Pipes.Insertion
+namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Insertion
 {
     using System.Threading.Tasks;
-    using Core;
-    using Core.Pipes.Common;
-    using Core.Storage;
+    using FluentRestBuilder.Pipes.Common;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Storage;
 
     public class EntityInsertionPipe<TInput> : InputOutputPipe<TInput>
         where TInput : class

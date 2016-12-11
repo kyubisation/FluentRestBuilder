@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test
+namespace FluentRestBuilder.EntityFrameworkCore.Test
 {
     using Common;
     using EntityFrameworkCore.MetaModel;

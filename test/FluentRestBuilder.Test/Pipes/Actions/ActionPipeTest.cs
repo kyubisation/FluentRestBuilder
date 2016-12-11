@@ -2,11 +2,11 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Test.Pipes.Actions
+namespace FluentRestBuilder.Test.Pipes.Actions
 {
     using System;
     using System.Threading.Tasks;
-    using Core.Pipes.Actions;
+    using FluentRestBuilder.Pipes.Actions;
     using Mocks;
     using Xunit;
 

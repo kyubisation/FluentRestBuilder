@@ -2,12 +2,12 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Sources.SelectableEntity
+namespace FluentRestBuilder.EntityFrameworkCore.Sources.SelectableEntity
 {
     using System;
     using System.Linq.Expressions;
-    using Core.Storage;
     using EntityFrameworkCore.Common;
+    using Storage;
 
     public class SelectableEntitySourceFactory<TEntity> : ISelectableEntitySourceFactory<TEntity>
         where TEntity : class

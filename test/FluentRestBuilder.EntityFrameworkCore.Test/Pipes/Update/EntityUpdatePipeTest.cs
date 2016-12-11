@@ -2,14 +2,14 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.Pipes.Update
+namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Update
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using Core.Storage;
     using EntityFrameworkCore.Pipes.Update;
     using Microsoft.EntityFrameworkCore;
     using Mocks;
+    using Storage;
     using Xunit;
 
     public class EntityUpdatePipeTest : ScopedDbContextTestBase

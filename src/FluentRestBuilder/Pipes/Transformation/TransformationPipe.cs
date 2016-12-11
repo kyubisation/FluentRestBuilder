@@ -2,11 +2,11 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Pipes.Transformation
+namespace FluentRestBuilder.Pipes.Transformation
 {
     using System;
     using System.Threading.Tasks;
-    using Core.Common;
+    using FluentRestBuilder.Common;
     using Microsoft.AspNetCore.Mvc;
 
     public class TransformationPipe<TInput, TOutput> :

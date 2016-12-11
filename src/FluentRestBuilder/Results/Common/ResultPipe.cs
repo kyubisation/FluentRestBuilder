@@ -2,11 +2,11 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Results.Common
+namespace FluentRestBuilder.Results.Common
 {
     using System;
     using System.Threading.Tasks;
-    using Core.Common;
+    using FluentRestBuilder.Common;
     using Microsoft.AspNetCore.Mvc;
 
     public abstract class ResultPipe<TInput> : InputPipe<TInput>, IInputPipe<TInput>

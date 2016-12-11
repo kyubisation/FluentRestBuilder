@@ -3,11 +3,10 @@
 // </copyright>
 
 // ReSharper disable once CheckNamespace
-namespace FluentRest
+namespace FluentRestBuilder
 {
     using System;
     using System.Linq;
-    using Core;
     using EntityFrameworkCore.Common;
     using EntityFrameworkCore.Pipes.EntityCollectionSource;
     using Microsoft.Extensions.DependencyInjection;

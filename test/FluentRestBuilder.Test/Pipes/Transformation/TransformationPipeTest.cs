@@ -2,10 +2,10 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Test.Pipes.Transformation
+namespace FluentRestBuilder.Test.Pipes.Transformation
 {
     using System.Threading.Tasks;
-    using Core.Pipes.Transformation;
+    using FluentRestBuilder.Pipes.Transformation;
     using Mocks;
     using Xunit;
 

@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Sources.LazySource
+namespace FluentRestBuilder.Sources.LazySource
 {
     using System;
     using System.Threading.Tasks;

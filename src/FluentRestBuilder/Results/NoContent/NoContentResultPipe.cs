@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Results.NoContent
+namespace FluentRestBuilder.Results.NoContent
 {
     using Common;
     using Microsoft.AspNetCore.Mvc;

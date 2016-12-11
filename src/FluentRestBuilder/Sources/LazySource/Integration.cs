@@ -3,11 +3,11 @@
 // </copyright>
 
 // ReSharper disable once CheckNamespace
-namespace FluentRest
+namespace FluentRestBuilder
 {
     using System;
     using System.Threading.Tasks;
-    using Core.Sources.LazySource;
+    using FluentRestBuilder.Sources.LazySource;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
 

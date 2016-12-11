@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Common
+namespace FluentRestBuilder.Common
 {
     using System;
     using System.Threading.Tasks;

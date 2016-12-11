@@ -2,11 +2,11 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Test.Pipes.ClaimValidation
+namespace FluentRestBuilder.Test.Pipes.ClaimValidation
 {
     using System.Security.Principal;
     using System.Threading.Tasks;
-    using Core.Pipes.ClaimValidation;
+    using FluentRestBuilder.Pipes.ClaimValidation;
     using Mocks;
     using Xunit;
 

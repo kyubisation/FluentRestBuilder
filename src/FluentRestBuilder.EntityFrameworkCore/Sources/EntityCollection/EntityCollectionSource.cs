@@ -2,16 +2,14 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Sources.EntityCollection
+namespace FluentRestBuilder.EntityFrameworkCore.Sources.EntityCollection
 {
     using System;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Common;
-    using Core;
-    using Core.Common;
-    using Core.Storage;
+    using FluentRestBuilder.Common;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using RestCollectionMutators.Common;
@@ -19,6 +17,7 @@ namespace FluentRest.EntityFrameworkCore.Sources.EntityCollection
     using RestCollectionMutators.OrderBy;
     using RestCollectionMutators.Pagination;
     using RestCollectionMutators.Search;
+    using Storage;
 
     public class EntityCollectionSource<TEntity> :
         EntitySource<TEntity, EntityCollectionSource<TEntity>>,

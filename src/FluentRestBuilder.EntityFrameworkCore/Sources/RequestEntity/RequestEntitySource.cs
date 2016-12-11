@@ -2,11 +2,10 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Sources.RequestEntity
+namespace FluentRestBuilder.EntityFrameworkCore.Sources.RequestEntity
 {
     using System;
     using System.Threading.Tasks;
-    using Core;
     using Microsoft.AspNetCore.Mvc;
 
     public class RequestEntitySource<TEntity> : IOutputPipe<TEntity>

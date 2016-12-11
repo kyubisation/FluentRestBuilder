@@ -1,12 +1,14 @@
-﻿// <copyright file="StartupIntegrationExtensions.cs" company="Kyubisation">
+﻿// <copyright file="Integration.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core
+// ReSharper disable once CheckNamespace
+namespace FluentRestBuilder
 {
+    using Builder;
     using Microsoft.Extensions.DependencyInjection;
 
-    public static class StartupIntegrationExtensions
+    public static partial class Integration
     {
         public static IFluentRestBuilder AddFluentRest(this IMvcBuilder builder) =>
             builder.Services.AddFluentRest();

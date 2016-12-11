@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Transformers
+namespace FluentRestBuilder.Transformers
 {
     public interface ITransformer<in TInput, out TOutput>
     {

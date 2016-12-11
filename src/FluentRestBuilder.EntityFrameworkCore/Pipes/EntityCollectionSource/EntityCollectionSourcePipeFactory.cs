@@ -2,14 +2,13 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Pipes.EntityCollectionSource
+namespace FluentRestBuilder.EntityFrameworkCore.Pipes.EntityCollectionSource
 {
     using System;
     using System.Linq;
     using Common;
-    using Core;
-    using Core.Common;
-    using Core.Storage;
+    using FluentRestBuilder.Common;
+    using Storage;
 
     public class EntityCollectionSourcePipeFactory<TInput, TOutput> :
         IEntityCollectionSourcePipeFactory<TInput, TOutput>

@@ -2,19 +2,18 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Sources.SelectableEntity
+namespace FluentRestBuilder.EntityFrameworkCore.Sources.SelectableEntity
 {
     using System;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Common;
-    using Core;
-    using Core.Storage;
     using EntityFrameworkCore.Common;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Storage;
 
     public class SelectableEntitySource<TEntity> :
         EntitySource<TEntity, SelectableEntitySource<TEntity>>,

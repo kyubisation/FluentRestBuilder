@@ -3,12 +3,12 @@
  // </copyright>
 
 // ReSharper disable once CheckNamespace
-namespace FluentRest
+namespace FluentRestBuilder
 {
     using System;
     using System.Threading.Tasks;
-    using Core;
-    using Core.Pipes.Actions;
+    using FluentRestBuilder;
+    using FluentRestBuilder.Pipes.Actions;
     using Microsoft.Extensions.DependencyInjection;
 
     public static partial class Integration

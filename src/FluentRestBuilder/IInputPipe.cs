@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core
+namespace FluentRestBuilder
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;

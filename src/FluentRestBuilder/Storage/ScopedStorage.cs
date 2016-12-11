@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Storage
+namespace FluentRestBuilder.Storage
 {
     public class ScopedStorage<TValue> : IScopedStorage<TValue>
     {

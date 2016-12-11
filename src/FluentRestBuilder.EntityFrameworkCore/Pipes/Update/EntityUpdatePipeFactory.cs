@@ -2,11 +2,10 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Pipes.Update
+namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
 {
-    using Core;
-    using Core.Storage;
     using Microsoft.EntityFrameworkCore;
+    using Storage;
 
     public class EntityUpdatePipeFactory<TInput> : IEntityUpdatePipeFactory<TInput>
         where TInput : class

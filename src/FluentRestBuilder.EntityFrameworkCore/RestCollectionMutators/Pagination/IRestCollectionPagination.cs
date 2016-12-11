@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.RestCollectionMutators.Pagination
+namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Pagination
 {
     using Common;
 

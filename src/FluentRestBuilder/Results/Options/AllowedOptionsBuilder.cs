@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Results.Options
+namespace FluentRestBuilder.Results.Options
 {
     using System;
     using System.Collections.Generic;

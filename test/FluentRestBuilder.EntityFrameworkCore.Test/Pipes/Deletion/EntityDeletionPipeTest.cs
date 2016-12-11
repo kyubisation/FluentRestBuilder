@@ -2,13 +2,12 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.Pipes.Deletion
+namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Deletion
 {
     using System.Linq;
     using System.Threading.Tasks;
     using EntityFrameworkCore.Pipes.Deletion;
     using Mocks;
-    using Test;
     using Xunit;
 
     public class EntityDeletionPipeTest : ScopedDbContextTestBase

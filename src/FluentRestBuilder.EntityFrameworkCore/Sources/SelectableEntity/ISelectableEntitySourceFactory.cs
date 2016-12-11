@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Sources.SelectableEntity
+namespace FluentRestBuilder.EntityFrameworkCore.Sources.SelectableEntity
 {
     using System;
     using System.Linq.Expressions;

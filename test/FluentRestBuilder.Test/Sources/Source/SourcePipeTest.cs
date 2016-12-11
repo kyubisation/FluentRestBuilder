@@ -2,10 +2,10 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Test.Sources.Source
+namespace FluentRestBuilder.Test.Sources.Source
 {
     using System.Threading.Tasks;
-    using Core.Sources.Source;
+    using FluentRestBuilder.Sources.Source;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;
     using Xunit;

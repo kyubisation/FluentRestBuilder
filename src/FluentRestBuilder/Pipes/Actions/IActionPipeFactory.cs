@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Pipes.Actions
+namespace FluentRestBuilder.Pipes.Actions
 {
     using System;
     using System.Threading.Tasks;

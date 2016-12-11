@@ -2,18 +2,17 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Test.Results.Options
+namespace FluentRestBuilder.Test.Results.Options
 {
     using System.Linq;
-    using FluentRest;
-    using FluentRest.Core.Results.Options;
-    using FluentRest.Core.Test.Mocks;
+    using FluentRestBuilder.Results.Options;
     using Microsoft.AspNetCore.Http;
+    using Mocks;
     using Xunit;
 
     public class AllowedOptionsBuilderTest
     {
-        private AllowedOptionsBuilder<Entity> builder;
+        private readonly AllowedOptionsBuilder<Entity> builder;
 
         public AllowedOptionsBuilderTest()
         {
@@ -62,8 +61,7 @@ namespace FluentRest.Core.Test.Results.Options
             var result = this.builder
                 .IsAllowed(new[] { HttpVerb.Get, HttpVerb.Delete }, (p, e) => false)
                 .IsAllowed(new[] { HttpVerb.Get, HttpVerb.Post }, (p, e) => true)
-                .GenerateAllowedVerbs(new Entity())
-                .ToList();
+                .GenerateAllowedVerbs(new Entity()).ToList();
             Assert.Equal(2, result.Count);
             Assert.Contains(HttpVerb.Get, result);
             Assert.Contains(HttpVerb.Post, result);

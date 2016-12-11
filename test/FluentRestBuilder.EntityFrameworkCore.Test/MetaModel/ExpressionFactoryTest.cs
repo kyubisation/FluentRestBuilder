@@ -2,14 +2,13 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.MetaModel
+namespace FluentRestBuilder.EntityFrameworkCore.Test.MetaModel
 {
     using System.Linq;
     using System.Threading.Tasks;
     using EntityFrameworkCore.MetaModel;
     using Microsoft.EntityFrameworkCore;
     using Mocks;
-    using Test;
     using Xunit;
 
     public class ExpressionFactoryTest : ScopedDbContextTestBase

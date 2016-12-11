@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Pipes.Validation
+namespace FluentRestBuilder.Pipes.Validation
 {
     using System;
     using System.Threading.Tasks;

@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.Core.Pipes.ClaimValidation
+namespace FluentRestBuilder.Pipes.ClaimValidation
 {
     using System;
     using System.Security.Claims;

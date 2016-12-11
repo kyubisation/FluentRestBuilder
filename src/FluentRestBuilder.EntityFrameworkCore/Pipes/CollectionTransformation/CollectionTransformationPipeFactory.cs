@@ -2,14 +2,13 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Pipes.CollectionTransformation
+namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
 {
     using System;
     using System.Linq;
-    using Core;
-    using Core.Common;
-    using Core.Storage;
-    using Core.Transformers;
+    using FluentRestBuilder.Common;
+    using Storage;
+    using Transformers;
 
     public class CollectionTransformationPipeFactory<TInput, TOutput> :
         ICollectionTransformationPipeFactory<TInput, TOutput>

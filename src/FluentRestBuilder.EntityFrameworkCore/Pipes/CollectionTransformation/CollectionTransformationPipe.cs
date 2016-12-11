@@ -2,18 +2,17 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Pipes.CollectionTransformation
+namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Core;
-    using Core.Common;
-    using Core.Storage;
-    using Core.Transformers.Hal;
+    using FluentRestBuilder.Common;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Storage;
+    using Transformers.Hal;
 
     public class CollectionTransformationPipe<TInput, TOutput> :
         InputPipe<IQueryable<TInput>>,

@@ -2,17 +2,16 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Pipes.Update
+namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using Core;
-    using Core.Pipes.Common;
-    using Core.Storage;
+    using FluentRestBuilder.Pipes.Common;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Storage;
 
     public class EntityUpdatePipe<TInput> : InputOutputPipe<TInput>
         where TInput : class

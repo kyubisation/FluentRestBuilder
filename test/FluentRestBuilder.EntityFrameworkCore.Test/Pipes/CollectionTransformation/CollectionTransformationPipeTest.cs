@@ -2,17 +2,16 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRest.EntityFrameworkCore.Test.Pipes.CollectionTransformation
+namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.CollectionTransformation
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Core.Common;
-    using Core.Storage;
-    using Core.Transformers.Hal;
     using EntityFrameworkCore.Pipes.CollectionTransformation;
+    using FluentRestBuilder.Common;
     using Mocks;
-    using Test;
+    using Storage;
+    using Transformers.Hal;
     using Xunit;
 
     public class CollectionTransformationPipeTest : ScopedDbContextTestBase
