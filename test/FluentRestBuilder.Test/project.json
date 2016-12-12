@@ -17,11 +17,11 @@
     }
   },
   "frameworks": {
-    "netcoreapp1.1": {
+    "netcoreapp1.0": {
       "dependencies": {
         "Microsoft.NETCore.App": {
           "type": "platform",
-          "version": "1.1.0"
+          "version": "1.0.1"
         },
         "Microsoft.CodeCoverage": "1.0.2"
       },
