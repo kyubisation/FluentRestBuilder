@@ -17,6 +17,8 @@ namespace FluentRestBuilder.Common
             this.serviceProvider = serviceProvider;
         }
 
+        protected IInputPipe<TOutput> Child { get; private set; }
+
         object IServiceProvider.GetService(Type serviceType) =>
             this.serviceProvider.GetService(serviceType);
 
@@ -25,8 +27,6 @@ namespace FluentRestBuilder.Common
             this.Child = pipe;
             return pipe;
         }
-
-        protected IInputPipe<TOutput> Child { get; private set; }
 
         Task<IActionResult> IPipe.Execute() => this.Execute();
 
