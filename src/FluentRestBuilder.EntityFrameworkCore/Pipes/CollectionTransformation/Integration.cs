@@ -13,14 +13,14 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static CollectionTransformationPipe<TInput, TOutput> TransformCollection<TInput, TOutput>(
+        public static OutputPipe<RestEntityCollection> TransformCollection<TInput, TOutput>(
             this IOutputPipe<IQueryable<TInput>> pipe, Func<TInput, TOutput> transformation)
             where TInput : class
             where TOutput : class =>
             pipe.GetRequiredService<ICollectionTransformationPipeFactory<TInput, TOutput>>()
                 .Resolve(transformation, pipe);
 
-        public static CollectionTransformationPipe<TInput, TOutput> UseTransformerForCollection<TInput, TOutput>(
+        public static OutputPipe<RestEntityCollection> UseTransformerForCollection<TInput, TOutput>(
             this IOutputPipe<IQueryable<TInput>> pipe,
             Func<ITransformerFactory<TInput>, ITransformer<TInput, TOutput>> selection)
             where TInput : class
@@ -28,7 +28,7 @@ namespace FluentRestBuilder
             pipe.GetRequiredService<ICollectionTransformationPipeFactory<TInput, TOutput>>()
                 .ResolveTransformer(selection, pipe);
 
-        public static CollectionTransformationPipe<TInput, TOutput> BuildTransformationForCollection<TInput, TOutput>(
+        public static OutputPipe<RestEntityCollection> BuildTransformationForCollection<TInput, TOutput>(
             this IOutputPipe<IQueryable<TInput>> pipe,
             Func<ITransformationBuilder<TInput>, Func<TInput, TOutput>> builder)
             where TInput : class

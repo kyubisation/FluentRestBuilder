@@ -19,7 +19,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
             this.entityStorage = entityStorage;
         }
 
-        public EntityUpdatePipe<TInput> Resolve(IOutputPipe<TInput> parent) =>
+        public OutputPipe<TInput> Resolve(IOutputPipe<TInput> parent) =>
             new EntityUpdatePipe<TInput>(this.context, this.entityStorage, parent);
     }
 }

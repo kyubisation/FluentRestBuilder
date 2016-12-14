@@ -30,12 +30,12 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
             this.transformationBuilder = transformationBuilder;
         }
 
-        public CollectionTransformationPipe<TInput, TOutput> Resolve(
+        public OutputPipe<RestEntityCollection> Resolve(
                 Func<TInput, TOutput> transformation, IOutputPipe<IQueryable<TInput>> parent) =>
             new CollectionTransformationPipe<TInput, TOutput>(
                 transformation, this.linkGenerator, this.paginationMetaInfoStorage, parent);
 
-        public CollectionTransformationPipe<TInput, TOutput> ResolveTransformer(
+        public OutputPipe<RestEntityCollection> ResolveTransformer(
             Func<ITransformerFactory<TInput>, ITransformer<TInput, TOutput>> selection,
             IOutputPipe<IQueryable<TInput>> parent)
         {
@@ -43,7 +43,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
             return this.Resolve(transformer.Transform, parent);
         }
 
-        public CollectionTransformationPipe<TInput, TOutput> ResolveTransformationBuilder(
+        public OutputPipe<RestEntityCollection> ResolveTransformationBuilder(
             Func<ITransformationBuilder<TInput>, Func<TInput, TOutput>> builder,
             IOutputPipe<IQueryable<TInput>> parent)
         {

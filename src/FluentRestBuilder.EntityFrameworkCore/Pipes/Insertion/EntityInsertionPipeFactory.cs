@@ -19,7 +19,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Insertion
             this.entityStorage = entityStorage;
         }
 
-        public EntityInsertionPipe<TInput> Resolve(IOutputPipe<TInput> parent) =>
+        public OutputPipe<TInput> Resolve(IOutputPipe<TInput> parent) =>
             new EntityInsertionPipe<TInput>(this.context, this.entityStorage, parent);
     }
 }

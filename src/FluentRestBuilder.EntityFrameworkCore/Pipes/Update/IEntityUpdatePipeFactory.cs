@@ -7,6 +7,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
     public interface IEntityUpdatePipeFactory<TInput>
         where TInput : class
     {
-        EntityUpdatePipe<TInput> Resolve(IOutputPipe<TInput> parent);
+        OutputPipe<TInput> Resolve(IOutputPipe<TInput> parent);
     }
 }

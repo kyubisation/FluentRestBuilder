@@ -11,24 +11,31 @@ namespace FluentRestBuilder.Pipes
     public abstract class BaseMappingPipe<TInput, TOutput> : OutputPipe<TOutput>, IInputPipe<TInput>
     {
         private readonly IOutputPipe<TInput> parent;
-        private readonly Func<TInput, TOutput> mapping;
 
-        protected BaseMappingPipe(
-            Func<TInput, TOutput> mapping, IOutputPipe<TInput> parent)
+        protected BaseMappingPipe(IOutputPipe<TInput> parent)
             : base(parent)
         {
-            this.mapping = mapping;
             this.parent = parent;
             this.parent.Attach(this);
         }
 
-        async Task<IActionResult> IInputPipe<TInput>.Execute(TInput input)
+        Task<IActionResult> IInputPipe<TInput>.Execute(TInput input) => this.Execute(input);
+
+        protected virtual async Task<IActionResult> Execute(TInput input)
         {
             NoPipeAttachedException.Check(this.Child);
-            var result = this.mapping(input);
+            var result = await this.MapAsync(input);
             return await this.Child.Execute(result);
         }
 
         protected override Task<IActionResult> Execute() => this.parent.Execute();
+
+        protected virtual Task<TOutput> MapAsync(TInput input) =>
+            Task.FromResult(this.Map(input));
+
+        protected virtual TOutput Map(TInput input)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

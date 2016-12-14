@@ -7,6 +7,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Deletion
     public interface IEntityDeletionPipeFactory<TInput>
         where TInput : class
     {
-        EntityDeletionPipe<TInput> Resolve(IOutputPipe<TInput> parent);
+        OutputPipe<TInput> Resolve(IOutputPipe<TInput> parent);
     }
 }

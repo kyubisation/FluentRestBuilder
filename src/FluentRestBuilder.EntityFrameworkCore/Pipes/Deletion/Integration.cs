@@ -10,7 +10,7 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static EntityDeletionPipe<TInput> DeleteEntity<TInput>(this IOutputPipe<TInput> pipe)
+        public static OutputPipe<TInput> DeleteEntity<TInput>(this IOutputPipe<TInput> pipe)
             where TInput : class =>
             pipe.GetRequiredService<IEntityDeletionPipeFactory<TInput>>()
                 .Resolve(pipe);

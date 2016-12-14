@@ -10,7 +10,7 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static EntityUpdatePipe<TInput> UpdateEntity<TInput>(
+        public static OutputPipe<TInput> UpdateEntity<TInput>(
             this IOutputPipe<TInput> pipe)
             where TInput : class =>
             pipe.GetRequiredService<IEntityUpdatePipeFactory<TInput>>()

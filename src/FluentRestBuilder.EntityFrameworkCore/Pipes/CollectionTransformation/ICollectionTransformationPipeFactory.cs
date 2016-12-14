@@ -10,14 +10,14 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
 
     public interface ICollectionTransformationPipeFactory<TInput, TOutput>
     {
-        CollectionTransformationPipe<TInput, TOutput> Resolve(
+        OutputPipe<RestEntityCollection> Resolve(
             Func<TInput, TOutput> transformation, IOutputPipe<IQueryable<TInput>> parent);
 
-        CollectionTransformationPipe<TInput, TOutput> ResolveTransformer(
+        OutputPipe<RestEntityCollection> ResolveTransformer(
             Func<ITransformerFactory<TInput>, ITransformer<TInput, TOutput>> selection,
             IOutputPipe<IQueryable<TInput>> parent);
 
-        CollectionTransformationPipe<TInput, TOutput> ResolveTransformationBuilder(
+        OutputPipe<RestEntityCollection> ResolveTransformationBuilder(
             Func<ITransformationBuilder<TInput>, Func<TInput, TOutput>> builder,
             IOutputPipe<IQueryable<TInput>> parent);
     }

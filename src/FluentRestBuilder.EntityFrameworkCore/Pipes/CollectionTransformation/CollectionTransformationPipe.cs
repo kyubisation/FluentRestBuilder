@@ -9,20 +9,17 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
     using System.Linq;
     using System.Threading.Tasks;
     using FluentRestBuilder.Common;
-    using Microsoft.AspNetCore.Mvc;
+    using FluentRestBuilder.Pipes;
     using Microsoft.EntityFrameworkCore;
     using Storage;
     using Transformers.Hal;
 
-    public class CollectionTransformationPipe<TInput, TOutput> :
-        InputPipe<IQueryable<TInput>>,
-        IInputPipe<IQueryable<TInput>>,
-        IOutputPipe<RestEntityCollection>
+    public class CollectionTransformationPipe<TInput, TOutput>
+        : BaseMappingPipe<IQueryable<TInput>, RestEntityCollection>
     {
         private readonly IRestCollectionLinkGenerator linkGenerator;
         private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
         private readonly Func<TInput, TOutput> transformation;
-        private IInputPipe<RestEntityCollection> child;
         private RestEntityCollection restEntityCollection;
 
         public CollectionTransformationPipe(
@@ -37,27 +34,22 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
             this.paginationMetaInfoStorage = paginationMetaInfoStorage;
         }
 
-        async Task<IActionResult> IInputPipe<IQueryable<TInput>>.Execute(IQueryable<TInput> input)
+        protected override async Task<RestEntityCollection> MapAsync(IQueryable<TInput> input)
         {
-            NoPipeAttachedException.Check(this.child);
             var entities = await input.ToListAsync();
 
             this.restEntityCollection = new RestEntityCollection();
             this.GenerateEmbeddedEntities(entities);
             this.GenerateLinks();
 
-            return await this.child.Execute(this.restEntityCollection);
-        }
-
-        TPipe IOutputPipe<RestEntityCollection>.Attach<TPipe>(TPipe pipe)
-        {
-            this.child = pipe;
-            return pipe;
+            return this.restEntityCollection;
         }
 
         private void GenerateEmbeddedEntities(IEnumerable<TInput> entities)
         {
-            var transformedEntities = entities.Select(e => this.transformation(e)).ToList();
+            var transformedEntities = entities
+                .Select(e => this.transformation(e))
+                .ToList();
             this.restEntityCollection.Embedded.Add("items", transformedEntities);
         }
 

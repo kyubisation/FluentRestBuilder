@@ -7,6 +7,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Insertion
     public interface IEntityInsertionPipeFactory<TInput>
         where TInput : class
     {
-        EntityInsertionPipe<TInput> Resolve(IOutputPipe<TInput> parent);
+        OutputPipe<TInput> Resolve(IOutputPipe<TInput> parent);
     }
 }
