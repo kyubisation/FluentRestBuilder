@@ -13,12 +13,12 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static ActionPipe<TInput> Do<TInput>(
+        public static OutputPipe<TInput> Do<TInput>(
             this IOutputPipe<TInput> pipe, Action<TInput> action)
             where TInput : class =>
             pipe.GetService<IActionPipeFactory<TInput>>().Resolve(action, pipe);
 
-        public static ActionPipe<TInput> Do<TInput>(
+        public static OutputPipe<TInput> Do<TInput>(
             this IOutputPipe<TInput> pipe, Func<TInput, Task> action)
             where TInput : class =>
             pipe.GetService<IActionPipeFactory<TInput>>().Resolve(action, pipe);

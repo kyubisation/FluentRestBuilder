@@ -1,24 +1,24 @@
-﻿// <copyright file="ITransformationPipeFactory.cs" company="Kyubisation">
+﻿// <copyright file="IMappingPipeFactory.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.Transformation
+namespace FluentRestBuilder.Pipes.Mapping
 {
     using System;
     using Transformers;
 
-    public interface ITransformationPipeFactory<TInput, TOutput>
+    public interface IMappingPipeFactory<TInput, TOutput>
         where TInput : class
         where TOutput : class
     {
-        TransformationPipe<TInput, TOutput> Resolve(
+        OutputPipe<TOutput> Resolve(
             Func<TInput, TOutput> transformation, IOutputPipe<TInput> parent);
 
-        TransformationPipe<TInput, TOutput> ResolveTransformer(
+        OutputPipe<TOutput> ResolveTransformer(
             Func<ITransformerFactory<TInput>, ITransformer<TInput, TOutput>> selection,
             IOutputPipe<TInput> parent);
 
-        TransformationPipe<TInput, TOutput> ResolveTransformationBuilder(
+        OutputPipe<TOutput> ResolveTransformationBuilder(
             Func<ITransformationBuilder<TInput>, Func<TInput, TOutput>> builder,
             IOutputPipe<TInput> parent);
     }

@@ -1,22 +1,22 @@
-﻿// <copyright file="TransformationPipeFactory.cs" company="Kyubisation">
+// <copyright file="MappingPipeFactory.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.Transformation
+namespace FluentRestBuilder.Pipes.Mapping
 {
     using System;
-    using FluentRestBuilder.Common;
+    using Common;
     using Transformers;
 
-    public class TransformationPipeFactory<TInput, TOutput> :
-        ITransformationPipeFactory<TInput, TOutput>
+    public class MappingPipeFactory<TInput, TOutput> :
+        IMappingPipeFactory<TInput, TOutput>
         where TInput : class
         where TOutput : class
     {
         private readonly LazyResolver<ITransformationBuilder<TInput>> transformationBuilder;
         private readonly LazyResolver<ITransformerFactory<TInput>> transformerFactory;
 
-        public TransformationPipeFactory(
+        public MappingPipeFactory(
             LazyResolver<ITransformerFactory<TInput>> transformerFactory,
             LazyResolver<ITransformationBuilder<TInput>> transformationBuilder)
         {
@@ -24,25 +24,25 @@ namespace FluentRestBuilder.Pipes.Transformation
             this.transformationBuilder = transformationBuilder;
         }
 
-        public TransformationPipe<TInput, TOutput> Resolve(
+        public OutputPipe<TOutput> Resolve(
             Func<TInput, TOutput> transformation,
             IOutputPipe<TInput> parent) =>
-            new TransformationPipe<TInput, TOutput>(transformation, parent);
+            new MappingPipe<TInput, TOutput>(transformation, parent);
 
-        public TransformationPipe<TInput, TOutput> ResolveTransformer(
+        public OutputPipe<TOutput> ResolveTransformer(
             Func<ITransformerFactory<TInput>, ITransformer<TInput, TOutput>> selection,
             IOutputPipe<TInput> parent)
         {
             var transformer = selection(this.transformerFactory.Value);
-            return new TransformationPipe<TInput, TOutput>(transformer.Transform, parent);
+            return new MappingPipe<TInput, TOutput>(transformer.Transform, parent);
         }
 
-        public TransformationPipe<TInput, TOutput> ResolveTransformationBuilder(
+        public OutputPipe<TOutput> ResolveTransformationBuilder(
             Func<ITransformationBuilder<TInput>, Func<TInput, TOutput>> builder,
             IOutputPipe<TInput> parent)
         {
             var transformation = builder(this.transformationBuilder.Value);
-            return new TransformationPipe<TInput, TOutput>(transformation, parent);
+            return new MappingPipe<TInput, TOutput>(transformation, parent);
         }
     }
 }

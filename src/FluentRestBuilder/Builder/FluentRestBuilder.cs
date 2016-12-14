@@ -15,7 +15,7 @@ namespace FluentRestBuilder.Builder
     using Pipes.Actions;
     using Pipes.ClaimValidation;
     using Pipes.EntityValidation;
-    using Pipes.Transformation;
+    using Pipes.Mapping;
     using Pipes.Validation;
     using Results.Options;
     using Sources.LazySource;
@@ -48,7 +48,7 @@ namespace FluentRestBuilder.Builder
             collection.TryAddScoped(
                 typeof(IEntityValidationPipeFactory<>), typeof(EntityValidationPipeFactory<>));
             collection.TryAddScoped(
-                typeof(ITransformationPipeFactory<,>), typeof(TransformationPipeFactory<,>));
+                typeof(IMappingPipeFactory<,>), typeof(MappingPipeFactory<,>));
             collection.TryAddScoped(
                 typeof(IValidationPipeFactory<>), typeof(ValidationPipeFactory<>));
         }

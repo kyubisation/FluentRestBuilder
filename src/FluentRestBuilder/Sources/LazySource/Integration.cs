@@ -13,13 +13,13 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static LazySourcePipe<TOutput> FromSource<TOutput>(
+        public static OutputPipe<TOutput> FromSource<TOutput>(
             this ControllerBase controller, Func<TOutput> output) =>
             controller.HttpContext.RequestServices
                 .GetService<ILazySourcePipeFactory<TOutput>>()
                 .Resolve(output);
 
-        public static LazySourcePipe<TOutput> FromSource<TOutput>(
+        public static OutputPipe<TOutput> FromSource<TOutput>(
             this ControllerBase controller, Func<Task<TOutput>> output) =>
             controller.HttpContext.RequestServices
                 .GetService<ILazySourcePipeFactory<TOutput>>()

@@ -8,8 +8,8 @@ namespace FluentRestBuilder.Sources.Source
 
     public interface ISourcePipeFactory<TOutput>
     {
-        SourcePipe<TOutput> Resolve(Task<TOutput> output);
+        OutputPipe<TOutput> Resolve(Task<TOutput> output);
 
-        SourcePipe<TOutput> Resolve(TOutput output);
+        OutputPipe<TOutput> Resolve(TOutput output);
     }
 }

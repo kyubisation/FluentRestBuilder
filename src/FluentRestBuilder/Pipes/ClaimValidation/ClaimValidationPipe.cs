@@ -9,7 +9,7 @@ namespace FluentRestBuilder.Pipes.ClaimValidation
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
 
-    public class ClaimValidationPipe<TInput> : ValidationPipe<TInput>
+    public class ClaimValidationPipe<TInput> : BaseValidationPipe<TInput>
         where TInput : class
     {
         private readonly ClaimsPrincipal principal;

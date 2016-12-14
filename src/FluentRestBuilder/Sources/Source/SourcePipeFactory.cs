@@ -16,10 +16,10 @@ namespace FluentRestBuilder.Sources.Source
             this.serviceProvider = serviceProvider;
         }
 
-        public SourcePipe<TOutput> Resolve(Task<TOutput> output) =>
+        public OutputPipe<TOutput> Resolve(Task<TOutput> output) =>
             new SourcePipe<TOutput>(output, this.serviceProvider);
 
-        public SourcePipe<TOutput> Resolve(TOutput output) =>
+        public OutputPipe<TOutput> Resolve(TOutput output) =>
             new SourcePipe<TOutput>(output, this.serviceProvider);
     }
 }

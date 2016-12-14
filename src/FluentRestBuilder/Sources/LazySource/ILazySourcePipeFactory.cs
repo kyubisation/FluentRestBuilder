@@ -9,8 +9,8 @@ namespace FluentRestBuilder.Sources.LazySource
 
     public interface ILazySourcePipeFactory<TOutput>
     {
-        LazySourcePipe<TOutput> Resolve(Func<Task<TOutput>> output);
+        OutputPipe<TOutput> Resolve(Func<Task<TOutput>> output);
 
-        LazySourcePipe<TOutput> Resolve(Func<TOutput> output);
+        OutputPipe<TOutput> Resolve(Func<TOutput> output);
     }
 }

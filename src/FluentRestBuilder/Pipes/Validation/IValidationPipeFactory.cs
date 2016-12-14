@@ -10,13 +10,13 @@ namespace FluentRestBuilder.Pipes.Validation
     public interface IValidationPipeFactory<TInput>
         where TInput : class
     {
-        ValidationPipe<TInput> Resolve(
+        OutputPipe<TInput> Resolve(
             Func<Task<bool>> invalidCheck,
             int statusCode,
             object error,
             IOutputPipe<TInput> parent);
 
-        ValidationPipe<TInput> Resolve(
+        OutputPipe<TInput> Resolve(
             Func<bool> invalidCheck,
             int statusCode,
             object error,

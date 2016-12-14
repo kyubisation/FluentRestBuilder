@@ -18,26 +18,26 @@ namespace FluentRestBuilder.Pipes.ClaimValidation
             this.user = httpContextAccessor.HttpContext.User;
         }
 
-        public ClaimValidationPipe<TInput> Resolve(
+        public OutputPipe<TInput> Resolve(
                 Func<ClaimsPrincipal, TInput, bool> predicate,
                 object error,
                 IOutputPipe<TInput> parent) =>
             new ClaimValidationPipe<TInput>(predicate, this.user, error, parent);
 
-        public ClaimValidationPipe<TInput> Resolve(
+        public OutputPipe<TInput> Resolve(
                 Func<ClaimsPrincipal, bool> predicate,
                 object error,
                 IOutputPipe<TInput> parent) =>
             this.Resolve((p, e) => predicate(p), error, parent);
 
-        public ClaimValidationPipe<TInput> Resolve(
+        public OutputPipe<TInput> Resolve(
                 string claimType,
                 Func<TInput, string> claim,
                 object error,
                 IOutputPipe<TInput> parent) =>
             this.Resolve((p, e) => p.HasClaim(claimType, claim(e)), error, parent);
 
-        public ClaimValidationPipe<TInput> Resolve(
+        public OutputPipe<TInput> Resolve(
             string claimType,
             string claim,
             object error,

@@ -1,4 +1,4 @@
-﻿// <copyright file="ValidationPipe.cs" company="Kyubisation">
+﻿// <copyright file="BaseValidationPipe.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -8,13 +8,13 @@ namespace FluentRestBuilder.Pipes
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    public abstract class ValidationPipe<TInput> : InputOutputPipe<TInput>
+    public abstract class BaseValidationPipe<TInput> : InputOutputPipe<TInput>
         where TInput : class
     {
         private readonly object error;
         private readonly int statusCode;
 
-        protected ValidationPipe(
+        protected BaseValidationPipe(
             int statusCode,
             object error,
             IOutputPipe<TInput> parent)

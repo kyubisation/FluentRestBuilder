@@ -14,7 +14,7 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static EntityValidationPipe<TEntity> InvalidWhen<TEntity>(
+        public static OutputPipe<TEntity> InvalidWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,
             Func<TEntity, bool> invalidCheck,
             int statusCode,
@@ -23,7 +23,7 @@ namespace FluentRestBuilder
             pipe.GetService<IEntityValidationPipeFactory<TEntity>>()
                 .Resolve(invalidCheck, statusCode, error, pipe);
 
-        public static EntityValidationPipe<TEntity> InvalidWhen<TEntity>(
+        public static OutputPipe<TEntity> InvalidWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,
             Func<TEntity, Task<bool>> invalidCheck,
             int statusCode,
@@ -32,61 +32,61 @@ namespace FluentRestBuilder
             pipe.GetService<IEntityValidationPipeFactory<TEntity>>()
                 .Resolve(invalidCheck, statusCode, error, pipe);
 
-        public static EntityValidationPipe<TEntity> ForbiddenWhen<TEntity>(
+        public static OutputPipe<TEntity> ForbiddenWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,
             Func<TEntity, bool> invalidCheck,
             object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status403Forbidden, error);
 
-        public static EntityValidationPipe<TEntity> ForbiddenWhen<TEntity>(
+        public static OutputPipe<TEntity> ForbiddenWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,
             Func<TEntity, Task<bool>> invalidCheck,
             object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status403Forbidden, error);
 
-        public static EntityValidationPipe<TEntity> BadRequestWhen<TEntity>(
+        public static OutputPipe<TEntity> BadRequestWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,
             Func<TEntity, bool> invalidCheck,
             object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status400BadRequest, error);
 
-        public static EntityValidationPipe<TEntity> BadRequestWhen<TEntity>(
+        public static OutputPipe<TEntity> BadRequestWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,
             Func<TEntity, Task<bool>> invalidCheck,
             object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status400BadRequest, error);
 
-        public static EntityValidationPipe<TEntity> NotFoundWhenEmpty<TEntity>(
+        public static OutputPipe<TEntity> NotFoundWhenEmpty<TEntity>(
             this IOutputPipe<TEntity> pipe, object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, e => e == null, StatusCodes.Status404NotFound, error);
 
-        public static EntityValidationPipe<TEntity> NotFoundWhen<TEntity>(
+        public static OutputPipe<TEntity> NotFoundWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,
             Func<TEntity, bool> invalidCheck,
             object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status404NotFound, error);
 
-        public static EntityValidationPipe<TEntity> NotFoundWhen<TEntity>(
+        public static OutputPipe<TEntity> NotFoundWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,
             Func<TEntity, Task<bool>> invalidCheck,
             object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status404NotFound, error);
 
-        public static EntityValidationPipe<TEntity> GoneWhen<TEntity>(
+        public static OutputPipe<TEntity> GoneWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,
             Func<TEntity, bool> invalidCheck,
             object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status410Gone, error);
 
-        public static EntityValidationPipe<TEntity> GoneWhen<TEntity>(
+        public static OutputPipe<TEntity> GoneWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,
             Func<TEntity, Task<bool>> invalidCheck,
             object error = null)

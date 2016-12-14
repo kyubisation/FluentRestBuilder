@@ -16,10 +16,10 @@ namespace FluentRestBuilder.Sources.LazySource
             this.serviceProvider = serviceProvider;
         }
 
-        public LazySourcePipe<TOutput> Resolve(Func<Task<TOutput>> output) =>
+        public OutputPipe<TOutput> Resolve(Func<Task<TOutput>> output) =>
             new LazySourcePipe<TOutput>(output, this.serviceProvider);
 
-        public LazySourcePipe<TOutput> Resolve(Func<TOutput> output) =>
+        public OutputPipe<TOutput> Resolve(Func<TOutput> output) =>
             new LazySourcePipe<TOutput>(output, this.serviceProvider);
     }
 }

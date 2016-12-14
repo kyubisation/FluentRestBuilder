@@ -10,10 +10,10 @@ namespace FluentRestBuilder.Pipes.Actions
     public class ActionPipeFactory<TInput> : IActionPipeFactory<TInput>
         where TInput : class
     {
-        public ActionPipe<TInput> Resolve(Func<TInput, Task> action, IOutputPipe<TInput> parent) =>
+        public OutputPipe<TInput> Resolve(Func<TInput, Task> action, IOutputPipe<TInput> parent) =>
             new ActionPipe<TInput>(action, parent);
 
-        public ActionPipe<TInput> Resolve(Action<TInput> action, IOutputPipe<TInput> parent) =>
+        public OutputPipe<TInput> Resolve(Action<TInput> action, IOutputPipe<TInput> parent) =>
             new ActionPipe<TInput>(action, parent);
     }
 }

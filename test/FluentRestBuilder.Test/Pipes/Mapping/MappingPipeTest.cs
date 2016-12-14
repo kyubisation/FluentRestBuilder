@@ -1,15 +1,15 @@
-﻿// <copyright file="TransformationPipeTest.cs" company="Kyubisation">
+﻿// <copyright file="MappingPipeTest.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Pipes.Transformation
+namespace FluentRestBuilder.Test.Pipes.Mapping
 {
     using System.Threading.Tasks;
-    using FluentRestBuilder.Pipes.Transformation;
+    using FluentRestBuilder.Pipes.Mapping;
     using Mocks;
     using Xunit;
 
-    public class TransformationPipeTest : TestBaseWithServiceProvider
+    public class MappingPipeTest : TestBaseWithServiceProvider
     {
         [Fact]
         public async Task TestTransformation()
@@ -18,7 +18,7 @@ namespace FluentRestBuilder.Test.Pipes.Transformation
             var resultPipe = MockSourcePipe<Entity>.CreateCompleteChain(
                 entity,
                 this.ServiceProvider,
-                source => new TransformationPipe<Entity, string>(e => e.Name, source));
+                source => new MappingPipe<Entity, string>(e => e.Name, source));
             await resultPipe.Execute();
             Assert.Equal(entity.Name, resultPipe.Input);
         }

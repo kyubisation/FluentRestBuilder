@@ -6,34 +6,33 @@
 namespace FluentRestBuilder
 {
     using System;
-    using FluentRestBuilder;
-    using FluentRestBuilder.Pipes.Transformation;
-    using FluentRestBuilder.Transformers;
     using Microsoft.Extensions.DependencyInjection;
+    using Pipes.Mapping;
+    using Transformers;
 
     public static partial class Integration
     {
-        public static TransformationPipe<TInput, TOutput> Select<TInput, TOutput>(
+        public static OutputPipe<TOutput> Select<TInput, TOutput>(
             this IOutputPipe<TInput> pipe, Func<TInput, TOutput> transformation)
             where TInput : class
             where TOutput : class =>
-            pipe.GetRequiredService<ITransformationPipeFactory<TInput, TOutput>>()
+            pipe.GetRequiredService<IMappingPipeFactory<TInput, TOutput>>()
                 .Resolve(transformation, pipe);
 
-        public static TransformationPipe<TInput, TOutput> UseTransformer<TInput, TOutput>(
+        public static OutputPipe<TOutput> UseTransformer<TInput, TOutput>(
             this IOutputPipe<TInput> pipe,
             Func<ITransformerFactory<TInput>, ITransformer<TInput, TOutput>> selection)
             where TInput : class
             where TOutput : class =>
-            pipe.GetRequiredService<ITransformationPipeFactory<TInput, TOutput>>()
+            pipe.GetRequiredService<IMappingPipeFactory<TInput, TOutput>>()
                 .ResolveTransformer(selection, pipe);
 
-        public static TransformationPipe<TInput, TOutput> BuildTransformation<TInput, TOutput>(
+        public static OutputPipe<TOutput> BuildTransformation<TInput, TOutput>(
             this IOutputPipe<TInput> pipe,
             Func<ITransformationBuilder<TInput>, Func<TInput, TOutput>> builder)
             where TInput : class
             where TOutput : class =>
-            pipe.GetRequiredService<ITransformationPipeFactory<TInput, TOutput>>()
+            pipe.GetRequiredService<IMappingPipeFactory<TInput, TOutput>>()
                 .ResolveTransformationBuilder(builder, pipe);
     }
 }

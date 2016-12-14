@@ -1,4 +1,4 @@
-﻿// <copyright file="QueryableSource.cs" company="Kyubisation">
+// <copyright file="QueryableSource.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -8,9 +8,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
     using System.Linq;
     using System.Threading.Tasks;
     using EntityFrameworkCore.Common;
-    using FluentRestBuilder.Sources.Common;
+    using FluentRestBuilder.Sources;
 
-    public class QueryableSource<TEntity> : SourcePipe<IQueryable<TEntity>>
+    public class QueryableSource<TEntity> : BaseSourcePipe<IQueryable<TEntity>>
         where TEntity : class
     {
         private readonly IQueryableFactory<TEntity> queryableFactory;
