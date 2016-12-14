@@ -6,7 +6,6 @@ namespace FluentRestBuilder.Pipes.Actions
 {
     using System;
     using System.Threading.Tasks;
-    using Common;
     using Microsoft.AspNetCore.Mvc;
 
     public class ActionPipe<TInput> : InputOutputPipe<TInput>

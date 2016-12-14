@@ -1,0 +1,35 @@
+﻿// <copyright file="OutputPipe.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRestBuilder.Common
+{
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+
+    public abstract class OutputPipe<TOutput> : IOutputPipe<TOutput>
+    {
+        private readonly IServiceProvider serviceProvider;
+
+        protected OutputPipe(IServiceProvider serviceProvider)
+        {
+            this.serviceProvider = serviceProvider;
+        }
+
+        object IServiceProvider.GetService(Type serviceType) =>
+            this.serviceProvider.GetService(serviceType);
+
+        TPipe IOutputPipe<TOutput>.Attach<TPipe>(TPipe pipe)
+        {
+            this.Child = pipe;
+            return pipe;
+        }
+
+        protected IInputPipe<TOutput> Child { get; private set; }
+
+        Task<IActionResult> IPipe.Execute() => this.Execute();
+
+        protected abstract Task<IActionResult> Execute();
+    }
+}

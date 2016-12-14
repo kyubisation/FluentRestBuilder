@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.Common
+namespace FluentRestBuilder.Pipes
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;

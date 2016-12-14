@@ -5,7 +5,7 @@
 namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Deletion
 {
     using System.Threading.Tasks;
-    using FluentRestBuilder.Pipes.Common;
+    using FluentRestBuilder.Pipes;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;

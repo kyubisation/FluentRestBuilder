@@ -7,7 +7,6 @@ namespace FluentRestBuilder.Pipes.ClaimValidation
     using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
-    using Common;
     using Microsoft.AspNetCore.Http;
 
     public class ClaimValidationPipe<TInput> : ValidationPipe<TInput>

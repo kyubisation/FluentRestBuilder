@@ -2,23 +2,24 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.Common
+namespace FluentRestBuilder.Pipes
 {
     using System.Threading.Tasks;
-    using FluentRestBuilder.Common;
+    using Common;
     using Microsoft.AspNetCore.Mvc;
 
     public abstract class InputOutputPipe<TInput> :
-        InputPipe<TInput>,
-        IInputPipe<TInput>,
-        IOutputPipe<TInput>
+        OutputPipe<TInput>,
+        IInputPipe<TInput>
         where TInput : class
     {
-        private IInputPipe<TInput> child;
+        private readonly IOutputPipe<TInput> parent;
 
         protected InputOutputPipe(IOutputPipe<TInput> parent)
             : base(parent)
         {
+            this.parent = parent;
+            this.parent.Attach(this);
         }
 
         async Task<IActionResult> IInputPipe<TInput>.Execute(TInput input)
@@ -29,19 +30,15 @@ namespace FluentRestBuilder.Pipes.Common
                 return result;
             }
 
-            NoPipeAttachedException.Check(this.child);
-            return await this.child.Execute(input);
-        }
-
-        TPipe IOutputPipe<TInput>.Attach<TPipe>(TPipe pipe)
-        {
-            this.child = pipe;
-            return pipe;
+            NoPipeAttachedException.Check(this.Child);
+            return await this.Child.Execute(input);
         }
 
         protected virtual Task<IActionResult> ExecuteAsync(TInput entity) =>
             Task.FromResult(this.Execute(entity));
 
         protected virtual IActionResult Execute(TInput entity) => null;
+
+        protected override Task<IActionResult> Execute() => this.parent.Execute();
     }
 }

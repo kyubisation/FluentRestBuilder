@@ -6,7 +6,6 @@ namespace FluentRestBuilder.Pipes.EntityValidation
 {
     using System;
     using System.Threading.Tasks;
-    using Common;
 
     public class EntityValidationPipe<TInput> : ValidationPipe<TInput>
         where TInput : class

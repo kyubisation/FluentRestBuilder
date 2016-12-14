@@ -6,7 +6,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Pipes.Common;
+    using FluentRestBuilder.Pipes;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
