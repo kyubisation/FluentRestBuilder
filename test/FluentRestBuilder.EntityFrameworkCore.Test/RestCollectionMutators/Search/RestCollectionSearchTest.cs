@@ -7,7 +7,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Sear
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using EntityFrameworkCore.RestCollectionMutators;
     using EntityFrameworkCore.RestCollectionMutators.Search;
     using FluentRestBuilder.Common;
     using FluentRestBuilder.Test.Common.Mocks;

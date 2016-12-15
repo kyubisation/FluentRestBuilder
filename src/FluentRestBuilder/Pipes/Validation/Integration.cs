@@ -7,10 +7,9 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Threading.Tasks;
-    using FluentRestBuilder;
-    using FluentRestBuilder.Pipes.Validation;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
+    using Pipes.Validation;
 
     public static partial class Integration
     {

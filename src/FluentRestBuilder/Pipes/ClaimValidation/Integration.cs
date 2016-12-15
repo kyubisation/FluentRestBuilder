@@ -7,9 +7,8 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Security.Claims;
-    using FluentRestBuilder;
-    using FluentRestBuilder.Pipes.ClaimValidation;
     using Microsoft.Extensions.DependencyInjection;
+    using Pipes.ClaimValidation;
 
     public static partial class Integration
     {

@@ -7,9 +7,8 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Threading.Tasks;
-    using FluentRestBuilder;
-    using FluentRestBuilder.Pipes.Actions;
     using Microsoft.Extensions.DependencyInjection;
+    using Pipes.Actions;
 
     public static partial class Integration
     {

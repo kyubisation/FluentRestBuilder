@@ -7,8 +7,7 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Security.Claims;
-    using FluentRestBuilder;
-    using FluentRestBuilder.Results.Options;
+    using Results.Options;
 
     public static class AllowedOptionsBuilderExtensions
     {

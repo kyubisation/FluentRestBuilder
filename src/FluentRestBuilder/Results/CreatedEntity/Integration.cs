@@ -7,11 +7,10 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Threading.Tasks;
-    using FluentRestBuilder;
-    using FluentRestBuilder.Results.CreatedEntity;
-    using FluentRestBuilder.Storage;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
+    using Results.CreatedEntity;
+    using Storage;
 
     public static partial class Integration
     {

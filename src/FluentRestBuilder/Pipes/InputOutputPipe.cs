@@ -5,7 +5,6 @@
 namespace FluentRestBuilder.Pipes
 {
     using System.Threading.Tasks;
-    using Common;
     using Microsoft.AspNetCore.Mvc;
 
     public abstract class InputOutputPipe<TInput> :

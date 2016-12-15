@@ -6,9 +6,8 @@
 namespace FluentRestBuilder
 {
     using System.Threading.Tasks;
-    using FluentRestBuilder;
-    using FluentRestBuilder.Results.Ok;
     using Microsoft.AspNetCore.Mvc;
+    using Results.Ok;
 
     public static partial class Integration
     {

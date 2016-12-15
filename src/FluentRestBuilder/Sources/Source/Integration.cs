@@ -6,9 +6,9 @@
 namespace FluentRestBuilder
 {
     using System.Threading.Tasks;
-    using FluentRestBuilder.Sources.Source;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
+    using Sources.Source;
 
     public static partial class Integration
     {

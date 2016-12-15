@@ -7,7 +7,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Orde
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using EntityFrameworkCore.RestCollectionMutators;
     using EntityFrameworkCore.RestCollectionMutators.OrderBy;
     using FluentRestBuilder.Common;
     using FluentRestBuilder.Test.Common.Mocks;
