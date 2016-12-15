@@ -26,13 +26,13 @@ namespace FluentRestBuilder
             object error = null)
             where TInput : class =>
             pipe.GetRequiredService<IClaimValidationPipeFactory<TInput>>()
-                .Resolve(predicate, error, pipe);
+                .Resolve((p, e) => predicate(p), error, pipe);
 
         public static OutputPipe<TInput> CurrentUserHasClaim<TInput>(
             this IOutputPipe<TInput> pipe, string claimType, string claim, object error = null)
             where TInput : class =>
             pipe.GetRequiredService<IClaimValidationPipeFactory<TInput>>()
-                .Resolve(claimType, claim, error, pipe);
+                .Resolve((p, e) => p.HasClaim(claimType, claim), error, pipe);
 
         public static OutputPipe<TInput> CurrentUserHasClaim<TInput>(
             this IOutputPipe<TInput> pipe,
@@ -41,6 +41,6 @@ namespace FluentRestBuilder
             object error = null)
             where TInput : class =>
             pipe.GetRequiredService<IClaimValidationPipeFactory<TInput>>()
-                .Resolve(claimType, claim, error, pipe);
+                .Resolve((p, e) => p.HasClaim(claimType, claim(e)), error, pipe);
     }
 }

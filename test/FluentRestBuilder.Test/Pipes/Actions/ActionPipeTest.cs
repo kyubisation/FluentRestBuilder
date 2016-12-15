@@ -21,13 +21,6 @@ namespace FluentRestBuilder.Test.Pipes.Actions
         }
 
         [Fact]
-        public async Task TestSynchronousAction()
-        {
-            await this.TestActionPipe(
-                source => new ActionPipe<Entity>(e => e.Name = NewName, source));
-        }
-
-        [Fact]
         public async Task TestAsyncAction()
         {
             await this.TestActionPipe(

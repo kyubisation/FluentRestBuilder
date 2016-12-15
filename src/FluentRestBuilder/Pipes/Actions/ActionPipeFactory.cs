@@ -12,8 +12,5 @@ namespace FluentRestBuilder.Pipes.Actions
     {
         public OutputPipe<TInput> Resolve(Func<TInput, Task> action, IOutputPipe<TInput> parent) =>
             new ActionPipe<TInput>(action, parent);
-
-        public OutputPipe<TInput> Resolve(Action<TInput> action, IOutputPipe<TInput> parent) =>
-            new ActionPipe<TInput>(action, parent);
     }
 }

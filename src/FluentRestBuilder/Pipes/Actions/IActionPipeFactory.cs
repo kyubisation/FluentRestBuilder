@@ -11,7 +11,5 @@ namespace FluentRestBuilder.Pipes.Actions
         where TInput : class
     {
         OutputPipe<TInput> Resolve(Func<TInput, Task> action, IOutputPipe<TInput> parent);
-
-        OutputPipe<TInput> Resolve(Action<TInput> action, IOutputPipe<TInput> parent);
     }
 }

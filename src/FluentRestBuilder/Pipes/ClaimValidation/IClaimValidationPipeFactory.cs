@@ -14,22 +14,5 @@ namespace FluentRestBuilder.Pipes.ClaimValidation
             Func<ClaimsPrincipal, TInput, bool> predicate,
             object error,
             IOutputPipe<TInput> parent);
-
-        OutputPipe<TInput> Resolve(
-            Func<ClaimsPrincipal, bool> predicate,
-            object error,
-            IOutputPipe<TInput> parent);
-
-        OutputPipe<TInput> Resolve(
-            string claimType,
-            Func<TInput, string> claim,
-            object error,
-            IOutputPipe<TInput> parent);
-
-        OutputPipe<TInput> Resolve(
-            string claimType,
-            string claim,
-            object error,
-            IOutputPipe<TInput> parent);
     }
 }

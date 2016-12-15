@@ -21,26 +21,10 @@ namespace FluentRestBuilder.Pipes.Actions
             this.action = action;
         }
 
-        public ActionPipe(
-            Action<TInput> action,
-            IOutputPipe<TInput> parent)
-            : this(WrapActionInAsyncCallback(action), parent)
-        {
-        }
-
         protected override async Task<IActionResult> ExecuteAsync(TInput entity)
         {
             await this.action(entity);
             return null;
-        }
-
-        private static Func<TInput, Task> WrapActionInAsyncCallback(Action<TInput> action)
-        {
-            return entity =>
-            {
-                action(entity);
-                return Task.CompletedTask;
-            };
         }
     }
 }
