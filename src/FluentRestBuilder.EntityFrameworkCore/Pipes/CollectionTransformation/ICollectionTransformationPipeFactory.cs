@@ -6,6 +6,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
 {
     using System;
     using System.Linq;
+    using Hal;
     using Transformers;
 
     public interface ICollectionTransformationPipeFactory<TInput, TOutput>

@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Transformers.Hal
+namespace FluentRestBuilder.Hal
 {
     using System.Collections.Generic;
     using Newtonsoft.Json;

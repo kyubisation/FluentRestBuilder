@@ -2,11 +2,12 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Transformers.Hal
+namespace FluentRestBuilder.Hal
 {
     using System;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
+    using Transformers;
 
     public static class Integration
     {

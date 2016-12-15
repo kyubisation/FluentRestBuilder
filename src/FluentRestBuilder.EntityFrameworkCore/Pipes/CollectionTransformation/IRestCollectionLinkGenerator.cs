@@ -6,7 +6,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
 {
     using System.Collections.Generic;
     using FluentRestBuilder.Common;
-    using Transformers.Hal;
+    using Hal;
 
     public interface IRestCollectionLinkGenerator
     {

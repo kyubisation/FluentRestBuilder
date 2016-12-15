@@ -9,9 +9,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.CollectionTransformat
     using System.Threading.Tasks;
     using EntityFrameworkCore.Pipes.CollectionTransformation;
     using FluentRestBuilder.Common;
+    using Hal;
     using Mocks;
     using Storage;
-    using Transformers.Hal;
     using Xunit;
 
     public class CollectionTransformationPipeTest : ScopedDbContextTestBase

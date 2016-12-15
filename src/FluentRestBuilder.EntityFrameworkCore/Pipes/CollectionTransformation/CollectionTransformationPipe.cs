@@ -10,9 +10,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
     using System.Threading.Tasks;
     using FluentRestBuilder.Common;
     using FluentRestBuilder.Pipes;
+    using Hal;
     using Microsoft.EntityFrameworkCore;
     using Storage;
-    using Transformers.Hal;
 
     public class CollectionTransformationPipe<TInput, TOutput>
         : BaseMappingPipe<IQueryable<TInput>, RestEntityCollection>

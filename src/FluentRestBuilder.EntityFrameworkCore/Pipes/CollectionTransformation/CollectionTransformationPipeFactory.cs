@@ -7,6 +7,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
     using System;
     using System.Linq;
     using FluentRestBuilder.Common;
+    using Hal;
     using Storage;
     using Transformers;
 

@@ -2,11 +2,12 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Transformers.Hal
+namespace FluentRestBuilder.Hal
 {
     using System;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
+    using Transformers;
 
     public class RestTransformer<TInput, TOutput> : ITransformer<TInput, TOutput>
         where TOutput : RestEntity

@@ -8,11 +8,11 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
     using System.Collections.Generic;
     using System.Linq;
     using FluentRestBuilder.Common;
+    using Hal;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.AspNetCore.WebUtilities;
     using RestCollectionMutators;
-    using Transformers.Hal;
 
     public class RestCollectionLinkGenerator : IRestCollectionLinkGenerator
     {
