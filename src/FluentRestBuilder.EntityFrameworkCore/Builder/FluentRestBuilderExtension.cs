@@ -6,14 +6,12 @@
 namespace FluentRestBuilder
 {
     using Builder;
-    using Common;
     using EntityFrameworkCore.Common;
     using EntityFrameworkCore.MetaModel;
     using EntityFrameworkCore.Pipes.Deletion;
     using EntityFrameworkCore.Pipes.EntityCollectionSource;
     using EntityFrameworkCore.Pipes.Insertion;
     using EntityFrameworkCore.Pipes.Update;
-    using EntityFrameworkCore.RestCollectionMutators;
     using EntityFrameworkCore.RestCollectionMutators.Filter;
     using EntityFrameworkCore.RestCollectionMutators.OrderBy;
     using EntityFrameworkCore.RestCollectionMutators.Pagination;
@@ -61,6 +59,9 @@ namespace FluentRestBuilder
 
         private static void RegisterPipes(IServiceCollection collection)
         {
+            collection.TryAddScoped(
+                typeof(ICollectionMappingPipeFactory<,>),
+                typeof(EntityFrameworkCore.Pipes.CollectionMapping.CollectionMappingPipeFactory<,>));
             collection.TryAddScoped(
                 typeof(IEntityInsertionPipeFactory<>), typeof(EntityInsertionPipeFactory<>));
             collection.TryAddScoped(
