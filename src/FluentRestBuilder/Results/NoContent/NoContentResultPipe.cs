@@ -4,7 +4,6 @@
 
 namespace FluentRestBuilder.Results.NoContent
 {
-    using Common;
     using Microsoft.AspNetCore.Mvc;
 
     public class NoContentResultPipe<TInput> : ResultPipe<TInput>

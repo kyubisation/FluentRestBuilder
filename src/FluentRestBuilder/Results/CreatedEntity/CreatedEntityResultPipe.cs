@@ -5,7 +5,6 @@
 namespace FluentRestBuilder.Results.CreatedEntity
 {
     using System;
-    using Common;
     using Microsoft.AspNetCore.Mvc;
 
     public class CreatedEntityResultPipe<TInput> : ResultPipe<TInput>

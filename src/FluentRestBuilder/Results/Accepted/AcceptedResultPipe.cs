@@ -4,7 +4,6 @@
 
 namespace FluentRestBuilder.Results.Accepted
 {
-    using Common;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 

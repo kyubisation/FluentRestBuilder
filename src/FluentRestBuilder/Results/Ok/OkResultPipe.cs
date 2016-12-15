@@ -4,7 +4,6 @@
 
 namespace FluentRestBuilder.Results.Ok
 {
-    using Common;
     using Microsoft.AspNetCore.Mvc;
 
     public class OkResultPipe<TInput> : ResultPipe<TInput>
