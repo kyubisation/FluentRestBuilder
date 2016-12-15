@@ -35,6 +35,7 @@ namespace FluentRestBuilder.Test.Common
 
         protected override void Setup(IServiceCollection services)
         {
+            base.Setup(services);
             services
                 .AddSingleton<DbContextOptions>(s => this.options)
                 .AddScoped(s => new MockDbContext(this.options))

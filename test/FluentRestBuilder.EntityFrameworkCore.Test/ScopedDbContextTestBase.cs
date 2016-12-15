@@ -20,6 +20,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test
 
         protected override void Setup(IServiceCollection services)
         {
+            base.Setup(services);
             services
                 .AddScoped<IQueryableFactory, ContextQueryableFactory<MockDbContext>>()
                 .AddScoped(typeof(IQueryableFactory<>), typeof(QueryableFactory<>))
