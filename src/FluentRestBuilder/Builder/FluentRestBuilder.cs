@@ -14,6 +14,7 @@ namespace FluentRestBuilder.Builder
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Pipes.Actions;
     using Pipes.ClaimValidation;
+    using Pipes.CollectionMapping;
     using Pipes.EntityValidation;
     using Pipes.Mapping;
     using Pipes.Validation;
@@ -49,6 +50,9 @@ namespace FluentRestBuilder.Builder
                 typeof(IEntityValidationPipeFactory<>), typeof(EntityValidationPipeFactory<>));
             collection.TryAddScoped(
                 typeof(IMappingPipeFactory<,>), typeof(MappingPipeFactory<,>));
+            collection.TryAddScoped(
+                typeof(ICollectionMappingPipeFactory<,>),
+                typeof(CollectionMappingPipeFactory<,>));
             collection.TryAddScoped(
                 typeof(IValidationPipeFactory<>), typeof(ValidationPipeFactory<>));
         }

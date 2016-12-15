@@ -12,7 +12,7 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static OutputPipe<TOutput> Select<TInput, TOutput>(
+        public static OutputPipe<TOutput> Map<TInput, TOutput>(
             this IOutputPipe<TInput> pipe, Func<TInput, TOutput> transformation)
             where TInput : class
             where TOutput : class =>

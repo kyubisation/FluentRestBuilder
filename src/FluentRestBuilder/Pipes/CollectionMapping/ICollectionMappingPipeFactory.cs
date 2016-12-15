@@ -1,15 +1,15 @@
-﻿// <copyright file="ICollectionTransformationPipeFactory.cs" company="Kyubisation">
+﻿// <copyright file="ICollectionMappingPipeFactory.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.CollectionTransformation
+namespace FluentRestBuilder.Pipes.CollectionMapping
 {
     using System;
     using System.Linq;
     using Hal;
     using Transformers;
 
-    public interface ICollectionTransformationPipeFactory<TInput, TOutput>
+    public interface ICollectionMappingPipeFactory<TInput, in TOutput>
     {
         OutputPipe<RestEntityCollection> Resolve(
             Func<TInput, TOutput> transformation, IOutputPipe<IQueryable<TInput>> parent);

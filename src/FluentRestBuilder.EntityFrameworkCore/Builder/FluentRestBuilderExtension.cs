@@ -24,7 +24,7 @@ namespace FluentRestBuilder
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
-    using Pipes.CollectionTransformation;
+    using Pipes.CollectionMapping;
 
     public static class FluentRestBuilderExtension
     {
@@ -61,9 +61,6 @@ namespace FluentRestBuilder
 
         private static void RegisterPipes(IServiceCollection collection)
         {
-            collection.TryAddScoped(
-                typeof(ICollectionTransformationPipeFactory<,>),
-                typeof(CollectionTransformationPipeFactory<,>));
             collection.TryAddScoped(
                 typeof(IEntityInsertionPipeFactory<>), typeof(EntityInsertionPipeFactory<>));
             collection.TryAddScoped(

@@ -1,4 +1,4 @@
-﻿// <copyright file="CollectionTransformationPipeTest.cs" company="Kyubisation">
+﻿// <copyright file="CollectionMappingPipeTest.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -10,12 +10,12 @@ namespace FluentRestBuilder.Test.Pipes.CollectionTransformation
     using Common;
     using Common.Mocks;
     using FluentRestBuilder.Common;
-    using FluentRestBuilder.Pipes.CollectionTransformation;
+    using FluentRestBuilder.Pipes.CollectionMapping;
     using Hal;
     using Storage;
     using Xunit;
 
-    public class CollectionTransformationPipeTest : ScopedDbContextTestBase
+    public class CollectionMappingPipeTest : ScopedDbContextTestBase
     {
         [Fact]
         public async Task TestCollectionTransformation()
@@ -24,7 +24,7 @@ namespace FluentRestBuilder.Test.Pipes.CollectionTransformation
             var resultPipe = MockSourcePipe<IQueryable<Entity>>.CreateCompleteChain(
                 this.Context.Entities,
                 this.ServiceProvider,
-                source => new CollectionTransformationPipe<Entity, string>(
+                source => new CollectionMappingPipe<Entity, string>(
                     e => e.Name, new MockLinkGenerator(), new ScopedStorage<PaginationMetaInfo>(), source));
             await resultPipe.Execute();
             Assert.NotNull(resultPipe.Input);

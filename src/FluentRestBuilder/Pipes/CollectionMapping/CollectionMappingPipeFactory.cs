@@ -1,8 +1,8 @@
-﻿// <copyright file="CollectionTransformationPipeFactory.cs" company="Kyubisation">
+﻿// <copyright file="CollectionMappingPipeFactory.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.CollectionTransformation
+namespace FluentRestBuilder.Pipes.CollectionMapping
 {
     using System;
     using System.Linq;
@@ -11,15 +11,15 @@ namespace FluentRestBuilder.Pipes.CollectionTransformation
     using Storage;
     using Transformers;
 
-    public class CollectionTransformationPipeFactory<TInput, TOutput> :
-        ICollectionTransformationPipeFactory<TInput, TOutput>
+    public class CollectionMappingPipeFactory<TInput, TOutput> :
+        ICollectionMappingPipeFactory<TInput, TOutput>
     {
         private readonly IRestCollectionLinkGenerator linkGenerator;
         private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
         private readonly LazyResolver<ITransformationBuilder<TInput>> transformationBuilder;
         private readonly LazyResolver<ITransformerFactory<TInput>> transformerFactory;
 
-        public CollectionTransformationPipeFactory(
+        public CollectionMappingPipeFactory(
             IRestCollectionLinkGenerator linkGenerator,
             IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
             LazyResolver<ITransformerFactory<TInput>> transformerFactory,
@@ -33,7 +33,7 @@ namespace FluentRestBuilder.Pipes.CollectionTransformation
 
         public OutputPipe<RestEntityCollection> Resolve(
                 Func<TInput, TOutput> transformation, IOutputPipe<IQueryable<TInput>> parent) =>
-            new CollectionTransformationPipe<TInput, TOutput>(
+            new CollectionMappingPipe<TInput, TOutput>(
                 transformation, this.linkGenerator, this.paginationMetaInfoStorage, parent);
 
         public OutputPipe<RestEntityCollection> ResolveTransformer(

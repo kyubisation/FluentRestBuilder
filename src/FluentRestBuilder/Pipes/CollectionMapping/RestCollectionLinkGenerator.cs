@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.CollectionTransformation
+namespace FluentRestBuilder.Pipes.CollectionMapping
 {
     using System;
     using System.Collections.Generic;

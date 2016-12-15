@@ -1,8 +1,8 @@
-﻿// <copyright file="CollectionTransformationPipe.cs" company="Kyubisation">
+﻿// <copyright file="CollectionMappingPipe.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.CollectionTransformation
+namespace FluentRestBuilder.Pipes.CollectionMapping
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace FluentRestBuilder.Pipes.CollectionTransformation
     using Pipes;
     using Storage;
 
-    public class CollectionTransformationPipe<TInput, TOutput>
+    public class CollectionMappingPipe<TInput, TOutput>
         : BaseMappingPipe<IQueryable<TInput>, RestEntityCollection>
     {
         private readonly IRestCollectionLinkGenerator linkGenerator;
@@ -21,7 +21,7 @@ namespace FluentRestBuilder.Pipes.CollectionTransformation
         private readonly Func<TInput, TOutput> transformation;
         private RestEntityCollection restEntityCollection;
 
-        public CollectionTransformationPipe(
+        public CollectionMappingPipe(
             Func<TInput, TOutput> transformation,
             IRestCollectionLinkGenerator linkGenerator,
             IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,

@@ -9,16 +9,16 @@ namespace FluentRestBuilder
     using System.Linq;
     using Hal;
     using Microsoft.Extensions.DependencyInjection;
-    using Pipes.CollectionTransformation;
+    using Pipes.CollectionMapping;
     using Transformers;
 
     public static partial class Integration
     {
-        public static OutputPipe<RestEntityCollection> TransformCollection<TInput, TOutput>(
+        public static OutputPipe<RestEntityCollection> MapCollection<TInput, TOutput>(
             this IOutputPipe<IQueryable<TInput>> pipe, Func<TInput, TOutput> transformation)
             where TInput : class
             where TOutput : class =>
-            pipe.GetRequiredService<ICollectionTransformationPipeFactory<TInput, TOutput>>()
+            pipe.GetRequiredService<ICollectionMappingPipeFactory<TInput, TOutput>>()
                 .Resolve(transformation, pipe);
 
         public static OutputPipe<RestEntityCollection> UseTransformerForCollection<TInput, TOutput>(
@@ -26,7 +26,7 @@ namespace FluentRestBuilder
             Func<ITransformerFactory<TInput>, ITransformer<TInput, TOutput>> selection)
             where TInput : class
             where TOutput : class =>
-            pipe.GetRequiredService<ICollectionTransformationPipeFactory<TInput, TOutput>>()
+            pipe.GetRequiredService<ICollectionMappingPipeFactory<TInput, TOutput>>()
                 .ResolveTransformer(selection, pipe);
 
         public static OutputPipe<RestEntityCollection> BuildTransformationForCollection<TInput, TOutput>(
@@ -34,7 +34,7 @@ namespace FluentRestBuilder
             Func<ITransformationBuilder<TInput>, Func<TInput, TOutput>> builder)
             where TInput : class
             where TOutput : class =>
-            pipe.GetRequiredService<ICollectionTransformationPipeFactory<TInput, TOutput>>()
+            pipe.GetRequiredService<ICollectionMappingPipeFactory<TInput, TOutput>>()
                 .ResolveTransformationBuilder(builder, pipe);
     }
 }
