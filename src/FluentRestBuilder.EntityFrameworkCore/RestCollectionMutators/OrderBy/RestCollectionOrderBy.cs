@@ -7,6 +7,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.OrderBy
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using FluentRestBuilder.Common;
     using MetaModel;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;

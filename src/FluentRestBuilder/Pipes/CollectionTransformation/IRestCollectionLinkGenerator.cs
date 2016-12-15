@@ -2,10 +2,10 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
+namespace FluentRestBuilder.Pipes.CollectionTransformation
 {
     using System.Collections.Generic;
-    using FluentRestBuilder.Common;
+    using Common;
     using Hal;
 
     public interface IRestCollectionLinkGenerator

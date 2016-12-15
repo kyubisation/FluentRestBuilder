@@ -6,9 +6,9 @@
 namespace FluentRestBuilder
 {
     using Builder;
+    using Common;
     using EntityFrameworkCore.Common;
     using EntityFrameworkCore.MetaModel;
-    using EntityFrameworkCore.Pipes.CollectionTransformation;
     using EntityFrameworkCore.Pipes.Deletion;
     using EntityFrameworkCore.Pipes.EntityCollectionSource;
     using EntityFrameworkCore.Pipes.Insertion;
@@ -24,6 +24,7 @@ namespace FluentRestBuilder
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Pipes.CollectionTransformation;
 
     public static class FluentRestBuilderExtension
     {
@@ -76,7 +77,6 @@ namespace FluentRestBuilder
 
         private static void RegisterCollectionServices(IServiceCollection collection)
         {
-            collection.TryAddSingleton<IQueryArgumentKeys, QueryArgumentKeys>();
             collection.TryAddScoped<IRestCollectionLinkGenerator, RestCollectionLinkGenerator>();
             collection.TryAddScoped(
                 typeof(IRestCollectionFilter<>), typeof(RestCollectionFilter<>));

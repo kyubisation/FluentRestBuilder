@@ -9,10 +9,11 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Filt
     using System.Threading.Tasks;
     using EntityFrameworkCore.RestCollectionMutators;
     using EntityFrameworkCore.RestCollectionMutators.Filter;
+    using FluentRestBuilder.Common;
+    using FluentRestBuilder.Test.Common.Mocks;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Primitives;
-    using Mocks;
     using Xunit;
 
     public class RestCollectionFilterTest : ScopedDbContextTestBase

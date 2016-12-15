@@ -5,9 +5,9 @@
 namespace FluentRestBuilder.Test.Results.Options
 {
     using System.Linq;
+    using Common.Mocks;
     using FluentRestBuilder.Results.Options;
     using Microsoft.AspNetCore.Http;
-    using Mocks;
     using Xunit;
 
     public class AllowedOptionsBuilderTest
@@ -16,9 +16,9 @@ namespace FluentRestBuilder.Test.Results.Options
 
         public AllowedOptionsBuilderTest()
         {
-            var httpContextAccessor = new HttpContextAccessor()
+            var httpContextAccessor = new HttpContextAccessor
             {
-                HttpContext = new DefaultHttpContext()
+                HttpContext = new DefaultHttpContext
                 {
                     User = new MockPrincipal()
                 }

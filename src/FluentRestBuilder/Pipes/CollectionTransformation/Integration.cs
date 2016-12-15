@@ -7,9 +7,9 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Linq;
-    using EntityFrameworkCore.Pipes.CollectionTransformation;
     using Hal;
     using Microsoft.Extensions.DependencyInjection;
+    using Pipes.CollectionTransformation;
     using Transformers;
 
     public static partial class Integration

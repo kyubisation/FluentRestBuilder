@@ -2,11 +2,11 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
+namespace FluentRestBuilder.Pipes.CollectionTransformation
 {
     using System;
     using System.Linq;
-    using FluentRestBuilder.Common;
+    using Common;
     using Hal;
     using Storage;
     using Transformers;

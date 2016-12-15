@@ -6,8 +6,8 @@ namespace FluentRestBuilder.Test.Pipes.Actions
 {
     using System;
     using System.Threading.Tasks;
+    using Common.Mocks;
     using FluentRestBuilder.Pipes.Actions;
-    using Mocks;
     using Xunit;
 
     public class ActionPipeTest : TestBaseWithServiceProvider

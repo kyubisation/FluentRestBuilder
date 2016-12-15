@@ -9,11 +9,12 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Pagi
     using System.Threading.Tasks;
     using EntityFrameworkCore.RestCollectionMutators;
     using EntityFrameworkCore.RestCollectionMutators.Pagination;
+    using FluentRestBuilder.Common;
+    using FluentRestBuilder.Test.Common.Mocks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Primitives;
-    using Mocks;
     using Xunit;
 
     public class RestCollectionPaginationTest : ScopedDbContextTestBase

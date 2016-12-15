@@ -7,8 +7,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.MetaModel
     using System.Linq;
     using System.Threading.Tasks;
     using EntityFrameworkCore.MetaModel;
+    using FluentRestBuilder.Test.Common.Mocks;
     using Microsoft.EntityFrameworkCore;
-    using Mocks;
     using Xunit;
 
     public class ExpressionFactoryTest : ScopedDbContextTestBase

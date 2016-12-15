@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators
+namespace FluentRestBuilder.Common
 {
     public class QueryArgumentKeys : IQueryArgumentKeys
     {

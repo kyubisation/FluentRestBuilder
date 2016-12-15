@@ -2,10 +2,9 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.Test.Mocks
+namespace FluentRestBuilder.Test.Common.Mocks
 {
     using System.Collections.Generic;
-    using System.Collections.Immutable;
     using System.Linq;
 
     public class Entity
@@ -18,7 +17,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Mocks
                     Name = $"name{id}",
                     Description = $"description{id}"
                 })
-                .ToImmutableList();
+                .ToList()
+                .AsReadOnly();
 
         public int Id { get; set; }
 

@@ -6,7 +6,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Sources.RequestEntity
 {
     using System.Threading.Tasks;
     using EntityFrameworkCore.Sources.RequestEntity;
-    using Mocks;
+    using FluentRestBuilder.Test.Common;
+    using FluentRestBuilder.Test.Common.Mocks;
     using Xunit;
 
     public class RequestEntitySourceTest : TestBaseWithServiceProvider

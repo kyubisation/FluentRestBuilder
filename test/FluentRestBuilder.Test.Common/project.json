@@ -1,0 +1,18 @@
+﻿{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "FluentRestBuilder": "1.0.0-*",
+    "Microsoft.AspNetCore.Mvc.Abstractions": "1.1.0",
+    "Microsoft.EntityFrameworkCore": "1.1.0",
+    "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
+    "Microsoft.Extensions.DependencyInjection": "1.1.0",
+    "NETStandard.Library": "1.6.1"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}

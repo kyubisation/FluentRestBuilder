@@ -62,6 +62,7 @@ namespace FluentRestBuilder.Builder
 
         private static void RegisterUtilities(IServiceCollection collection)
         {
+            collection.TryAddSingleton<IQueryArgumentKeys, QueryArgumentKeys>();
             collection.TryAddTransient(typeof(LazyResolver<>));
             collection.TryAddScoped(typeof(IAllowedOptionsBuilder<>), typeof(AllowedOptionsBuilder<>));
             collection.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));

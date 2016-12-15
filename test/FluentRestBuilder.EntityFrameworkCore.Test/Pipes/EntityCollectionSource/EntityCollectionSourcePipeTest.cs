@@ -10,8 +10,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.EntityCollectionSourc
     using Common;
     using EntityFrameworkCore.Pipes.EntityCollectionSource;
     using FluentRestBuilder.Common;
+    using FluentRestBuilder.Test.Common.Mocks;
     using Microsoft.EntityFrameworkCore;
-    using Mocks;
     using Storage;
     using Xunit;
 

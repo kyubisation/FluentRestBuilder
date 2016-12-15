@@ -7,9 +7,9 @@ namespace FluentRestBuilder.Test.Pipes.EntityValidation
     using System;
     using System.Diagnostics;
     using System.Threading.Tasks;
+    using Common.Mocks;
     using FluentRestBuilder.Pipes.EntityValidation;
     using Microsoft.AspNetCore.Mvc;
-    using Mocks;
     using Xunit;
 
     public class EntityValidationPipeTest : TestBaseWithServiceProvider

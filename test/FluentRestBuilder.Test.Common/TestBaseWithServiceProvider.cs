@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.Test
+namespace FluentRestBuilder.Test.Common
 {
     using System;
     using Microsoft.Extensions.DependencyInjection;

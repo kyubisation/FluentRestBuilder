@@ -6,8 +6,8 @@ namespace FluentRestBuilder.Test.Pipes.ClaimValidation
 {
     using System.Security.Principal;
     using System.Threading.Tasks;
+    using Common.Mocks;
     using FluentRestBuilder.Pipes.ClaimValidation;
-    using Mocks;
     using Xunit;
 
     public class ClaimValidationPipeTest : TestBaseWithServiceProvider

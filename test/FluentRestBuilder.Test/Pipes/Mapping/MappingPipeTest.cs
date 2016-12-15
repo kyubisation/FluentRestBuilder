@@ -5,8 +5,8 @@
 namespace FluentRestBuilder.Test.Pipes.Mapping
 {
     using System.Threading.Tasks;
+    using Common.Mocks;
     using FluentRestBuilder.Pipes.Mapping;
-    using Mocks;
     using Xunit;
 
     public class MappingPipeTest : TestBaseWithServiceProvider

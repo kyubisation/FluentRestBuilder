@@ -8,7 +8,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Sources.SelectableEntity
     using System.Threading.Tasks;
     using Common;
     using EntityFrameworkCore.Sources.SelectableEntity;
-    using Mocks;
+    using FluentRestBuilder.Test.Common.Mocks;
     using Storage;
     using Xunit;
 

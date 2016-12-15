@@ -9,11 +9,12 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Orde
     using System.Threading.Tasks;
     using EntityFrameworkCore.RestCollectionMutators;
     using EntityFrameworkCore.RestCollectionMutators.OrderBy;
+    using FluentRestBuilder.Common;
+    using FluentRestBuilder.Test.Common.Mocks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Primitives;
-    using Mocks;
     using Xunit;
 
     public class RestCollectionOrderByTest : ScopedDbContextTestBase

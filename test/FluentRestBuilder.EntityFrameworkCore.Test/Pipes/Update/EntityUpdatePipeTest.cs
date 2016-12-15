@@ -7,8 +7,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Update
     using System.Linq;
     using System.Threading.Tasks;
     using EntityFrameworkCore.Pipes.Update;
+    using FluentRestBuilder.Test.Common.Mocks;
     using Microsoft.EntityFrameworkCore;
-    using Mocks;
     using Storage;
     using Xunit;
 

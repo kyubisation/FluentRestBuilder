@@ -6,6 +6,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Paginatio
 {
     using System;
     using System.Linq;
+    using FluentRestBuilder.Common;
     using Microsoft.AspNetCore.Http;
 
     public class RestCollectionPagination<TEntity> : IRestCollectionPagination<TEntity>

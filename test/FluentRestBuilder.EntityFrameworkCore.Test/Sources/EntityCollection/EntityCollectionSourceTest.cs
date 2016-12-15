@@ -9,7 +9,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Sources.EntityCollection
     using Common;
     using EntityFrameworkCore.Sources.EntityCollection;
     using FluentRestBuilder.Common;
-    using Mocks;
+    using FluentRestBuilder.Test.Common.Mocks;
     using Storage;
     using Xunit;
 

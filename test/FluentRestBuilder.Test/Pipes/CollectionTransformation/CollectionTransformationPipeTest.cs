@@ -2,15 +2,16 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.CollectionTransformation
+namespace FluentRestBuilder.Test.Pipes.CollectionTransformation
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using EntityFrameworkCore.Pipes.CollectionTransformation;
+    using Common;
+    using Common.Mocks;
     using FluentRestBuilder.Common;
+    using FluentRestBuilder.Pipes.CollectionTransformation;
     using Hal;
-    using Mocks;
     using Storage;
     using Xunit;
 

@@ -2,16 +2,15 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
+namespace FluentRestBuilder.Pipes.CollectionTransformation
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Common;
-    using FluentRestBuilder.Pipes;
+    using Common;
     using Hal;
-    using Microsoft.EntityFrameworkCore;
+    using Pipes;
     using Storage;
 
     public class CollectionTransformationPipe<TInput, TOutput>
@@ -36,7 +35,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
 
         protected override async Task<RestEntityCollection> MapAsync(IQueryable<TInput> input)
         {
-            var entities = await input.ToListAsync();
+            var entities = await this.EntitiesToList(input);
 
             this.restEntityCollection = new RestEntityCollection();
             this.GenerateEmbeddedEntities(entities);
@@ -44,6 +43,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.CollectionTransformation
 
             return this.restEntityCollection;
         }
+
+        protected virtual Task<List<TInput>> EntitiesToList(IQueryable<TInput> input) =>
+            Task.FromResult(input.ToList());
 
         private void GenerateEmbeddedEntities(IEnumerable<TInput> entities)
         {

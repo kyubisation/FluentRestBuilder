@@ -5,9 +5,9 @@
 namespace FluentRestBuilder.Test.Sources.LazySource
 {
     using System.Threading.Tasks;
+    using Common.Mocks;
     using FluentRestBuilder.Sources.LazySource;
     using Microsoft.Extensions.DependencyInjection;
-    using Mocks;
     using Xunit;
 
     public class LazySourcePipeTest

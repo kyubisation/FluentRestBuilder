@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Mocks
+namespace FluentRestBuilder.Test.Common.Mocks
 {
     using System;
     using System.Threading.Tasks;
@@ -46,9 +46,6 @@ namespace FluentRestBuilder.Test.Mocks
             return pipe;
         }
 
-        public Task<IActionResult> Execute()
-        {
-            return this.child.Execute(this.source);
-        }
+        public Task<IActionResult> Execute() => this.child.Execute(this.source);
     }
 }

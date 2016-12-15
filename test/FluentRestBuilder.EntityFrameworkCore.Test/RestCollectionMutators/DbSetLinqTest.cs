@@ -6,7 +6,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators
 {
     using System;
     using System.Linq;
-    using Mocks;
+    using FluentRestBuilder.Test.Common.Mocks;
     using Xunit;
 
     public class DbSetLinqTest : IDisposable
