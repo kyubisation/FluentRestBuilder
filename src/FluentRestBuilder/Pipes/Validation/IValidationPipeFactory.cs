@@ -15,11 +15,5 @@ namespace FluentRestBuilder.Pipes.Validation
             int statusCode,
             object error,
             IOutputPipe<TInput> parent);
-
-        OutputPipe<TInput> Resolve(
-            Func<bool> invalidCheck,
-            int statusCode,
-            object error,
-            IOutputPipe<TInput> parent);
     }
 }

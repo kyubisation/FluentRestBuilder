@@ -20,7 +20,7 @@ namespace FluentRestBuilder
             object error = null)
             where TEntity : class =>
             pipe.GetService<IEntityValidationPipeFactory<TEntity>>()
-                .Resolve(invalidCheck, statusCode, error, pipe);
+                .Resolve(e => Task.FromResult(invalidCheck(e)), statusCode, error, pipe);
 
         public static OutputPipe<TEntity> InvalidWhen<TEntity>(
             this IOutputPipe<TEntity> pipe,

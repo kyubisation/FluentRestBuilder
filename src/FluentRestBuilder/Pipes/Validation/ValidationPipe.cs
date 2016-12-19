@@ -22,15 +22,6 @@ namespace FluentRestBuilder.Pipes.Validation
             this.invalidCheck = invalidCheck;
         }
 
-        public ValidationPipe(
-            Func<bool> invalidCheck,
-            int statusCode,
-            object error,
-            IOutputPipe<TInput> parent)
-            : this(() => Task.FromResult(invalidCheck()), statusCode, error, parent)
-        {
-        }
-
         protected override Task<bool> IsInvalid(TInput entity) => this.invalidCheck();
     }
 }

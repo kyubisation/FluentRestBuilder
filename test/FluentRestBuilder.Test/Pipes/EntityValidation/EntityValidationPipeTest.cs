@@ -38,7 +38,7 @@ namespace FluentRestBuilder.Test.Pipes.EntityValidation
                 entity,
                 this.ServiceProvider,
                 source => new EntityValidationPipe<Entity>(
-                    invalidCheck, 401, "error", source));
+                    e => Task.FromResult(invalidCheck(e)), 401, "error", source));
             return await resultPipe.Execute();
         }
     }
