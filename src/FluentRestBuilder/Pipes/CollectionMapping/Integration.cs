@@ -25,16 +25,22 @@ namespace FluentRestBuilder
             this IOutputPipe<IQueryable<TInput>> pipe,
             Func<ITransformerFactory<TInput>, ITransformer<TInput, TOutput>> selection)
             where TInput : class
-            where TOutput : class =>
-            pipe.GetRequiredService<ICollectionMappingPipeFactory<TInput, TOutput>>()
-                .ResolveTransformer(selection, pipe);
+            where TOutput : class
+        {
+            var transformer = pipe.GetService<ITransformerFactory<TInput>>();
+            return pipe.GetRequiredService<ICollectionMappingPipeFactory<TInput, TOutput>>()
+                .Resolve(i => selection(transformer).Transform(i), pipe);
+        }
 
         public static OutputPipe<RestEntityCollection> BuildTransformationForCollection<TInput, TOutput>(
             this IOutputPipe<IQueryable<TInput>> pipe,
             Func<ITransformationBuilder<TInput>, Func<TInput, TOutput>> builder)
             where TInput : class
-            where TOutput : class =>
-            pipe.GetRequiredService<ICollectionMappingPipeFactory<TInput, TOutput>>()
-                .ResolveTransformationBuilder(builder, pipe);
+            where TOutput : class
+        {
+            var transformerBuilder = pipe.GetService<ITransformationBuilder<TInput>>();
+            return pipe.GetRequiredService<ICollectionMappingPipeFactory<TInput, TOutput>>()
+                .Resolve(builder(transformerBuilder), pipe);
+        }
     }
 }

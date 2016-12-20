@@ -13,13 +13,5 @@ namespace FluentRestBuilder.Pipes.Mapping
     {
         OutputPipe<TOutput> Resolve(
             Func<TInput, TOutput> transformation, IOutputPipe<TInput> parent);
-
-        OutputPipe<TOutput> ResolveTransformer(
-            Func<ITransformerFactory<TInput>, ITransformer<TInput, TOutput>> selection,
-            IOutputPipe<TInput> parent);
-
-        OutputPipe<TOutput> ResolveTransformationBuilder(
-            Func<ITransformationBuilder<TInput>, Func<TInput, TOutput>> builder,
-            IOutputPipe<TInput> parent);
     }
 }
