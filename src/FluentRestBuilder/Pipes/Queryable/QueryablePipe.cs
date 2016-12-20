@@ -7,19 +7,20 @@ namespace FluentRestBuilder.Pipes.Queryable
     using System;
     using System.Linq;
 
-    public class QueryablePipe<TInput> : BaseMappingPipe<IQueryable<TInput>, IQueryable<TInput>>
-        where TInput : class
+    public class QueryablePipe<TInput, TOutput> : BaseMappingPipe<TInput, TOutput>
+        where TInput : class, IQueryable
+        where TOutput : class, IQueryable
     {
-        private readonly Func<IQueryable<TInput>, IQueryable<TInput>> callback;
+        private readonly Func<TInput, TOutput> callback;
 
         public QueryablePipe(
-            Func<IQueryable<TInput>, IQueryable<TInput>> callback,
-            IOutputPipe<IQueryable<TInput>> parent)
+            Func<TInput, TOutput> callback,
+            IOutputPipe<TInput> parent)
             : base(parent)
         {
             this.callback = callback;
         }
 
-        protected override IQueryable<TInput> Map(IQueryable<TInput> input) => this.callback(input);
+        protected override TOutput Map(TInput input) => this.callback(input);
     }
 }

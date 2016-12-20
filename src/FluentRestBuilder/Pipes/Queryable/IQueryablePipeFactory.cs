@@ -7,10 +7,10 @@ namespace FluentRestBuilder.Pipes.Queryable
     using System;
     using System.Linq;
 
-    public interface IQueryablePipeFactory<TInput>
+    public interface IQueryablePipeFactory<TInput, TOutput>
+        where TInput : class, IQueryable
+        where TOutput : class, IQueryable
     {
-        OutputPipe<IQueryable<TInput>> Resolve(
-            Func<IQueryable<TInput>, IQueryable<TInput>> callback,
-            IOutputPipe<IQueryable<TInput>> parent);
+        OutputPipe<TOutput> Resolve(Func<TInput, TOutput> callback, IOutputPipe<TInput> parent);
     }
 }

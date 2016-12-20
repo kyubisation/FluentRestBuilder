@@ -1,18 +1,14 @@
-﻿// <copyright file="QueryablePipeFactory.cs" company="Kyubisation">
-// Copyright (c) Kyubisation. All rights reserved.
-// </copyright>
-
-namespace FluentRestBuilder.Pipes.Queryable
+﻿namespace FluentRestBuilder.Pipes.Queryable
 {
     using System;
     using System.Linq;
 
-    public class QueryablePipeFactory<TInput> : IQueryablePipeFactory<TInput>
-        where TInput : class
+    public class QueryablePipeFactory<TInput, TOutput> : IQueryablePipeFactory<TInput, TOutput>
+        where TInput : class, IQueryable
+        where TOutput : class, IQueryable
     {
-        public OutputPipe<IQueryable<TInput>> Resolve(
-            Func<IQueryable<TInput>, IQueryable<TInput>> callback,
-            IOutputPipe<IQueryable<TInput>> parent) =>
-            new QueryablePipe<TInput>(callback, parent);
+        public OutputPipe<TOutput> Resolve(
+            Func<TInput, TOutput> callback, IOutputPipe<TInput> parent) =>
+            new QueryablePipe<TInput, TOutput>(callback, parent);
     }
 }
