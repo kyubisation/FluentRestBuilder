@@ -17,6 +17,7 @@ namespace FluentRestBuilder.Builder
     using Pipes.CollectionMapping;
     using Pipes.EntityValidation;
     using Pipes.Mapping;
+    using Pipes.Queryable;
     using Pipes.Validation;
     using Results.Options;
     using Sources.LazySource;
@@ -55,6 +56,8 @@ namespace FluentRestBuilder.Builder
                 typeof(CollectionMappingPipeFactory<,>));
             collection.TryAddScoped(
                 typeof(IValidationPipeFactory<>), typeof(ValidationPipeFactory<>));
+            collection.TryAddScoped(
+                typeof(IQueryablePipeFactory<>), typeof(QueryablePipeFactory<>));
         }
 
         private static void RegisterTransformations(IServiceCollection collection)
