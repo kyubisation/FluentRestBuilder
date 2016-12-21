@@ -1,40 +1,34 @@
-﻿// <copyright file="EntityCollectionSourcePipeTest.cs" company="Kyubisation">
+﻿// <copyright file="QueryableSourcePipeTest.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.EntityCollectionSource
+namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Common;
-    using EntityFrameworkCore.Pipes.EntityCollectionSource;
-    using FluentRestBuilder.Common;
+    using EntityFrameworkCore.Pipes.QueryableSource;
+    using FluentRestBuilder.Sources.Source;
     using FluentRestBuilder.Test.Common.Mocks;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
+    using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
-    public class EntityCollectionSourcePipeTest : ScopedDbContextTestBase
+    public class QueryableSourcePipeTest : ScopedDbContextTestBase
     {
         [Fact]
         public async Task TestCreationWithoutPredicate()
         {
             var parent = await this.CreateParentWithChildren();
             var parent2 = await this.CreateParentWithChildren();
-            var result = MockSourcePipe<Parent>.CreateCompleteChain(
-                parent,
-                this.ServiceProvider,
-                p => new EntityCollectionSourcePipe<Parent, Child>(
-                    null,
-                    this.ResolveScoped<IQueryableFactory<Child>>().Queryable,
-                    new ScopedStorage<PaginationMetaInfo>(),
-                    p));
-            await result.Execute();
-            Assert.NotNull(result.Input);
+            var result = await new SourcePipe<Parent>(parent, this.ServiceProvider)
+                .SelectQueryableSource(f => f.Resolve<Child>())
+                .ToObjectResultOrDefault();
+            Assert.NotNull(result);
             Assert.Equal(
                 parent.Children.Count + parent2.Children.Count,
-                await result.Input.CountAsync());
+                await result.CountAsync());
         }
 
         [Fact]
@@ -42,17 +36,21 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.EntityCollectionSourc
         {
             var parent = await this.CreateParentWithChildren();
             await this.CreateParentWithChildren();
-            var result = MockSourcePipe<Parent>.CreateCompleteChain(
-                parent,
-                this.ServiceProvider,
-                pipe => new EntityCollectionSourcePipe<Parent, Child>(
-                    (q, p) => q.Where(c => c.ParentId == p.Id),
-                    this.ResolveScoped<IQueryableFactory<Child>>().Queryable,
-                    new ScopedStorage<PaginationMetaInfo>(),
-                    pipe));
-            await result.Execute();
-            Assert.NotNull(result.Input);
-            Assert.Equal(parent.Children.Count, await result.Input.CountAsync());
+            var result = await new SourcePipe<Parent>(parent, this.ServiceProvider)
+                .SelectQueryableSource((f, p) => f.Resolve<Child>().Where(c => c.ParentId == p.Id))
+                .ToObjectResultOrDefault();
+            Assert.NotNull(result);
+            Assert.Equal(parent.Children.Count, await result.CountAsync());
+        }
+
+        protected override void Setup(IServiceCollection services)
+        {
+            base.Setup(services);
+            services.AddTransient<
+                IQueryableSourcePipeFactory<Parent, Child>,
+                QueryableSourcePipeFactory<Parent, Child>>();
+            services.AddTransient<IQueryableFactory, ContextQueryableFactory<MockDbContext>>();
+            services.AddTransient(typeof(IQueryableFactory<>), typeof(QueryableFactory<>));
         }
 
         private async Task<Parent> CreateParentWithChildren()

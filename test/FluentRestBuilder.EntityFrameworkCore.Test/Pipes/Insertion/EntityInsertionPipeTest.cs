@@ -7,7 +7,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Insertion
     using System.Linq;
     using System.Threading.Tasks;
     using EntityFrameworkCore.Pipes.Insertion;
+    using FluentRestBuilder.Sources.Source;
     using FluentRestBuilder.Test.Common.Mocks;
+    using Microsoft.Extensions.DependencyInjection;
     using Storage;
     using Xunit;
 
@@ -17,15 +19,21 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Insertion
         public async Task TestInsertion()
         {
             var entity = new Entity { Id = 1, Name = "test" };
-            var resultPipe = MockSourcePipe<Entity>.CreateCompleteChain(
-                entity,
-                this.ServiceProvider,
-                p => new EntityInsertionPipe<Entity>(this.Context, new ScopedStorage<Entity>(), p));
-            await resultPipe.Execute();
+            var result = await new SourcePipe<Entity>(entity, this.ServiceProvider)
+                .InsertEntity()
+                .ToObjectResultOrDefault();
+            Assert.Same(entity, result);
             using (var context = this.CreateContext())
             {
                 Assert.Equal(1, context.Entities.Count(e => e.Id == entity.Id));
             }
+        }
+
+        protected override void Setup(IServiceCollection services)
+        {
+            base.Setup(services);
+            services.AddTransient<IScopedStorage<Entity>, ScopedStorage<Entity>>();
+            services.AddTransient<IEntityInsertionPipeFactory<Entity>, EntityInsertionPipeFactory<Entity>>();
         }
     }
 }

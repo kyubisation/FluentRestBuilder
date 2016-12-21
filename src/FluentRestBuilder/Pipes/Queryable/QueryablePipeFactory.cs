@@ -1,4 +1,8 @@
-﻿namespace FluentRestBuilder.Pipes.Queryable
+﻿// <copyright file="QueryablePipeFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRestBuilder.Pipes.Queryable
 {
     using System;
     using System.Linq;

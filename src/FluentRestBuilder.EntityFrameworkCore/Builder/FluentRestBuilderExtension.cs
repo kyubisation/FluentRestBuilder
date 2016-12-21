@@ -9,14 +9,13 @@ namespace FluentRestBuilder
     using EntityFrameworkCore.Common;
     using EntityFrameworkCore.MetaModel;
     using EntityFrameworkCore.Pipes.Deletion;
-    using EntityFrameworkCore.Pipes.EntityCollectionSource;
     using EntityFrameworkCore.Pipes.Insertion;
+    using EntityFrameworkCore.Pipes.QueryableSource;
     using EntityFrameworkCore.Pipes.Update;
     using EntityFrameworkCore.RestCollectionMutators.Filter;
     using EntityFrameworkCore.RestCollectionMutators.OrderBy;
     using EntityFrameworkCore.RestCollectionMutators.Pagination;
     using EntityFrameworkCore.RestCollectionMutators.Search;
-    using EntityFrameworkCore.Sources.EntityCollection;
     using EntityFrameworkCore.Sources.QueryableSource;
     using EntityFrameworkCore.Sources.SelectableEntity;
     using Microsoft.EntityFrameworkCore;
@@ -50,8 +49,6 @@ namespace FluentRestBuilder
         private static void RegisterSources(IServiceCollection collection)
         {
             collection.TryAddScoped(
-                typeof(IEntityCollectionSourceFactory<>), typeof(EntityCollectionSourceFactory<>));
-            collection.TryAddScoped(
                 typeof(ISelectableEntitySourceFactory<>), typeof(SelectableEntitySourceFactory<>));
             collection.TryAddScoped(
                 typeof(IQueryableSourceFactory<>), typeof(QueryableSourceFactory<>));
@@ -69,8 +66,8 @@ namespace FluentRestBuilder
             collection.TryAddScoped(
                 typeof(IEntityDeletionPipeFactory<>), typeof(EntityDeletionPipeFactory<>));
             collection.TryAddScoped(
-                typeof(IEntityCollectionSourcePipeFactory<,>),
-                typeof(EntityCollectionSourcePipeFactory<,>));
+                typeof(IQueryableSourcePipeFactory<,>),
+                typeof(QueryableSourcePipeFactory<,>));
         }
 
         private static void RegisterCollectionServices(IServiceCollection collection)

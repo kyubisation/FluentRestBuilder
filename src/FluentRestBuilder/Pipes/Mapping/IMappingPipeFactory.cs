@@ -5,7 +5,6 @@
 namespace FluentRestBuilder.Pipes.Mapping
 {
     using System;
-    using Transformers;
 
     public interface IMappingPipeFactory<TInput, TOutput>
         where TInput : class

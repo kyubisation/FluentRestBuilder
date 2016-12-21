@@ -52,12 +52,11 @@ namespace FluentRestBuilder.Builder
             collection.TryAddScoped(
                 typeof(IMappingPipeFactory<,>), typeof(MappingPipeFactory<,>));
             collection.TryAddScoped(
-                typeof(ICollectionMappingPipeFactory<,>),
-                typeof(CollectionMappingPipeFactory<,>));
+                typeof(ICollectionMappingPipeFactory<,>), typeof(CollectionMappingPipeFactory<,>));
             collection.TryAddScoped(
                 typeof(IValidationPipeFactory<>), typeof(ValidationPipeFactory<>));
             collection.TryAddScoped(
-                typeof(IQueryablePipeFactory<>), typeof(QueryablePipeFactory<>));
+                typeof(IQueryablePipeFactory<,>), typeof(QueryablePipeFactory<,>));
         }
 
         private static void RegisterTransformations(IServiceCollection collection)

@@ -4,42 +4,48 @@
 
 namespace FluentRestBuilder.Test.Pipes.EntityValidation
 {
-    using System;
-    using System.Diagnostics;
     using System.Threading.Tasks;
     using Common.Mocks;
     using FluentRestBuilder.Pipes.EntityValidation;
+    using FluentRestBuilder.Sources.Source;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
     public class EntityValidationPipeTest : TestBaseWithServiceProvider
     {
+        private readonly SourcePipe<Entity> source;
+        private readonly Entity entity = new Entity { Id = 1, Name = "test" };
+
+        public EntityValidationPipeTest()
+        {
+            var provider = new ServiceCollection()
+                .AddTransient<IEntityValidationPipeFactory<Entity>, EntityValidationPipeFactory<Entity>>()
+                .BuildServiceProvider();
+            this.source = new SourcePipe<Entity>(this.entity, provider);
+        }
+
         [Fact]
         public async Task TestInvalidValidation()
         {
-            var result = await this.TestValidation(e => e.Id == 1);
-            Assert.IsType<ObjectResult>(result);
-            var objectResult = result as ObjectResult;
-            Debug.Assert(objectResult != null, "objectResult != null");
-            Assert.Equal(401, objectResult.StatusCode.GetValueOrDefault());
+            var result = await this.source
+                .InvalidWhen(e => e.Id == this.entity.Id, StatusCodes.Status403Forbidden, "error")
+                .ToMockResultPipe()
+                .Execute();
+            Assert.IsAssignableFrom<ObjectResult>(result);
+            Assert.Equal(
+                StatusCodes.Status403Forbidden,
+                ((ObjectResult)result).StatusCode.GetValueOrDefault());
         }
 
         [Fact]
         public async Task TestValidValidation()
         {
-            var result = await this.TestValidation(e => e.Id != 1);
-            Assert.IsType<MockActionResult>(result);
-        }
-
-        private async Task<IActionResult> TestValidation(Func<Entity, bool> invalidCheck)
-        {
-            var entity = new Entity { Id = 1 };
-            var resultPipe = MockSourcePipe<Entity>.CreateCompleteChain(
-                entity,
-                this.ServiceProvider,
-                source => new EntityValidationPipe<Entity>(
-                    e => Task.FromResult(invalidCheck(e)), 401, "error", source));
-            return await resultPipe.Execute();
+            var result = await this.source
+                .InvalidWhen(e => e.Id == this.entity.Id + 1, StatusCodes.Status403Forbidden)
+                .ToObjectResultOrDefault();
+            Assert.Equal(this.entity.Id, result.Id);
         }
     }
 }

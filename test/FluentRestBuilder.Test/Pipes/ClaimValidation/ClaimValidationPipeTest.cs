@@ -4,42 +4,55 @@
 
 namespace FluentRestBuilder.Test.Pipes.ClaimValidation
 {
-    using System.Security.Principal;
     using System.Threading.Tasks;
     using Common.Mocks;
     using FluentRestBuilder.Pipes.ClaimValidation;
+    using FluentRestBuilder.Sources.Source;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
     public class ClaimValidationPipeTest : TestBaseWithServiceProvider
     {
+        public const string ClaimType = "claimType";
+        public const string Claim = "claim";
+        private readonly SourcePipe<Entity> source;
+        private readonly MockPrincipal principal;
+
+        public ClaimValidationPipeTest()
+        {
+            this.principal = new MockPrincipal();
+            var provider = new ServiceCollection()
+                .AddSingleton<IHttpContextAccessor>(p => new HttpContextAccessor
+                {
+                    HttpContext = new DefaultHttpContext { User = this.principal }
+                })
+                .AddTransient<IClaimValidationPipeFactory<Entity>, ClaimValidationPipeFactory<Entity>>()
+                .BuildServiceProvider();
+            this.source = new SourcePipe<Entity>(new Entity(), provider);
+        }
+
         [Fact]
         public async Task TestHasClaim()
         {
-            var mockPrincipal = new MockPrincipal();
-            var resultPipe = MockSourcePipe<Entity>.CreateCompleteChain(
-                new Entity(),
-                this.ServiceProvider,
-                p => new ClaimValidationPipe<Entity>(
-                    (u, e) => u.HasClaim(MockPrincipal.ClaimType, MockPrincipal.Claim),
-                    mockPrincipal,
-                    null,
-                    p));
-            var result = await resultPipe.Execute();
-            Assert.IsType<MockActionResult>(result);
+            this.principal.AddClaim(ClaimType, Claim);
+            var result = await this.source
+                .CurrentUserHasClaim(ClaimType, Claim)
+                .ToObjectResultOrDefault();
+            Assert.NotNull(result);
         }
 
-        private class MockPrincipal : GenericPrincipal
+        [Fact]
+        public async Task TestMissingClaim()
         {
-            public const string ClaimType = "claimType";
-            public const string Claim = "claim";
-
-            public MockPrincipal()
-                : base(new GenericIdentity(string.Empty), new string[] { })
-            {
-            }
-
-            public override bool HasClaim(string type, string value) =>
-                type == ClaimType && value == Claim;
+            var result = await this.source
+                .CurrentUserHasClaim(ClaimType, Claim)
+                .ToMockResultPipe()
+                .Execute();
+            Assert.IsAssignableFrom<StatusCodeResult>(result);
+            Assert.Equal(StatusCodes.Status403Forbidden, ((StatusCodeResult)result).StatusCode);
+            Assert.Null(result.GetObjectResultOrDefault<Entity>());
         }
     }
 }

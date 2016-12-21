@@ -7,8 +7,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Update
     using System.Linq;
     using System.Threading.Tasks;
     using EntityFrameworkCore.Pipes.Update;
+    using FluentRestBuilder.Sources.Source;
     using FluentRestBuilder.Test.Common.Mocks;
-    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
     using Storage;
     using Xunit;
 
@@ -19,21 +20,27 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Update
         {
             const string newName = "TestUpdate";
             this.CreateEntities();
-            var scopedContext = this.ResolveScoped<DbContext>();
-            var entity = scopedContext.Set<Entity>().First();
+            var entity = this.Context.Set<Entity>().First();
             Assert.NotEqual(newName, entity.Name);
             entity.Name = newName;
-            var resultPipe = MockSourcePipe<Entity>.CreateCompleteChain(
-                entity,
-                this.ServiceProvider,
-                source => new EntityUpdatePipe<Entity>(
-                    scopedContext, new ScopedStorage<Entity>(), source));
-            await resultPipe.Execute();
+
+            var result = await new SourcePipe<Entity>(entity, this.ServiceProvider)
+                .UpdateEntity()
+                .ToObjectResultOrDefault();
+            Assert.Equal(entity.Id, result.Id);
             using (var context = this.CreateContext())
             {
                 var updatedEntity = context.Entities.Single(e => e.Id == entity.Id);
                 Assert.Equal(newName, updatedEntity.Name);
             }
+        }
+
+        protected override void Setup(IServiceCollection services)
+        {
+            base.Setup(services);
+            services.AddTransient<IEntityUpdatePipeFactory<Entity>>(
+                p => new EntityUpdatePipeFactory<Entity>(this.Context, new ScopedStorage<Entity>()));
+            services.AddTransient<IScopedStorage<Entity>, ScopedStorage<Entity>>();
         }
     }
 }

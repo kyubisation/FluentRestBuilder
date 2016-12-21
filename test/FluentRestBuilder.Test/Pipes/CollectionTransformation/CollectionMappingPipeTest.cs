@@ -11,7 +11,9 @@ namespace FluentRestBuilder.Test.Pipes.CollectionTransformation
     using Common.Mocks;
     using FluentRestBuilder.Common;
     using FluentRestBuilder.Pipes.CollectionMapping;
+    using FluentRestBuilder.Sources.Source;
     using Hal;
+    using Microsoft.Extensions.DependencyInjection;
     using Storage;
     using Xunit;
 
@@ -21,15 +23,20 @@ namespace FluentRestBuilder.Test.Pipes.CollectionTransformation
         public async Task TestCollectionTransformation()
         {
             this.CreateEntities();
-            var resultPipe = MockSourcePipe<IQueryable<Entity>>.CreateCompleteChain(
-                this.Context.Entities,
-                this.ServiceProvider,
-                source => new CollectionMappingPipe<Entity, string>(
-                    e => e.Name, new MockLinkGenerator(), new ScopedStorage<PaginationMetaInfo>(), source));
-            await resultPipe.Execute();
-            Assert.NotNull(resultPipe.Input);
-            Assert.Contains("items", resultPipe.Input.Embedded.Keys);
-            Assert.IsAssignableFrom<IEnumerable<string>>(resultPipe.Input.Embedded["items"]);
+            var result = await new SourcePipe<IQueryable<Entity>>(this.Context.Entities, this.ServiceProvider)
+                .MapCollection(e => e.Name)
+                .ToObjectResultOrDefault();
+            Assert.NotNull(result);
+            Assert.Contains("items", result.Embedded.Keys);
+            Assert.IsAssignableFrom<IEnumerable<string>>(result.Embedded["items"]);
+        }
+
+        protected override void Setup(IServiceCollection services)
+        {
+            base.Setup(services);
+            services.AddTransient<ICollectionMappingPipeFactory<Entity, string>>(
+                p => new CollectionMappingPipeFactory<Entity, string>(
+                    new MockLinkGenerator(), new ScopedStorage<PaginationMetaInfo>()));
         }
 
         private class MockLinkGenerator : IRestCollectionLinkGenerator

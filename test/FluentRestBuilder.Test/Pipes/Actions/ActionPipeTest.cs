@@ -4,41 +4,43 @@
 
 namespace FluentRestBuilder.Test.Pipes.Actions
 {
-    using System;
     using System.Threading.Tasks;
     using Common.Mocks;
     using FluentRestBuilder.Pipes.Actions;
+    using FluentRestBuilder.Sources.Source;
+    using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
     public class ActionPipeTest : TestBaseWithServiceProvider
     {
         private const string NewName = "ActionPipeTest";
-        private readonly Entity entity;
+        private readonly Entity entity = new Entity { Id = 1, Name = "test" };
+        private readonly SourcePipe<Entity> source;
 
         public ActionPipeTest()
         {
-            this.entity = new Entity { Id = 1, Name = "test" };
+            var provider = new ServiceCollection()
+                .AddTransient<IActionPipeFactory<Entity>, ActionPipeFactory<Entity>>()
+                .BuildServiceProvider();
+            this.source = new SourcePipe<Entity>(this.entity, provider);
         }
 
         [Fact]
         public async Task TestAsyncAction()
         {
-            await this.TestActionPipe(
-                source => new ActionPipe<Entity>(
-                    async e => await Task.Run(() => e.Name = NewName), source));
+            var result = await this.source
+                .Do(async e => await Task.Run(() => e.Name = NewName))
+                .ToObjectResultOrDefault();
+            Assert.Equal(NewName, result.Name);
         }
 
-        private async Task TestActionPipe(
-            Func<IOutputPipe<Entity>, IOutputPipe<Entity>> actionPipeCreator)
+        [Fact]
+        public async Task TestSyncAction()
         {
-            var name = this.entity.Name;
-            Assert.NotEqual(name, NewName);
-            var resultPipe = MockSourcePipe<Entity>.CreateCompleteChain(
-                this.entity,
-                this.ServiceProvider,
-                actionPipeCreator);
-            await resultPipe.Execute();
-            Assert.Equal(NewName, resultPipe.Input.Name);
+            var result = await this.source
+                .Do(e => e.Name = NewName)
+                .ToObjectResultOrDefault();
+            Assert.Equal(NewName, result.Name);
         }
     }
 }

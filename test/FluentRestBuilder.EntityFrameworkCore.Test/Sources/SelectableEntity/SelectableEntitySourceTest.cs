@@ -34,10 +34,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Sources.SelectableEntity
         public async Task TestEntityDoesNotExist()
         {
             var source = this.CreateSource();
-            var resultPipe = new MockResultPipe<Entity>(source);
-
-            await resultPipe.Execute();
-            Assert.Null(resultPipe.Input);
+            var resultPipe = new MockResult<Entity>(source);
+            var result = await resultPipe.Execute();
+            Assert.Null(result.GetObjectResultOrDefault<Entity>());
         }
 
         [Fact]
@@ -45,10 +44,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Sources.SelectableEntity
         {
             this.CreateEntities();
             var source = this.CreateSource();
-            var resultPipe = new MockResultPipe<Entity>(source);
-
-            await resultPipe.Execute();
-            Assert.Equal(this.entity.Id, resultPipe.Input.Id);
+            var resultPipe = new MockResult<Entity>(source);
+            var result = await resultPipe.Execute();
+            Assert.Equal(this.entity.Id, result.GetObjectResultOrDefault<Entity>().Id);
         }
 
         private SelectableEntitySource<Entity> CreateSource()
