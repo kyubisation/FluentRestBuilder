@@ -15,18 +15,25 @@ namespace FluentRestBuilder.Pipes.CollectionMapping
     {
         private readonly IRestCollectionLinkGenerator linkGenerator;
         private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
+        private readonly IQueryableTransformer<TInput> queryableTransformer;
 
         public CollectionMappingPipeFactory(
             IRestCollectionLinkGenerator linkGenerator,
-            IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage)
+            IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
+            IQueryableTransformer<TInput> queryableTransformer)
         {
             this.linkGenerator = linkGenerator;
             this.paginationMetaInfoStorage = paginationMetaInfoStorage;
+            this.queryableTransformer = queryableTransformer;
         }
 
         public OutputPipe<RestEntityCollection> Resolve(
                 Func<TInput, TOutput> transformation, IOutputPipe<IQueryable<TInput>> parent) =>
             new CollectionMappingPipe<TInput, TOutput>(
-                transformation, this.linkGenerator, this.paginationMetaInfoStorage, parent);
+                transformation,
+                this.linkGenerator,
+                this.paginationMetaInfoStorage,
+                this.queryableTransformer,
+                parent);
     }
 }

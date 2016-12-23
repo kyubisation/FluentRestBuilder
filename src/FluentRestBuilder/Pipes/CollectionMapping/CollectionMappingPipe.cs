@@ -18,6 +18,7 @@ namespace FluentRestBuilder.Pipes.CollectionMapping
     {
         private readonly IRestCollectionLinkGenerator linkGenerator;
         private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
+        private readonly IQueryableTransformer<TInput> queryableTransformer;
         private readonly Func<TInput, TOutput> transformation;
         private RestEntityCollection restEntityCollection;
 
@@ -25,17 +26,19 @@ namespace FluentRestBuilder.Pipes.CollectionMapping
             Func<TInput, TOutput> transformation,
             IRestCollectionLinkGenerator linkGenerator,
             IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
+            IQueryableTransformer<TInput> queryableTransformer,
             IOutputPipe<IQueryable<TInput>> parent)
             : base(parent)
         {
             this.transformation = transformation;
             this.linkGenerator = linkGenerator;
             this.paginationMetaInfoStorage = paginationMetaInfoStorage;
+            this.queryableTransformer = queryableTransformer;
         }
 
         protected override async Task<RestEntityCollection> MapAsync(IQueryable<TInput> input)
         {
-            var entities = await this.EntitiesToList(input);
+            var entities = await this.queryableTransformer.ToList(input);
 
             this.restEntityCollection = new RestEntityCollection();
             this.GenerateEmbeddedEntities(entities);
@@ -43,9 +46,6 @@ namespace FluentRestBuilder.Pipes.CollectionMapping
 
             return this.restEntityCollection;
         }
-
-        protected virtual Task<List<TInput>> EntitiesToList(IQueryable<TInput> input) =>
-            Task.FromResult(input.ToList());
 
         private void GenerateEmbeddedEntities(IEnumerable<TInput> entities)
         {

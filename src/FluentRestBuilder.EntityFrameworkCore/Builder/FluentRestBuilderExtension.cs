@@ -6,6 +6,7 @@
 namespace FluentRestBuilder
 {
     using Builder;
+    using Common;
     using EntityFrameworkCore.Common;
     using EntityFrameworkCore.MetaModel;
     using EntityFrameworkCore.Pipes.Deletion;
@@ -32,6 +33,7 @@ namespace FluentRestBuilder
             RegisterEntityFrameworkRelatedServices<TContext>(builder.Services);
             RegisterSources(builder.Services);
             RegisterPipes(builder.Services);
+            RegisterTransformations(builder.Services);
             RegisterCollectionServices(builder.Services);
 
             return builder;
@@ -57,9 +59,6 @@ namespace FluentRestBuilder
         private static void RegisterPipes(IServiceCollection collection)
         {
             collection.TryAddScoped(
-                typeof(ICollectionMappingPipeFactory<,>),
-                typeof(EntityFrameworkCore.Pipes.CollectionMapping.CollectionMappingPipeFactory<,>));
-            collection.TryAddScoped(
                 typeof(IEntityInsertionPipeFactory<>), typeof(EntityInsertionPipeFactory<>));
             collection.TryAddScoped(
                 typeof(IEntityUpdatePipeFactory<>), typeof(EntityUpdatePipeFactory<>));
@@ -68,6 +67,12 @@ namespace FluentRestBuilder
             collection.TryAddScoped(
                 typeof(IQueryableSourcePipeFactory<,>),
                 typeof(QueryableSourcePipeFactory<,>));
+        }
+
+        private static void RegisterTransformations(IServiceCollection collection)
+        {
+            collection.TryAddSingleton(
+                typeof(IQueryableTransformer<>), typeof(AsyncQueryableTransformer<>));
         }
 
         private static void RegisterCollectionServices(IServiceCollection collection)

@@ -14,7 +14,7 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static OutputPipe<RestEntityCollection> MapCollection<TInput, TOutput>(
+        public static OutputPipe<RestEntityCollection> MapToRestCollection<TInput, TOutput>(
             this IOutputPipe<IQueryable<TInput>> pipe, Func<TInput, TOutput> transformation)
             where TInput : class
             where TOutput : class =>

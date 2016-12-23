@@ -24,7 +24,7 @@ namespace FluentRestBuilder.Test.Pipes.CollectionTransformation
         {
             this.CreateEntities();
             var result = await new SourcePipe<IQueryable<Entity>>(this.Context.Entities, this.ServiceProvider)
-                .MapCollection(e => e.Name)
+                .MapToRestCollection(e => e.Name)
                 .ToObjectResultOrDefault();
             Assert.NotNull(result);
             Assert.Contains("items", result.Embedded.Keys);
@@ -36,7 +36,9 @@ namespace FluentRestBuilder.Test.Pipes.CollectionTransformation
             base.Setup(services);
             services.AddTransient<ICollectionMappingPipeFactory<Entity, string>>(
                 p => new CollectionMappingPipeFactory<Entity, string>(
-                    new MockLinkGenerator(), new ScopedStorage<PaginationMetaInfo>()));
+                    new MockLinkGenerator(),
+                    new ScopedStorage<PaginationMetaInfo>(),
+                    new QueryableTransformer<Entity>()));
         }
 
         private class MockLinkGenerator : IRestCollectionLinkGenerator

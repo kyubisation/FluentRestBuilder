@@ -63,7 +63,10 @@ namespace FluentRestBuilder.Builder
         {
             collection.TryAddScoped<ITransformerFactory, TransformerFactory>();
             collection.TryAddScoped(typeof(ITransformerFactory<>), typeof(TransformerFactory<>));
-            collection.TryAddTransient(typeof(ITransformationBuilder<>), typeof(TransformationBuilder<>));
+            collection.TryAddTransient(
+                typeof(ITransformationBuilder<>), typeof(TransformationBuilder<>));
+            collection.TryAddSingleton(
+                typeof(IQueryableTransformer<>), typeof(QueryableTransformer<>));
         }
 
         private static void RegisterUtilities(IServiceCollection collection)
