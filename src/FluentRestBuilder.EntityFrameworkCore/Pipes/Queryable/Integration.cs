@@ -10,6 +10,11 @@ namespace FluentRestBuilder
     using System.Linq.Expressions;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Query;
+    using Microsoft.Extensions.DependencyInjection;
+    using RestCollectionMutators.Filter;
+    using RestCollectionMutators.OrderBy;
+    using RestCollectionMutators.Pagination;
+    using RestCollectionMutators.Search;
 
     public static partial class Integration
     {
@@ -29,5 +34,42 @@ namespace FluentRestBuilder
             Expression<Func<TPreviousProperty, TProperty>> navigationPropertyPath)
             where TInput : class =>
             pipe.MapQueryable(q => q.ThenInclude(navigationPropertyPath));
+
+        public static OutputPipe<IQueryable<TInput>> ApplyFilter<TInput>(
+            this IOutputPipe<IOrderedQueryable<TInput>> pipe)
+        {
+            var filter = pipe.GetService<IRestCollectionFilter<TInput>>();
+            return pipe.MapQueryable(filter.Apply);
+        }
+
+        public static OutputPipe<IQueryable<TInput>> ApplySearch<TInput>(
+            this IOutputPipe<IOrderedQueryable<TInput>> pipe)
+        {
+            var search = pipe.GetService<IRestCollectionSearch<TInput>>();
+            return pipe.MapQueryable(search.Apply);
+        }
+
+        public static OutputPipe<IQueryable<TInput>> ApplyOrderBy<TInput>(
+            this IOutputPipe<IOrderedQueryable<TInput>> pipe)
+        {
+            var orderBy = pipe.GetService<IRestCollectionOrderBy<TInput>>();
+            return pipe.MapQueryable(orderBy.Apply);
+        }
+
+        public static OutputPipe<IQueryable<TInput>> ApplyPagination<TInput>(
+            this IOutputPipe<IOrderedQueryable<TInput>> pipe)
+        {
+            var pagination = pipe.GetService<IRestCollectionPagination<TInput>>();
+            return pipe.MapQueryable(pagination.Apply);
+        }
+
+        public static OutputPipe<IQueryable<TInput>> ApplyPagination<TInput>(
+            this IOutputPipe<IOrderedQueryable<TInput>> pipe,
+            PaginationOptions options)
+        {
+            var pagination = pipe.GetService<IRestCollectionPagination<TInput>>();
+            pagination.Options = options;
+            return pipe.MapQueryable(pagination.Apply);
+        }
     }
 }
