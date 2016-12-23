@@ -10,43 +10,43 @@ namespace FluentRestBuilder
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using Common;
+    using Mapping;
     using Microsoft.Extensions.DependencyInjection;
     using Pipes.Mapping;
-    using Transformers;
 
     public static partial class Integration
     {
         public static OutputPipe<TOutput> Map<TInput, TOutput>(
-            this IOutputPipe<TInput> pipe, Func<TInput, Task<TOutput>> transformation)
+            this IOutputPipe<TInput> pipe, Func<TInput, Task<TOutput>> mapping)
             where TInput : class
             where TOutput : class =>
             pipe.GetRequiredService<IMappingPipeFactory<TInput, TOutput>>()
-                .Resolve(transformation, pipe);
+                .Resolve(mapping, pipe);
 
         public static OutputPipe<TOutput> Map<TInput, TOutput>(
-            this IOutputPipe<TInput> pipe, Func<TInput, TOutput> transformation)
+            this IOutputPipe<TInput> pipe, Func<TInput, TOutput> mapping)
             where TInput : class
             where TOutput : class =>
-            pipe.Map(i => Task.FromResult(transformation(i)));
+            pipe.Map(i => Task.FromResult(mapping(i)));
 
-        public static OutputPipe<TOutput> UseTransformer<TInput, TOutput>(
+        public static OutputPipe<TOutput> UseMapper<TInput, TOutput>(
             this IOutputPipe<TInput> pipe,
-            Func<ITransformerFactory<TInput>, ITransformer<TInput, TOutput>> selection)
+            Func<IMapperFactory<TInput>, IMapper<TInput, TOutput>> selection)
             where TInput : class
             where TOutput : class
         {
-            var transformer = pipe.GetService<ITransformerFactory<TInput>>();
-            return pipe.Map(i => selection(transformer).Transform(i));
+            var mapper = pipe.GetService<IMapperFactory<TInput>>();
+            return pipe.Map(i => selection(mapper).Map(i));
         }
 
-        public static OutputPipe<TOutput> BuildTransformation<TInput, TOutput>(
+        public static OutputPipe<TOutput> BuildMapping<TInput, TOutput>(
             this IOutputPipe<TInput> pipe,
-            Func<ITransformationBuilder<TInput>, Func<TInput, TOutput>> builder)
+            Func<IMappingBuilder<TInput>, Func<TInput, TOutput>> builder)
             where TInput : class
             where TOutput : class
         {
-            var transformerBuilder = pipe.GetService<ITransformationBuilder<TInput>>();
-            return pipe.Map(builder(transformerBuilder));
+            var mappingBuilder = pipe.GetService<IMappingBuilder<TInput>>();
+            return pipe.Map(builder(mappingBuilder));
         }
 
         public static OutputPipe<TInput> SingleOrDefault<TInput>(

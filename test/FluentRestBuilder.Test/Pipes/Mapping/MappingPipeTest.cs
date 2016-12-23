@@ -14,7 +14,7 @@ namespace FluentRestBuilder.Test.Pipes.Mapping
     public class MappingPipeTest : TestBaseWithServiceProvider
     {
         [Fact]
-        public async Task TestTransformation()
+        public async Task TestMap()
         {
             var entity = new Entity { Id = 1, Name = "test" };
             var provider = new ServiceCollection()

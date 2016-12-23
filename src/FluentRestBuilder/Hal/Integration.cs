@@ -5,25 +5,25 @@
 namespace FluentRestBuilder.Hal
 {
     using System;
+    using Mapping;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
-    using Transformers;
 
     public static class Integration
     {
-        public static IServiceCollection AddRestTransformer<TInput, TOutput>(
+        public static IServiceCollection AddRestMapper<TInput, TOutput>(
             this IServiceCollection serviceCollection,
-            Func<TInput, TOutput> transformation,
-            Action<RestTransformer<TInput, TOutput>> configuration = null)
+            Func<TInput, TOutput> mapping,
+            Action<RestMapper<TInput, TOutput>> configuration = null)
             where TOutput : RestEntity
         {
-            serviceCollection.AddScoped<ITransformer<TInput, TOutput>>(
+            serviceCollection.AddScoped<IMapper<TInput, TOutput>>(
                 serviceProvider =>
                 {
                     var urlHelper = serviceProvider.GetService<IUrlHelper>();
-                    var transformer = new RestTransformer<TInput, TOutput>(transformation, urlHelper);
-                    configuration?.Invoke(transformer);
-                    return transformer;
+                    var mapper = new RestMapper<TInput, TOutput>(mapping, urlHelper);
+                    configuration?.Invoke(mapper);
+                    return mapper;
                 });
             return serviceCollection;
         }

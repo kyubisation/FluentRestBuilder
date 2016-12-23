@@ -19,18 +19,18 @@ namespace FluentRestBuilder.Pipes.CollectionMapping
         private readonly IRestCollectionLinkGenerator linkGenerator;
         private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
         private readonly IQueryableTransformer<TInput> queryableTransformer;
-        private readonly Func<TInput, TOutput> transformation;
+        private readonly Func<TInput, TOutput> mapping;
         private RestEntityCollection restEntityCollection;
 
         public CollectionMappingPipe(
-            Func<TInput, TOutput> transformation,
+            Func<TInput, TOutput> mapping,
             IRestCollectionLinkGenerator linkGenerator,
             IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
             IQueryableTransformer<TInput> queryableTransformer,
             IOutputPipe<IQueryable<TInput>> parent)
             : base(parent)
         {
-            this.transformation = transformation;
+            this.mapping = mapping;
             this.linkGenerator = linkGenerator;
             this.paginationMetaInfoStorage = paginationMetaInfoStorage;
             this.queryableTransformer = queryableTransformer;
@@ -49,10 +49,10 @@ namespace FluentRestBuilder.Pipes.CollectionMapping
 
         private void GenerateEmbeddedEntities(IEnumerable<TInput> entities)
         {
-            var transformedEntities = entities
-                .Select(e => this.transformation(e))
+            var mappedEntities = entities
+                .Select(e => this.mapping(e))
                 .ToList();
-            this.restEntityCollection.Embedded.Add("items", transformedEntities);
+            this.restEntityCollection.Embedded.Add("items", mappedEntities);
         }
 
         private void GenerateLinks()

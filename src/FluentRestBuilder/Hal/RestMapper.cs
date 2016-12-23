@@ -1,4 +1,4 @@
-﻿// <copyright file="RestTransformer.cs" company="Kyubisation">
+﻿// <copyright file="RestMapper.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -6,27 +6,27 @@ namespace FluentRestBuilder.Hal
 {
     using System;
     using System.Collections.Generic;
+    using Mapping;
     using Microsoft.AspNetCore.Mvc;
-    using Transformers;
 
-    public class RestTransformer<TInput, TOutput> : ITransformer<TInput, TOutput>
+    public class RestMapper<TInput, TOutput> : IMapper<TInput, TOutput>
         where TOutput : RestEntity
     {
         private readonly IDictionary<string, object> embeddedResources = new Dictionary<string, object>();
-        private readonly Func<TInput, TOutput> transformation;
+        private readonly Func<TInput, TOutput> mapping;
         private readonly IUrlHelper urlHelper;
 
-        public RestTransformer(
-            Func<TInput, TOutput> transformation,
+        public RestMapper(
+            Func<TInput, TOutput> mapping,
             IUrlHelper urlHelper)
         {
-            this.transformation = transformation;
+            this.mapping = mapping;
             this.urlHelper = urlHelper;
         }
 
-        public TOutput Transform(TInput source)
+        public TOutput Map(TInput source)
         {
-            var target = this.transformation(source);
+            var target = this.mapping(source);
             target.Links = this.GenerateLinks(target, source);
             if (this.embeddedResources.Count > 0)
             {
@@ -36,13 +36,13 @@ namespace FluentRestBuilder.Hal
             return target;
         }
 
-        ITransformer<TInput, TOutput> ITransformer<TInput, TOutput>.Embed(string name, object value)
+        IMapper<TInput, TOutput> IMapper<TInput, TOutput>.Embed(string name, object value)
         {
             this.embeddedResources.Add(name, value);
             return this;
         }
 
-        public RestTransformer<TInput, TOutput> Embed(string name, object value)
+        public RestMapper<TInput, TOutput> Embed(string name, object value)
         {
             this.embeddedResources.Add(name, value);
             return this;

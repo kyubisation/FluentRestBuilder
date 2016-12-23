@@ -6,6 +6,7 @@ namespace FluentRestBuilder.Builder
 {
     using System.Linq;
     using Common;
+    using Mapping;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -23,7 +24,6 @@ namespace FluentRestBuilder.Builder
     using Sources.LazySource;
     using Sources.Source;
     using Storage;
-    using Transformers;
 
     public class FluentRestBuilder : IFluentRestBuilder
     {
@@ -31,7 +31,7 @@ namespace FluentRestBuilder.Builder
         {
             this.Services = services;
             RegisterPipeFactories(this.Services);
-            RegisterTransformations(this.Services);
+            RegisterMappings(this.Services);
             RegisterUtilities(this.Services);
         }
 
@@ -59,18 +59,18 @@ namespace FluentRestBuilder.Builder
                 typeof(IQueryablePipeFactory<,>), typeof(QueryablePipeFactory<,>));
         }
 
-        private static void RegisterTransformations(IServiceCollection collection)
+        private static void RegisterMappings(IServiceCollection collection)
         {
-            collection.TryAddScoped<ITransformerFactory, TransformerFactory>();
-            collection.TryAddScoped(typeof(ITransformerFactory<>), typeof(TransformerFactory<>));
+            collection.TryAddScoped<IMapperFactory, MapperFactory>();
+            collection.TryAddScoped(typeof(IMapperFactory<>), typeof(MapperFactory<>));
             collection.TryAddTransient(
-                typeof(ITransformationBuilder<>), typeof(TransformationBuilder<>));
-            collection.TryAddSingleton(
-                typeof(IQueryableTransformer<>), typeof(QueryableTransformer<>));
+                typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
         }
 
         private static void RegisterUtilities(IServiceCollection collection)
         {
+            collection.TryAddSingleton(
+                typeof(IQueryableTransformer<>), typeof(QueryableTransformer<>));
             collection.TryAddSingleton<IQueryArgumentKeys, QueryArgumentKeys>();
             collection.TryAddTransient(typeof(LazyResolver<>));
             collection.TryAddScoped(typeof(IAllowedOptionsBuilder<>), typeof(AllowedOptionsBuilder<>));

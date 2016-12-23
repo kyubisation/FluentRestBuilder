@@ -11,6 +11,6 @@ namespace FluentRestBuilder.Pipes.CollectionMapping
     public interface ICollectionMappingPipeFactory<TInput, in TOutput>
     {
         OutputPipe<RestEntityCollection> Resolve(
-            Func<TInput, TOutput> transformation, IOutputPipe<IQueryable<TInput>> parent);
+            Func<TInput, TOutput> mapping, IOutputPipe<IQueryable<TInput>> parent);
     }
 }

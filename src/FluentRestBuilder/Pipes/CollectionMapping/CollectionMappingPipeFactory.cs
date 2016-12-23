@@ -28,9 +28,9 @@ namespace FluentRestBuilder.Pipes.CollectionMapping
         }
 
         public OutputPipe<RestEntityCollection> Resolve(
-                Func<TInput, TOutput> transformation, IOutputPipe<IQueryable<TInput>> parent) =>
+                Func<TInput, TOutput> mapping, IOutputPipe<IQueryable<TInput>> parent) =>
             new CollectionMappingPipe<TInput, TOutput>(
-                transformation,
+                mapping,
                 this.linkGenerator,
                 this.paginationMetaInfoStorage,
                 this.queryableTransformer,

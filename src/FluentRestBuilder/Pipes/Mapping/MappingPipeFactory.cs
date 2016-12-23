@@ -13,8 +13,8 @@ namespace FluentRestBuilder.Pipes.Mapping
         where TOutput : class
     {
         public OutputPipe<TOutput> Resolve(
-            Func<TInput, Task<TOutput>> transformation,
+            Func<TInput, Task<TOutput>> mapping,
             IOutputPipe<TInput> parent) =>
-            new MappingPipe<TInput, TOutput>(transformation, parent);
+            new MappingPipe<TInput, TOutput>(mapping, parent);
     }
 }
