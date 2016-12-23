@@ -10,6 +10,10 @@ namespace FluentRestBuilder
     using System.Linq.Expressions;
     using Microsoft.Extensions.DependencyInjection;
     using Pipes.Queryable;
+    using RestCollectionMutators.Filter;
+    using RestCollectionMutators.OrderBy;
+    using RestCollectionMutators.Pagination;
+    using RestCollectionMutators.Search;
 
     public static partial class Integration
     {
@@ -35,5 +39,34 @@ namespace FluentRestBuilder
             Expression<Func<TInput, TKey>> keySelector)
             where TInput : class =>
             pipe.MapQueryable(q => q.ThenBy(keySelector));
+
+        public static OutputPipe<IQueryable<TInput>> ApplyFilter<TInput>(
+            this IOutputPipe<IOrderedQueryable<TInput>> pipe,
+            IRestCollectionFilter<TInput> filter) =>
+            pipe.MapQueryable(filter.Apply);
+
+        public static OutputPipe<IQueryable<TInput>> ApplySearch<TInput>(
+            this IOutputPipe<IOrderedQueryable<TInput>> pipe,
+            IRestCollectionSearch<TInput> search) =>
+            pipe.MapQueryable(search.Apply);
+
+        public static OutputPipe<IQueryable<TInput>> ApplyOrderBy<TInput>(
+            this IOutputPipe<IOrderedQueryable<TInput>> pipe,
+            IRestCollectionOrderBy<TInput> orderBy) =>
+            pipe.MapQueryable(orderBy.Apply);
+
+        public static OutputPipe<IQueryable<TInput>> ApplyPagination<TInput>(
+            this IOutputPipe<IOrderedQueryable<TInput>> pipe,
+            IRestCollectionPagination<TInput> pagination) =>
+            pipe.MapQueryable(pagination.Apply);
+
+        public static OutputPipe<IQueryable<TInput>> ApplyPagination<TInput>(
+            this IOutputPipe<IOrderedQueryable<TInput>> pipe,
+            IRestCollectionPagination<TInput> pagination,
+            PaginationOptions options)
+        {
+            pagination.Options = options;
+            return pipe.MapQueryable(pagination.Apply);
+        }
     }
 }
