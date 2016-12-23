@@ -18,7 +18,6 @@ namespace FluentRestBuilder
     using EntityFrameworkCore.RestCollectionMutators.Pagination;
     using EntityFrameworkCore.RestCollectionMutators.Search;
     using EntityFrameworkCore.Sources.QueryableSource;
-    using EntityFrameworkCore.Sources.SelectableEntity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -54,8 +53,6 @@ namespace FluentRestBuilder
 
         private static void RegisterSources(IServiceCollection collection)
         {
-            collection.TryAddScoped(
-                typeof(ISelectableEntitySourceFactory<>), typeof(SelectableEntitySourceFactory<>));
             collection.TryAddScoped(
                 typeof(IQueryableSourceFactory<>), typeof(QueryableSourceFactory<>));
         }
