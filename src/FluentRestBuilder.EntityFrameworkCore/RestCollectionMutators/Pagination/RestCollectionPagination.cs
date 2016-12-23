@@ -7,6 +7,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Paginatio
     using System;
     using System.Linq;
     using FluentRestBuilder.Common;
+    using FluentRestBuilder.RestCollectionMutators.Pagination;
     using Microsoft.AspNetCore.Http;
 
     public class RestCollectionPagination<TEntity> : IRestCollectionPagination<TEntity>
@@ -28,18 +29,12 @@ namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Paginatio
             this.actualEntriesPerPage = new Lazy<int>(this.ResolveEntriesPerPage);
         }
 
-        public int EntriesPerPageDefaultValue { get; set; } = 10;
-
-        public int MaxEntriesPerPage { get; set; } = 100;
-
-        public int ActualPage => this.actualPage.Value;
-
-        public int ActualEntriesPerPage => this.actualEntriesPerPage.Value;
+        public PaginationOptions Options { get; set; } = new PaginationOptions();
 
         public IQueryable<TEntity> Apply(IQueryable<TEntity> queryable)
         {
-            var skipAmount = (this.ActualPage - 1) * this.ActualEntriesPerPage;
-            return queryable.Skip(skipAmount).Take(this.ActualEntriesPerPage);
+            var skipAmount = (this.actualPage.Value - 1) * this.actualEntriesPerPage.Value;
+            return queryable.Skip(skipAmount).Take(this.actualEntriesPerPage.Value);
         }
 
         private int ResolvePage()
@@ -56,9 +51,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Paginatio
             int entriesPerPage;
             return int.TryParse(entriesPerPageValue.ToString(), out entriesPerPage)
                    && entriesPerPage >= MinimumEntriesPerPage
-                   && entriesPerPage <= this.MaxEntriesPerPage
+                   && entriesPerPage <= this.Options.MaxEntriesPerPage
                 ? entriesPerPage
-                : this.EntriesPerPageDefaultValue;
+                : this.Options.DefaultEntriesPerPage;
         }
     }
 }

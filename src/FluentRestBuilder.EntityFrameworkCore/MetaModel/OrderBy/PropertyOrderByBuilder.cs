@@ -6,8 +6,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.MetaModel.OrderBy
 {
     using System;
     using System.Linq.Expressions;
+    using FluentRestBuilder.RestCollectionMutators.OrderBy;
     using Microsoft.EntityFrameworkCore.Metadata;
-    using RestCollectionMutators.OrderBy;
 
     public class PropertyOrderByBuilder<TEntity> : IOrderByBuilder<TEntity>
     {

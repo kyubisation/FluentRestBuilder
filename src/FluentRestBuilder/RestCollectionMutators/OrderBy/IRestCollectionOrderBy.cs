@@ -2,10 +2,8 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.OrderBy
+namespace FluentRestBuilder.RestCollectionMutators.OrderBy
 {
-    using Common;
-
     public interface IRestCollectionOrderBy<TEntity> : IRestCollectionMutator<TEntity>
     {
     }

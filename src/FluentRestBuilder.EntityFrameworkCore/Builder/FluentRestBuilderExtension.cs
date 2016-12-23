@@ -23,6 +23,10 @@ namespace FluentRestBuilder
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Pipes.CollectionMapping;
+    using RestCollectionMutators.Filter;
+    using RestCollectionMutators.OrderBy;
+    using RestCollectionMutators.Pagination;
+    using RestCollectionMutators.Search;
 
     public static class FluentRestBuilderExtension
     {

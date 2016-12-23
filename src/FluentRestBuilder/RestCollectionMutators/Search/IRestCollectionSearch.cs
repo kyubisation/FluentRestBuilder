@@ -2,10 +2,8 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Search
+namespace FluentRestBuilder.RestCollectionMutators.Search
 {
-    using Common;
-
     public interface IRestCollectionSearch<TEntity> : IRestCollectionMutator<TEntity>
     {
     }

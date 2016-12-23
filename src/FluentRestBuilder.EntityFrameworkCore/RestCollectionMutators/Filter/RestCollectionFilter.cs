@@ -9,6 +9,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Filter
     using System.Linq;
     using System.Linq.Expressions;
     using FluentRestBuilder.Common;
+    using FluentRestBuilder.RestCollectionMutators.Filter;
     using MetaModel;
     using MetaModel.Filters;
     using Microsoft.AspNetCore.Http;
