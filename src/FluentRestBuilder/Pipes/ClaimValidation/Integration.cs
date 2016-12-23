@@ -25,14 +25,12 @@ namespace FluentRestBuilder
             Func<ClaimsPrincipal, bool> predicate,
             object error = null)
             where TInput : class =>
-            pipe.GetRequiredService<IClaimValidationPipeFactory<TInput>>()
-                .Resolve((p, e) => predicate(p), error, pipe);
+            pipe.CurrentUserHas((p, e) => predicate(p), error);
 
         public static OutputPipe<TInput> CurrentUserHasClaim<TInput>(
             this IOutputPipe<TInput> pipe, string claimType, string claim, object error = null)
             where TInput : class =>
-            pipe.GetRequiredService<IClaimValidationPipeFactory<TInput>>()
-                .Resolve((p, e) => p.HasClaim(claimType, claim), error, pipe);
+            pipe.CurrentUserHas((p, e) => p.HasClaim(claimType, claim), error);
 
         public static OutputPipe<TInput> CurrentUserHasClaim<TInput>(
             this IOutputPipe<TInput> pipe,
@@ -40,7 +38,6 @@ namespace FluentRestBuilder
             Func<TInput, string> claim,
             object error = null)
             where TInput : class =>
-            pipe.GetRequiredService<IClaimValidationPipeFactory<TInput>>()
-                .Resolve((p, e) => p.HasClaim(claimType, claim(e)), error, pipe);
+            pipe.CurrentUserHas((p, e) => p.HasClaim(claimType, claim(e)), error);
     }
 }

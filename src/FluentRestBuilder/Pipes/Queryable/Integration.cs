@@ -13,23 +13,27 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
+        public static OutputPipe<TOutputQueryable> MapQueryable<TInputQueryable, TOutputQueryable>(
+            this IOutputPipe<TInputQueryable> pipe, Func<TInputQueryable, TOutputQueryable> mapping)
+            where TInputQueryable : class, IQueryable
+            where TOutputQueryable : class, IQueryable =>
+            pipe.GetService<IQueryablePipeFactory<TInputQueryable, TOutputQueryable>>()
+                .Resolve(mapping, pipe);
+
         public static OutputPipe<IQueryable<TInput>> Where<TInput>(
             this IOutputPipe<IQueryable<TInput>> pipe, Expression<Func<TInput, bool>> predicate)
             where TInput : class =>
-            pipe.GetService<IQueryablePipeFactory<IQueryable<TInput>, IQueryable<TInput>>>()
-                .Resolve(q => q.Where(predicate), pipe);
+            pipe.MapQueryable(q => q.Where(predicate));
 
         public static OutputPipe<IOrderedQueryable<TInput>> OrderBy<TInput, TKey>(
             this IOutputPipe<IQueryable<TInput>> pipe, Expression<Func<TInput, TKey>> keySelector)
             where TInput : class =>
-            pipe.GetService<IQueryablePipeFactory<IQueryable<TInput>, IOrderedQueryable<TInput>>>()
-                .Resolve(q => q.OrderBy(keySelector), pipe);
+            pipe.MapQueryable(q => q.OrderBy(keySelector));
 
         public static OutputPipe<IOrderedQueryable<TInput>> ThenBy<TInput, TKey>(
             this IOutputPipe<IOrderedQueryable<TInput>> pipe,
             Expression<Func<TInput, TKey>> keySelector)
             where TInput : class =>
-            pipe.GetService<IQueryablePipeFactory<IOrderedQueryable<TInput>, IOrderedQueryable<TInput>>>()
-                .Resolve(q => q.ThenBy(keySelector), pipe);
+            pipe.MapQueryable(q => q.ThenBy(keySelector));
     }
 }

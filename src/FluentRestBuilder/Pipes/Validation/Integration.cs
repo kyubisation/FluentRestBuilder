@@ -15,21 +15,20 @@ namespace FluentRestBuilder
     {
         public static OutputPipe<TInput> InvalidWhen<TInput>(
             this IOutputPipe<TInput> pipe,
-            Func<bool> invalidCheck,
-            int statusCode,
-            object error = null)
-            where TInput : class =>
-            pipe.GetService<IValidationPipeFactory<TInput>>()
-                .Resolve(() => Task.FromResult(invalidCheck()), statusCode, error, pipe);
-
-        public static OutputPipe<TInput> InvalidWhen<TInput>(
-            this IOutputPipe<TInput> pipe,
             Func<Task<bool>> invalidCheck,
             int statusCode,
             object error = null)
             where TInput : class =>
             pipe.GetService<IValidationPipeFactory<TInput>>()
                 .Resolve(invalidCheck, statusCode, error, pipe);
+
+        public static OutputPipe<TInput> InvalidWhen<TInput>(
+            this IOutputPipe<TInput> pipe,
+            Func<bool> invalidCheck,
+            int statusCode,
+            object error = null)
+            where TInput : class =>
+            pipe.InvalidWhen(() => Task.FromResult(invalidCheck()), statusCode, error);
 
         public static OutputPipe<TInput> ForbiddenWhen<TInput>(
             this IOutputPipe<TInput> pipe,
