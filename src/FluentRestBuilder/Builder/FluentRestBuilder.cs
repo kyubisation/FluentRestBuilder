@@ -30,65 +30,69 @@ namespace FluentRestBuilder.Builder
         public FluentRestBuilder(IServiceCollection services)
         {
             this.Services = services;
-            RegisterPipeFactories(this.Services);
-            RegisterMappings(this.Services);
-            RegisterUtilities(this.Services);
+            this.RegisterPipeFactories();
+            this.RegisterMappings();
+            this.RegisterUtilities();
         }
 
         public IServiceCollection Services { get; }
 
-        private static void RegisterPipeFactories(IServiceCollection collection)
+        private void RegisterPipeFactories()
         {
-            collection.TryAddScoped(
+            this.Services.TryAddScoped(
                 typeof(ISourcePipeFactory<>), typeof(SourcePipeFactory<>));
-            collection.TryAddScoped(
+            this.Services.TryAddScoped(
                 typeof(ILazySourcePipeFactory<>), typeof(LazySourcePipeFactory<>));
-            collection.TryAddScoped(
+            this.Services.TryAddScoped(
                 typeof(IActionPipeFactory<>), typeof(ActionPipeFactory<>));
-            collection.TryAddScoped(
+            this.Services.TryAddScoped(
                 typeof(IClaimValidationPipeFactory<>), typeof(ClaimValidationPipeFactory<>));
-            collection.TryAddScoped(
+            this.Services.TryAddScoped(
                 typeof(IEntityValidationPipeFactory<>), typeof(EntityValidationPipeFactory<>));
-            collection.TryAddScoped(
+            this.Services.TryAddScoped(
                 typeof(IMappingPipeFactory<,>), typeof(MappingPipeFactory<,>));
-            collection.TryAddScoped(
+            this.Services.TryAddScoped(
                 typeof(ICollectionMappingPipeFactory<,>), typeof(CollectionMappingPipeFactory<,>));
-            collection.TryAddScoped(
+            this.Services.TryAddScoped(
                 typeof(IValidationPipeFactory<>), typeof(ValidationPipeFactory<>));
-            collection.TryAddScoped(
+            this.Services.TryAddScoped(
                 typeof(IQueryablePipeFactory<,>), typeof(QueryablePipeFactory<,>));
         }
 
-        private static void RegisterMappings(IServiceCollection collection)
+        private void RegisterMappings()
         {
-            collection.TryAddScoped<IMapperFactory, MapperFactory>();
-            collection.TryAddScoped(typeof(IMapperFactory<>), typeof(MapperFactory<>));
-            collection.TryAddTransient(
-                typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
+            this.Services.TryAddScoped<IMapperFactory, MapperFactory>();
+            this.Services.TryAddScoped(typeof(IMapperFactory<>), typeof(MapperFactory<>));
+            this.Services.TryAddTransient(typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
         }
 
-        private static void RegisterUtilities(IServiceCollection collection)
+        private void RegisterUtilities()
         {
-            collection.TryAddSingleton(
+            this.Services.TryAddSingleton(
                 typeof(IQueryableTransformer<>), typeof(QueryableTransformer<>));
-            collection.TryAddSingleton<IQueryArgumentKeys, QueryArgumentKeys>();
-            collection.TryAddTransient(typeof(LazyResolver<>));
-            collection.TryAddScoped(typeof(IAllowedOptionsBuilder<>), typeof(AllowedOptionsBuilder<>));
-            collection.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
-            collection.TryAddScoped(
-                s => s.GetRequiredService<IHttpContextAccessor>().HttpContext.Request.Query);
+            this.Services.TryAddSingleton<IQueryArgumentKeys, QueryArgumentKeys>();
+            this.Services.TryAddScoped(
+                typeof(IAllowedOptionsBuilder<>), typeof(AllowedOptionsBuilder<>));
+            this.Services.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
 
-            collection.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            if (collection.All(d => d.ServiceType != typeof(IUrlHelper)))
+            this.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            if (this.Services.Any(d => d.ServiceType == typeof(IUrlHelper)))
             {
-                collection.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
-                collection.TryAddScoped(serviceProvider =>
-                {
-                    var actionContextAccessor = serviceProvider.GetService<IActionContextAccessor>();
-                    var urlHelperFactory = serviceProvider.GetService<IUrlHelperFactory>();
-                    return urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
-                });
+                return;
             }
+
+            this.RegisterUrlHelper();
+        }
+
+        private void RegisterUrlHelper()
+        {
+            this.Services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            this.Services.TryAddScoped(serviceProvider =>
+            {
+                var actionContextAccessor = serviceProvider.GetService<IActionContextAccessor>();
+                var urlHelperFactory = serviceProvider.GetService<IUrlHelperFactory>();
+                return urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
+            });
         }
     }
 }
