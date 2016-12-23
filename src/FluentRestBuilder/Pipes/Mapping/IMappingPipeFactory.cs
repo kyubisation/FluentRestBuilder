@@ -5,12 +5,13 @@
 namespace FluentRestBuilder.Pipes.Mapping
 {
     using System;
+    using System.Threading.Tasks;
 
     public interface IMappingPipeFactory<TInput, TOutput>
         where TInput : class
         where TOutput : class
     {
         OutputPipe<TOutput> Resolve(
-            Func<TInput, TOutput> transformation, IOutputPipe<TInput> parent);
+            Func<TInput, Task<TOutput>> transformation, IOutputPipe<TInput> parent);
     }
 }

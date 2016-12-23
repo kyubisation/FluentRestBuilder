@@ -5,21 +5,22 @@
 namespace FluentRestBuilder.Pipes.Mapping
 {
     using System;
+    using System.Threading.Tasks;
 
     public class MappingPipe<TInput, TOutput> : BaseMappingPipe<TInput, TOutput>
         where TInput : class
         where TOutput : class
     {
-        private readonly Func<TInput, TOutput> mapping;
+        private readonly Func<TInput, Task<TOutput>> mapping;
 
         public MappingPipe(
-            Func<TInput, TOutput> mapping,
+            Func<TInput, Task<TOutput>> mapping,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
             this.mapping = mapping;
         }
 
-        protected override TOutput Map(TInput input) => this.mapping(input);
+        protected override async Task<TOutput> MapAsync(TInput input) => await this.mapping(input);
     }
 }

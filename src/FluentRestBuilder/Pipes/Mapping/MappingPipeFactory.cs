@@ -5,6 +5,7 @@
 namespace FluentRestBuilder.Pipes.Mapping
 {
     using System;
+    using System.Threading.Tasks;
 
     public class MappingPipeFactory<TInput, TOutput> :
         IMappingPipeFactory<TInput, TOutput>
@@ -12,7 +13,7 @@ namespace FluentRestBuilder.Pipes.Mapping
         where TOutput : class
     {
         public OutputPipe<TOutput> Resolve(
-            Func<TInput, TOutput> transformation,
+            Func<TInput, Task<TOutput>> transformation,
             IOutputPipe<TInput> parent) =>
             new MappingPipe<TInput, TOutput>(transformation, parent);
     }

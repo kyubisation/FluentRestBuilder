@@ -6,6 +6,7 @@
 namespace FluentRestBuilder
 {
     using System;
+    using System.Threading.Tasks;
     using Microsoft.Extensions.DependencyInjection;
     using Pipes.Mapping;
     using Transformers;
@@ -13,11 +14,17 @@ namespace FluentRestBuilder
     public static partial class Integration
     {
         public static OutputPipe<TOutput> Map<TInput, TOutput>(
-            this IOutputPipe<TInput> pipe, Func<TInput, TOutput> transformation)
+            this IOutputPipe<TInput> pipe, Func<TInput, Task<TOutput>> transformation)
             where TInput : class
             where TOutput : class =>
             pipe.GetRequiredService<IMappingPipeFactory<TInput, TOutput>>()
                 .Resolve(transformation, pipe);
+
+        public static OutputPipe<TOutput> Map<TInput, TOutput>(
+            this IOutputPipe<TInput> pipe, Func<TInput, TOutput> transformation)
+            where TInput : class
+            where TOutput : class =>
+            pipe.Map(i => Task.FromResult(transformation(i)));
 
         public static OutputPipe<TOutput> UseTransformer<TInput, TOutput>(
             this IOutputPipe<TInput> pipe,
@@ -26,8 +33,7 @@ namespace FluentRestBuilder
             where TOutput : class
         {
             var transformer = pipe.GetService<ITransformerFactory<TInput>>();
-            return pipe.GetRequiredService<IMappingPipeFactory<TInput, TOutput>>()
-                .Resolve(i => selection(transformer).Transform(i), pipe);
+            return pipe.Map(i => selection(transformer).Transform(i));
         }
 
         public static OutputPipe<TOutput> BuildTransformation<TInput, TOutput>(
@@ -37,8 +43,7 @@ namespace FluentRestBuilder
             where TOutput : class
         {
             var transformerBuilder = pipe.GetService<ITransformationBuilder<TInput>>();
-            return pipe.GetRequiredService<IMappingPipeFactory<TInput, TOutput>>()
-                .Resolve(builder(transformerBuilder), pipe);
+            return pipe.Map(builder(transformerBuilder));
         }
     }
 }
