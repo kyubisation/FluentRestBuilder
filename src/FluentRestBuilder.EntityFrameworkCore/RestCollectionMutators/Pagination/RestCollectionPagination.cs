@@ -20,10 +20,10 @@ namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Paginatio
         private readonly IQueryCollection queryCollection;
 
         public RestCollectionPagination(
-            IQueryCollection queryCollection,
+            IHttpContextAccessor contextAccessor,
             IQueryArgumentKeys queryArgumentKeys)
         {
-            this.queryCollection = queryCollection;
+            this.queryCollection = contextAccessor.HttpContext.Request.Query;
             this.queryArgumentKeys = queryArgumentKeys;
             this.actualPage = new Lazy<int>(this.ResolvePage);
             this.actualEntriesPerPage = new Lazy<int>(this.ResolveEntriesPerPage);

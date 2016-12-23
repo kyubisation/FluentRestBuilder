@@ -28,7 +28,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Sear
         {
             const string namePart = "me2";
             var search = new RestCollectionSearch<Entity>(
-                this.CreateQueryCollection(new[] { namePart }),
+                this.CreateAccessor(new[] { namePart }),
                 this.Factory,
                 new QueryArgumentKeys());
             var result = await search.Apply(this.Context.Entities)
@@ -42,7 +42,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Sear
         {
             var nameParts = new[] { "me2", "me3", "notcontained" };
             var search = new RestCollectionSearch<Entity>(
-                this.CreateQueryCollection(nameParts),
+                this.CreateAccessor(nameParts),
                 this.Factory,
                 new QueryArgumentKeys());
             var result = await search.Apply(this.Context.Entities)
@@ -50,12 +50,21 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Sear
             Assert.Equal(2, result.Count);
         }
 
-        private IQueryCollection CreateQueryCollection(string[] searchables)
+        private IHttpContextAccessor CreateAccessor(string[] searchables)
         {
-            return new QueryCollection(new Dictionary<string, StringValues>
+            return new HttpContextAccessor
             {
-                { new QueryArgumentKeys().Search, new StringValues(searchables) }
-            });
+                HttpContext = new DefaultHttpContext
+                {
+                    Request =
+                    {
+                        Query = new QueryCollection(new Dictionary<string, StringValues>
+                        {
+                            { new QueryArgumentKeys().Search, new StringValues(searchables) }
+                        })
+                    }
+                }
+            };
         }
     }
 }

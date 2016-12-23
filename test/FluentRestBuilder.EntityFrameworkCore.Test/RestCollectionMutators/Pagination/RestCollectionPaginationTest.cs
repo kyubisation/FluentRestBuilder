@@ -29,7 +29,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Pagi
             const int page = 2;
             const int entriesPerPage = 3;
             var mutator = new RestCollectionPagination<Entity>(
-                this.CreateCollection(page, entriesPerPage),
+                this.CreateAccessor(page, entriesPerPage),
                 new QueryArgumentKeys());
             var result = await mutator.Apply(this.Context.Entities).ToListAsync();
             Assert.Equal(entriesPerPage, result.Count);
@@ -46,7 +46,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Pagi
             const int entriesPerPage = 6;
             const int expectedEntities = 10 - entriesPerPage;
             var mutator = new RestCollectionPagination<Entity>(
-                this.CreateCollection(page, entriesPerPage),
+                this.CreateAccessor(page, entriesPerPage),
                 new QueryArgumentKeys());
             var result = await mutator.Apply(this.Context.Entities).ToListAsync();
             Assert.Equal(expectedEntities, result.Count);
@@ -56,14 +56,23 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Pagi
                     .SequenceEqual(Enumerable.Range(firstIndex + 1, expectedEntities)));
         }
 
-        private IQueryCollection CreateCollection(int page, int entriesPerPage)
+        private IHttpContextAccessor CreateAccessor(int page, int entriesPerPage)
         {
             var keys = new QueryArgumentKeys();
-            return new QueryCollection(new Dictionary<string, StringValues>
+            return new HttpContextAccessor
             {
-                { keys.Page, new StringValues(page.ToString()) },
-                { keys.EntriesPerPage, new StringValues(entriesPerPage.ToString()) }
-            });
+                HttpContext = new DefaultHttpContext
+                {
+                    Request =
+                    {
+                        Query = new QueryCollection(new Dictionary<string, StringValues>
+                        {
+                            { keys.Page, new StringValues(page.ToString()) },
+                            { keys.EntriesPerPage, new StringValues(entriesPerPage.ToString()) }
+                        })
+                    }
+                }
+            };
         }
     }
 }

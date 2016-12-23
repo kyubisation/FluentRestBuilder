@@ -21,11 +21,11 @@ namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Search
         private readonly IQueryCollection queryCollection;
 
         public RestCollectionSearch(
-            IQueryCollection queryCollection,
+            IHttpContextAccessor contextAccessor,
             IExpressionFactory<TEntity> expressionFactory,
             IQueryArgumentKeys queryArgumentKeys)
         {
-            this.queryCollection = queryCollection;
+            this.queryCollection = contextAccessor.HttpContext.Request.Query;
             this.expressionFactory = expressionFactory;
             this.queryArgumentKeys = queryArgumentKeys;
             this.filters = this.expressionFactory.FilterExpressions.Values

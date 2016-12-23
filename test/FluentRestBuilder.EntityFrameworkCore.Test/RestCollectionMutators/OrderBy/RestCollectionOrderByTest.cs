@@ -27,7 +27,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Orde
         public async Task TestAscending()
         {
             var mutator = new RestCollectionOrderBy<Entity>(
-                this.CreateQueryCollection(new[] { nameof(Entity.Name) }),
+                this.CreateHttpContextAccessor(new[] { nameof(Entity.Name) }),
                 this.Factory,
                 new QueryArgumentKeys());
             var entities = await mutator.Apply(this.Context.Entities).ToListAsync();
@@ -38,19 +38,28 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Orde
         public async Task TestDescending()
         {
             var mutator = new RestCollectionOrderBy<Entity>(
-                this.CreateQueryCollection(new[] { $"!{nameof(Entity.Name)}" }),
+                this.CreateHttpContextAccessor(new[] { $"!{nameof(Entity.Name)}" }),
                 this.Factory,
                 new QueryArgumentKeys());
             var entities = await mutator.Apply(this.Context.Entities).ToListAsync();
             Assert.True(entities.SequenceEqual(entities.OrderByDescending(e => e.Name)));
         }
 
-        private IQueryCollection CreateQueryCollection(string[] searchables)
+        private IHttpContextAccessor CreateHttpContextAccessor(string[] searchables)
         {
-            return new QueryCollection(new Dictionary<string, StringValues>
+            return new HttpContextAccessor
             {
-                { new QueryArgumentKeys().OrderBy, new StringValues(searchables) }
-            });
+                HttpContext = new DefaultHttpContext
+                {
+                    Request =
+                    {
+                        Query = new QueryCollection(new Dictionary<string, StringValues>
+                        {
+                            { new QueryArgumentKeys().OrderBy, new StringValues(searchables) }
+                        })
+                    }
+                }
+            };
         }
     }
 }

@@ -10,6 +10,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Filt
     using EntityFrameworkCore.RestCollectionMutators.Filter;
     using FluentRestBuilder.Common;
     using FluentRestBuilder.Test.Common.Mocks;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Primitives;
@@ -34,13 +35,27 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.RestCollectionMutators.Filt
                 }
             };
             var filter = new RestCollectionFilter<Entity>(
-                new QueryCollection(filterDictionary),
+                this.CreateAccessor(filterDictionary),
                 this.Factory,
                 new QueryArgumentKeys());
             var result = await filter.Apply(this.Context.Entities)
                 .ToListAsync();
             Assert.Equal(1, result.Count);
             Assert.Contains(namePart, result.First().Name);
+        }
+
+        private IHttpContextAccessor CreateAccessor(Dictionary<string, StringValues> filters)
+        {
+            return new HttpContextAccessor
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    Request =
+                    {
+                        Query = new QueryCollection(filters)
+                    }
+                }
+            };
         }
     }
 }

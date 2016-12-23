@@ -20,11 +20,11 @@ namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.OrderBy
         private readonly IQueryCollection queryCollection;
 
         public RestCollectionOrderBy(
-            IQueryCollection queryCollection,
+            IHttpContextAccessor contextAccessor,
             IExpressionFactory<TEntity> expressionFactory,
             IQueryArgumentKeys queryArgumentKeys)
         {
-            this.queryCollection = queryCollection;
+            this.queryCollection = contextAccessor.HttpContext.Request.Query;
             this.expressionFactory = expressionFactory;
             this.queryArgumentKeys = queryArgumentKeys;
         }
