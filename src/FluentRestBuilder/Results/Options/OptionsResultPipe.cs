@@ -15,6 +15,7 @@ namespace FluentRestBuilder.Results.Options
     public class OptionsResultPipe<TInput> : ResultPipe<TInput>
         where TInput : class
     {
+        // ReSharper disable once StaticMemberInGenericType
         private static readonly Dictionary<HttpVerb, string> VerbLookup
             = new Dictionary<HttpVerb, string>
             {
