@@ -6,10 +6,7 @@
 namespace FluentRestBuilder
 {
     using System;
-    using System.Linq;
-    using System.Linq.Expressions;
     using System.Threading.Tasks;
-    using Common;
     using Mapping;
     using Microsoft.Extensions.DependencyInjection;
     using Pipes.Mapping;
@@ -47,14 +44,6 @@ namespace FluentRestBuilder
         {
             var mappingBuilder = pipe.GetService<IMappingBuilder<TInput>>();
             return pipe.Map(builder(mappingBuilder));
-        }
-
-        public static OutputPipe<TInput> FirstOrDefault<TInput>(
-            this IOutputPipe<IQueryable<TInput>> pipe, Expression<Func<TInput, bool>> predicate)
-            where TInput : class
-        {
-            var queryableTransformer = pipe.GetService<IQueryableTransformer<TInput>>();
-            return pipe.Map(q => queryableTransformer.FirstOrDefault(q.Where(predicate)));
         }
     }
 }
