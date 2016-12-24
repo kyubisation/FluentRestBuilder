@@ -18,6 +18,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Paginatio
         private readonly Lazy<int> actualPage;
         private readonly IQueryArgumentKeys queryArgumentKeys;
         private readonly IQueryCollection queryCollection;
+        private readonly PaginationOptions defaultOptions = new PaginationOptions();
 
         public RestCollectionPagination(
             IHttpContextAccessor contextAccessor,
@@ -29,7 +30,13 @@ namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Paginatio
             this.actualEntriesPerPage = new Lazy<int>(this.ResolveEntriesPerPage);
         }
 
-        public PaginationOptions Options { get; set; } = new PaginationOptions();
+        public PaginationOptions Options { get; set; }
+
+        private int MaxEntriesPerPage =>
+            this.Options?.MaxEntriesPerPage ?? this.defaultOptions.MaxEntriesPerPage;
+
+        private int DefaultEntriesPerPage =>
+            this.Options?.DefaultEntriesPerPage ?? this.defaultOptions.DefaultEntriesPerPage;
 
         public IQueryable<TEntity> Apply(IQueryable<TEntity> queryable)
         {
@@ -51,9 +58,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.RestCollectionMutators.Paginatio
             int entriesPerPage;
             return int.TryParse(entriesPerPageValue.ToString(), out entriesPerPage)
                    && entriesPerPage >= MinimumEntriesPerPage
-                   && entriesPerPage <= this.Options.MaxEntriesPerPage
+                   && entriesPerPage <= this.MaxEntriesPerPage
                 ? entriesPerPage
-                : this.Options.DefaultEntriesPerPage;
+                : this.DefaultEntriesPerPage;
         }
     }
 }
