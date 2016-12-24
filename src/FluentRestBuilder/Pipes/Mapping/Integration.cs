@@ -49,14 +49,6 @@ namespace FluentRestBuilder
             return pipe.Map(builder(mappingBuilder));
         }
 
-        public static OutputPipe<TInput> SingleOrDefault<TInput>(
-            this IOutputPipe<IQueryable<TInput>> pipe, Expression<Func<TInput, bool>> predicate)
-            where TInput : class
-        {
-            var queryableTransformer = pipe.GetService<IQueryableTransformer<TInput>>();
-            return pipe.Map(q => queryableTransformer.SingleOrDefault(q.Where(predicate)));
-        }
-
         public static OutputPipe<TInput> FirstOrDefault<TInput>(
             this IOutputPipe<IQueryable<TInput>> pipe, Expression<Func<TInput, bool>> predicate)
             where TInput : class
