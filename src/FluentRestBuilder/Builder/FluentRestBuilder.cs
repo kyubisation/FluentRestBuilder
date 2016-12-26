@@ -18,6 +18,7 @@ namespace FluentRestBuilder.Builder
     using Pipes.CollectionMapping;
     using Pipes.EntityValidation;
     using Pipes.Mapping;
+    using Pipes.OrderByClientRequest;
     using Pipes.Queryable;
     using Pipes.SingleOrDefault;
     using Pipes.Validation;
@@ -31,6 +32,7 @@ namespace FluentRestBuilder.Builder
         public FluentRestBuilder(IServiceCollection services)
         {
             this.Services = services;
+            this.RegisterSourceFactories();
             this.RegisterPipeFactories();
             this.RegisterMappings();
             this.RegisterUtilities();
@@ -38,12 +40,16 @@ namespace FluentRestBuilder.Builder
 
         public IServiceCollection Services { get; }
 
-        private void RegisterPipeFactories()
+        private void RegisterSourceFactories()
         {
             this.Services.TryAddScoped(
                 typeof(ISourcePipeFactory<>), typeof(SourcePipeFactory<>));
             this.Services.TryAddScoped(
                 typeof(ILazySourcePipeFactory<>), typeof(LazySourcePipeFactory<>));
+        }
+
+        private void RegisterPipeFactories()
+        {
             this.Services.TryAddScoped(
                 typeof(IActionPipeFactory<>), typeof(ActionPipeFactory<>));
             this.Services.TryAddScoped(
@@ -60,6 +66,9 @@ namespace FluentRestBuilder.Builder
                 typeof(IQueryablePipeFactory<,>), typeof(QueryablePipeFactory<,>));
             this.Services.TryAddScoped(
                 typeof(ISingleOrDefaultPipeFactory<>), typeof(SingleOrDefaultPipeFactory<>));
+            this.Services.TryAddScoped(
+                typeof(IOrderByClientRequestPipeFactory<>),
+                typeof(OrderByClientRequestPipeFactory<>));
         }
 
         private void RegisterMappings()
@@ -71,6 +80,7 @@ namespace FluentRestBuilder.Builder
 
         private void RegisterUtilities()
         {
+            this.Services.TryAddScoped<IOrderByClientRequestInterpreter, OrderByClientRequestInterpreter>();
             this.Services.TryAddSingleton(
                 typeof(IQueryableTransformer<>), typeof(QueryableTransformer<>));
             this.Services.TryAddSingleton<IQueryArgumentKeys, QueryArgumentKeys>();
