@@ -2,16 +2,17 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Expressions;
 
     public class OrderByClientRequestPipe<TInput> : BaseMappingPipe<IQueryable<TInput>, IQueryable<TInput>>
     {
         private readonly IOrderByExpression<TInput> defaultOrderBy;
-        private readonly IDictionary<string, IOrderByExpressionBuilder<TInput>> orderByDictionary;
+        private readonly IDictionary<string, IOrderByExpressionFactory<TInput>> orderByDictionary;
         private readonly IOrderByClientRequestInterpreter orderByClientRequestInterpreter;
 
         public OrderByClientRequestPipe(
             IOrderByExpression<TInput> defaultOrderBy,
-            IDictionary<string, IOrderByExpressionBuilder<TInput>> orderByDictionary,
+            IDictionary<string, IOrderByExpressionFactory<TInput>> orderByDictionary,
             IOrderByClientRequestInterpreter orderByClientRequestInterpreter,
             IOutputPipe<IQueryable<TInput>> parent)
             : base(parent)

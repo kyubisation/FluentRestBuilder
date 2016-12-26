@@ -1,4 +1,4 @@
-﻿namespace FluentRestBuilder.Pipes.OrderByClientRequest
+namespace FluentRestBuilder.Pipes.OrderByClientRequest.Expressions
 {
     using System;
     using System.Linq;

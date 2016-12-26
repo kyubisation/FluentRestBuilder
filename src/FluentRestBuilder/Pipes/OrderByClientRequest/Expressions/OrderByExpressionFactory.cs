@@ -1,14 +1,14 @@
-﻿namespace FluentRestBuilder.Pipes.OrderByClientRequest
+﻿namespace FluentRestBuilder.Pipes.OrderByClientRequest.Expressions
 {
     using System;
     using System.Linq.Expressions;
     using RestCollectionMutators.OrderBy;
 
-    public class OrderByExpressionBuilder<TEntity, TKey> : IOrderByExpressionBuilder<TEntity>
+    public class OrderByExpressionFactory<TEntity, TKey> : IOrderByExpressionFactory<TEntity>
     {
         private readonly Expression<Func<TEntity, TKey>> orderBy;
 
-        public OrderByExpressionBuilder(Expression<Func<TEntity, TKey>> orderBy)
+        public OrderByExpressionFactory(Expression<Func<TEntity, TKey>> orderBy)
         {
             this.orderBy = orderBy;
         }

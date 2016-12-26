@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Expressions;
 
     public class OrderByClientRequestPipeFactory<TInput> : IOrderByClientRequestPipeFactory<TInput>
     {
@@ -14,7 +15,7 @@
 
         public OutputPipe<IQueryable<TInput>> Resolve(
             IOrderByExpression<TInput> defaultOrderBy,
-            IDictionary<string, IOrderByExpressionBuilder<TInput>> orderByDictionary,
+            IDictionary<string, IOrderByExpressionFactory<TInput>> orderByDictionary,
             IOutputPipe<IQueryable<TInput>> parent) =>
             new OrderByClientRequestPipe<TInput>(
                 defaultOrderBy, orderByDictionary, this.interpreter, parent);

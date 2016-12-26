@@ -1,8 +1,8 @@
-﻿namespace FluentRestBuilder.Pipes.OrderByClientRequest
+﻿namespace FluentRestBuilder.Pipes.OrderByClientRequest.Expressions
 {
     using RestCollectionMutators.OrderBy;
 
-    public interface IOrderByExpressionBuilder<TEntity>
+    public interface IOrderByExpressionFactory<TEntity>
     {
         IOrderByExpression<TEntity> Create(OrderByDirection direction);
     }
