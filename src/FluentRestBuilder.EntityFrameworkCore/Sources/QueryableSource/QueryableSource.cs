@@ -7,7 +7,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using EntityFrameworkCore.Common;
+    using Common;
     using FluentRestBuilder.Sources;
 
     public class QueryableSource<TEntity> : BaseSource<IQueryable<TEntity>>

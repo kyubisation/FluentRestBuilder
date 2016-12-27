@@ -4,13 +4,9 @@
 
 namespace FluentRestBuilder.Builder
 {
-    using System.Linq;
     using Common;
     using Mapping;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.AspNetCore.Mvc.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Pipes.Actions;

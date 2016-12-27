@@ -12,7 +12,6 @@ namespace FluentRestBuilder
     using Pipes.Queryable;
     using RestCollectionMutators.Filter;
     using RestCollectionMutators.Pagination;
-    using RestCollectionMutators.Search;
 
     public static partial class Integration
     {
