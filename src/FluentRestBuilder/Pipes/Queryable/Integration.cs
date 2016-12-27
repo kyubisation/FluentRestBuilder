@@ -34,11 +34,22 @@ namespace FluentRestBuilder
             where TInput : class =>
             pipe.MapQueryable(q => q.OrderBy(keySelector));
 
+        public static OutputPipe<IOrderedQueryable<TInput>> OrderByDescending<TInput, TKey>(
+            this IOutputPipe<IQueryable<TInput>> pipe, Expression<Func<TInput, TKey>> keySelector)
+            where TInput : class =>
+            pipe.MapQueryable(q => q.OrderByDescending(keySelector));
+
         public static OutputPipe<IOrderedQueryable<TInput>> ThenBy<TInput, TKey>(
             this IOutputPipe<IOrderedQueryable<TInput>> pipe,
             Expression<Func<TInput, TKey>> keySelector)
             where TInput : class =>
             pipe.MapQueryable(q => q.ThenBy(keySelector));
+
+        public static OutputPipe<IOrderedQueryable<TInput>> ThenByDescending<TInput, TKey>(
+            this IOutputPipe<IOrderedQueryable<TInput>> pipe,
+            Expression<Func<TInput, TKey>> keySelector)
+            where TInput : class =>
+            pipe.MapQueryable(q => q.ThenByDescending(keySelector));
 
         public static OutputPipe<IQueryable<TInput>> ApplyFilter<TInput>(
             this IOutputPipe<IOrderedQueryable<TInput>> pipe,
