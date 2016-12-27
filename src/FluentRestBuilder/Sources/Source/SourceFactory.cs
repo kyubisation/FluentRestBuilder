@@ -6,6 +6,7 @@ namespace FluentRestBuilder.Sources.Source
 {
     using System;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
 
     public class SourceFactory<TOutput> : ISourceFactory<TOutput>
     {
@@ -16,10 +17,7 @@ namespace FluentRestBuilder.Sources.Source
             this.serviceProvider = serviceProvider;
         }
 
-        public OutputPipe<TOutput> Resolve(Task<TOutput> output) =>
-            new Source<TOutput>(output, this.serviceProvider);
-
-        public OutputPipe<TOutput> Resolve(TOutput output) =>
-            new Source<TOutput>(output, this.serviceProvider);
+        public OutputPipe<TOutput> Resolve(Task<TOutput> output, IUrlHelper urlHelper) =>
+            new Source<TOutput>(output, this.serviceProvider) { UrlHelper = urlHelper };
     }
 }

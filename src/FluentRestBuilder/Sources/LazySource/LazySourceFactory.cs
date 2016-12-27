@@ -6,6 +6,7 @@ namespace FluentRestBuilder.Sources.LazySource
 {
     using System;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
 
     public class LazySourceFactory<TOutput> : ILazySourceFactory<TOutput>
     {
@@ -16,10 +17,7 @@ namespace FluentRestBuilder.Sources.LazySource
             this.serviceProvider = serviceProvider;
         }
 
-        public OutputPipe<TOutput> Resolve(Func<Task<TOutput>> output) =>
-            new LazySource<TOutput>(output, this.serviceProvider);
-
-        public OutputPipe<TOutput> Resolve(Func<TOutput> output) =>
-            new LazySource<TOutput>(output, this.serviceProvider);
+        public OutputPipe<TOutput> Resolve(Func<Task<TOutput>> output, IUrlHelper urlHelper) =>
+            new LazySource<TOutput>(output, this.serviceProvider) { UrlHelper = urlHelper };
     }
 }

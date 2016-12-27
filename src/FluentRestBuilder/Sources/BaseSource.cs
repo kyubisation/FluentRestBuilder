@@ -15,6 +15,18 @@ namespace FluentRestBuilder.Sources
         {
         }
 
+        public IUrlHelper UrlHelper { get; set; }
+
+        protected override object GetService(Type serviceType)
+        {
+            if (serviceType == typeof(IUrlHelper) && this.UrlHelper != null)
+            {
+                return this.UrlHelper;
+            }
+
+            return base.GetService(serviceType);
+        }
+
         protected override async Task<IActionResult> Execute()
         {
             NoPipeAttachedException.Check(this.Child);

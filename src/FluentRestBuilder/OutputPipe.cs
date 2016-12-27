@@ -20,7 +20,7 @@ namespace FluentRestBuilder
         protected IInputPipe<TOutput> Child { get; private set; }
 
         object IServiceProvider.GetService(Type serviceType) =>
-            this.serviceProvider.GetService(serviceType);
+            this.GetService(serviceType);
 
         TPipe IOutputPipe<TOutput>.Attach<TPipe>(TPipe pipe)
         {
@@ -29,6 +29,9 @@ namespace FluentRestBuilder
         }
 
         Task<IActionResult> IPipe.Execute() => this.Execute();
+
+        protected virtual object GetService(Type serviceType) =>
+            this.serviceProvider.GetService(serviceType);
 
         protected abstract Task<IActionResult> Execute();
     }

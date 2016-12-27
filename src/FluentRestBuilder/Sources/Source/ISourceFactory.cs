@@ -5,11 +5,10 @@
 namespace FluentRestBuilder.Sources.Source
 {
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
 
     public interface ISourceFactory<TOutput>
     {
-        OutputPipe<TOutput> Resolve(Task<TOutput> output);
-
-        OutputPipe<TOutput> Resolve(TOutput output);
+        OutputPipe<TOutput> Resolve(Task<TOutput> output, IUrlHelper urlHelper);
     }
 }
