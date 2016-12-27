@@ -11,7 +11,6 @@ namespace FluentRestBuilder
     using Microsoft.Extensions.DependencyInjection;
     using Pipes.Queryable;
     using RestCollectionMutators.Filter;
-    using RestCollectionMutators.OrderBy;
     using RestCollectionMutators.Pagination;
     using RestCollectionMutators.Search;
 
