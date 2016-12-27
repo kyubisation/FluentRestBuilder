@@ -92,23 +92,6 @@ namespace FluentRestBuilder.Builder
             this.Services.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
 
             this.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            if (this.Services.Any(d => d.ServiceType == typeof(IUrlHelper)))
-            {
-                return;
-            }
-
-            this.RegisterUrlHelper();
-        }
-
-        private void RegisterUrlHelper()
-        {
-            this.Services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            this.Services.TryAddScoped(serviceProvider =>
-            {
-                var actionContextAccessor = serviceProvider.GetService<IActionContextAccessor>();
-                var urlHelperFactory = serviceProvider.GetService<IUrlHelperFactory>();
-                return urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
-            });
         }
     }
 }
