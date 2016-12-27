@@ -21,6 +21,7 @@ namespace FluentRestBuilder.Builder
     using Pipes.OrderByClientRequest;
     using Pipes.OrderByClientRequest.Expressions;
     using Pipes.Queryable;
+    using Pipes.SearchByClientRequest;
     using Pipes.SingleOrDefault;
     using Pipes.Validation;
     using Results.Options;
@@ -70,6 +71,9 @@ namespace FluentRestBuilder.Builder
             this.Services.TryAddScoped(
                 typeof(IOrderByClientRequestPipeFactory<>),
                 typeof(OrderByClientRequestPipeFactory<>));
+            this.Services.TryAddScoped(
+                typeof(ISearchByClientRequestPipeFactory<>),
+                typeof(SearchByClientRequestPipeFactory<>));
         }
 
         private void RegisterMappings()

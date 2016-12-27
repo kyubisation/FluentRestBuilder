@@ -55,11 +55,6 @@ namespace FluentRestBuilder
             IRestCollectionFilter<TInput> filter) =>
             pipe.MapQueryable(filter.Apply);
 
-        public static OutputPipe<IQueryable<TInput>> ApplySearch<TInput>(
-            this IOutputPipe<IOrderedQueryable<TInput>> pipe,
-            IRestCollectionSearch<TInput> search) =>
-            pipe.MapQueryable(search.Apply);
-
         public static OutputPipe<IQueryable<TInput>> ApplyPagination<TInput>(
             this IOutputPipe<IOrderedQueryable<TInput>> pipe,
             IRestCollectionPagination<TInput> pagination) =>
