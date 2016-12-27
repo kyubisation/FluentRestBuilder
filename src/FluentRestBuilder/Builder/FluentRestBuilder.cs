@@ -19,6 +19,7 @@ namespace FluentRestBuilder.Builder
     using Pipes.EntityValidation;
     using Pipes.Mapping;
     using Pipes.OrderByClientRequest;
+    using Pipes.OrderByClientRequest.Expressions;
     using Pipes.Queryable;
     using Pipes.SingleOrDefault;
     using Pipes.Validation;
@@ -81,6 +82,8 @@ namespace FluentRestBuilder.Builder
         private void RegisterUtilities()
         {
             this.Services.TryAddScoped<IOrderByClientRequestInterpreter, OrderByClientRequestInterpreter>();
+            this.Services.TryAddScoped(
+                typeof(IOrderByExpressionBuilder<>), typeof(OrderByExpressionBuilder<>));
             this.Services.TryAddSingleton(
                 typeof(IQueryableTransformer<>), typeof(QueryableTransformer<>));
             this.Services.TryAddSingleton<IQueryArgumentKeys, QueryArgumentKeys>();

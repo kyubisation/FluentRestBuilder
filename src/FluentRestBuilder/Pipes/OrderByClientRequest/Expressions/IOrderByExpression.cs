@@ -1,4 +1,8 @@
-﻿namespace FluentRestBuilder.Pipes.OrderByClientRequest.Expressions
+﻿// <copyright file="IOrderByExpression.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRestBuilder.Pipes.OrderByClientRequest.Expressions
 {
     using System.Linq;
 

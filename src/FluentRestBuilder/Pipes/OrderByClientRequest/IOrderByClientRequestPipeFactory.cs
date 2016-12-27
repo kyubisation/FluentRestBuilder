@@ -1,4 +1,8 @@
-﻿namespace FluentRestBuilder.Pipes.OrderByClientRequest
+﻿// <copyright file="IOrderByClientRequestPipeFactory.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRestBuilder.Pipes.OrderByClientRequest
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -7,7 +11,6 @@
     public interface IOrderByClientRequestPipeFactory<TInput>
     {
         OutputPipe<IQueryable<TInput>> Resolve(
-            IOrderByExpression<TInput> defaultOrderBy,
             IDictionary<string, IOrderByExpressionFactory<TInput>> orderByDictionary,
             IOutputPipe<IQueryable<TInput>> parent);
     }
