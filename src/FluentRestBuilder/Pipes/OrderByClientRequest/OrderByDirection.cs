@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.RestCollectionMutators.OrderBy
+namespace FluentRestBuilder.Pipes.OrderByClientRequest
 {
     public enum OrderByDirection
     {

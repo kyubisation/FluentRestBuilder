@@ -10,7 +10,6 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
     using Common;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
-    using RestCollectionMutators.OrderBy;
 
     public class OrderByClientRequestInterpreter : IOrderByClientRequestInterpreter
     {
@@ -42,7 +41,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
         private Tuple<string, OrderByDirection> ParseOrderBy(string orderByString)
         {
             return orderByString.StartsWith("!")
-                ? Tuple.Create(orderByString.Substring(1), OrderByDirection.Descending)
+                ? Tuple.Create(orderByString.Substring(1).Trim(), OrderByDirection.Descending)
                 : Tuple.Create(orderByString, OrderByDirection.Ascending);
         }
     }

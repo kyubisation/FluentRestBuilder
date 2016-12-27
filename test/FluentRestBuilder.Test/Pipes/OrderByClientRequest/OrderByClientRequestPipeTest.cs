@@ -17,7 +17,6 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
     using FluentRestBuilder.Sources.Source;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using RestCollectionMutators.OrderBy;
     using Xunit;
 
     public class OrderByClientRequestPipeTest : ScopedDbContextTestBase

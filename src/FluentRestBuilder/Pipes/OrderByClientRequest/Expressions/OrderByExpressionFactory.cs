@@ -6,7 +6,6 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest.Expressions
 {
     using System;
     using System.Linq.Expressions;
-    using RestCollectionMutators.OrderBy;
 
     public class OrderByExpressionFactory<TEntity, TKey> : IOrderByExpressionFactory<TEntity>
     {

@@ -6,7 +6,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.MetaModel.OrderBy
 {
     using System;
     using System.Linq.Expressions;
-    using FluentRestBuilder.RestCollectionMutators.OrderBy;
+    using FluentRestBuilder.Pipes.OrderByClientRequest;
 
     public interface IOrderByBuilder<TEntity>
     {
