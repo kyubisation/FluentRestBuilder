@@ -33,7 +33,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
 
             var result = await new SourcePipe<IQueryable<Entity>>(
                     this.Context.Entities, this.ServiceProvider)
-                .ApplyOrderBy(b => b.Add(nameof(Entity.Name), e => e.Name).Build())
+                .ApplyOrderByClientRequest(b => b.Add(nameof(Entity.Name), e => e.Name).Build())
                 .Map(q => q.ToListAsync())
                 .ToObjectResultOrDefault();
             Assert.Equal(3, result.Count);
@@ -48,7 +48,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
             var result = await new SourcePipe<IQueryable<Entity>>(
                     this.Context.Entities, this.ServiceProvider)
                 .OrderByDescending(e => e.Name)
-                .ApplyOrderBy(b => b.Add(nameof(Entity.Name), e => e.Name).Build())
+                .ApplyOrderByClientRequest(b => b.Add(nameof(Entity.Name), e => e.Name).Build())
                 .Map(q => q.ToListAsync())
                 .ToObjectResultOrDefault();
             Assert.Equal(3, result.Count);
@@ -65,7 +65,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
             var result = await new SourcePipe<IQueryable<Entity>>(
                     this.Context.Entities, this.ServiceProvider)
                 .OrderByDescending(e => e.Name)
-                .ApplyOrderBy(b => b.Add(nameof(Entity.Name), e => e.Name).Build())
+                .ApplyOrderByClientRequest(b => b.Add(nameof(Entity.Name), e => e.Name).Build())
                 .Map(q => q.ToListAsync())
                 .ToObjectResultOrDefault();
             Assert.Equal(3, result.Count);

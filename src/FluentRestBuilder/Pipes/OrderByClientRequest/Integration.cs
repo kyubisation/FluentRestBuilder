@@ -14,7 +14,7 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static OutputPipe<IQueryable<TInput>> ApplyOrderBy<TInput>(
+        public static OutputPipe<IQueryable<TInput>> ApplyOrderByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
                 Func<IOrderByExpressionBuilder<TInput>, IDictionary<string, IOrderByExpressionFactory<TInput>>> builder)
         {
