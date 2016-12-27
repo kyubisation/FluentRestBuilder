@@ -1,4 +1,4 @@
-﻿// <copyright file="ISourcePipeFactory.cs" company="Kyubisation">
+﻿// <copyright file="ISourceFactory.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -6,7 +6,7 @@ namespace FluentRestBuilder.Sources.Source
 {
     using System.Threading.Tasks;
 
-    public interface ISourcePipeFactory<TOutput>
+    public interface ISourceFactory<TOutput>
     {
         OutputPipe<TOutput> Resolve(Task<TOutput> output);
 

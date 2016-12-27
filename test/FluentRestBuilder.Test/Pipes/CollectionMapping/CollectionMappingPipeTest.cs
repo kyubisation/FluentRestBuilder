@@ -1,4 +1,4 @@
-﻿// <copyright file="CollectionMappingPipeTest.cs" company="Kyubisation">
+// <copyright file="CollectionMappingPipeTest.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -23,7 +23,7 @@ namespace FluentRestBuilder.Test.Pipes.CollectionMapping
         public async Task TestCollectionTransformation()
         {
             this.CreateEntities();
-            var result = await new SourcePipe<IQueryable<Entity>>(this.Context.Entities, this.ServiceProvider)
+            var result = await new Source<IQueryable<Entity>>(this.Context.Entities, this.ServiceProvider)
                 .MapToRestCollection(e => e.Name)
                 .ToObjectResultOrDefault();
             Assert.NotNull(result);

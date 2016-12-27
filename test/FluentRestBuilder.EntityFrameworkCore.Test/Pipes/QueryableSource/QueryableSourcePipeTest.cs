@@ -22,7 +22,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
         {
             var parent = await this.CreateParentWithChildren();
             var parent2 = await this.CreateParentWithChildren();
-            var result = await new SourcePipe<Parent>(parent, this.ServiceProvider)
+            var result = await new Source<Parent>(parent, this.ServiceProvider)
                 .SelectQueryableSource(f => f.Resolve<Child>())
                 .ToObjectResultOrDefault();
             Assert.NotNull(result);
@@ -36,7 +36,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
         {
             var parent = await this.CreateParentWithChildren();
             await this.CreateParentWithChildren();
-            var result = await new SourcePipe<Parent>(parent, this.ServiceProvider)
+            var result = await new Source<Parent>(parent, this.ServiceProvider)
                 .SelectQueryableSource((f, p) => f.Resolve<Child>().Where(c => c.ParentId == p.Id))
                 .ToObjectResultOrDefault();
             Assert.NotNull(result);

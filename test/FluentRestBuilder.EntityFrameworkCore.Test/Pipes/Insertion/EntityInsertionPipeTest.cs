@@ -19,7 +19,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Insertion
         public async Task TestInsertion()
         {
             var entity = new Entity { Id = 1, Name = "test" };
-            var result = await new SourcePipe<Entity>(entity, this.ServiceProvider)
+            var result = await new Source<Entity>(entity, this.ServiceProvider)
                 .InsertEntity()
                 .ToObjectResultOrDefault();
             Assert.Same(entity, result);

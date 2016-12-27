@@ -44,9 +44,9 @@ namespace FluentRestBuilder.Builder
         private void RegisterSourceFactories()
         {
             this.Services.TryAddScoped(
-                typeof(ISourcePipeFactory<>), typeof(SourcePipeFactory<>));
+                typeof(ISourceFactory<>), typeof(SourceFactory<>));
             this.Services.TryAddScoped(
-                typeof(ILazySourcePipeFactory<>), typeof(LazySourcePipeFactory<>));
+                typeof(ILazySourceFactory<>), typeof(LazySourceFactory<>));
         }
 
         private void RegisterPipeFactories()

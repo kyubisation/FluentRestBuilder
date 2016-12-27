@@ -1,4 +1,4 @@
-﻿// <copyright file="LazySourcePipeTest.cs" company="Kyubisation">
+﻿// <copyright file="LazySourceTest.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -10,12 +10,12 @@ namespace FluentRestBuilder.Test.Sources.LazySource
     using FluentRestBuilder.Sources.LazySource;
     using Xunit;
 
-    public class LazySourcePipeTest
+    public class LazySourceTest
     {
         [Fact]
         public async Task TestNoChildAttached()
         {
-            var sourcePipe = new LazySourcePipe<Entity>(() => new Entity(), new EmptyServiceProvider());
+            var sourcePipe = new LazySource<Entity>(() => new Entity(), new EmptyServiceProvider());
             await Assert.ThrowsAsync<NoPipeAttachedException>(() => ((IOutputPipe<Entity>)sourcePipe).Execute());
         }
 
@@ -23,7 +23,7 @@ namespace FluentRestBuilder.Test.Sources.LazySource
         public async Task TestExecute()
         {
             var lazySource = new Lazy<Entity>(() => new Entity());
-            var resultPipe = new LazySourcePipe<Entity>(() => lazySource.Value, new EmptyServiceProvider())
+            var resultPipe = new LazySource<Entity>(() => lazySource.Value, new EmptyServiceProvider())
                 .ToMockResultPipe();
             Assert.False(lazySource.IsValueCreated);
             var result = await resultPipe.Execute()

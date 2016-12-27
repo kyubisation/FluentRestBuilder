@@ -1,4 +1,4 @@
-﻿// <copyright file="SourcePipeTest.cs" company="Kyubisation">
+﻿// <copyright file="SourceTest.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -9,12 +9,12 @@ namespace FluentRestBuilder.Test.Sources.Source
     using FluentRestBuilder.Sources.Source;
     using Xunit;
 
-    public class SourcePipeTest
+    public class SourceTest
     {
         [Fact]
         public async Task TestNoChildAttached()
         {
-            var sourcePipe = new SourcePipe<Entity>(new Entity(), new EmptyServiceProvider());
+            var sourcePipe = new Source<Entity>(new Entity(), new EmptyServiceProvider());
             await Assert.ThrowsAsync<NoPipeAttachedException>(
                 () => ((IOutputPipe<Entity>)sourcePipe).Execute());
         }
@@ -23,7 +23,7 @@ namespace FluentRestBuilder.Test.Sources.Source
         public async Task TestExecute()
         {
             var source = new Entity();
-            var result = await new SourcePipe<Entity>(source, new EmptyServiceProvider())
+            var result = await new Source<Entity>(source, new EmptyServiceProvider())
                 .ToObjectResultOrDefault();
             Assert.Same(source, result);
         }

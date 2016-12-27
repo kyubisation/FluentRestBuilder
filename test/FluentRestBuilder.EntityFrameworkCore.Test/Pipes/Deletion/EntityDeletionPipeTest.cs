@@ -19,7 +19,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Deletion
         {
             this.CreateEntities();
             var entity = Entity.Entities.First();
-            var result = await new SourcePipe<Entity>(entity, this.ServiceProvider)
+            var result = await new Source<Entity>(entity, this.ServiceProvider)
                 .DeleteEntity()
                 .ToObjectResultOrDefault();
             Assert.Equal(entity.Id, result.Id);

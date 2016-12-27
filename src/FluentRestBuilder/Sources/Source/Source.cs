@@ -1,4 +1,4 @@
-﻿// <copyright file="SourcePipe.cs" company="Kyubisation">
+﻿// <copyright file="Source.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -7,17 +7,17 @@ namespace FluentRestBuilder.Sources.Source
     using System;
     using System.Threading.Tasks;
 
-    public class SourcePipe<TOutput> : BaseSourcePipe<TOutput>
+    public class Source<TOutput> : BaseSource<TOutput>
     {
         private readonly Task<TOutput> output;
 
-        public SourcePipe(Task<TOutput> output, IServiceProvider serviceProvider)
+        public Source(Task<TOutput> output, IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
             this.output = output;
         }
 
-        public SourcePipe(TOutput output, IServiceProvider serviceProvider)
+        public Source(TOutput output, IServiceProvider serviceProvider)
             : this(Task.FromResult(output), serviceProvider)
         {
         }

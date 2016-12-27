@@ -16,13 +16,13 @@ namespace FluentRestBuilder
         public static OutputPipe<TOutput> FromSource<TOutput>(
             this ControllerBase controller, Func<TOutput> output) =>
             controller.HttpContext.RequestServices
-                .GetService<ILazySourcePipeFactory<TOutput>>()
+                .GetService<ILazySourceFactory<TOutput>>()
                 .Resolve(output);
 
         public static OutputPipe<TOutput> FromSource<TOutput>(
             this ControllerBase controller, Func<Task<TOutput>> output) =>
             controller.HttpContext.RequestServices
-                .GetService<ILazySourcePipeFactory<TOutput>>()
+                .GetService<ILazySourceFactory<TOutput>>()
                 .Resolve(output);
     }
 }

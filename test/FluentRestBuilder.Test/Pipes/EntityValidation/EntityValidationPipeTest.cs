@@ -15,7 +15,7 @@ namespace FluentRestBuilder.Test.Pipes.EntityValidation
 
     public class EntityValidationPipeTest : TestBaseWithServiceProvider
     {
-        private readonly SourcePipe<Entity> source;
+        private readonly Source<Entity> source;
         private readonly Entity entity = new Entity { Id = 1, Name = "test" };
 
         public EntityValidationPipeTest()
@@ -23,7 +23,7 @@ namespace FluentRestBuilder.Test.Pipes.EntityValidation
             var provider = new ServiceCollection()
                 .AddTransient<IEntityValidationPipeFactory<Entity>, EntityValidationPipeFactory<Entity>>()
                 .BuildServiceProvider();
-            this.source = new SourcePipe<Entity>(this.entity, provider);
+            this.source = new Source<Entity>(this.entity, provider);
         }
 
         [Fact]

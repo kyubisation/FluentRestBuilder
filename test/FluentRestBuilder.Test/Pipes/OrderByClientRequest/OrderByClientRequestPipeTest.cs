@@ -31,7 +31,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
                 .Add(Tuple.Create(nameof(Entity.Name), OrderByDirection.Ascending));
             this.CreateOrderByEntities();
 
-            var result = await new SourcePipe<IQueryable<Entity>>(
+            var result = await new Source<IQueryable<Entity>>(
                     this.Context.Entities, this.ServiceProvider)
                 .ApplyOrderByClientRequest(b => b.Add(nameof(Entity.Name), e => e.Name).Build())
                 .Map(q => q.ToListAsync())
@@ -45,7 +45,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
         {
             this.CreateOrderByEntities();
 
-            var result = await new SourcePipe<IQueryable<Entity>>(
+            var result = await new Source<IQueryable<Entity>>(
                     this.Context.Entities, this.ServiceProvider)
                 .OrderByDescending(e => e.Name)
                 .ApplyOrderByClientRequest(b => b.Add(nameof(Entity.Name), e => e.Name).Build())
@@ -62,7 +62,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
                 .Add(Tuple.Create(nameof(Entity.Name), OrderByDirection.Ascending));
             this.CreateOrderByEntities();
 
-            var result = await new SourcePipe<IQueryable<Entity>>(
+            var result = await new Source<IQueryable<Entity>>(
                     this.Context.Entities, this.ServiceProvider)
                 .OrderByDescending(e => e.Name)
                 .ApplyOrderByClientRequest(b => b.Add(nameof(Entity.Name), e => e.Name).Build())

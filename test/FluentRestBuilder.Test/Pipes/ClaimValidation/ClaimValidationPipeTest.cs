@@ -17,7 +17,7 @@ namespace FluentRestBuilder.Test.Pipes.ClaimValidation
     {
         public const string ClaimType = "claimType";
         public const string Claim = "claim";
-        private readonly SourcePipe<Entity> source;
+        private readonly Source<Entity> source;
         private readonly MockPrincipal principal;
 
         public ClaimValidationPipeTest()
@@ -30,7 +30,7 @@ namespace FluentRestBuilder.Test.Pipes.ClaimValidation
                 })
                 .AddTransient<IClaimValidationPipeFactory<Entity>, ClaimValidationPipeFactory<Entity>>()
                 .BuildServiceProvider();
-            this.source = new SourcePipe<Entity>(new Entity(), provider);
+            this.source = new Source<Entity>(new Entity(), provider);
         }
 
         [Fact]

@@ -24,7 +24,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Update
             Assert.NotEqual(newName, entity.Name);
             entity.Name = newName;
 
-            var result = await new SourcePipe<Entity>(entity, this.ServiceProvider)
+            var result = await new Source<Entity>(entity, this.ServiceProvider)
                 .UpdateEntity()
                 .ToObjectResultOrDefault();
             Assert.Equal(entity.Id, result.Id);

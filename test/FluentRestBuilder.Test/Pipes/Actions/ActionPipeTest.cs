@@ -15,14 +15,14 @@ namespace FluentRestBuilder.Test.Pipes.Actions
     {
         private const string NewName = "ActionPipeTest";
         private readonly Entity entity = new Entity { Id = 1, Name = "test" };
-        private readonly SourcePipe<Entity> source;
+        private readonly Source<Entity> source;
 
         public ActionPipeTest()
         {
             var provider = new ServiceCollection()
                 .AddTransient<IActionPipeFactory<Entity>, ActionPipeFactory<Entity>>()
                 .BuildServiceProvider();
-            this.source = new SourcePipe<Entity>(this.entity, provider);
+            this.source = new Source<Entity>(this.entity, provider);
         }
 
         [Fact]

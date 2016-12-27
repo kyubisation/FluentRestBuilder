@@ -20,7 +20,7 @@ namespace FluentRestBuilder.Test.Pipes.Mapping
             var provider = new ServiceCollection()
                 .AddTransient<IMappingPipeFactory<Entity, string>, MappingPipeFactory<Entity, string>>()
                 .BuildServiceProvider();
-            var result = await new SourcePipe<Entity>(entity, provider)
+            var result = await new Source<Entity>(entity, provider)
                 .Map(e => e.Name)
                 .ToObjectResultOrDefault();
             Assert.Equal(entity.Name, result);
