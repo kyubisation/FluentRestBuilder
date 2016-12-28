@@ -4,8 +4,6 @@
 
 namespace FluentRestBuilder.Pipes.FilterByClientRequest
 {
-    using System;
-
     public class FilterInterpreterException : FilterException
     {
         public FilterInterpreterException(string message)
