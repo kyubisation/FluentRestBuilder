@@ -41,7 +41,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
         private Tuple<string, OrderByDirection> ParseOrderBy(string orderByString)
         {
             return orderByString.StartsWith("!")
-                ? Tuple.Create(orderByString.Substring(1).Trim(), OrderByDirection.Descending)
+                ? Tuple.Create(orderByString.TrimStart('!', ' '), OrderByDirection.Descending)
                 : Tuple.Create(orderByString, OrderByDirection.Ascending);
         }
     }
