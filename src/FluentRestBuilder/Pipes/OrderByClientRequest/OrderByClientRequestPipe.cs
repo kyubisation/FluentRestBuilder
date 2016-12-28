@@ -4,9 +4,12 @@
 
 namespace FluentRestBuilder.Pipes.OrderByClientRequest
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Expressions;
+    using Microsoft.AspNetCore.Mvc;
 
     public class OrderByClientRequestPipe<TInput> : BaseMappingPipe<IQueryable<TInput>, IQueryable<TInput>>
     {
@@ -23,6 +26,19 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
             this.orderByClientRequestInterpreter = orderByClientRequestInterpreter;
         }
 
+        protected override Task<IActionResult> Execute(IQueryable<TInput> input)
+        {
+            try
+            {
+                return base.Execute(input);
+            }
+            catch (OrderByNotSupportedException exception)
+            {
+                return Task.FromResult<IActionResult>(
+                    new BadRequestObjectResult(new { error = exception.Message }));
+            }
+        }
+
         protected override IQueryable<TInput> Map(IQueryable<TInput> input)
         {
             var orderByExpressions = this.ResolveOrderBySequence();
@@ -33,9 +49,19 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
         private List<IOrderByExpression<TInput>> ResolveOrderBySequence() =>
             this.orderByClientRequestInterpreter
                 .ParseRequestQuery()
-                .Where(o => this.orderByDictionary.ContainsKey(o.Item1))
-                .Select(o => this.orderByDictionary[o.Item1].Create(o.Item2))
+                .Select(o => this.ResolveFactory(o.Item1).Create(o.Item2))
                 .ToList();
+
+        private IOrderByExpressionFactory<TInput> ResolveFactory(string property)
+        {
+            IOrderByExpressionFactory<TInput> factory;
+            if (!this.orderByDictionary.TryGetValue(property, out factory))
+            {
+                throw new OrderByNotSupportedException(property);
+            }
+
+            return factory;
+        }
 
         private IQueryable<TInput> ApplyOrderBy(
             List<IOrderByExpression<TInput>> orderByExpressions, IQueryable<TInput> queryable)
