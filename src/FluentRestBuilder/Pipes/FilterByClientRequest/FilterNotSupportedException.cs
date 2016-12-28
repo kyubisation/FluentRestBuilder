@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
+namespace FluentRestBuilder.Pipes.FilterByClientRequest
 {
     public class FilterNotSupportedException : FilterException
     {
