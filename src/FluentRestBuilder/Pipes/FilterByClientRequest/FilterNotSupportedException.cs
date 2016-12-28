@@ -7,7 +7,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
     public class FilterNotSupportedException : FilterException
     {
         public FilterNotSupportedException(string property)
-            : base($"'{property}' is not supported!")
+            : base($"'{property}' filter is not supported!")
         {
         }
     }
