@@ -4,7 +4,6 @@
 
 namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -27,7 +26,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
         public async Task TestBasicUseCase()
         {
             this.orderByInterpreter.RequestedOrderBy
-                .Add(Tuple.Create(nameof(Entity.Name), OrderByDirection.Ascending));
+                .Add(new OrderByRequest(nameof(Entity.Name), OrderByDirection.Ascending));
             this.CreateOrderByEntities();
 
             var result = await new Source<IQueryable<Entity>>(
@@ -58,7 +57,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
         public async Task TestDefaultOrderByOverridden()
         {
             this.orderByInterpreter.RequestedOrderBy
-                .Add(Tuple.Create(nameof(Entity.Name), OrderByDirection.Ascending));
+                .Add(new OrderByRequest(nameof(Entity.Name), OrderByDirection.Ascending));
             this.CreateOrderByEntities();
 
             var result = await new Source<IQueryable<Entity>>(
@@ -98,10 +97,9 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
 
         private class Interpreter : IOrderByClientRequestInterpreter
         {
-            public List<Tuple<string, OrderByDirection>> RequestedOrderBy { get; } =
-                new List<Tuple<string, OrderByDirection>>();
+            public List<OrderByRequest> RequestedOrderBy { get; } = new List<OrderByRequest>();
 
-            public IEnumerable<Tuple<string, OrderByDirection>> ParseRequestQuery() =>
+            public IEnumerable<OrderByRequest> ParseRequestQuery() =>
                 this.RequestedOrderBy;
         }
     }

@@ -4,7 +4,6 @@
 
 namespace FluentRestBuilder.Pipes.OrderByClientRequest
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Common;
@@ -24,12 +23,12 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
             this.queryCollection = httpContextAccessor.HttpContext.Request.Query;
         }
 
-        public IEnumerable<Tuple<string, OrderByDirection>> ParseRequestQuery()
+        public IEnumerable<OrderByRequest> ParseRequestQuery()
         {
             StringValues orderByValues;
             if (!this.queryCollection.TryGetValue(this.queryArgumentKeys.OrderBy, out orderByValues))
             {
-                return Enumerable.Empty<Tuple<string, OrderByDirection>>();
+                return Enumerable.Empty<OrderByRequest>();
             }
 
             return orderByValues
@@ -38,11 +37,12 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
                 .Select(this.ParseOrderBy);
         }
 
-        private Tuple<string, OrderByDirection> ParseOrderBy(string orderByString)
+        private OrderByRequest ParseOrderBy(string orderByString)
         {
             return orderByString.StartsWith("!")
-                ? Tuple.Create(orderByString.TrimStart('!', ' '), OrderByDirection.Descending)
-                : Tuple.Create(orderByString, OrderByDirection.Ascending);
+                ? new OrderByRequest(
+                    orderByString, orderByString.TrimStart('!', ' '), OrderByDirection.Descending)
+                : new OrderByRequest(orderByString, OrderByDirection.Ascending);
         }
     }
 }

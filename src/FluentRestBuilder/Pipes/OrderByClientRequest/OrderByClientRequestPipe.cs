@@ -48,15 +48,15 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
         private List<IOrderByExpression<TInput>> ResolveOrderBySequence() =>
             this.orderByClientRequestInterpreter
                 .ParseRequestQuery()
-                .Select(o => this.ResolveFactory(o.Item1).Create(o.Item2))
+                .Select(o => this.ResolveFactory(o).Create(o.Direction))
                 .ToList();
 
-        private IOrderByExpressionFactory<TInput> ResolveFactory(string property)
+        private IOrderByExpressionFactory<TInput> ResolveFactory(OrderByRequest request)
         {
             IOrderByExpressionFactory<TInput> factory;
-            if (!this.orderByDictionary.TryGetValue(property, out factory))
+            if (!this.orderByDictionary.TryGetValue(request.Property, out factory))
             {
-                throw new OrderByNotSupportedException(property);
+                throw new OrderByNotSupportedException(request.OriginalProperty);
             }
 
             return factory;

@@ -4,11 +4,10 @@
 
 namespace FluentRestBuilder.Pipes.OrderByClientRequest
 {
-    using System;
     using System.Collections.Generic;
 
     public interface IOrderByClientRequestInterpreter
     {
-        IEnumerable<Tuple<string, OrderByDirection>> ParseRequestQuery();
+        IEnumerable<OrderByRequest> ParseRequestQuery();
     }
 }
