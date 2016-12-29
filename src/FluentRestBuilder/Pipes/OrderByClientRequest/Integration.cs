@@ -6,7 +6,6 @@
 namespace FluentRestBuilder
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Extensions.DependencyInjection;
     using Pipes.OrderByClientRequest;
@@ -16,11 +15,11 @@ namespace FluentRestBuilder
     {
         public static OutputPipe<IQueryable<TInput>> ApplyOrderByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
-                Func<IOrderByExpressionBuilder<TInput>, IDictionary<string, IOrderByExpressionFactory<TInput>>> builder)
+                Func<IOrderByExpressionBuilder<TInput>, IOrderByExpressionBuilder<TInput>> builder)
         {
             var orderByExpressionBuilder = pipe.GetService<IOrderByExpressionBuilder<TInput>>();
             return pipe.GetService<IOrderByClientRequestPipeFactory<TInput>>()
-                .Resolve(builder(orderByExpressionBuilder), pipe);
+                .Resolve(builder(orderByExpressionBuilder).Build(), pipe);
         }
     }
 }

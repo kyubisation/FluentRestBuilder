@@ -32,7 +32,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
 
             var result = await new Source<IQueryable<Entity>>(
                     this.Context.Entities, this.ServiceProvider)
-                .ApplyOrderByClientRequest(b => b.Add(nameof(Entity.Name), e => e.Name).Build())
+                .ApplyOrderByClientRequest(b => b.Add(nameof(Entity.Name), e => e.Name))
                 .Map(q => q.ToListAsync())
                 .ToObjectResultOrDefault();
             Assert.Equal(3, result.Count);
@@ -47,7 +47,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
             var result = await new Source<IQueryable<Entity>>(
                     this.Context.Entities, this.ServiceProvider)
                 .OrderByDescending(e => e.Name)
-                .ApplyOrderByClientRequest(b => b.Add(nameof(Entity.Name), e => e.Name).Build())
+                .ApplyOrderByClientRequest(b => b.Add(nameof(Entity.Name), e => e.Name))
                 .Map(q => q.ToListAsync())
                 .ToObjectResultOrDefault();
             Assert.Equal(3, result.Count);
@@ -64,7 +64,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
             var result = await new Source<IQueryable<Entity>>(
                     this.Context.Entities, this.ServiceProvider)
                 .OrderByDescending(e => e.Name)
-                .ApplyOrderByClientRequest(b => b.Add(nameof(Entity.Name), e => e.Name).Build())
+                .ApplyOrderByClientRequest(b => b.Add(nameof(Entity.Name), e => e.Name))
                 .Map(q => q.ToListAsync())
                 .ToObjectResultOrDefault();
             Assert.Equal(3, result.Count);
@@ -80,7 +80,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
 
             var result = await new Source<IQueryable<Entity>>(
                     this.Context.Entities, this.ServiceProvider)
-                .ApplyOrderByClientRequest(b => b.Build())
+                .ApplyOrderByClientRequest(b => b)
                 .Map(q => q.ToListAsync())
                 .ToMockResultPipe()
                 .Execute();

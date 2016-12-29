@@ -10,11 +10,11 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest.Expressions
 
     public interface IOrderByExpressionBuilder<TEntity>
     {
+        IOrderByExpressionBuilder<TEntity> AsCaseInsensitive();
+
         IOrderByExpressionBuilder<TEntity> Add<TKey>(
             string key, Expression<Func<TEntity, TKey>> orderByExpression);
 
         IDictionary<string, IOrderByExpressionFactory<TEntity>> Build();
-
-        IDictionary<string, IOrderByExpressionFactory<TEntity>> BuildCaseInsensitive();
     }
 }

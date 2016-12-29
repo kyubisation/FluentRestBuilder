@@ -10,8 +10,15 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest.Expressions
 
     public class OrderByExpressionBuilder<TEntity> : IOrderByExpressionBuilder<TEntity>
     {
-        private readonly IDictionary<string, IOrderByExpressionFactory<TEntity>> orderByDictionary =
+        private IDictionary<string, IOrderByExpressionFactory<TEntity>> orderByDictionary =
             new Dictionary<string, IOrderByExpressionFactory<TEntity>>();
+
+        public IOrderByExpressionBuilder<TEntity> AsCaseInsensitive()
+        {
+            this.orderByDictionary = new Dictionary<string, IOrderByExpressionFactory<TEntity>>(
+                this.orderByDictionary, StringComparer.OrdinalIgnoreCase);
+            return this;
+        }
 
         public IOrderByExpressionBuilder<TEntity> Add<TKey>(
             string key, Expression<Func<TEntity, TKey>> orderByExpression)
@@ -23,9 +30,5 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest.Expressions
 
         public IDictionary<string, IOrderByExpressionFactory<TEntity>> Build() =>
             this.orderByDictionary;
-
-        public IDictionary<string, IOrderByExpressionFactory<TEntity>> BuildCaseInsensitive() =>
-            new Dictionary<string, IOrderByExpressionFactory<TEntity>>(
-                this.orderByDictionary, StringComparer.OrdinalIgnoreCase);
     }
 }
