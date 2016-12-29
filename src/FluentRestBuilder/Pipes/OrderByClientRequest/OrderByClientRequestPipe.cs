@@ -25,16 +25,15 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
             this.orderByClientRequestInterpreter = orderByClientRequestInterpreter;
         }
 
-        protected override Task<IActionResult> Execute(IQueryable<TInput> input)
+        protected override async Task<IActionResult> Execute(IQueryable<TInput> input)
         {
             try
             {
-                return base.Execute(input);
+                return await base.Execute(input);
             }
             catch (OrderByNotSupportedException exception)
             {
-                return Task.FromResult<IActionResult>(
-                    new BadRequestObjectResult(new { error = exception.Message }));
+                return new BadRequestObjectResult(new { error = exception.Message });
             }
         }
 

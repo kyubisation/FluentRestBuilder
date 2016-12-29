@@ -14,6 +14,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
     using FluentRestBuilder.Pipes.OrderByClientRequest.Expressions;
     using FluentRestBuilder.Pipes.Queryable;
     using FluentRestBuilder.Sources.Source;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;
@@ -68,6 +69,22 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
                 .ToObjectResultOrDefault();
             Assert.Equal(3, result.Count);
             Assert.Equal(new[] { "a", "b", "c" }, result.Select(e => e.Name));
+        }
+
+        [Fact]
+        public async Task TestNotSupported()
+        {
+            this.orderByInterpreter.RequestedOrderBy
+                .Add(new OrderByRequest(nameof(Entity.Name), OrderByDirection.Ascending));
+            this.CreateOrderByEntities();
+
+            var result = await new Source<IQueryable<Entity>>(
+                    this.Context.Entities, this.ServiceProvider)
+                .ApplyOrderByClientRequest(b => b.Build())
+                .Map(q => q.ToListAsync())
+                .ToMockResultPipe()
+                .Execute();
+            Assert.IsAssignableFrom<BadRequestObjectResult>(result);
         }
 
         protected override void Setup(IServiceCollection services)
