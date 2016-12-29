@@ -24,9 +24,9 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
             string property, FilterExpressionBuilderCallback<TEntity, string> builder)
         {
             var providerBuilder = this.CreateProviderBuilder();
-            this.filters.Add(
-                property, new StringFilterExpressionProvider<TEntity>(
-                    f => builder(f, providerBuilder)));
+            var expressionProvider = new StringFilterExpressionProvider<TEntity>(
+                f => builder(f, providerBuilder).Build());
+            this.filters.Add(property, expressionProvider);
             return this;
         }
 
@@ -40,9 +40,10 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
             FilterExpressionBuilderCallback<TEntity, TFilter> builder)
         {
             var providerBuilder = this.CreateProviderBuilder();
-            this.filters.Add(
-                property, new GenericFilterExpressionProvider<TEntity,TFilter>(
-                    f => builder(f, providerBuilder), conversion));
+            var expressionProvider = new GenericFilterExpressionProvider<TEntity, TFilter>(
+                f => builder(f, providerBuilder).Build(),
+                conversion);
+            this.filters.Add(property, expressionProvider);
             return this;
         }
 

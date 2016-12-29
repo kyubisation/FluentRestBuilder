@@ -27,16 +27,15 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
             this.interpreter = interpreter;
         }
 
-        protected override Task<IActionResult> Execute(IQueryable<TInput> input)
+        protected override async Task<IActionResult> Execute(IQueryable<TInput> input)
         {
             try
             {
-                return base.Execute(input);
+                return await base.Execute(input);
             }
             catch (FilterException exception)
             {
-                return Task.FromResult<IActionResult>(
-                    new BadRequestObjectResult(new { error = exception.Message }));
+                return new BadRequestObjectResult(new { error = exception.Message });
             }
         }
 

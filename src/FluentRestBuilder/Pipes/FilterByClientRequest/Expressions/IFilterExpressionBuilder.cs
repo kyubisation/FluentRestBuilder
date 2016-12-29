@@ -6,9 +6,8 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq.Expressions;
 
-    public delegate IDictionary<FilterType, Expression<Func<TEntity, bool>>>
+    public delegate IFilterExpressionProviderBuilder<TEntity>
         FilterExpressionBuilderCallback<TEntity, in TFilter>(
         TFilter filter, IFilterExpressionProviderBuilder<TEntity> builder);
 
