@@ -8,24 +8,24 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
     using System.Collections.Generic;
     using System.Linq.Expressions;
 
-    public class GenericFilterExpressionProvider<TEntity, TFilter> : FilterExpressionProvider<TEntity, TFilter>
+    public class GenericFilterExpressionProvider<TEntity, TFilter> : IFilterExpressionProvider<TEntity>
     {
+        private readonly Func<TFilter, IDictionary<FilterType, Expression<Func<TEntity, bool>>>> filterBuilder;
         private readonly Func<string, TFilter> conversion;
 
         public GenericFilterExpressionProvider(
-            IDictionary<FilterType, Func<TFilter, Expression<Func<TEntity, bool>>>> filterDictionary,
+            Func<TFilter, IDictionary<FilterType, Expression<Func<TEntity, bool>>>> filterBuilder,
             Func<string, TFilter> conversion)
-            : base(filterDictionary)
         {
-            this.conversion = conversion ?? ConvertToFilterType;
+            this.filterBuilder = filterBuilder;
+            this.conversion = conversion;
         }
 
-        public override Expression<Func<TEntity, bool>> Resolve(FilterType type, string filter)
+        public Expression<Func<TEntity, bool>> Resolve(FilterType type, string filter)
         {
             try
             {
-                var filterValue = this.conversion(filter);
-                return this.ResolveForType(type, filterValue);
+                return this.TryResolve(type, filter);
             }
             catch (Exception)
             {
@@ -33,7 +33,12 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
             }
         }
 
-        private static TFilter ConvertToFilterType(string filter) =>
-            (TFilter)Convert.ChangeType(filter, typeof(TFilter));
+        public Expression<Func<TEntity, bool>> TryResolve(FilterType type, string filter)
+        {
+            var filterValue = this.conversion(filter);
+            var dictionary = this.filterBuilder(filterValue);
+            Expression<Func<TEntity, bool>> filterExpression;
+            return dictionary.TryGetValue(type, out filterExpression) ? filterExpression : null;
+        }
     }
 }

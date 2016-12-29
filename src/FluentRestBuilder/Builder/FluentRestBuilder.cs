@@ -13,6 +13,8 @@ namespace FluentRestBuilder.Builder
     using Pipes.ClaimValidation;
     using Pipes.CollectionMapping;
     using Pipes.EntityValidation;
+    using Pipes.FilterByClientRequest;
+    using Pipes.FilterByClientRequest.Expressions;
     using Pipes.Mapping;
     using Pipes.OrderByClientRequest;
     using Pipes.OrderByClientRequest.Expressions;
@@ -70,6 +72,9 @@ namespace FluentRestBuilder.Builder
             this.Services.TryAddScoped(
                 typeof(ISearchByClientRequestPipeFactory<>),
                 typeof(SearchByClientRequestPipeFactory<>));
+            this.Services.TryAddScoped(
+                typeof(IFilterByClientRequestPipeFactory<>),
+                typeof(FilterByClientRequestPipeFactory<>));
         }
 
         private void RegisterMappings()
@@ -90,6 +95,11 @@ namespace FluentRestBuilder.Builder
             this.Services.TryAddScoped(
                 typeof(IAllowedOptionsBuilder<>), typeof(AllowedOptionsBuilder<>));
             this.Services.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
+            this.Services.TryAddTransient(
+                typeof(IFilterExpressionProviderBuilder<>),
+                typeof(FilterExpressionProviderBuilder<>));
+            this.Services.TryAddScoped(
+                typeof(IFilterExpressionBuilder<>), typeof(FilterExpressionBuilder<>));
 
             this.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
