@@ -9,7 +9,7 @@ namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
     using System.Threading.Tasks;
     using Common;
     using Common.Mocks;
-    using FluentRestBuilder.Common;
+    using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Pipes.Mapping;
     using FluentRestBuilder.Pipes.Queryable;
     using FluentRestBuilder.Pipes.SearchByClientRequest;

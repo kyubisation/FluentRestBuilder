@@ -7,7 +7,6 @@ namespace FluentRestBuilder.Pipes.SingleOrDefault
     using System;
     using System.Linq;
     using System.Linq.Expressions;
-    using Common;
 
     public class SingleOrDefaultPipeFactory<TInput> : ISingleOrDefaultPipeFactory<TInput>
     {

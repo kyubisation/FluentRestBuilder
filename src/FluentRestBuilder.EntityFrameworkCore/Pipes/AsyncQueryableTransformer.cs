@@ -2,12 +2,12 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.Common
+namespace FluentRestBuilder.EntityFrameworkCore.Pipes
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Common;
+    using FluentRestBuilder.Pipes;
     using Microsoft.EntityFrameworkCore;
 
     public class AsyncQueryableTransformer<TEntity> : IQueryableTransformer<TEntity>

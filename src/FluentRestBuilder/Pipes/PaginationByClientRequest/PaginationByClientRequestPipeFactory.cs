@@ -5,7 +5,6 @@
 namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 {
     using System.Linq;
-    using Common;
     using Storage;
 
     public class PaginationByClientRequestPipeFactory<TInput> : IPaginationByClientRequestPipeFactory<TInput>

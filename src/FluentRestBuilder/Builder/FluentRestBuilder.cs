@@ -4,11 +4,11 @@
 
 namespace FluentRestBuilder.Builder
 {
-    using Common;
     using Mapping;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Pipes;
     using Pipes.Actions;
     using Pipes.ClaimValidation;
     using Pipes.CollectionMapping;

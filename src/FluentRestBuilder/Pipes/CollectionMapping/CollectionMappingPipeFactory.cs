@@ -6,7 +6,6 @@ namespace FluentRestBuilder.Pipes.CollectionMapping
 {
     using System;
     using System.Linq;
-    using Common;
     using Hal;
     using Storage;
 

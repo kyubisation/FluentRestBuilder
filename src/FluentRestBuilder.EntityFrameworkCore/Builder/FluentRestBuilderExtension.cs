@@ -6,9 +6,9 @@
 namespace FluentRestBuilder
 {
     using Builder;
-    using Common;
     using EntityFrameworkCore.Common;
     using EntityFrameworkCore.MetaModel;
+    using EntityFrameworkCore.Pipes;
     using EntityFrameworkCore.Pipes.Deletion;
     using EntityFrameworkCore.Pipes.Insertion;
     using EntityFrameworkCore.Pipes.QueryableSource;
@@ -17,6 +17,7 @@ namespace FluentRestBuilder
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Pipes;
 
     public static class FluentRestBuilderExtension
     {

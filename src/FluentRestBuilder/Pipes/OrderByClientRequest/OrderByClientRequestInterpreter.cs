@@ -6,7 +6,6 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Common;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
 

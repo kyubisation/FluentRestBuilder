@@ -7,7 +7,6 @@ namespace FluentRestBuilder.Pipes.FirstOrDefault
     using System;
     using System.Linq;
     using System.Linq.Expressions;
-    using Common;
 
     public class FirstOrDefaultPipeFactory<TInput> : IFirstOrDefaultPipeFactory<TInput>
     {

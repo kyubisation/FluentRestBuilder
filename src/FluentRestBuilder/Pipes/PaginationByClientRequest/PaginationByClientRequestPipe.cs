@@ -6,7 +6,6 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using Common;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
     using Storage;

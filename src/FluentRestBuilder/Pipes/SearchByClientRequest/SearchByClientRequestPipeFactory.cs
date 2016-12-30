@@ -7,7 +7,6 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
     using System;
     using System.Linq;
     using System.Linq.Expressions;
-    using Common;
     using Microsoft.AspNetCore.Http;
 
     public class SearchByClientRequestPipeFactory<TInput> : ISearchByClientRequestPipeFactory<TInput>

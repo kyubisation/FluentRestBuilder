@@ -5,7 +5,6 @@
 namespace FluentRestBuilder.Pipes.CollectionMapping
 {
     using System.Collections.Generic;
-    using Common;
     using Hal;
 
     public interface IRestCollectionLinkGenerator

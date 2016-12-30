@@ -6,7 +6,6 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Common;
     using Exceptions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;

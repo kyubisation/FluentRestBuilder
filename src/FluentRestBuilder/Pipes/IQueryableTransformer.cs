@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Common
+namespace FluentRestBuilder.Pipes
 {
     using System.Collections.Generic;
     using System.Linq;

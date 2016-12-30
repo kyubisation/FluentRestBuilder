@@ -9,7 +9,7 @@ namespace FluentRestBuilder.Test.Pipes.CollectionMapping
     using System.Threading.Tasks;
     using Common;
     using Common.Mocks;
-    using FluentRestBuilder.Common;
+    using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Pipes.CollectionMapping;
     using FluentRestBuilder.Sources.Source;
     using Hal;
