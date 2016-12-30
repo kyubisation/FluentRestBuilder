@@ -9,7 +9,7 @@ namespace FluentRestBuilder.Pipes.SingleOrDefault
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    public class SingleOrDefaultPipe<TInput> : BaseMappingPipe<IQueryable<TInput>, TInput>
+    public class SingleOrDefaultPipe<TInput> : MappingPipeBase<IQueryable<TInput>, TInput>
     {
         private readonly Expression<Func<TInput, bool>> predicate;
         private readonly IQueryableTransformer<TInput> queryableTransformer;

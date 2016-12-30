@@ -13,7 +13,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
     using Expressions;
     using Microsoft.AspNetCore.Mvc;
 
-    public class FilterByClientRequestPipe<TInput> : BaseMappingPipe<IQueryable<TInput>, IQueryable<TInput>>
+    public class FilterByClientRequestPipe<TInput> : MappingPipeBase<IQueryable<TInput>, IQueryable<TInput>>
     {
         private readonly IDictionary<string, IFilterExpressionProvider<TInput>> filterDictionary;
         private readonly IFilterByClientRequestInterpreter interpreter;

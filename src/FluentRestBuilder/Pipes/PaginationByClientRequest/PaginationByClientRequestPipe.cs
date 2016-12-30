@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
     using Microsoft.AspNetCore.Mvc;
     using Storage;
 
-    public class PaginationByClientRequestPipe<TInput> : BaseMappingPipe<IQueryable<TInput>, IQueryable<TInput>>
+    public class PaginationByClientRequestPipe<TInput> : MappingPipeBase<IQueryable<TInput>, IQueryable<TInput>>
     {
         private readonly PaginationOptions options;
         private readonly IPaginationByClientRequestInterpreter interpreter;

@@ -11,7 +11,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
     using Expressions;
     using Microsoft.AspNetCore.Mvc;
 
-    public class OrderByClientRequestPipe<TInput> : BaseMappingPipe<IQueryable<TInput>, IQueryable<TInput>>
+    public class OrderByClientRequestPipe<TInput> : MappingPipeBase<IQueryable<TInput>, IQueryable<TInput>>
     {
         private readonly IDictionary<string, IOrderByExpressionFactory<TInput>> orderByDictionary;
         private readonly IOrderByClientRequestInterpreter orderByClientRequestInterpreter;

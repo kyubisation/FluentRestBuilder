@@ -1,4 +1,4 @@
-﻿// <copyright file="BaseSource.cs" company="Kyubisation">
+﻿// <copyright file="SourceBase.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -8,9 +8,9 @@ namespace FluentRestBuilder.Sources
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
-    public abstract class BaseSource<TOutput> : OutputPipe<TOutput>
+    public abstract class SourceBase<TOutput> : OutputPipe<TOutput>
     {
-        protected BaseSource(IServiceProvider serviceProvider)
+        protected SourceBase(IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
         }

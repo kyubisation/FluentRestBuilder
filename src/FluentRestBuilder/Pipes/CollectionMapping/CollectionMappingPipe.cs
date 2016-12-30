@@ -13,7 +13,7 @@ namespace FluentRestBuilder.Pipes.CollectionMapping
     using Storage;
 
     public class CollectionMappingPipe<TInput, TOutput>
-        : BaseMappingPipe<IQueryable<TInput>, RestEntityCollection>
+        : MappingPipeBase<IQueryable<TInput>, RestEntityCollection>
     {
         private readonly IRestCollectionLinkGenerator linkGenerator;
         private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;

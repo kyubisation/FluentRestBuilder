@@ -7,7 +7,7 @@ namespace FluentRestBuilder.Sources.LazySource
     using System;
     using System.Threading.Tasks;
 
-    public class LazySource<TOutput> : BaseSource<TOutput>
+    public class LazySource<TOutput> : SourceBase<TOutput>
     {
         private readonly Func<Task<TOutput>> output;
 

@@ -7,7 +7,7 @@ namespace FluentRestBuilder.Pipes.Mapping
     using System;
     using System.Threading.Tasks;
 
-    public class MappingPipe<TInput, TOutput> : BaseMappingPipe<TInput, TOutput>
+    public class MappingPipe<TInput, TOutput> : MappingPipeBase<TInput, TOutput>
         where TInput : class
         where TOutput : class
     {

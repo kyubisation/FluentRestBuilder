@@ -1,4 +1,4 @@
-﻿// <copyright file="BaseMappingPipe.cs" company="Kyubisation">
+﻿// <copyright file="MappingPipeBase.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -8,11 +8,11 @@ namespace FluentRestBuilder.Pipes
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
-    public abstract class BaseMappingPipe<TInput, TOutput> : OutputPipe<TOutput>, IInputPipe<TInput>
+    public abstract class MappingPipeBase<TInput, TOutput> : OutputPipe<TOutput>, IInputPipe<TInput>
     {
         private readonly IOutputPipe<TInput> parent;
 
-        protected BaseMappingPipe(IOutputPipe<TInput> parent)
+        protected MappingPipeBase(IOutputPipe<TInput> parent)
             : base(parent)
         {
             this.parent = parent;

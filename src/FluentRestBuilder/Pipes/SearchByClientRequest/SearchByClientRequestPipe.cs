@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
 
-    public class SearchByClientRequestPipe<TInput> : BaseMappingPipe<IQueryable<TInput>, IQueryable<TInput>>
+    public class SearchByClientRequestPipe<TInput> : MappingPipeBase<IQueryable<TInput>, IQueryable<TInput>>
     {
         private readonly IQueryArgumentKeys queryArgumentKeys;
         private readonly Func<string, Expression<Func<TInput, bool>>> search;

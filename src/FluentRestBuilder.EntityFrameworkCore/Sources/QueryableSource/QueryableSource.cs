@@ -10,7 +10,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
     using Common;
     using FluentRestBuilder.Sources;
 
-    public class QueryableSource<TEntity> : BaseSource<IQueryable<TEntity>>
+    public class QueryableSource<TEntity> : SourceBase<IQueryable<TEntity>>
         where TEntity : class
     {
         private readonly IQueryableFactory<TEntity> queryableFactory;

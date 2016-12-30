@@ -7,7 +7,7 @@ namespace FluentRestBuilder.Pipes.Queryable
     using System;
     using System.Linq;
 
-    public class QueryablePipe<TInput, TOutput> : BaseMappingPipe<TInput, TOutput>
+    public class QueryablePipe<TInput, TOutput> : MappingPipeBase<TInput, TOutput>
         where TInput : class, IQueryable
         where TOutput : class, IQueryable
     {

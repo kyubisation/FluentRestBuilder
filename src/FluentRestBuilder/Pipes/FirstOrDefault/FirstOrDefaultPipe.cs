@@ -1,4 +1,4 @@
-﻿// <copyright file="FirstOrDefaultPipe.cs" company="Kyubisation">
+// <copyright file="FirstOrDefaultPipe.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -9,7 +9,7 @@ namespace FluentRestBuilder.Pipes.FirstOrDefault
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    public class FirstOrDefaultPipe<TInput> : BaseMappingPipe<IQueryable<TInput>, TInput>
+    public class FirstOrDefaultPipe<TInput> : MappingPipeBase<IQueryable<TInput>, TInput>
     {
         private readonly Expression<Func<TInput, bool>> predicate;
         private readonly IQueryableTransformer<TInput> queryableTransformer;

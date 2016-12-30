@@ -7,7 +7,7 @@ namespace FluentRestBuilder.Pipes.Validation
     using System;
     using System.Threading.Tasks;
 
-    public class ValidationPipe<TInput> : BaseValidationPipe<TInput>
+    public class ValidationPipe<TInput> : ValidationPipeBase<TInput>
         where TInput : class
     {
         private readonly Func<Task<bool>> invalidCheck;

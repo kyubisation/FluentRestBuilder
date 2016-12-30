@@ -7,7 +7,7 @@ namespace FluentRestBuilder.Sources.Source
     using System;
     using System.Threading.Tasks;
 
-    public class Source<TOutput> : BaseSource<TOutput>
+    public class Source<TOutput> : SourceBase<TOutput>
     {
         private readonly Task<TOutput> output;
 
