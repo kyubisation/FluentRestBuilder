@@ -4,18 +4,19 @@
 
 namespace FluentRestBuilder.Common
 {
+    using System;
+
     public class PaginationMetaInfo
     {
         public PaginationMetaInfo(
             int total,
             int page,
-            int entriesPerPage,
-            int totalPages)
+            int entriesPerPage)
         {
             this.Total = total;
             this.Page = page;
             this.EntriesPerPage = entriesPerPage;
-            this.TotalPages = totalPages;
+            this.TotalPages = (int)Math.Ceiling(total / (double)entriesPerPage);
         }
 
         public int Total { get; }

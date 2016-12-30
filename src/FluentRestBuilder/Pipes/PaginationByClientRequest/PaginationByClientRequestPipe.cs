@@ -6,22 +6,30 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 {
     using System.Linq;
     using System.Threading.Tasks;
+    using Common;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
+    using Storage;
 
     public class PaginationByClientRequestPipe<TInput> : BaseMappingPipe<IQueryable<TInput>, IQueryable<TInput>>
     {
         private readonly PaginationOptions options;
         private readonly IPaginationByClientRequestInterpreter interpreter;
+        private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
+        private readonly IQueryableTransformer<TInput> queryableTransformer;
 
         public PaginationByClientRequestPipe(
             PaginationOptions options,
             IPaginationByClientRequestInterpreter interpreter,
+            IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
+            IQueryableTransformer<TInput> queryableTransformer,
             IOutputPipe<IQueryable<TInput>> parent)
             : base(parent)
         {
             this.options = options ?? new PaginationOptions();
             this.interpreter = interpreter;
+            this.paginationMetaInfoStorage = paginationMetaInfoStorage;
+            this.queryableTransformer = queryableTransformer;
         }
 
         protected override async Task<IActionResult> Execute(IQueryable<TInput> input)
@@ -36,13 +44,19 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
             }
         }
 
-        protected override IQueryable<TInput> Map(IQueryable<TInput> input)
+        protected override async Task<IQueryable<TInput>> MapAsync(IQueryable<TInput> input)
         {
             var paginationRequest = this.interpreter.ParseRequestQuery();
-            var page = paginationRequest.Page ?? 1;
-            var entriesPerPage = this.ResolveEntriesPerPage(paginationRequest);
-            var pageOffset = entriesPerPage * (page - 1);
-            return input.Skip(pageOffset).Take(entriesPerPage);
+            var paginationValues = new PaginationValues
+            {
+                Page = paginationRequest.Page ?? 1,
+                EntriesPerPage = this.ResolveEntriesPerPage(paginationRequest)
+            };
+            await this.CalculateMetaInfo(input, paginationValues);
+
+            return input
+                .Skip(paginationValues.PageOffset)
+                .Take(paginationValues.EntriesPerPage);
         }
 
         private int ResolveEntriesPerPage(PaginationRequest request)
@@ -56,6 +70,23 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
             }
 
             return entriesPerPage;
+        }
+
+        private async Task CalculateMetaInfo(
+            IQueryable<TInput> queryable, PaginationValues paginationValues)
+        {
+            var count = await this.queryableTransformer.Count(queryable);
+            this.paginationMetaInfoStorage.Value = new PaginationMetaInfo(
+                count, paginationValues.Page, paginationValues.EntriesPerPage);
+        }
+
+        private class PaginationValues
+        {
+            public int Page { get; set; }
+
+            public int EntriesPerPage { get; set; }
+
+            public int PageOffset => this.EntriesPerPage * (this.Page - 1);
         }
     }
 }

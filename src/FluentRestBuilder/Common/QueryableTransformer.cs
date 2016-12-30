@@ -18,5 +18,8 @@ namespace FluentRestBuilder.Common
 
         public Task<TEntity> FirstOrDefault(IQueryable<TEntity> queryable) =>
             Task.FromResult(queryable.FirstOrDefault());
+
+        public Task<int> Count(IQueryable<TEntity> queryable) =>
+            Task.FromResult(queryable.Count());
     }
 }
