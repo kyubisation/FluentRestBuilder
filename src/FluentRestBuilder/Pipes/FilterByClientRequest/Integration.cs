@@ -6,6 +6,7 @@
 namespace FluentRestBuilder
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Extensions.DependencyInjection;
     using Pipes.FilterByClientRequest;
@@ -15,11 +16,16 @@ namespace FluentRestBuilder
     {
         public static OutputPipe<IQueryable<TInput>> ApplyFilterByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
+                IDictionary<string, IFilterExpressionProvider<TInput>> filterExpressionProviders) =>
+            pipe.GetService<IFilterByClientRequestPipeFactory<TInput>>()
+                .Resolve(filterExpressionProviders, pipe);
+
+        public static OutputPipe<IQueryable<TInput>> ApplyFilterByClientRequest<TInput>(
+                this IOutputPipe<IQueryable<TInput>> pipe,
                 Func<IFilterExpressionBuilder<TInput>, IFilterExpressionBuilder<TInput>> builder)
         {
             var filterExpressionBuilder = pipe.GetService<IFilterExpressionBuilder<TInput>>();
-            return pipe.GetService<IFilterByClientRequestPipeFactory<TInput>>()
-                .Resolve(builder(filterExpressionBuilder).Build(), pipe);
+            return pipe.ApplyFilterByClientRequest(builder(filterExpressionBuilder).Build());
         }
     }
 }
