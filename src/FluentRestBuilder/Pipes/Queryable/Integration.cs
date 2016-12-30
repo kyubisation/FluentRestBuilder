@@ -10,8 +10,6 @@ namespace FluentRestBuilder
     using System.Linq.Expressions;
     using Microsoft.Extensions.DependencyInjection;
     using Pipes.Queryable;
-    using RestCollectionMutators.Filter;
-    using RestCollectionMutators.Pagination;
 
     public static partial class Integration
     {
@@ -48,24 +46,5 @@ namespace FluentRestBuilder
             Expression<Func<TInput, TKey>> keySelector)
             where TInput : class =>
             pipe.MapQueryable(q => q.ThenByDescending(keySelector));
-
-        public static OutputPipe<IQueryable<TInput>> ApplyFilter<TInput>(
-            this IOutputPipe<IOrderedQueryable<TInput>> pipe,
-            IRestCollectionFilter<TInput> filter) =>
-            pipe.MapQueryable(filter.Apply);
-
-        public static OutputPipe<IQueryable<TInput>> ApplyPagination<TInput>(
-            this IOutputPipe<IOrderedQueryable<TInput>> pipe,
-            IRestCollectionPagination<TInput> pagination) =>
-            pipe.MapQueryable(pagination.Apply);
-
-        public static OutputPipe<IQueryable<TInput>> ApplyPagination<TInput>(
-            this IOutputPipe<IOrderedQueryable<TInput>> pipe,
-            IRestCollectionPagination<TInput> pagination,
-            PaginationOptions options)
-        {
-            pagination.Options = options;
-            return pipe.MapQueryable(pagination.Apply);
-        }
     }
 }

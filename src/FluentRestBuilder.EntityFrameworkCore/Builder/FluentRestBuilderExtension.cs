@@ -13,19 +13,10 @@ namespace FluentRestBuilder
     using EntityFrameworkCore.Pipes.Insertion;
     using EntityFrameworkCore.Pipes.QueryableSource;
     using EntityFrameworkCore.Pipes.Update;
-    using EntityFrameworkCore.RestCollectionMutators.Filter;
-    using EntityFrameworkCore.RestCollectionMutators.OrderBy;
-    using EntityFrameworkCore.RestCollectionMutators.Pagination;
-    using EntityFrameworkCore.RestCollectionMutators.Search;
     using EntityFrameworkCore.Sources.QueryableSource;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
-    using Pipes.CollectionMapping;
-    using RestCollectionMutators.Filter;
-    using RestCollectionMutators.OrderBy;
-    using RestCollectionMutators.Pagination;
-    using RestCollectionMutators.Search;
 
     public static class FluentRestBuilderExtension
     {
@@ -37,7 +28,6 @@ namespace FluentRestBuilder
             RegisterSources(builder.Services);
             RegisterPipes(builder.Services);
             RegisterTransformations(builder.Services);
-            RegisterCollectionServices(builder.Services);
 
             return builder;
         }
@@ -74,19 +64,6 @@ namespace FluentRestBuilder
         {
             collection.TryAddSingleton(
                 typeof(IQueryableTransformer<>), typeof(AsyncQueryableTransformer<>));
-        }
-
-        private static void RegisterCollectionServices(IServiceCollection collection)
-        {
-            collection.TryAddScoped<IRestCollectionLinkGenerator, RestCollectionLinkGenerator>();
-            collection.TryAddScoped(
-                typeof(IRestCollectionFilter<>), typeof(RestCollectionFilter<>));
-            collection.TryAddScoped(
-                typeof(IRestCollectionSearch<>), typeof(RestCollectionSearch<>));
-            collection.TryAddScoped(
-                typeof(IRestCollectionOrderBy<>), typeof(RestCollectionOrderBy<>));
-            collection.TryAddScoped(
-                typeof(IRestCollectionPagination<>), typeof(RestCollectionPagination<>));
         }
     }
 }
