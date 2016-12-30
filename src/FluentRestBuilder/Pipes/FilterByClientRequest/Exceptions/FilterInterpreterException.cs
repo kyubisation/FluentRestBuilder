@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.FilterByClientRequest
+namespace FluentRestBuilder.Pipes.FilterByClientRequest.Exceptions
 {
     public class FilterInterpreterException : FilterException
     {

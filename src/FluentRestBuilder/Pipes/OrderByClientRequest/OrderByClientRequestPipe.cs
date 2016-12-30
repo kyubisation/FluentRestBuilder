@@ -7,6 +7,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Exceptions;
     using Expressions;
     using Microsoft.AspNetCore.Mvc;
 

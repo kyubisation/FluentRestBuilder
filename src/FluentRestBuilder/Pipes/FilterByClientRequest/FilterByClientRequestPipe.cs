@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
+    using Exceptions;
     using Expressions;
     using Microsoft.AspNetCore.Mvc;
 

@@ -1,8 +1,8 @@
-﻿// <copyright file="FilterNotSupportedException.cs" company="Kyubisation">
+// <copyright file="FilterNotSupportedException.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.FilterByClientRequest
+namespace FluentRestBuilder.Pipes.FilterByClientRequest.Exceptions
 {
     public class FilterNotSupportedException : FilterException
     {
