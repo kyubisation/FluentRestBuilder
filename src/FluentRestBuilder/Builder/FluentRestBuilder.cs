@@ -18,6 +18,7 @@ namespace FluentRestBuilder.Builder
     using Pipes.Mapping;
     using Pipes.OrderByClientRequest;
     using Pipes.OrderByClientRequest.Expressions;
+    using Pipes.PaginationByClientRequest;
     using Pipes.Queryable;
     using Pipes.SearchByClientRequest;
     using Pipes.SingleOrDefault;
@@ -35,6 +36,7 @@ namespace FluentRestBuilder.Builder
             this.RegisterSourceFactories();
             this.RegisterPipeFactories();
             this.RegisterMappings();
+            this.RegisterInterpreters();
             this.RegisterUtilities();
         }
 
@@ -75,6 +77,9 @@ namespace FluentRestBuilder.Builder
             this.Services.TryAddScoped(
                 typeof(IFilterByClientRequestPipeFactory<>),
                 typeof(FilterByClientRequestPipeFactory<>));
+            this.Services.TryAddScoped(
+                typeof(IPaginationByClientRequestPipeFactory<>),
+                typeof(PaginationByClientRequestPipeFactory<>));
         }
 
         private void RegisterMappings()
@@ -84,9 +89,21 @@ namespace FluentRestBuilder.Builder
             this.Services.TryAddTransient(typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
         }
 
+        private void RegisterInterpreters()
+        {
+            this.Services.TryAddScoped<
+                IOrderByClientRequestInterpreter,
+                OrderByClientRequestInterpreter>();
+            this.Services.TryAddScoped<
+                IFilterByClientRequestInterpreter,
+                FilterByClientRequestInterpreter>();
+            this.Services.TryAddScoped<
+                IPaginationByClientRequestInterpreter,
+                PaginationByClientRequestInterpreter>();
+        }
+
         private void RegisterUtilities()
         {
-            this.Services.TryAddScoped<IOrderByClientRequestInterpreter, OrderByClientRequestInterpreter>();
             this.Services.TryAddScoped(
                 typeof(IOrderByExpressionBuilder<>), typeof(OrderByExpressionBuilder<>));
             this.Services.TryAddSingleton(

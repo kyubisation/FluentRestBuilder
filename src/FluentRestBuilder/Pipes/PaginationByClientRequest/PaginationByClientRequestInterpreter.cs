@@ -1,0 +1,64 @@
+﻿// <copyright file="PaginationByClientRequestInterpreter.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRestBuilder.Pipes.PaginationByClientRequest
+{
+    using Common;
+    using Exceptions;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Primitives;
+
+    public class PaginationByClientRequestInterpreter : IPaginationByClientRequestInterpreter
+    {
+        private readonly IQueryArgumentKeys queryArgumentKeys;
+        private readonly IQueryCollection queryCollection;
+
+        public PaginationByClientRequestInterpreter(
+            IHttpContextAccessor httpContextAccessor,
+            IQueryArgumentKeys queryArgumentKeys)
+        {
+            this.queryCollection = httpContextAccessor.HttpContext.Request.Query;
+            this.queryArgumentKeys = queryArgumentKeys;
+        }
+
+        public PaginationRequest ParseRequestQuery() =>
+            new PaginationRequest(this.ParsePage(), this.ParseEntriesPerPage());
+
+        private int? ParsePage()
+        {
+            StringValues pageValue;
+            if (!this.queryCollection.TryGetValue(this.queryArgumentKeys.Page, out pageValue))
+            {
+                return null;
+            }
+
+            int page;
+            if (!int.TryParse(pageValue.ToString(), out page) || page < 1)
+            {
+                throw new NotSupportedPageException(pageValue.ToString());
+            }
+
+            return page;
+        }
+
+        private int? ParseEntriesPerPage()
+        {
+            StringValues entriesPerPageValue;
+            if (!this.queryCollection
+                .TryGetValue(this.queryArgumentKeys.EntriesPerPage, out entriesPerPageValue))
+            {
+                return null;
+            }
+
+            int entriesPerPage;
+            if (!int.TryParse(entriesPerPageValue.ToString(), out entriesPerPage)
+                || entriesPerPage < 1)
+            {
+                throw new NotSupportedEntriesPerPageException(entriesPerPageValue.ToString());
+            }
+
+            return entriesPerPage;
+        }
+    }
+}
