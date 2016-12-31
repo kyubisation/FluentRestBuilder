@@ -2,14 +2,15 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.CollectionMapping
+namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Hal;
-    using Pipes;
+    using FluentRestBuilder.Pipes;
+    using HypertextApplicationLanguage;
+    using Links;
     using Storage;
 
     public class CollectionMappingPipe<TInput, TOutput>

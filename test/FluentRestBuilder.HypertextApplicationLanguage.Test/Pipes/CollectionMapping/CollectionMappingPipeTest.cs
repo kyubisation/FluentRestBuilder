@@ -2,18 +2,18 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Pipes.CollectionMapping
+namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMapping
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Common;
-    using Common.Mocks;
     using FluentRestBuilder.Pipes;
-    using FluentRestBuilder.Pipes.CollectionMapping;
-    using FluentRestBuilder.Sources.Source;
-    using Hal;
+    using FluentRestBuilder.Test.Common;
+    using FluentRestBuilder.Test.Common.Mocks;
+    using HypertextApplicationLanguage.Pipes.CollectionMapping;
+    using Links;
     using Microsoft.Extensions.DependencyInjection;
+    using Sources.Source;
     using Storage;
     using Xunit;
 

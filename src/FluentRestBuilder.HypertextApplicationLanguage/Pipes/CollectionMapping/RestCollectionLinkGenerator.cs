@@ -2,12 +2,13 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.CollectionMapping
+namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Hal;
+    using FluentRestBuilder.Pipes;
+    using Links;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.AspNetCore.WebUtilities;

@@ -16,3 +16,4 @@ script:
   - dotnet build */**/project.json
   - dotnet test test/FluentRestBuilder.Test/project.json
   - dotnet test test/FluentRestBuilder.EntityFrameworkCore.Test/project.json
+  - dotnet test test/FluentRestBuilder.HypertextApplicationLanguage.Test/project.json

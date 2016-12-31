@@ -2,11 +2,12 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Hal
+namespace FluentRestBuilder.HypertextApplicationLanguage.Mapping
 {
     using System;
     using System.Collections.Generic;
-    using Mapping;
+    using HypertextApplicationLanguage;
+    using Links;
     using Microsoft.AspNetCore.Mvc;
 
     public class RestMapper<TInput, TOutput> : IMapper<TInput, TOutput>

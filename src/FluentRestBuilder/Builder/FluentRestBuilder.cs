@@ -5,8 +5,6 @@
 namespace FluentRestBuilder.Builder
 {
     using System;
-    using Hal;
-    using Mapping;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -16,7 +14,6 @@ namespace FluentRestBuilder.Builder
     using Pipes;
     using Pipes.Actions;
     using Pipes.ClaimValidation;
-    using Pipes.CollectionMapping;
     using Pipes.EntityValidation;
     using Pipes.FilterByClientRequest;
     using Pipes.FilterByClientRequest.Expressions;
@@ -37,30 +34,12 @@ namespace FluentRestBuilder.Builder
         {
             this.Services = services;
             this.RegisterPipeFactories();
-            this.RegisterMappings();
             this.RegisterInterpreters();
             this.RegisterStorage();
             this.RegisterUtilities();
         }
 
         public IServiceCollection Services { get; }
-
-        public IFluentRestBuilder AddRestMapper<TInput, TOutput>(
-            Func<TInput, TOutput> mapping,
-            Action<RestMapper<TInput, TOutput>> configuration = null)
-            where TOutput : RestEntity
-        {
-            this.Services.AddScoped<IMapper<TInput, TOutput>>(
-                serviceProvider =>
-                {
-                    var urlHelper = serviceProvider.GetService<IScopedStorage<IUrlHelper>>()?.Value
-                        ?? serviceProvider.GetService<IUrlHelper>();
-                    var mapper = new RestMapper<TInput, TOutput>(mapping, urlHelper);
-                    configuration?.Invoke(mapper);
-                    return mapper;
-                });
-            return this;
-        }
 
         private void RegisterPipeFactories()
         {
@@ -72,8 +51,6 @@ namespace FluentRestBuilder.Builder
                 typeof(IEntityValidationPipeFactory<>), typeof(EntityValidationPipeFactory<>));
             this.Services.TryAddScoped(
                 typeof(IMappingPipeFactory<,>), typeof(MappingPipeFactory<,>));
-            this.Services.TryAddScoped(
-                typeof(ICollectionMappingPipeFactory<,>), typeof(CollectionMappingPipeFactory<,>));
             this.Services.TryAddScoped(
                 typeof(IValidationPipeFactory<>), typeof(ValidationPipeFactory<>));
             this.Services.TryAddScoped(
@@ -92,13 +69,6 @@ namespace FluentRestBuilder.Builder
             this.Services.TryAddScoped(
                 typeof(IPaginationByClientRequestPipeFactory<>),
                 typeof(PaginationByClientRequestPipeFactory<>));
-        }
-
-        private void RegisterMappings()
-        {
-            this.Services.TryAddScoped<IMapperFactory, MapperFactory>();
-            this.Services.TryAddScoped(typeof(IMapperFactory<>), typeof(MapperFactory<>));
-            this.Services.TryAddTransient(typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
         }
 
         private void RegisterInterpreters()
@@ -135,7 +105,6 @@ namespace FluentRestBuilder.Builder
                 typeof(FilterExpressionProviderBuilder<>));
             this.Services.TryAddScoped(
                 typeof(IFilterExpressionBuilder<>), typeof(FilterExpressionBuilder<>));
-            this.Services.TryAddScoped<IRestCollectionLinkGenerator, RestCollectionLinkGenerator>();
             this.Services.TryAddSingleton<IHttpVerbMap, HttpVerbMap>();
         }
 

@@ -8,6 +8,7 @@ build_script:
   - ps: dotnet build */**/project.json
   - ps: dotnet test test/FluentRestBuilder.Test/project.json
   - ps: dotnet test test/FluentRestBuilder.EntityFrameworkCore.Test/project.json
+  - ps: dotnet test test/FluentRestBuilder.HypertextApplicationLanguage.Test/project.json
 
 
 test: off 

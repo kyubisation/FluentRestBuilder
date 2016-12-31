@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Mapping
+namespace FluentRestBuilder.HypertextApplicationLanguage.Mapping
 {
     public interface IMapper<in TInput, out TOutput>
     {

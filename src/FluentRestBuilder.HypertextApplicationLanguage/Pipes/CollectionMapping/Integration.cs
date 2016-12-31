@@ -7,10 +7,10 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Linq;
-    using Hal;
-    using Mapping;
+    using HypertextApplicationLanguage;
+    using HypertextApplicationLanguage.Mapping;
+    using HypertextApplicationLanguage.Pipes.CollectionMapping;
     using Microsoft.Extensions.DependencyInjection;
-    using Pipes.CollectionMapping;
 
     public static partial class Integration
     {

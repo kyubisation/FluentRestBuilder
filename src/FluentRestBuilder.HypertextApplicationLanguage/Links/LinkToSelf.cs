@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Hal
+namespace FluentRestBuilder.HypertextApplicationLanguage.Links
 {
     public class LinkToSelf : NamedLink
     {
