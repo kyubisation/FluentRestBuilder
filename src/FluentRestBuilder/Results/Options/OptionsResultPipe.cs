@@ -16,27 +16,19 @@ namespace FluentRestBuilder.Results.Options
     public class OptionsResultPipe<TInput> : ResultPipe<TInput>
         where TInput : class
     {
-        // ReSharper disable once StaticMemberInGenericType
-        private static readonly Dictionary<HttpVerb, string> VerbLookup
-            = new Dictionary<HttpVerb, string>
-            {
-                { HttpVerb.Delete, "DELETE" },
-                { HttpVerb.Get, "GET, HEAD" },
-                { HttpVerb.Patch, "PATCH" },
-                { HttpVerb.Post, "POST" },
-                { HttpVerb.Put, "PUT" }
-            };
-
         private readonly IScopedStorage<HttpContext> httpContextStorage;
         private readonly Func<TInput, IEnumerable<HttpVerb>> verbGeneration;
+        private readonly IHttpVerbMap httpVerbMap;
 
         public OptionsResultPipe(
             Func<TInput, IEnumerable<HttpVerb>> verbGeneration,
+            IHttpVerbMap httpVerbMap,
             IScopedStorage<HttpContext> httpContextStorage,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
             this.verbGeneration = verbGeneration;
+            this.httpVerbMap = httpVerbMap;
             this.httpContextStorage = httpContextStorage;
         }
 
@@ -49,7 +41,7 @@ namespace FluentRestBuilder.Results.Options
         private void SetAllowHeader(TInput input)
         {
             var verbs = this.verbGeneration(input)
-                .Select(v => VerbLookup[v])
+                .Select(v => this.httpVerbMap[v])
                 .Aggregate(
                     new StringBuilder("OPTIONS"),
                     (current, next) => current.Append($", {next}"))

@@ -136,6 +136,7 @@ namespace FluentRestBuilder.Builder
             this.Services.TryAddScoped(
                 typeof(IFilterExpressionBuilder<>), typeof(FilterExpressionBuilder<>));
             this.Services.TryAddScoped<IRestCollectionLinkGenerator, RestCollectionLinkGenerator>();
+            this.Services.TryAddSingleton<IHttpVerbMap, HttpVerbMap>();
         }
 
         private IScopedStorage<HttpContext> RegisterHttpContextScopedStorage(

@@ -6,7 +6,6 @@
 namespace FluentRestBuilder
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -18,13 +17,15 @@ namespace FluentRestBuilder
     {
         public static Task<IActionResult> ToOptionsResult<TInput>(
             this IOutputPipe<TInput> pipe,
-            Func<IAllowedOptionsBuilder<TInput>, IEnumerable<HttpVerb>> builder)
+            Func<IAllowedOptionsBuilder<TInput>, IAllowedOptionsBuilder<TInput>> builder)
             where TInput : class
         {
             var allowedOptionsBuilder = pipe.GetService<IAllowedOptionsBuilder<TInput>>();
             var httpContextStorage = pipe.GetService<IScopedStorage<HttpContext>>();
+            var httpVerbMap = pipe.GetService<IHttpVerbMap>();
             IPipe resultPipe = new OptionsResultPipe<TInput>(
-                input => builder(allowedOptionsBuilder),
+                input => builder(allowedOptionsBuilder).GenerateAllowedVerbs(input),
+                httpVerbMap,
                 httpContextStorage,
                 pipe);
             return resultPipe.Execute();
@@ -36,8 +37,9 @@ namespace FluentRestBuilder
             where TInput : class
         {
             var httpContextStorage = pipe.GetService<IScopedStorage<HttpContext>>();
+            var httpVerbMap = pipe.GetService<IHttpVerbMap>();
             IPipe resultPipe = new OptionsResultPipe<TInput>(
-                input => verbs, httpContextStorage, pipe);
+                input => verbs, httpVerbMap, httpContextStorage, pipe);
             return resultPipe.Execute();
         }
     }
