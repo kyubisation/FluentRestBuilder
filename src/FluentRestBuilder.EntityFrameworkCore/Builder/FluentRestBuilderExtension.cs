@@ -54,7 +54,7 @@ namespace FluentRestBuilder
 
         private static void RegisterTransformations(IServiceCollection collection)
         {
-            collection.TryAddSingleton(
+            collection.AddSingleton(
                 typeof(IQueryableTransformer<>), typeof(AsyncQueryableTransformer<>));
         }
     }

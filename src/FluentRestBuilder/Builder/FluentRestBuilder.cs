@@ -4,8 +4,13 @@
 
 namespace FluentRestBuilder.Builder
 {
+    using System;
+    using Hal;
     using Mapping;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Pipes;
@@ -34,10 +39,28 @@ namespace FluentRestBuilder.Builder
             this.RegisterPipeFactories();
             this.RegisterMappings();
             this.RegisterInterpreters();
+            this.RegisterStorage();
             this.RegisterUtilities();
         }
 
         public IServiceCollection Services { get; }
+
+        public IFluentRestBuilder AddRestMapper<TInput, TOutput>(
+            Func<TInput, TOutput> mapping,
+            Action<RestMapper<TInput, TOutput>> configuration = null)
+            where TOutput : RestEntity
+        {
+            this.Services.AddScoped<IMapper<TInput, TOutput>>(
+                serviceProvider =>
+                {
+                    var urlHelper = serviceProvider.GetService<IScopedStorage<IUrlHelper>>()?.Value
+                        ?? serviceProvider.GetService<IUrlHelper>();
+                    var mapper = new RestMapper<TInput, TOutput>(mapping, urlHelper);
+                    configuration?.Invoke(mapper);
+                    return mapper;
+                });
+            return this;
+        }
 
         private void RegisterPipeFactories()
         {
@@ -91,6 +114,13 @@ namespace FluentRestBuilder.Builder
                 PaginationByClientRequestInterpreter>();
         }
 
+        private void RegisterStorage()
+        {
+            this.Services.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
+            this.Services.TryAddScoped(this.RegisterHttpContextScopedStorage);
+            this.Services.TryAddScoped(this.RegisterUrlHelperScopedStorage);
+        }
+
         private void RegisterUtilities()
         {
             this.Services.TryAddScoped(
@@ -100,15 +130,36 @@ namespace FluentRestBuilder.Builder
             this.Services.TryAddSingleton<IQueryArgumentKeys, QueryArgumentKeys>();
             this.Services.TryAddScoped(
                 typeof(IAllowedOptionsBuilder<>), typeof(AllowedOptionsBuilder<>));
-            this.Services.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
             this.Services.TryAddTransient(
                 typeof(IFilterExpressionProviderBuilder<>),
                 typeof(FilterExpressionProviderBuilder<>));
             this.Services.TryAddScoped(
                 typeof(IFilterExpressionBuilder<>), typeof(FilterExpressionBuilder<>));
             this.Services.TryAddScoped<IRestCollectionLinkGenerator, RestCollectionLinkGenerator>();
+        }
 
-            this.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        private IScopedStorage<HttpContext> RegisterHttpContextScopedStorage(
+            IServiceProvider serviceProvider)
+        {
+            var accessor = serviceProvider.GetService<IHttpContextAccessor>();
+            return new ScopedStorage<HttpContext> { Value = accessor?.HttpContext };
+        }
+
+        private IScopedStorage<IUrlHelper> RegisterUrlHelperScopedStorage(
+            IServiceProvider serviceProvider)
+        {
+            var actionContextAccessor = serviceProvider.GetService<IActionContextAccessor>();
+            if (actionContextAccessor == null)
+            {
+                return new ScopedStorage<IUrlHelper>();
+            }
+
+            var urlHelperFactory = serviceProvider.GetService<IUrlHelperFactory>();
+            var urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
+            return new ScopedStorage<IUrlHelper>
+            {
+                Value = urlHelper
+            };
         }
     }
 }

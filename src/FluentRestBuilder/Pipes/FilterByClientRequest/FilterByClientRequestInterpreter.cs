@@ -10,13 +10,11 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
     using Newtonsoft.Json;
+    using Storage;
 
     public class FilterByClientRequestInterpreter : IFilterByClientRequestInterpreter
     {
-        private readonly IQueryArgumentKeys queryArgumentKeys;
-        private readonly IQueryCollection queryCollection;
-
-        private readonly IDictionary<string, FilterType> typeMap = new Dictionary<string, FilterType>
+        private static readonly IDictionary<string, FilterType> TypeMap = new Dictionary<string, FilterType>
         {
             ["~"] = FilterType.Contains,
             ["<="] = FilterType.LessThanOrEqual,
@@ -25,12 +23,15 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
             [">"] = FilterType.GreaterThan
         };
 
+        private readonly IQueryArgumentKeys queryArgumentKeys;
+        private readonly IQueryCollection queryCollection;
+
         public FilterByClientRequestInterpreter(
-            IHttpContextAccessor httpContextAccessor,
+            IScopedStorage<HttpContext> httpContextStorage,
             IQueryArgumentKeys queryArgumentKeys)
         {
             this.queryArgumentKeys = queryArgumentKeys;
-            this.queryCollection = httpContextAccessor.HttpContext.Request.Query;
+            this.queryCollection = httpContextStorage.Value.Request.Query;
         }
 
         public IEnumerable<FilterRequest> ParseRequestQuery()
@@ -62,7 +63,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
 
         private FilterRequest InterpretFilterRequest(string property, string filter)
         {
-            foreach (var filterType in this.typeMap.Where(f => property.EndsWith(f.Key)))
+            foreach (var filterType in TypeMap.Where(f => property.EndsWith(f.Key)))
             {
                 return new FilterRequest(
                     property,

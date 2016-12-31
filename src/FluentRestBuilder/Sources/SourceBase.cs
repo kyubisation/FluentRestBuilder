@@ -5,15 +5,15 @@
 namespace FluentRestBuilder.Sources
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
+    using Storage;
 
     public abstract class SourceBase<TOutput> : OutputPipe<TOutput>
     {
         private ControllerBase controller;
-        private Dictionary<Type, object> services;
 
         protected SourceBase(IServiceProvider serviceProvider)
             : base(serviceProvider)
@@ -34,9 +34,6 @@ namespace FluentRestBuilder.Sources
             }
         }
 
-        protected override object GetService(Type serviceType) =>
-            this.TryGetControllerService(serviceType) ?? base.GetService(serviceType);
-
         protected override async Task<IActionResult> Execute()
         {
             NoPipeAttachedException.Check(this.Child);
@@ -47,25 +44,17 @@ namespace FluentRestBuilder.Sources
 
         private void InitializeControllerServices(ControllerBase controllerBase)
         {
-            this.services = new Dictionary<Type, object>
+            var urlHelperStorage = this.GetService<IScopedStorage<IUrlHelper>>();
+            if (urlHelperStorage.Value == null)
             {
-                [typeof(IUrlHelper)] = controllerBase.Url,
-                [typeof(IHttpContextAccessor)] = new HttpContextAccessor
-                {
-                    HttpContext = controllerBase.HttpContext
-                }
-            };
-        }
-
-        private object TryGetControllerService(Type serviceType)
-        {
-            if (this.services == null)
-            {
-                return null;
+                urlHelperStorage.Value = controllerBase.Url;
             }
 
-            object service;
-            return this.services.TryGetValue(serviceType, out service) ? service : null;
+            var httpContextStorage = this.GetService<IScopedStorage<HttpContext>>();
+            if (httpContextStorage.Value == null)
+            {
+                httpContextStorage.Value = controllerBase.HttpContext;
+            }
         }
     }
 }

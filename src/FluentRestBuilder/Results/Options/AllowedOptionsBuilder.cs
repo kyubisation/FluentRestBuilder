@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Results.Options
     using System.Linq;
     using System.Security.Claims;
     using Microsoft.AspNetCore.Http;
+    using Storage;
 
     public class AllowedOptionsBuilder<TInput> : IAllowedOptionsBuilder<TInput>
     {
@@ -16,9 +17,9 @@ namespace FluentRestBuilder.Results.Options
         private readonly List<Tuple<Func<ClaimsPrincipal, TInput, bool>, IEnumerable<HttpVerb>>> verbChecks
             = new List<Tuple<Func<ClaimsPrincipal, TInput, bool>, IEnumerable<HttpVerb>>>();
 
-        public AllowedOptionsBuilder(IHttpContextAccessor httpContextAccessor)
+        public AllowedOptionsBuilder(IScopedStorage<HttpContext> httpContextStorage)
         {
-            this.claimsPrincipal = httpContextAccessor.HttpContext.User;
+            this.claimsPrincipal = httpContextStorage.Value.User;
         }
 
         public IAllowedOptionsBuilder<TInput> IsAllowed(IEnumerable<HttpVerb> verbs, Func<ClaimsPrincipal, TInput, bool> validCheck)

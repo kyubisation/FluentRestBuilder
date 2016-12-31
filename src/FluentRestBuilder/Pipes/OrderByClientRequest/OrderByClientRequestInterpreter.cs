@@ -8,6 +8,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
     using System.Linq;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
+    using Storage;
 
     public class OrderByClientRequestInterpreter : IOrderByClientRequestInterpreter
     {
@@ -15,11 +16,11 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
         private readonly IQueryCollection queryCollection;
 
         public OrderByClientRequestInterpreter(
-            IHttpContextAccessor httpContextAccessor,
+            IScopedStorage<HttpContext> httpContextStorage,
             IQueryArgumentKeys queryArgumentKeys)
         {
             this.queryArgumentKeys = queryArgumentKeys;
-            this.queryCollection = httpContextAccessor.HttpContext.Request.Query;
+            this.queryCollection = httpContextStorage.Value.Request.Query;
         }
 
         public IEnumerable<OrderByRequest> ParseRequestQuery()

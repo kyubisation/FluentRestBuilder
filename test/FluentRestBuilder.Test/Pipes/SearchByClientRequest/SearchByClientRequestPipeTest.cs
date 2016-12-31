@@ -19,6 +19,7 @@ namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Primitives;
+    using Storage;
     using Xunit;
 
     public class SearchByClientRequestPipeTest : ScopedDbContextTestBase
@@ -54,9 +55,9 @@ namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
                 QueryablePipeFactory<IQueryable<Entity>, IOrderedQueryable<Entity>>>();
 
             services.AddSingleton(p => this.queryArgumentKeys);
-            services.AddScoped<IHttpContextAccessor>(p => new HttpContextAccessor
+            services.AddScoped<IScopedStorage<HttpContext>>(p => new ScopedStorage<HttpContext>
             {
-                HttpContext = new DefaultHttpContext
+                Value = new DefaultHttpContext
                 {
                     Request =
                     {

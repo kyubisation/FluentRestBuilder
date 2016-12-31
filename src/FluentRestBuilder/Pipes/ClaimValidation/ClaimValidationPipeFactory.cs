@@ -7,15 +7,16 @@ namespace FluentRestBuilder.Pipes.ClaimValidation
     using System;
     using System.Security.Claims;
     using Microsoft.AspNetCore.Http;
+    using Storage;
 
     public class ClaimValidationPipeFactory<TInput> : IClaimValidationPipeFactory<TInput>
         where TInput : class
     {
         private readonly ClaimsPrincipal user;
 
-        public ClaimValidationPipeFactory(IHttpContextAccessor httpContextAccessor)
+        public ClaimValidationPipeFactory(IScopedStorage<HttpContext> httpContextStorage)
         {
-            this.user = httpContextAccessor.HttpContext.User;
+            this.user = httpContextStorage.Value.User;
         }
 
         public OutputPipe<TInput> Resolve(

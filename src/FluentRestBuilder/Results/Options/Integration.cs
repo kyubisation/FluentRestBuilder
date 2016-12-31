@@ -12,6 +12,7 @@ namespace FluentRestBuilder
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using Results.Options;
+    using Storage;
 
     public static partial class Integration
     {
@@ -21,10 +22,10 @@ namespace FluentRestBuilder
             where TInput : class
         {
             var allowedOptionsBuilder = pipe.GetService<IAllowedOptionsBuilder<TInput>>();
-            var httpContextAccessor = pipe.GetService<IHttpContextAccessor>();
+            var httpContextStorage = pipe.GetService<IScopedStorage<HttpContext>>();
             IPipe resultPipe = new OptionsResultPipe<TInput>(
                 input => builder(allowedOptionsBuilder),
-                httpContextAccessor,
+                httpContextStorage,
                 pipe);
             return resultPipe.Execute();
         }
@@ -34,9 +35,9 @@ namespace FluentRestBuilder
             params HttpVerb[] verbs)
             where TInput : class
         {
-            var httpContextAccessor = pipe.GetService<IHttpContextAccessor>();
+            var httpContextStorage = pipe.GetService<IScopedStorage<HttpContext>>();
             IPipe resultPipe = new OptionsResultPipe<TInput>(
-                input => verbs, httpContextAccessor, pipe);
+                input => verbs, httpContextStorage, pipe);
             return resultPipe.Execute();
         }
     }

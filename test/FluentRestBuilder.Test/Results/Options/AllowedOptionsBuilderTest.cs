@@ -8,6 +8,7 @@ namespace FluentRestBuilder.Test.Results.Options
     using Common.Mocks;
     using FluentRestBuilder.Results.Options;
     using Microsoft.AspNetCore.Http;
+    using Storage;
     using Xunit;
 
     public class AllowedOptionsBuilderTest
@@ -16,14 +17,14 @@ namespace FluentRestBuilder.Test.Results.Options
 
         public AllowedOptionsBuilderTest()
         {
-            var httpContextAccessor = new HttpContextAccessor
+            var httpContextStorage = new ScopedStorage<HttpContext>
             {
-                HttpContext = new DefaultHttpContext
+                Value = new DefaultHttpContext
                 {
                     User = new MockPrincipal()
                 }
             };
-            this.builder = new AllowedOptionsBuilder<Entity>(httpContextAccessor);
+            this.builder = new AllowedOptionsBuilder<Entity>(httpContextStorage);
         }
 
         [Fact]

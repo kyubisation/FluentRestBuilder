@@ -11,6 +11,7 @@ namespace FluentRestBuilder.Results.Options
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Primitives;
+    using Storage;
 
     public class OptionsResultPipe<TInput> : ResultPipe<TInput>
         where TInput : class
@@ -26,17 +27,17 @@ namespace FluentRestBuilder.Results.Options
                 { HttpVerb.Put, "PUT" }
             };
 
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IScopedStorage<HttpContext> httpContextStorage;
         private readonly Func<TInput, IEnumerable<HttpVerb>> verbGeneration;
 
         public OptionsResultPipe(
             Func<TInput, IEnumerable<HttpVerb>> verbGeneration,
-            IHttpContextAccessor httpContextAccessor,
+            IScopedStorage<HttpContext> httpContextStorage,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
             this.verbGeneration = verbGeneration;
-            this.httpContextAccessor = httpContextAccessor;
+            this.httpContextStorage = httpContextStorage;
         }
 
         protected override IActionResult CreateResult(TInput source)
@@ -53,7 +54,7 @@ namespace FluentRestBuilder.Results.Options
                     new StringBuilder("OPTIONS"),
                     (current, next) => current.Append($", {next}"))
                 .ToString();
-            this.httpContextAccessor.HttpContext.Response.Headers
+            this.httpContextStorage.Value.Response.Headers
                 .Append("Allow", new StringValues(verbs));
         }
     }

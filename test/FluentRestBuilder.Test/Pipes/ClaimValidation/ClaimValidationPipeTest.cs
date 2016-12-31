@@ -11,6 +11,7 @@ namespace FluentRestBuilder.Test.Pipes.ClaimValidation
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
+    using Storage;
     using Xunit;
 
     public class ClaimValidationPipeTest : TestBaseWithServiceProvider
@@ -24,9 +25,9 @@ namespace FluentRestBuilder.Test.Pipes.ClaimValidation
         {
             this.principal = new MockPrincipal();
             var provider = new ServiceCollection()
-                .AddSingleton<IHttpContextAccessor>(p => new HttpContextAccessor
+                .AddSingleton<IScopedStorage<HttpContext>>(p => new ScopedStorage<HttpContext>
                 {
-                    HttpContext = new DefaultHttpContext { User = this.principal }
+                    Value = new DefaultHttpContext { User = this.principal }
                 })
                 .AddTransient<IClaimValidationPipeFactory<Entity>, ClaimValidationPipeFactory<Entity>>()
                 .BuildServiceProvider();

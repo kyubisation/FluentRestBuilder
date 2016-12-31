@@ -7,6 +7,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
     using Exceptions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
+    using Storage;
 
     public class PaginationByClientRequestInterpreter : IPaginationByClientRequestInterpreter
     {
@@ -14,10 +15,10 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
         private readonly IQueryCollection queryCollection;
 
         public PaginationByClientRequestInterpreter(
-            IHttpContextAccessor httpContextAccessor,
+            IScopedStorage<HttpContext> httpContextStorage,
             IQueryArgumentKeys queryArgumentKeys)
         {
-            this.queryCollection = httpContextAccessor.HttpContext.Request.Query;
+            this.queryCollection = httpContextStorage.Value.Request.Query;
             this.queryArgumentKeys = queryArgumentKeys;
         }
 

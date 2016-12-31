@@ -11,6 +11,7 @@ namespace FluentRestBuilder.Pipes.CollectionMapping
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.AspNetCore.WebUtilities;
+    using Storage;
 
     public class RestCollectionLinkGenerator : IRestCollectionLinkGenerator
     {
@@ -18,10 +19,10 @@ namespace FluentRestBuilder.Pipes.CollectionMapping
         private readonly HttpRequest request;
 
         public RestCollectionLinkGenerator(
-            IHttpContextAccessor actionContextAccessor,
+            IScopedStorage<HttpContext> httpContextStorage,
             IQueryArgumentKeys queryArgumentKeys)
         {
-            this.request = actionContextAccessor.HttpContext.Request;
+            this.request = httpContextStorage.Value.Request;
             this.queryArgumentKeys = queryArgumentKeys;
         }
 

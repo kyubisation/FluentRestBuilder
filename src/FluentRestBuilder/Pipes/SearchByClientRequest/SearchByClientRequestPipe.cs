@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
     using System.Linq.Expressions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
+    using Storage;
 
     public class SearchByClientRequestPipe<TInput> : MappingPipeBase<IQueryable<TInput>, IQueryable<TInput>>
     {
@@ -17,7 +18,7 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
         private readonly IQueryCollection queryCollection;
 
         public SearchByClientRequestPipe(
-            IHttpContextAccessor httpContextAccessor,
+            IScopedStorage<HttpContext> httpContextStorage,
             IQueryArgumentKeys queryArgumentKeys,
             Func<string, Expression<Func<TInput, bool>>> search,
             IOutputPipe<IQueryable<TInput>> parent)
@@ -25,7 +26,7 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
         {
             this.queryArgumentKeys = queryArgumentKeys;
             this.search = search;
-            this.queryCollection = httpContextAccessor.HttpContext.Request.Query;
+            this.queryCollection = httpContextStorage.Value.Request.Query;
         }
 
         protected override IQueryable<TInput> Map(IQueryable<TInput> input)
