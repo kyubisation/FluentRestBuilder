@@ -1,4 +1,4 @@
-﻿// <copyright file="Integration.cs" company="Kyubisation">
+// <copyright file="Integration.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -7,8 +7,8 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Linq;
-    using EntityFrameworkCore.Common;
     using EntityFrameworkCore.Pipes.QueryableSource;
+    using EntityFrameworkCore.QueryableFactories;
     using Microsoft.Extensions.DependencyInjection;
 
     public static partial class Integration

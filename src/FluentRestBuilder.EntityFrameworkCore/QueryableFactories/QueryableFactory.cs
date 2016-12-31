@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.Common
+namespace FluentRestBuilder.EntityFrameworkCore.QueryableFactories
 {
     using System.Linq;
 

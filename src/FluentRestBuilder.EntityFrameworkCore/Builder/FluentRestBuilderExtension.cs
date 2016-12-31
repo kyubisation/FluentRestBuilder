@@ -6,13 +6,13 @@
 namespace FluentRestBuilder
 {
     using Builder;
-    using EntityFrameworkCore.Common;
     using EntityFrameworkCore.MetaModel;
     using EntityFrameworkCore.Pipes;
     using EntityFrameworkCore.Pipes.Deletion;
     using EntityFrameworkCore.Pipes.Insertion;
     using EntityFrameworkCore.Pipes.QueryableSource;
     using EntityFrameworkCore.Pipes.Update;
+    using EntityFrameworkCore.QueryableFactories;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -49,8 +49,7 @@ namespace FluentRestBuilder
             collection.TryAddScoped(
                 typeof(IEntityDeletionPipeFactory<>), typeof(EntityDeletionPipeFactory<>));
             collection.TryAddScoped(
-                typeof(IQueryableSourcePipeFactory<,>),
-                typeof(QueryableSourcePipeFactory<,>));
+                typeof(IQueryableSourcePipeFactory<,>), typeof(QueryableSourcePipeFactory<,>));
         }
 
         private static void RegisterTransformations(IServiceCollection collection)

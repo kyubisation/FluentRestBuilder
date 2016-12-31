@@ -1,4 +1,4 @@
-﻿// <copyright file="QueryableSourcePipeFactory.cs" company="Kyubisation">
+// <copyright file="QueryableSourcePipeFactory.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -6,7 +6,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.QueryableSource
 {
     using System;
     using System.Linq;
-    using Common;
+    using QueryableFactories;
 
     public class QueryableSourcePipeFactory<TInput, TOutput> :
         IQueryableSourcePipeFactory<TInput, TOutput>

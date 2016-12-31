@@ -4,10 +4,10 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Test
 {
-    using Common;
     using EntityFrameworkCore.MetaModel;
     using FluentRestBuilder.Test.Common.Mocks;
     using Microsoft.Extensions.DependencyInjection;
+    using QueryableFactories;
 
     public abstract class ScopedDbContextTestBase : FluentRestBuilder.Test.Common.ScopedDbContextTestBase
     {
