@@ -29,8 +29,8 @@ namespace FluentRestBuilder.Sources
 
             set
             {
-                this.InitializeControllerServices(value);
                 this.controller = value;
+                this.InitializeControllerServices();
             }
         }
 
@@ -42,18 +42,18 @@ namespace FluentRestBuilder.Sources
 
         protected abstract Task<TOutput> GetOutput();
 
-        private void InitializeControllerServices(ControllerBase controllerBase)
+        private void InitializeControllerServices()
         {
             var urlHelperStorage = this.GetService<IScopedStorage<IUrlHelper>>();
             if (urlHelperStorage.Value == null)
             {
-                urlHelperStorage.Value = controllerBase.Url;
+                urlHelperStorage.Value = this.controller.Url;
             }
 
             var httpContextStorage = this.GetService<IScopedStorage<HttpContext>>();
             if (httpContextStorage.Value == null)
             {
-                httpContextStorage.Value = controllerBase.HttpContext;
+                httpContextStorage.Value = this.controller.HttpContext;
             }
         }
     }
