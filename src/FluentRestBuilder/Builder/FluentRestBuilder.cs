@@ -24,8 +24,6 @@ namespace FluentRestBuilder.Builder
     using Pipes.SingleOrDefault;
     using Pipes.Validation;
     using Results.Options;
-    using Sources.LazySource;
-    using Sources.Source;
     using Storage;
 
     public class FluentRestBuilder : IFluentRestBuilder
@@ -33,7 +31,6 @@ namespace FluentRestBuilder.Builder
         public FluentRestBuilder(IServiceCollection services)
         {
             this.Services = services;
-            this.RegisterSourceFactories();
             this.RegisterPipeFactories();
             this.RegisterMappings();
             this.RegisterInterpreters();
@@ -41,14 +38,6 @@ namespace FluentRestBuilder.Builder
         }
 
         public IServiceCollection Services { get; }
-
-        private void RegisterSourceFactories()
-        {
-            this.Services.TryAddScoped(
-                typeof(ISourceFactory<>), typeof(SourceFactory<>));
-            this.Services.TryAddScoped(
-                typeof(ILazySourceFactory<>), typeof(LazySourceFactory<>));
-        }
 
         private void RegisterPipeFactories()
         {

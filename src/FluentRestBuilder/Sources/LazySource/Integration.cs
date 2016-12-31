@@ -8,16 +8,16 @@ namespace FluentRestBuilder
     using System;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.DependencyInjection;
     using Sources.LazySource;
 
     public static partial class Integration
     {
         public static OutputPipe<TOutput> FromSource<TOutput>(
             this ControllerBase controller, Func<Task<TOutput>> output) =>
-            controller.HttpContext.RequestServices
-                .GetService<ILazySourceFactory<TOutput>>()
-                .Resolve(output, controller.Url);
+            new LazySource<TOutput>(output, controller.HttpContext.RequestServices)
+            {
+                Controller = controller
+            };
 
         public static OutputPipe<TOutput> FromSource<TOutput>(
             this ControllerBase controller, Func<TOutput> output) =>

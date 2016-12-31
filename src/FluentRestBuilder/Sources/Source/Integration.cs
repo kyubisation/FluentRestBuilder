@@ -7,16 +7,16 @@ namespace FluentRestBuilder
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.DependencyInjection;
     using Sources.Source;
 
     public static partial class Integration
     {
         public static OutputPipe<TOutput> FromSource<TOutput>(
             this ControllerBase controller, Task<TOutput> output) =>
-            controller.HttpContext.RequestServices
-                .GetService<ISourceFactory<TOutput>>()
-                .Resolve(output, controller.Url);
+            new Source<TOutput>(output, controller.HttpContext.RequestServices)
+            {
+                Controller = controller
+            };
 
         public static OutputPipe<TOutput> FromSource<TOutput>(
             this ControllerBase controller, TOutput output) =>

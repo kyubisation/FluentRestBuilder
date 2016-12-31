@@ -13,7 +13,6 @@ namespace FluentRestBuilder
     using EntityFrameworkCore.Pipes.Insertion;
     using EntityFrameworkCore.Pipes.QueryableSource;
     using EntityFrameworkCore.Pipes.Update;
-    using EntityFrameworkCore.Sources.QueryableSource;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -26,7 +25,6 @@ namespace FluentRestBuilder
             where TContext : DbContext
         {
             RegisterEntityFrameworkRelatedServices<TContext>(builder.Services);
-            RegisterSources(builder.Services);
             RegisterPipes(builder.Services);
             RegisterTransformations(builder.Services);
 
@@ -40,12 +38,6 @@ namespace FluentRestBuilder
             collection.TryAddScoped<IQueryableFactory, ContextQueryableFactory<TContext>>();
             collection.TryAddScoped(typeof(IQueryableFactory<>), typeof(QueryableFactory<>));
             collection.TryAddSingleton(typeof(IModelContainer<>), typeof(ModelContainer<>));
-        }
-
-        private static void RegisterSources(IServiceCollection collection)
-        {
-            collection.TryAddScoped(
-                typeof(IQueryableSourceFactory<>), typeof(QueryableSourceFactory<>));
         }
 
         private static void RegisterPipes(IServiceCollection collection)
