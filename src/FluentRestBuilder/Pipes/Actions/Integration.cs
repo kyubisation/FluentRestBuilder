@@ -19,7 +19,7 @@ namespace FluentRestBuilder
             Func<TInput, Task> asyncAction = entity =>
             {
                 action(entity);
-                return Task.CompletedTask;
+                return Task.FromResult(0);
             };
             return pipe.GetService<IActionPipeFactory<TInput>>().Resolve(asyncAction, pipe);
         }

@@ -1,13 +1,18 @@
 ﻿{
   "buildOptions": {
-    "xmlDoc": true,
+    "additionalArguments": [ "/additionalfile:../../stylecop.json" ],
     "keyFile": "../../FluentRestBuilder.snk",
-    "nowarn": [ "1591" ],
-    "additionalArguments": [ "/additionalfile:../../stylecop.json" ]
+    "nowarn": [
+      "CS1591"
+    ],
+    "warningsAsErrors": true,
+    "xmlDoc": true
   },
   "dependencies": {
-    "FluentRestBuilder": "1.0.0-*",
-    "NETStandard.Library": "1.6.1",
+    "FluentRestBuilder": {
+      "target": "project"
+    },
+    "Newtonsoft.Json": "9.0.1",
     "Microsoft.CodeAnalysis.FxCopAnalyzers": {
       "version": "1.2.0-beta2",
       "type": "build"
@@ -15,12 +20,12 @@
     "StyleCop.Analyzers": {
       "version": "1.0.0",
       "type": "build"
-    }
+    },
+    "NETStandard.Library": "1.6.1"
   },
   "frameworks": {
-    "netstandard1.6": {
-      "imports": "dnxcore50"
-    }
+    "net451": {},
+    "netstandard1.6": {}
   },
   "version": "1.0.0-*"
 }

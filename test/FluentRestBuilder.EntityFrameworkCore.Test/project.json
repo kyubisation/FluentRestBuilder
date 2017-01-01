@@ -1,45 +1,45 @@
 {
   "buildOptions": {
-    "xmlDoc": true,
+    "additionalArguments": [ "/additionalfile:../../stylecop.json" ],
     "keyFile": "../../FluentRestBuilder.snk",
-    "nowarn": [ "1591" ],
-    "additionalArguments": [ "/additionalfile:../../stylecop.json" ]
+    "nowarn": [
+      "CS1591"
+    ],
+    "warningsAsErrors": true,
+    "xmlDoc": true
   },
   "dependencies": {
-    "NETStandard.Library": "1.6.1",
-    "Microsoft.DotNet.InternalAbstractions": "1.0.0",
     "xunit": "2.2.0-beta4-build3444",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "Microsoft.CodeAnalysis.FxCopAnalyzers": {
-      "version": "1.2.0-beta2",
-      "type": "build"
-    },
-    "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
-    "StyleCop.Analyzers": {
-      "version": "1.0.0",
-      "type": "build"
-    },
     "FluentRestBuilder.EntityFrameworkCore": {
       "target": "project"
     },
     "FluentRestBuilder.Test.Common": {
       "target": "project"
-    }
+    },
+    "Microsoft.DotNet.InternalAbstractions": "1.0.0",
+    "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
+    "Microsoft.CodeAnalysis.FxCopAnalyzers": {
+      "version": "1.2.0-beta2",
+      "type": "build"
+    },
+    "StyleCop.Analyzers": {
+      "version": "1.0.0",
+      "type": "build"
+    },
+    "NETStandard.Library": "1.6.1"
   },
   "frameworks": {
-    "netcoreapp1.0": {
+    "netcoreapp1.1": {
       "dependencies": {
         "Microsoft.NETCore.App": {
-          "type": "platform",
-          "version": "1.0.1"
+          "version": "1.1.0",
+          "type": "platform"
         },
         "Microsoft.CodeCoverage": "1.0.2"
-      },
-      "imports": [
-        "dotnet5.4",
-        "portable-net451+win8"
-      ]
-    }
+      }
+    },
+    "net451": {}
   },
   "testRunner": "xunit"
 }

@@ -1,28 +1,29 @@
 {
   "buildOptions": {
-    "xmlDoc": true,
+    "additionalArguments": [ "/additionalfile:../../stylecop.json" ],
     "keyFile": "../../FluentRestBuilder.snk",
-    "define": [],
-    "nowarn": [ "1591" ],
-    "additionalArguments": [ "/additionalfile:../../stylecop.json" ]
+    "nowarn": [
+      "CS1591" 
+    ],
+    "warningsAsErrors": true,
+    "xmlDoc": true
   },
   "dependencies": {
-    "NETStandard.Library": "1.6.1",
     "Microsoft.AspNetCore.Mvc.Core": "1.1.0",
+    "Microsoft.Extensions.DependencyInjection": "1.1.0",
     "Microsoft.CodeAnalysis.FxCopAnalyzers": {
       "version": "1.2.0-beta2",
       "type": "build"
     },
-    "Microsoft.Extensions.DependencyInjection": "1.1.0",
-    "Newtonsoft.Json": "9.0.1",
     "StyleCop.Analyzers": {
       "version": "1.0.0",
       "type": "build"
-    }
+    },
+    "NETStandard.Library": "1.6.1"
   },
   "frameworks": {
+    "net451": {},
     "netstandard1.6": {
-      "imports": "dnxcore50",
       "dependencies": {
         "System.Linq.Queryable": "4.3.0"
       }

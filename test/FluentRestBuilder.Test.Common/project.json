@@ -1,16 +1,18 @@
 ﻿{
   "buildOptions": {
-    "xmlDoc": true,
+    "additionalArguments": [ "/additionalfile:../../stylecop.json" ],
     "keyFile": "../../FluentRestBuilder.snk",
-    "nowarn": [ "1591" ],
-    "additionalArguments": [ "/additionalfile:../../stylecop.json" ]
+    "nowarn": [
+      "CS1591"
+    ],
+    "warningsAsErrors": true,
+    "xmlDoc": true
   },
   "dependencies": {
     "FluentRestBuilder": {
       "target": "project"
     },
     "Microsoft.AspNetCore.Mvc.Abstractions": "1.1.0",
-    "Microsoft.EntityFrameworkCore": "1.1.0",
     "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
     "Microsoft.Extensions.DependencyInjection": "1.1.0",
     "Microsoft.CodeAnalysis.FxCopAnalyzers": {
@@ -24,8 +26,7 @@
     "NETStandard.Library": "1.6.1"
   },
   "frameworks": {
-    "netstandard1.6": {
-      "imports": "dnxcore50"
-    }
+    "net451": {},
+    "netstandard1.6": {}
   }
 }
