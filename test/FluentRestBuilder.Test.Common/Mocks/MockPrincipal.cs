@@ -14,7 +14,7 @@ namespace FluentRestBuilder.Test.Common.Mocks
         private readonly List<Tuple<string, string>> claims = new List<Tuple<string, string>>();
 
         public MockPrincipal()
-            : base(new GenericIdentity(string.Empty), new string[]{})
+            : base(new GenericIdentity(string.Empty), new string[] { })
         {
         }
 

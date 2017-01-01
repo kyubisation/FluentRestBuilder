@@ -1,4 +1,8 @@
-﻿namespace FluentRestBuilder.Test.Common.Mocks
+﻿// <copyright file="Integration.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRestBuilder.Test.Common.Mocks
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;

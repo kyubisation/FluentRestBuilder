@@ -1,4 +1,8 @@
-﻿namespace FluentRestBuilder.Test.Common.Mocks
+﻿// <copyright file="EmptyServiceProvider.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
+
+namespace FluentRestBuilder.Test.Common.Mocks
 {
     using System;
 
