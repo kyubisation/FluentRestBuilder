@@ -24,6 +24,7 @@
   },
   "buildOptions": {
     "xmlDoc": true,
+    "keyFile": "../../FluentRestBuilder.snk",
     "define": [],
     "nowarn": [ "1591" ],
     "additionalArguments": [ "/additionalfile:../../stylecop.json" ]
