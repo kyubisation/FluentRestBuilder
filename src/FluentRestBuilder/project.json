@@ -1,5 +1,11 @@
 {
-  "version": "1.0.0-*",
+  "buildOptions": {
+    "xmlDoc": true,
+    "keyFile": "../../FluentRestBuilder.snk",
+    "define": [],
+    "nowarn": [ "1591" ],
+    "additionalArguments": [ "/additionalfile:../../stylecop.json" ]
+  },
   "dependencies": {
     "NETStandard.Library": "1.6.1",
     "Microsoft.AspNetCore.Mvc.Core": "1.1.0",
@@ -22,11 +28,5 @@
       }
     }
   },
-  "buildOptions": {
-    "xmlDoc": true,
-    "keyFile": "../../FluentRestBuilder.snk",
-    "define": [],
-    "nowarn": [ "1591" ],
-    "additionalArguments": [ "/additionalfile:../../stylecop.json" ]
-  }
+  "version": "1.0.0-*"
 }

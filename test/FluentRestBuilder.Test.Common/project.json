@@ -1,7 +1,14 @@
 ﻿{
-  "version": "1.0.0-*",
+  "buildOptions": {
+    "xmlDoc": true,
+    "keyFile": "../../FluentRestBuilder.snk",
+    "nowarn": [ "1591" ],
+    "additionalArguments": [ "/additionalfile:../../stylecop.json" ]
+  },
   "dependencies": {
-    "FluentRestBuilder": "1.0.0-*",
+    "FluentRestBuilder": {
+      "target": "project"
+    },
     "Microsoft.AspNetCore.Mvc.Abstractions": "1.1.0",
     "Microsoft.EntityFrameworkCore": "1.1.0",
     "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
@@ -20,11 +27,5 @@
     "netstandard1.6": {
       "imports": "dnxcore50"
     }
-  },
-  "buildOptions": {
-    "xmlDoc": true,
-    "keyFile": "../../FluentRestBuilder.snk",
-    "nowarn": [ "1591" ],
-    "additionalArguments": [ "/additionalfile:../../stylecop.json" ]
   }
 }

@@ -1,5 +1,10 @@
 ﻿{
-  "version": "1.0.0-*",
+  "buildOptions": {
+    "xmlDoc": true,
+    "keyFile": "../../FluentRestBuilder.snk",
+    "nowarn": [ "1591" ],
+    "additionalArguments": [ "/additionalfile:../../stylecop.json" ]
+  },
   "dependencies": {
     "FluentRestBuilder": "1.0.0-*",
     "NETStandard.Library": "1.6.1",
@@ -18,10 +23,5 @@
       "imports": "dnxcore50"
     }
   },
-  "buildOptions": {
-    "xmlDoc": true,
-    "keyFile": "../../FluentRestBuilder.snk",
-    "nowarn": [ "1591" ],
-    "additionalArguments": [ "/additionalfile:../../stylecop.json" ]
-  }
+  "version": "1.0.0-*"
 }
