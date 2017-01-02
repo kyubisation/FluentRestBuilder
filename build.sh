@@ -22,9 +22,7 @@ do
 	# Instead, run directly with mono for the full .net version 
 	dotnet build ./test/$dir -c Release -f net451
 
-	mono \  
-	./test/$dir/bin/Release/net451/*/dotnet-test-xunit.exe \
-	./test/$dir/bin/Release/net451/*/$dir.dll
+	mono ./test/$dir/bin/Release/net451/*/dotnet-test-xunit.exe ./test/$dir/bin/Release/net451/*/$dir.dll
 done
 
 
