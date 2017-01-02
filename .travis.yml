@@ -1,19 +1,17 @@
 language: csharp
-solution: FluentRestBuilder.sln
 sudo: required
 dist: trusty
-
-mono: none
 dotnet: 1.0.0-preview2-003131
-
+env:
+  - DOTNETCORE=1
+mono:
+  - 4.2.3
+os:  
+  - linux
+  - osx
+osx_image: xcode7.3
 branches:  
   only:
     - master
-
 script:
-  - dotnet --info
-  - dotnet restore
-  - dotnet build */**/project.json
-  - dotnet test test/FluentRestBuilder.Test/project.json
-  - dotnet test test/FluentRestBuilder.EntityFrameworkCore.Test/project.json
-  - dotnet test test/FluentRestBuilder.HypertextApplicationLanguage.Test/project.json
+  - ./build.sh
