@@ -27,5 +27,14 @@
     "net451": {},
     "netstandard1.6": {}
   },
+  "packOptions": {
+    "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
+    "projectUrl": "https://github.com/kyubisation/FluentRestBuilder",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/kyubisation/FluentRestBuilder"
+    },
+    "requireLicenseAcceptance": false
+  },
   "version": "1.0.0-*"
 }
