@@ -27,7 +27,7 @@ done
 
 
 revision=${TRAVIS_JOB_ID:=1}  
-revision=$(printf "ci-%04d" $revision)
+revision=$(printf "%04d" $revision)
 
 for dir in `find ./src/ -maxdepth 1 -mindepth 1 -type d`
 do
