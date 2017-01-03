@@ -7,26 +7,19 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
     using System;
     using System.Linq;
     using System.Linq.Expressions;
-    using Microsoft.AspNetCore.Http;
-    using Storage;
 
     public class SearchByClientRequestPipeFactory<TInput> : ISearchByClientRequestPipeFactory<TInput>
     {
-        private readonly IScopedStorage<HttpContext> httpContextStorage;
-        private readonly IQueryArgumentKeys queryArgumentKeys;
+        private readonly ISearchByClientRequestInterpreter interpreter;
 
-        public SearchByClientRequestPipeFactory(
-            IScopedStorage<HttpContext> httpContextStorage,
-            IQueryArgumentKeys queryArgumentKeys)
+        public SearchByClientRequestPipeFactory(ISearchByClientRequestInterpreter interpreter)
         {
-            this.httpContextStorage = httpContextStorage;
-            this.queryArgumentKeys = queryArgumentKeys;
+            this.interpreter = interpreter;
         }
 
         public OutputPipe<IQueryable<TInput>> Resolve(
             Func<string, Expression<Func<TInput, bool>>> search,
             IOutputPipe<IQueryable<TInput>> parent) =>
-            new SearchByClientRequestPipe<TInput>(
-                this.httpContextStorage, this.queryArgumentKeys, search, parent);
+            new SearchByClientRequestPipe<TInput>(this.interpreter, search, parent);
     }
 }

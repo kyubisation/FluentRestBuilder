@@ -9,29 +9,23 @@ namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
     using System.Threading.Tasks;
     using Common;
     using Common.Mocks;
-    using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Pipes.Mapping;
     using FluentRestBuilder.Pipes.Queryable;
     using FluentRestBuilder.Pipes.SearchByClientRequest;
     using FluentRestBuilder.Sources.Source;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Primitives;
-    using Storage;
     using Xunit;
 
     public class SearchByClientRequestPipeTest : ScopedDbContextTestBase
     {
-        private readonly Dictionary<string, StringValues> queryValues = new Dictionary<string, StringValues>();
-        private readonly IQueryArgumentKeys queryArgumentKeys = new QueryArgumentKeys();
+        private readonly Interpreter interpreter = new Interpreter();
 
         [Fact]
         public async Task TestBasicUseCase()
         {
             this.CreateOrderByEntities();
-            this.queryValues.Add(this.queryArgumentKeys.Search, new StringValues("b"));
+            this.interpreter.SearchValue = "b";
 
             var result = await new Source<IQueryable<Entity>>(
                     this.Context.Entities, this.ServiceProvider)
@@ -54,17 +48,7 @@ namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
                 IQueryablePipeFactory<IQueryable<Entity>, IOrderedQueryable<Entity>>,
                 QueryablePipeFactory<IQueryable<Entity>, IOrderedQueryable<Entity>>>();
 
-            services.AddSingleton(p => this.queryArgumentKeys);
-            services.AddScoped<IScopedStorage<HttpContext>>(p => new ScopedStorage<HttpContext>
-            {
-                Value = new DefaultHttpContext
-                {
-                    Request =
-                    {
-                        Query = new QueryCollection(this.queryValues)
-                    }
-                }
-            });
+            services.AddSingleton<ISearchByClientRequestInterpreter>(p => this.interpreter);
         }
 
         private void CreateOrderByEntities()
@@ -77,6 +61,13 @@ namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
                 context.Add(new Entity { Id = 4, Name = "ab" });
                 context.SaveChanges();
             }
+        }
+
+        private class Interpreter : ISearchByClientRequestInterpreter
+        {
+            public string SearchValue { get; set; }
+
+            public string ParseRequestQuery() => this.SearchValue;
         }
     }
 }
