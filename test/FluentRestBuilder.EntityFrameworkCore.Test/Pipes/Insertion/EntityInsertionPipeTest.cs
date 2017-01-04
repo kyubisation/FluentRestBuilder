@@ -32,6 +32,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Insertion
         protected override void Setup(IServiceCollection services)
         {
             base.Setup(services);
+            services.AddScoped<IContextActions>(p => new ContextActions<MockDbContext>(this.Context));
             services.AddTransient<IScopedStorage<Entity>, ScopedStorage<Entity>>();
             services.AddTransient<IEntityInsertionPipeFactory<Entity>, EntityInsertionPipeFactory<Entity>>();
         }

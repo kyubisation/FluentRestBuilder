@@ -14,25 +14,24 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Insertion
     public class EntityInsertionPipe<TInput> : InputOutputPipe<TInput>
         where TInput : class
     {
-        private readonly DbContext context;
+        private readonly IContextActions contextActions;
         private readonly IScopedStorage<TInput> storage;
 
         public EntityInsertionPipe(
-            DbContext context,
+            IContextActions contextActions,
             IScopedStorage<TInput> storage,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
-            this.context = context;
+            this.contextActions = contextActions;
             this.storage = storage;
         }
 
         protected override async Task<IActionResult> ExecuteAsync(TInput entity)
         {
-            this.context.Set<TInput>().Add(entity);
             try
             {
-                await this.context.SaveChangesAsync();
+                await this.contextActions.AddAndSave(entity);
             }
             catch (DbUpdateConcurrencyException)
             {

@@ -39,7 +39,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Update
         {
             base.Setup(services);
             services.AddTransient<IEntityUpdatePipeFactory<Entity>>(
-                p => new EntityUpdatePipeFactory<Entity>(this.Context, new ScopedStorage<Entity>()));
+                p => new EntityUpdatePipeFactory<Entity>(
+                    new ContextActions<MockDbContext>(this.Context)));
             services.AddTransient<IScopedStorage<Entity>, ScopedStorage<Entity>>();
         }
     }

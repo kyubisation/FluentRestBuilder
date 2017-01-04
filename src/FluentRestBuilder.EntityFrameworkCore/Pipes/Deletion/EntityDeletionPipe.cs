@@ -13,22 +13,21 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Deletion
     public class EntityDeletionPipe<TInput> : InputOutputPipe<TInput>
         where TInput : class
     {
-        private readonly DbContext context;
+        private readonly IContextActions contextActions;
 
         public EntityDeletionPipe(
-            DbContext context,
+            IContextActions contextActions,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
-            this.context = context;
+            this.contextActions = contextActions;
         }
 
         protected override async Task<IActionResult> ExecuteAsync(TInput entity)
         {
-            this.context.Set<TInput>().Remove(entity);
             try
             {
-                await this.context.SaveChangesAsync();
+                await this.contextActions.RemoveAndSave(entity);
             }
             catch (DbUpdateConcurrencyException)
             {

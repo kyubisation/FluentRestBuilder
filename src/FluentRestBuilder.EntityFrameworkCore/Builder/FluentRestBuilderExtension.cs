@@ -34,6 +34,7 @@ namespace FluentRestBuilder
             IServiceCollection collection)
             where TContext : DbContext
         {
+            collection.TryAddScoped<IContextActions, ContextActions<TContext>>();
             collection.TryAddScoped<IQueryableFactory, ContextQueryableFactory<TContext>>();
             collection.TryAddScoped(typeof(IQueryableFactory<>), typeof(QueryableFactory<>));
             collection.TryAddSingleton(typeof(IModelContainer<>), typeof(ModelContainer<>));

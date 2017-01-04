@@ -32,6 +32,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Deletion
         protected override void Setup(IServiceCollection services)
         {
             base.Setup(services);
+            services.AddScoped<IContextActions>(p => new ContextActions<MockDbContext>(this.Context));
             services.AddTransient<IEntityDeletionPipeFactory<Entity>, EntityDeletionPipeFactory<Entity>>();
         }
     }
