@@ -20,7 +20,8 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
             ["<="] = FilterType.LessThanOrEqual,
             [">="] = FilterType.GreaterThanOrEqual,
             ["<"] = FilterType.LessThan,
-            [">"] = FilterType.GreaterThan
+            [">"] = FilterType.GreaterThan,
+            ["="] = FilterType.Equals
         };
 
         private readonly IQueryArgumentKeys queryArgumentKeys;
@@ -34,19 +35,24 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
             this.queryCollection = httpContextStorage.Value.Request.Query;
         }
 
-        public IEnumerable<FilterRequest> ParseRequestQuery()
+        public IEnumerable<FilterRequest> ParseRequestQuery() =>
+            this.TryParseRequestQuery() ?? Enumerable.Empty<FilterRequest>();
+
+        private IEnumerable<FilterRequest> TryParseRequestQuery()
         {
             StringValues filterValues;
             return !this.queryCollection.TryGetValue(this.queryArgumentKeys.Filter, out filterValues)
-                ? Enumerable.Empty<FilterRequest>()
-                : this.DeserializeFiltersAndCreateFilterRequests(filterValues);
+                ? null : this.DeserializeFiltersAndCreateFilterRequests(filterValues);
         }
 
         private IEnumerable<FilterRequest> DeserializeFiltersAndCreateFilterRequests(StringValues filterValues)
         {
             return filterValues.ToArray()
-                .SelectMany(this.DeserializeFilter)
-                .Select(f => this.InterpretFilterRequest(f.Key, f.Value));
+                .Select(this.DeserializeFilter)
+                .Where(f => f != null)
+                .SelectMany(f => f)
+                .Select(f => this.InterpretFilterRequest(f.Key, f.Value))
+                .ToList();
         }
 
         private IDictionary<string, string> DeserializeFilter(string filter)
