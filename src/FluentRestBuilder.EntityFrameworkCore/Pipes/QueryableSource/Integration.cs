@@ -8,8 +8,8 @@ namespace FluentRestBuilder
     using System;
     using System.Linq;
     using Builder;
+    using EntityFrameworkCore;
     using EntityFrameworkCore.Pipes.QueryableSource;
-    using EntityFrameworkCore.QueryableFactories;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
 

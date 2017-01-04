@@ -6,7 +6,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.QueryableSource
 {
     using System;
     using System.Linq;
-    using QueryableFactories;
 
     public interface IQueryableSourcePipeFactory<TInput, TOutput>
         where TOutput : class

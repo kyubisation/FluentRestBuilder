@@ -5,7 +5,7 @@
 // ReSharper disable once CheckNamespace
 namespace FluentRestBuilder
 {
-    using EntityFrameworkCore.QueryableFactories;
+    using EntityFrameworkCore;
     using EntityFrameworkCore.Sources.QueryableSource;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;

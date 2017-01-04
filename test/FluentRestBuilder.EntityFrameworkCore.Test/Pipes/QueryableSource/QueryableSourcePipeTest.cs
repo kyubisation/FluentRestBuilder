@@ -12,7 +12,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
     using FluentRestBuilder.Test.Common.Mocks;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using QueryableFactories;
     using Xunit;
 
     public class QueryableSourcePipeTest : ScopedDbContextTestBase
