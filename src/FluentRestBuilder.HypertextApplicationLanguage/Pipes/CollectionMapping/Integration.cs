@@ -7,13 +7,28 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Linq;
+    using Builder;
     using HypertextApplicationLanguage;
     using HypertextApplicationLanguage.Mapping;
     using HypertextApplicationLanguage.Pipes.CollectionMapping;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Pipes;
 
     public static partial class Integration
     {
+        internal static IFluentRestBuilder RegisterCollectionMappingPipe(
+            this IFluentRestBuilder builder)
+        {
+            builder.Services.TryAddScoped(
+                typeof(ICollectionMappingPipeFactory<,>), typeof(CollectionMappingPipeFactory<,>));
+            builder.Services.TryAddScoped<
+                IRestCollectionLinkGenerator, RestCollectionLinkGenerator>();
+            builder.Services.TryAddSingleton(
+                typeof(IQueryableTransformer<>), typeof(QueryableTransformer<>));
+            return builder;
+        }
+
         public static OutputPipe<RestEntityCollection> MapToRestCollection<TInput, TOutput>(
             this IOutputPipe<IQueryable<TInput>> pipe, Func<TInput, TOutput> mapping)
             where TInput : class

@@ -9,7 +9,6 @@ namespace FluentRestBuilder
     using Builder;
     using HypertextApplicationLanguage;
     using HypertextApplicationLanguage.Mapping;
-    using HypertextApplicationLanguage.Pipes.CollectionMapping;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -21,12 +20,10 @@ namespace FluentRestBuilder
         public static IFluentRestBuilder AddHAL(
             this IFluentRestBuilder builder)
         {
-            RegisterMappings(builder);
-            builder.Services.TryAddScoped(
-                typeof(ICollectionMappingPipeFactory<,>), typeof(CollectionMappingPipeFactory<,>));
-            builder.Services
-                .TryAddScoped<IRestCollectionLinkGenerator, RestCollectionLinkGenerator>();
-            return builder;
+            builder.Services.TryAddScoped<IMapperFactory, MapperFactory>();
+            builder.Services.TryAddScoped(typeof(IMapperFactory<>), typeof(MapperFactory<>));
+            builder.Services.TryAddTransient(typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
+            return builder.RegisterCollectionMappingPipe();
         }
 
         public static IFluentRestBuilder AddRestMapper<TInput, TOutput>(
@@ -45,13 +42,6 @@ namespace FluentRestBuilder
                     return mapper;
                 });
             return builder;
-        }
-
-        private static void RegisterMappings(IFluentRestBuilder builder)
-        {
-            builder.Services.TryAddScoped<IMapperFactory, MapperFactory>();
-            builder.Services.TryAddScoped(typeof(IMapperFactory<>), typeof(MapperFactory<>));
-            builder.Services.TryAddTransient(typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
         }
     }
 }
