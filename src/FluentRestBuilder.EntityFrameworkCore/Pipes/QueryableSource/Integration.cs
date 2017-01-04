@@ -7,12 +7,22 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Linq;
+    using Builder;
     using EntityFrameworkCore.Pipes.QueryableSource;
     using EntityFrameworkCore.QueryableFactories;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
 
     public static partial class Integration
     {
+        internal static IFluentRestBuilder RegisterQueryableSourcePipe(
+            this IFluentRestBuilder builder)
+        {
+            builder.Services.TryAddScoped(
+                typeof(IQueryableSourcePipeFactory<,>), typeof(QueryableSourcePipeFactory<,>));
+            return builder;
+        }
+
         public static QueryableSourcePipe<TInput, TOutput> SelectQueryableSource<TInput, TOutput>(
             this IOutputPipe<TInput> pipe,
             Func<IQueryableFactory, TInput, IQueryable<TOutput>> selection)

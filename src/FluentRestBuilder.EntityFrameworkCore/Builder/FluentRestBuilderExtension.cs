@@ -8,10 +8,6 @@ namespace FluentRestBuilder
     using Builder;
     using EntityFrameworkCore.MetaModel;
     using EntityFrameworkCore.Pipes;
-    using EntityFrameworkCore.Pipes.Deletion;
-    using EntityFrameworkCore.Pipes.Insertion;
-    using EntityFrameworkCore.Pipes.QueryableSource;
-    using EntityFrameworkCore.Pipes.Update;
     using EntityFrameworkCore.QueryableFactories;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
@@ -25,10 +21,13 @@ namespace FluentRestBuilder
             where TContext : DbContext
         {
             RegisterEntityFrameworkRelatedServices<TContext>(builder.Services);
-            RegisterPipes(builder.Services);
-            RegisterTransformations(builder.Services);
 
-            return builder;
+            builder.Services.AddSingleton(
+                typeof(IQueryableTransformer<>), typeof(AsyncQueryableTransformer<>));
+            return builder.RegisterDeletionPipe()
+                .RegisterInsertionPipe()
+                .RegisterQueryableSourcePipe()
+                .RegisterUpdatePipe();
         }
 
         private static void RegisterEntityFrameworkRelatedServices<TContext>(
@@ -38,24 +37,6 @@ namespace FluentRestBuilder
             collection.TryAddScoped<IQueryableFactory, ContextQueryableFactory<TContext>>();
             collection.TryAddScoped(typeof(IQueryableFactory<>), typeof(QueryableFactory<>));
             collection.TryAddSingleton(typeof(IModelContainer<>), typeof(ModelContainer<>));
-        }
-
-        private static void RegisterPipes(IServiceCollection collection)
-        {
-            collection.TryAddScoped(
-                typeof(IEntityInsertionPipeFactory<>), typeof(EntityInsertionPipeFactory<>));
-            collection.TryAddScoped(
-                typeof(IEntityUpdatePipeFactory<>), typeof(EntityUpdatePipeFactory<>));
-            collection.TryAddScoped(
-                typeof(IEntityDeletionPipeFactory<>), typeof(EntityDeletionPipeFactory<>));
-            collection.TryAddScoped(
-                typeof(IQueryableSourcePipeFactory<,>), typeof(QueryableSourcePipeFactory<,>));
-        }
-
-        private static void RegisterTransformations(IServiceCollection collection)
-        {
-            collection.AddSingleton(
-                typeof(IQueryableTransformer<>), typeof(AsyncQueryableTransformer<>));
         }
     }
 }
