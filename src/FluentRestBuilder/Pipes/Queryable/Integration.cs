@@ -8,11 +8,21 @@ namespace FluentRestBuilder
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using Builder;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Pipes.Queryable;
 
     public static partial class Integration
     {
+        internal static IFluentRestBuilder RegisterQueryablePipe(
+            this IFluentRestBuilder builder)
+        {
+            builder.Services.TryAddSingleton(
+                typeof(IQueryablePipeFactory<,>), typeof(QueryablePipeFactory<,>));
+            return builder;
+        }
+
         public static OutputPipe<TOutputQueryable> MapQueryable<TInputQueryable, TOutputQueryable>(
             this IOutputPipe<TInputQueryable> pipe, Func<TInputQueryable, TOutputQueryable> mapping)
             where TInputQueryable : class, IQueryable

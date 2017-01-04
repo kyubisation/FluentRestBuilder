@@ -7,12 +7,22 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Threading.Tasks;
+    using Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Pipes.Validation;
 
     public static partial class Integration
     {
+        internal static IFluentRestBuilder RegisterValidationPipe(
+            this IFluentRestBuilder builder)
+        {
+            builder.Services.TryAddSingleton(
+                typeof(IValidationPipeFactory<>), typeof(ValidationPipeFactory<>));
+            return builder;
+        }
+
         public static OutputPipe<TInput> InvalidWhen<TInput>(
             this IOutputPipe<TInput> pipe,
             Func<Task<bool>> invalidCheck,

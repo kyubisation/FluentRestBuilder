@@ -7,11 +7,22 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Security.Claims;
+    using Builder;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Pipes.ClaimValidation;
 
     public static partial class Integration
     {
+        internal static IFluentRestBuilder RegisterClaimValidationPipe(
+            this IFluentRestBuilder builder)
+        {
+            builder.Services.TryAddScoped(
+                typeof(IClaimValidationPipeFactory<>),
+                typeof(ClaimValidationPipeFactory<>));
+            return builder;
+        }
+
         public static OutputPipe<TInput> CurrentUserHas<TInput>(
             this IOutputPipe<TInput> pipe,
             Func<ClaimsPrincipal, TInput, bool> predicate,

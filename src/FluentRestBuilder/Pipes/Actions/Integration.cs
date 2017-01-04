@@ -7,11 +7,20 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Threading.Tasks;
+    using Builder;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Pipes.Actions;
 
     public static partial class Integration
     {
+        internal static IFluentRestBuilder RegisterActionPipe(this IFluentRestBuilder builder)
+        {
+            builder.Services.TryAddSingleton(
+                typeof(IActionPipeFactory<>), typeof(ActionPipeFactory<>));
+            return builder;
+        }
+
         public static OutputPipe<TInput> Do<TInput>(
             this IOutputPipe<TInput> pipe, Action<TInput> action)
             where TInput : class

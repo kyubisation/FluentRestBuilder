@@ -7,14 +7,26 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Threading.Tasks;
+    using Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Results.Options;
     using Storage;
 
     public static partial class Integration
     {
+        internal static IFluentRestBuilder RegisterOptionsResultPipe(
+            this IFluentRestBuilder builder)
+        {
+            builder.Services.TryAddScoped(
+                typeof(IAllowedOptionsBuilder<>),
+                typeof(AllowedOptionsBuilder<>));
+            builder.Services.TryAddSingleton<IHttpVerbMap, HttpVerbMap>();
+            return builder;
+        }
+
         public static Task<IActionResult> ToOptionsResult<TInput>(
             this IOutputPipe<TInput> pipe,
             Func<IAllowedOptionsBuilder<TInput>, IAllowedOptionsBuilder<TInput>> builder)
