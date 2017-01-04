@@ -36,5 +36,11 @@ namespace FluentRestBuilder.EntityFrameworkCore
         {
             return await this.context.SaveChangesAsync();
         }
+
+        public async Task Reload<TEntity>(TEntity entity)
+            where TEntity : class
+        {
+            await this.context.Entry(entity).ReloadAsync();
+        }
     }
 }

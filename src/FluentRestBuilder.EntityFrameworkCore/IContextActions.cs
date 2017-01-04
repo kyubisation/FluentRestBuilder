@@ -16,5 +16,8 @@ namespace FluentRestBuilder.EntityFrameworkCore
 
         Task<int> UpdateAndSave<TEntity>(TEntity entity)
             where TEntity : class;
+
+        Task Reload<TEntity>(TEntity entity)
+            where TEntity : class;
     }
 }
