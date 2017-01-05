@@ -28,7 +28,8 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
         private int? ParsePage()
         {
             StringValues pageValue;
-            if (!this.queryCollection.TryGetValue(this.queryArgumentKeys.Page, out pageValue))
+            if (!this.queryCollection.TryGetValue(this.queryArgumentKeys.Page, out pageValue)
+                || string.IsNullOrEmpty(pageValue.ToString()))
             {
                 return null;
             }
@@ -46,7 +47,8 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
         {
             StringValues entriesPerPageValue;
             if (!this.queryCollection
-                .TryGetValue(this.queryArgumentKeys.EntriesPerPage, out entriesPerPageValue))
+                .TryGetValue(this.queryArgumentKeys.EntriesPerPage, out entriesPerPageValue)
+                || string.IsNullOrEmpty(entriesPerPageValue.ToString()))
             {
                 return null;
             }
