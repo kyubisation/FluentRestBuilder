@@ -54,34 +54,15 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             Assert.Equal(Filter, request.Filter);
         }
 
-        [Fact]
-        public void TestContains()
+        [Theory]
+        [InlineData("~", FilterType.Contains)]
+        [InlineData("<=", FilterType.LessThanOrEqual)]
+        [InlineData(">=", FilterType.GreaterThanOrEqual)]
+        [InlineData("<", FilterType.LessThan)]
+        [InlineData(">", FilterType.GreaterThan)]
+        public void TestFilterTheory(string suffix, FilterType type)
         {
-            this.TestSingleFilterCase("~", FilterType.Contains);
-        }
-
-        [Fact]
-        public void TestLessThanOrEqual()
-        {
-            this.TestSingleFilterCase("<=", FilterType.LessThanOrEqual);
-        }
-
-        [Fact]
-        public void TestGreaterThanOrEqual()
-        {
-            this.TestSingleFilterCase(">=", FilterType.GreaterThanOrEqual);
-        }
-
-        [Fact]
-        public void TestLessThan()
-        {
-            this.TestSingleFilterCase("<", FilterType.LessThan);
-        }
-
-        [Fact]
-        public void TestGreaterThan()
-        {
-            this.TestSingleFilterCase(">", FilterType.GreaterThan);
+            this.TestSingleFilterCase(suffix, type);
         }
 
         [Fact]
