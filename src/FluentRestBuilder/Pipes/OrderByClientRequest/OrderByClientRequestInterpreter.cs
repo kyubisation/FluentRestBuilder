@@ -34,7 +34,9 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
             return orderByValues
                 .SelectMany(o => o.Split(','))
                 .Select(o => o.Trim())
-                .Select(this.ParseOrderBy);
+                .Where(o => !string.IsNullOrEmpty(o))
+                .Select(this.ParseOrderBy)
+                .ToList();
         }
 
         private OrderByRequest ParseOrderBy(string orderByString)
