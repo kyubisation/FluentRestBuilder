@@ -13,7 +13,7 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        internal static IFluentRestBuilder RegisterDistributedInputCachePipe(
+        internal static IFluentRestBuilder RegisterInputDistributedCachePipe(
             this IFluentRestBuilder builder)
         {
             builder.Services.TryAddScoped(
