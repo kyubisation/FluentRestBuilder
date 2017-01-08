@@ -1,8 +1,8 @@
-﻿// <copyright file="DistributedInputCachePipe.cs" company="Kyubisation">
+﻿// <copyright file="InputDistributedCachePipe.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Caching.Pipes.DistributedInputCache
+namespace FluentRestBuilder.Caching.Pipes.InputDistributedCache
 {
     using System.Threading.Tasks;
     using DistributedCache;
@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedInputCache
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Distributed;
 
-    public class DistributedInputCachePipe<TInput> : InputOutputPipe<TInput>
+    public class InputDistributedCachePipe<TInput> : InputOutputPipe<TInput>
         where TInput : class
     {
         private readonly string key;
@@ -18,7 +18,7 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedInputCache
         private readonly IByteMapper<TInput> byteMapper;
         private readonly DistributedCacheEntryOptions options;
 
-        public DistributedInputCachePipe(
+        public InputDistributedCachePipe(
             string key,
             DistributedCacheEntryOptions options,
             IByteMapper<TInput> byteMapper,
@@ -70,7 +70,7 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedInputCache
             return null;
         }
 
-        public class Factory : IDistributedInputCachePipeFactory<TInput>
+        public class Factory : IInputDistributedCachePipeFactory<TInput>
         {
             private readonly IByteMapper<TInput> byteMapper;
             private readonly IDistributedCache distributedCache;
@@ -85,7 +85,7 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedInputCache
 
             public OutputPipe<TInput> Resolve(
                 string key, DistributedCacheEntryOptions options, IOutputPipe<TInput> parent) =>
-                new DistributedInputCachePipe<TInput>(
+                new InputDistributedCachePipe<TInput>(
                     key, options, this.byteMapper, this.distributedCache, parent);
         }
     }

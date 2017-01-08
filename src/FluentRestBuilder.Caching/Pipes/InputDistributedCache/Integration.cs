@@ -6,7 +6,7 @@
 namespace FluentRestBuilder
 {
     using Builder;
-    using Caching.Pipes.DistributedInputCache;
+    using Caching.Pipes.InputDistributedCache;
     using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -17,14 +17,14 @@ namespace FluentRestBuilder
             this IFluentRestBuilder builder)
         {
             builder.Services.TryAddScoped(
-                typeof(IDistributedInputCachePipeFactory<>), typeof(DistributedInputCachePipe<>.Factory));
+                typeof(IInputDistributedCachePipeFactory<>), typeof(InputDistributedCachePipe<>.Factory));
             return builder;
         }
 
         public static OutputPipe<TInput> UseDistributedCacheForInput<TInput>(
             this IOutputPipe<TInput> pipe, string key, DistributedCacheEntryOptions options)
             where TInput : class =>
-            pipe.GetRequiredService<IDistributedInputCachePipeFactory<TInput>>()
+            pipe.GetRequiredService<IInputDistributedCachePipeFactory<TInput>>()
                 .Resolve(key, options, pipe);
 
         public static OutputPipe<TInput> UseDistributedCacheForInput<TInput>(
