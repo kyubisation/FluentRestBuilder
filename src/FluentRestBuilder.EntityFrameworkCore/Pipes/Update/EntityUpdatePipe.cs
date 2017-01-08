@@ -10,7 +10,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
-    public class EntityUpdatePipe<TInput> : InputOutputPipe<TInput>
+    public class EntityUpdatePipe<TInput> : ActionResultPipe<TInput>
         where TInput : class
     {
         private readonly IContextActions contextActions;
@@ -23,7 +23,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
             this.contextActions = contextActions;
         }
 
-        protected override async Task<IActionResult> ExecuteAsync(TInput entity)
+        protected override async Task<IActionResult> GenerateActionResultAsync(TInput entity)
         {
             try
             {

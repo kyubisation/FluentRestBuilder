@@ -11,7 +11,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Insertion
     using Microsoft.EntityFrameworkCore;
     using Storage;
 
-    public class EntityInsertionPipe<TInput> : InputOutputPipe<TInput>
+    public class EntityInsertionPipe<TInput> : ActionResultPipe<TInput>
         where TInput : class
     {
         private readonly IContextActions contextActions;
@@ -27,7 +27,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Insertion
             this.storage = storage;
         }
 
-        protected override async Task<IActionResult> ExecuteAsync(TInput entity)
+        protected override async Task<IActionResult> GenerateActionResultAsync(TInput entity)
         {
             try
             {

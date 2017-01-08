@@ -8,7 +8,7 @@ namespace FluentRestBuilder.Pipes.Actions
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
-    public class ActionPipe<TInput> : InputOutputPipe<TInput>
+    public class ActionPipe<TInput> : ActionResultPipe<TInput>
         where TInput : class
     {
         private readonly Func<TInput, Task> action;
@@ -21,7 +21,7 @@ namespace FluentRestBuilder.Pipes.Actions
             this.action = action;
         }
 
-        protected override async Task<IActionResult> ExecuteAsync(TInput entity)
+        protected override async Task<IActionResult> GenerateActionResultAsync(TInput entity)
         {
             await this.action(entity);
             return null;

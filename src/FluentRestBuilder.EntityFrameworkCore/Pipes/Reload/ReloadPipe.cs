@@ -8,7 +8,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Reload
     using FluentRestBuilder.Pipes;
     using Microsoft.AspNetCore.Mvc;
 
-    public class ReloadPipe<TInput> : InputOutputPipe<TInput>
+    public class ReloadPipe<TInput> : ActionResultPipe<TInput>
         where TInput : class
     {
         private readonly IContextActions contextActions;
@@ -21,10 +21,10 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Reload
             this.contextActions = contextActions;
         }
 
-        protected override async Task<IActionResult> ExecuteAsync(TInput entity)
+        protected override async Task<IActionResult> GenerateActionResultAsync(TInput entity)
         {
             await this.contextActions.Reload(entity);
-            return await base.ExecuteAsync(entity);
+            return await base.GenerateActionResultAsync(entity);
         }
     }
 }

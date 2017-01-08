@@ -8,7 +8,7 @@ namespace FluentRestBuilder.Pipes
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    public abstract class ValidationPipeBase<TInput> : InputOutputPipe<TInput>
+    public abstract class ValidationPipeBase<TInput> : ActionResultPipe<TInput>
         where TInput : class
     {
         private readonly object error;
@@ -24,7 +24,7 @@ namespace FluentRestBuilder.Pipes
             this.error = error;
         }
 
-        protected override async Task<IActionResult> ExecuteAsync(TInput entity)
+        protected override async Task<IActionResult> GenerateActionResultAsync(TInput entity)
         {
             if (!await this.IsInvalid(entity))
             {
