@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Caching.Pipes.InputMemoryCache
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
 
-    public class InputMemoryCachePipe<TInput> : ActionResultPipe<TInput>
+    public class InputMemoryCachePipe<TInput> : ChainPipe<TInput>
         where TInput : class
     {
         private readonly object key;
@@ -29,14 +29,14 @@ namespace FluentRestBuilder.Caching.Pipes.InputMemoryCache
             this.memoryCache = memoryCache;
         }
 
-        protected override IActionResult GenerateActionResult(TInput entity)
+        protected override Task<IActionResult> Execute(TInput input)
         {
-            if (entity != null)
+            if (input != null)
             {
-                this.SaveToCache(entity);
+                this.SaveToCache(input);
             }
 
-            return base.GenerateActionResult(entity);
+            return base.Execute(input);
         }
 
         protected override async Task<IActionResult> Execute()

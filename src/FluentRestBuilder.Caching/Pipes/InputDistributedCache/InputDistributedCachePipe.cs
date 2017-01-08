@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Caching.Pipes.InputDistributedCache
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Distributed;
 
-    public class InputDistributedCachePipe<TInput> : ActionResultPipe<TInput>
+    public class InputDistributedCachePipe<TInput> : ChainPipe<TInput>
         where TInput : class
     {
         private readonly string key;
@@ -32,14 +32,14 @@ namespace FluentRestBuilder.Caching.Pipes.InputDistributedCache
             this.byteMapper = byteMapper;
         }
 
-        protected override async Task<IActionResult> GenerateActionResultAsync(TInput entity)
+        protected override async Task<IActionResult> Execute(TInput input)
         {
-            if (entity != null)
+            if (input != null)
             {
-                await this.SaveToCache(entity);
+                await this.SaveToCache(input);
             }
 
-            return this.GenerateActionResult(entity);
+            return await base.Execute(input);
         }
 
         protected override async Task<IActionResult> Execute()
