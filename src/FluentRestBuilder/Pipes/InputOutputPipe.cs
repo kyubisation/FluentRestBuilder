@@ -29,14 +29,19 @@ namespace FluentRestBuilder.Pipes
                 return result;
             }
 
-            NoPipeAttachedException.Check(this.Child);
-            return await this.Child.Execute(input);
+            return await this.ExecuteChild(input);
         }
 
         protected virtual Task<IActionResult> ExecuteAsync(TInput entity) =>
             Task.FromResult(this.Execute(entity));
 
         protected virtual IActionResult Execute(TInput entity) => null;
+
+        protected virtual async Task<IActionResult> ExecuteChild(TInput input)
+        {
+            NoPipeAttachedException.Check(this.Child);
+            return await this.Child.Execute(input);
+        }
 
         protected override Task<IActionResult> Execute() => this.parent.Execute();
     }
