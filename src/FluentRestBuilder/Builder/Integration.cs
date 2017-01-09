@@ -5,7 +5,9 @@
 // ReSharper disable once CheckNamespace
 namespace FluentRestBuilder
 {
+    using System;
     using System.Linq;
+    using System.Reflection;
     using Builder;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -40,6 +42,37 @@ namespace FluentRestBuilder
             });
 
             return builder;
+        }
+
+        public static IServiceCollection TryAddPipeWithScopedNestedFactory(
+            this IServiceCollection services, Type pipe)
+        {
+            TryAddPipeWithNestedFactory(services.TryAddScoped, pipe);
+            return services;
+        }
+
+        public static IServiceCollection TryAddPipeWithSingletonNestedFactory(
+            this IServiceCollection services, Type pipe)
+        {
+            TryAddPipeWithNestedFactory(services.TryAddSingleton, pipe);
+            return services;
+        }
+
+        private static void TryAddPipeWithNestedFactory(
+            Action<Type, Type> registration, Type pipe)
+        {
+            var factories = pipe.GetTypeInfo()
+                .GetNestedTypes()
+                .Where(t => t.Name.Contains("Factory"));
+            foreach (var factory in factories)
+            {
+                var factoryInterfaces = factory.GetInterfaces()
+                    .Select(i => i.GetGenericTypeDefinition());
+                foreach (var factoryInterface in factoryInterfaces)
+                {
+                    registration(factoryInterface, factory);
+                }
+            }
         }
     }
 }
