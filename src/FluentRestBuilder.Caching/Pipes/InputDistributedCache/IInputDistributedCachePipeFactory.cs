@@ -7,6 +7,7 @@ namespace FluentRestBuilder.Caching.Pipes.InputDistributedCache
     using Microsoft.Extensions.Caching.Distributed;
 
     public interface IInputDistributedCachePipeFactory<TInput>
+        where TInput : class
     {
         OutputPipe<TInput> Resolve(
             string key, DistributedCacheEntryOptions options, IOutputPipe<TInput> parent);

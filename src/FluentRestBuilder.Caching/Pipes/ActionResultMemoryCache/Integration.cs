@@ -8,7 +8,6 @@ namespace FluentRestBuilder
     using System;
     using Builder;
     using Caching.Pipes.ActionResultMemoryCache;
-    using Caching.Pipes.InputMemoryCache;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +19,8 @@ namespace FluentRestBuilder
             this IFluentRestBuilder builder)
         {
             builder.Services.TryAddScoped(
-                typeof(IActionResultCachePipeFactory<>), typeof(InputMemoryCachePipe<>.Factory));
+                typeof(IActionResultMemoryCachePipeFactory<>),
+                typeof(ActionResultMemoryCachePipeFactory<>));
             return builder;
         }
 
@@ -29,7 +29,7 @@ namespace FluentRestBuilder
             object key,
             Action<ICacheEntry, IActionResult> cacheConfigurationCallback)
             where TInput : class =>
-            pipe.GetRequiredService<IActionResultCachePipeFactory<TInput>>()
+            pipe.GetRequiredService<IActionResultMemoryCachePipeFactory<TInput>>()
                 .Resolve(key, cacheConfigurationCallback, pipe);
 
         public static OutputPipe<TInput> UseMemoryCacheForActionResult<TInput>(

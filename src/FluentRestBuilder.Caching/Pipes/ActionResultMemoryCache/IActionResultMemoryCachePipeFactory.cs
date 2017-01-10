@@ -1,4 +1,4 @@
-﻿// <copyright file="IActionResultCachePipeFactory.cs" company="Kyubisation">
+﻿// <copyright file="IActionResultMemoryCachePipeFactory.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -8,7 +8,8 @@ namespace FluentRestBuilder.Caching.Pipes.ActionResultMemoryCache
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
 
-    public interface IActionResultCachePipeFactory<TInput>
+    public interface IActionResultMemoryCachePipeFactory<TInput>
+        where TInput : class
     {
         OutputPipe<TInput> Resolve(
             object key,

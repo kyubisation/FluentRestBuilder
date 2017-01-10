@@ -18,7 +18,7 @@ namespace FluentRestBuilder
             this IFluentRestBuilder builder)
         {
             builder.Services.TryAddScoped(
-                typeof(IInputMemoryCachePipeFactory<>), typeof(InputMemoryCachePipe<>.Factory));
+                typeof(IInputMemoryCachePipeFactory<>), typeof(InputMemoryCachePipeFactory<>));
             return builder;
         }
 

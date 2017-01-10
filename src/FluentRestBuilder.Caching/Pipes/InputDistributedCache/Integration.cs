@@ -17,7 +17,8 @@ namespace FluentRestBuilder
             this IFluentRestBuilder builder)
         {
             builder.Services.TryAddScoped(
-                typeof(IInputDistributedCachePipeFactory<>), typeof(InputDistributedCachePipe<>.Factory));
+                typeof(IInputDistributedCachePipeFactory<>),
+                typeof(InputDistributedCachePipeFactory<>));
             return builder;
         }
 

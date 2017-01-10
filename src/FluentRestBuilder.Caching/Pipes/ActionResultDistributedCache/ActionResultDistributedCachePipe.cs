@@ -70,24 +70,5 @@ namespace FluentRestBuilder.Caching.Pipes.ActionResultDistributedCache
 
             return null;
         }
-
-        public class Factory : IActionResultDistributedCachePipeFactory<TInput>
-        {
-            private readonly IByteMapper<TInput> byteMapper;
-            private readonly IDistributedCache distributedCache;
-
-            public Factory(
-                IByteMapper<TInput> byteMapper,
-                IDistributedCache distributedCache)
-            {
-                this.byteMapper = byteMapper;
-                this.distributedCache = distributedCache;
-            }
-
-            public OutputPipe<TInput> Resolve(
-                string key, DistributedCacheEntryOptions options, IOutputPipe<TInput> parent) =>
-                new ActionResultDistributedCachePipe<TInput>(
-                    key, options, this.byteMapper, this.distributedCache, parent);
-        }
     }
 }

@@ -64,22 +64,5 @@ namespace FluentRestBuilder.Caching.Pipes.ActionResultMemoryCache
 
             return null;
         }
-
-        public class Factory : IActionResultCachePipeFactory<TInput>
-        {
-            private readonly IMemoryCache memoryCache;
-
-            public Factory(IMemoryCache memoryCache)
-            {
-                this.memoryCache = memoryCache;
-            }
-
-            public OutputPipe<TInput> Resolve(
-                object key,
-                Action<ICacheEntry, IActionResult> cacheConfigurationCallback,
-                IOutputPipe<TInput> parent) =>
-                new ActionResultMemoryCachePipe<TInput>(
-                    key, cacheConfigurationCallback, this.memoryCache, parent);
-        }
     }
 }

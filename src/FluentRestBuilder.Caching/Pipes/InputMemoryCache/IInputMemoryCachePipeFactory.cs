@@ -8,6 +8,7 @@ namespace FluentRestBuilder.Caching.Pipes.InputMemoryCache
     using Microsoft.Extensions.Caching.Memory;
 
     public interface IInputMemoryCachePipeFactory<TInput>
+        where TInput : class
     {
         OutputPipe<TInput> Resolve(
             object key,
