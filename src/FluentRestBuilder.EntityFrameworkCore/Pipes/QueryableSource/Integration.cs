@@ -15,8 +15,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        internal static IFluentRestBuilder RegisterQueryableSourcePipe(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderCore RegisterQueryableSourcePipe(
+            this IFluentRestBuilderCore builder)
         {
             builder.Services.TryAddScoped(
                 typeof(IQueryableSourcePipeFactory<,>), typeof(QueryableSourcePipeFactory<,>));

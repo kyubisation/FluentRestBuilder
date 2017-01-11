@@ -14,8 +14,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        internal static IFluentRestBuilder RegisterPaginationByClientRequestPipe(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderCore RegisterPaginationByClientRequestPipe(
+            this IFluentRestBuilderCore builder)
         {
             builder.Services.TryAddScoped(
                 typeof(IPaginationByClientRequestPipeFactory<>),

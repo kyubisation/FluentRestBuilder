@@ -12,8 +12,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        internal static IFluentRestBuilder RegisterInsertionPipe(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderCore RegisterInsertionPipe(
+            this IFluentRestBuilderCore builder)
         {
             builder.Services.TryAddScoped(
                 typeof(IEntityInsertionPipeFactory<>), typeof(EntityInsertionPipeFactory<>));

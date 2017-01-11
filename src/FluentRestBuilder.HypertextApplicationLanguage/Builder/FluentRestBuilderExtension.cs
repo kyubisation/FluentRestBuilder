@@ -23,7 +23,9 @@ namespace FluentRestBuilder
             builder.Services.TryAddScoped<IMapperFactory, MapperFactory>();
             builder.Services.TryAddScoped(typeof(IMapperFactory<>), typeof(MapperFactory<>));
             builder.Services.TryAddTransient(typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
-            return builder.RegisterCollectionMappingPipe();
+            new FluentRestBuilderCore(builder.Services)
+                .RegisterCollectionMappingPipe();
+            return builder;
         }
 
         public static IFluentRestBuilder AddRestMapper<TInput, TOutput>(
@@ -32,7 +34,27 @@ namespace FluentRestBuilder
             Action<RestMapper<TInput, TOutput>> configuration = null)
             where TOutput : RestEntity
         {
-            builder.Services.AddScoped<IMapper<TInput, TOutput>>(
+            AddRestMapper(builder.Services, mapping, configuration);
+            return builder;
+        }
+
+        public static IFluentRestBuilderCore AddRestMapper<TInput, TOutput>(
+            this IFluentRestBuilderCore builder,
+            Func<TInput, TOutput> mapping,
+            Action<RestMapper<TInput, TOutput>> configuration = null)
+            where TOutput : RestEntity
+        {
+            AddRestMapper(builder.Services, mapping, configuration);
+            return builder;
+        }
+
+        private static void AddRestMapper<TInput, TOutput>(
+            IServiceCollection services,
+            Func<TInput, TOutput> mapping,
+            Action<RestMapper<TInput, TOutput>> configuration)
+            where TOutput : RestEntity
+        {
+            services.AddScoped<IMapper<TInput, TOutput>>(
                 serviceProvider =>
                 {
                     var urlHelper = serviceProvider.GetService<IScopedStorage<IUrlHelper>>()?.Value
@@ -41,7 +63,6 @@ namespace FluentRestBuilder
                     configuration?.Invoke(mapper);
                     return mapper;
                 });
-            return builder;
         }
     }
 }

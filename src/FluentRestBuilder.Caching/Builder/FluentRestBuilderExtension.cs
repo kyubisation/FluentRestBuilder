@@ -12,11 +12,12 @@ namespace FluentRestBuilder
         public static IFluentRestBuilder AddCachingPipes(
             this IFluentRestBuilder builder)
         {
-            return builder
+            new FluentRestBuilderCore(builder.Services)
                 .RegisterInputMemoryCachePipe()
                 .RegisterInputDistributedCachePipe()
                 .RegisterActionResultMemoryCachePipe()
                 .RegisterActionResultDistributedCachePipe();
+            return builder;
         }
     }
 }

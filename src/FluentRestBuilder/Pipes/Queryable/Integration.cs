@@ -15,8 +15,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        internal static IFluentRestBuilder RegisterQueryablePipe(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderCore RegisterQueryablePipe(
+            this IFluentRestBuilderCore builder)
         {
             builder.Services.TryAddSingleton(
                 typeof(IQueryablePipeFactory<,>), typeof(QueryablePipeFactory<,>));

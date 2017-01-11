@@ -16,8 +16,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        internal static IFluentRestBuilder RegisterOrderByClientRequestPipe(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderCore RegisterOrderByClientRequestPipe(
+            this IFluentRestBuilderCore builder)
         {
             builder.Services.TryAddScoped(
                 typeof(IOrderByClientRequestPipeFactory<>),

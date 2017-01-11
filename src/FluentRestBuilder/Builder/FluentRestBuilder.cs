@@ -4,22 +4,16 @@
 
 namespace FluentRestBuilder.Builder
 {
-    using System;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.AspNetCore.Mvc.Routing;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
-    using Storage;
 
     public class FluentRestBuilder : IFluentRestBuilder
     {
         public FluentRestBuilder(IServiceCollection services)
         {
             this.Services = services;
-            this.RegisterStorage();
-            this.RegisterActionPipe()
+            new FluentRestBuilderCore(this.Services)
+                .RegisterStorage()
+                .RegisterActionPipe()
                 .RegisterClaimValidationPipe()
                 .RegisterEntityValidationPipe()
                 .RegisterFilterByClientRequestPipe()
@@ -35,36 +29,5 @@ namespace FluentRestBuilder.Builder
         }
 
         public IServiceCollection Services { get; }
-
-        private void RegisterStorage()
-        {
-            this.Services.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
-            this.Services.TryAddScoped(this.RegisterHttpContextScopedStorage);
-            this.Services.TryAddScoped(this.RegisterUrlHelperScopedStorage);
-        }
-
-        private IScopedStorage<HttpContext> RegisterHttpContextScopedStorage(
-            IServiceProvider serviceProvider)
-        {
-            var accessor = serviceProvider.GetService<IHttpContextAccessor>();
-            return new ScopedStorage<HttpContext> { Value = accessor?.HttpContext };
-        }
-
-        private IScopedStorage<IUrlHelper> RegisterUrlHelperScopedStorage(
-            IServiceProvider serviceProvider)
-        {
-            var actionContextAccessor = serviceProvider.GetService<IActionContextAccessor>();
-            if (actionContextAccessor == null)
-            {
-                return new ScopedStorage<IUrlHelper>();
-            }
-
-            var urlHelperFactory = serviceProvider.GetService<IUrlHelperFactory>();
-            var urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
-            return new ScopedStorage<IUrlHelper>
-            {
-                Value = urlHelper
-            };
-        }
     }
 }

@@ -14,8 +14,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        internal static IFluentRestBuilder RegisterClaimValidationPipe(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderCore RegisterClaimValidationPipe(
+            this IFluentRestBuilderCore builder)
         {
             builder.Services.TryAddScoped(
                 typeof(IClaimValidationPipeFactory<>),

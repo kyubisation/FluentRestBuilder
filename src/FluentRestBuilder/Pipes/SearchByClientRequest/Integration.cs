@@ -17,8 +17,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        internal static IFluentRestBuilder RegisterSearchByClientRequestPipe(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderCore RegisterSearchByClientRequestPipe(
+            this IFluentRestBuilderCore builder)
         {
             builder.Services.TryAddScoped(
                 typeof(ISearchByClientRequestPipeFactory<>),

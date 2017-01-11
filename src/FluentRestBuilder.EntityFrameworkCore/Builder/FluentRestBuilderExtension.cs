@@ -22,23 +22,25 @@ namespace FluentRestBuilder
         {
             RegisterEntityFrameworkRelatedServices<TContext>(builder.Services);
 
-            builder.Services.AddSingleton(
-                typeof(IQueryableTransformer<>), typeof(AsyncQueryableTransformer<>));
-            return builder.RegisterDeletionPipe()
+            new FluentRestBuilderCore(builder.Services)
+                .RegisterDeletionPipe()
                 .RegisterInsertionPipe()
                 .RegisterQueryableSourcePipe()
                 .RegisterReloadPipe()
                 .RegisterUpdatePipe();
+            return builder;
         }
 
         private static void RegisterEntityFrameworkRelatedServices<TContext>(
-            IServiceCollection collection)
+            IServiceCollection services)
             where TContext : DbContext
         {
-            collection.TryAddScoped<IContextActions, ContextActions<TContext>>();
-            collection.TryAddScoped<IQueryableFactory, ContextQueryableFactory<TContext>>();
-            collection.TryAddScoped(typeof(IQueryableFactory<>), typeof(QueryableFactory<>));
-            collection.TryAddSingleton(typeof(IModelContainer<>), typeof(ModelContainer<>));
+            services.TryAddScoped<IContextActions, ContextActions<TContext>>();
+            services.TryAddScoped<IQueryableFactory, ContextQueryableFactory<TContext>>();
+            services.TryAddScoped(typeof(IQueryableFactory<>), typeof(QueryableFactory<>));
+            services.TryAddSingleton(typeof(IModelContainer<>), typeof(ModelContainer<>));
+            services.AddSingleton(
+                typeof(IQueryableTransformer<>), typeof(AsyncQueryableTransformer<>));
         }
     }
 }

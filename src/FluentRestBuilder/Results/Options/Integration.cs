@@ -17,8 +17,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        internal static IFluentRestBuilder RegisterOptionsResultPipe(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderCore RegisterOptionsResultPipe(
+            this IFluentRestBuilderCore builder)
         {
             builder.Services.TryAddScoped(
                 typeof(IAllowedOptionsBuilder<>),

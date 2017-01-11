@@ -14,8 +14,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        internal static IFluentRestBuilder RegisterInputMemoryCachePipe(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderCore RegisterInputMemoryCachePipe(
+            this IFluentRestBuilderCore builder)
         {
             builder.Services.TryAddScoped(
                 typeof(IInputMemoryCachePipeFactory<>), typeof(InputMemoryCachePipeFactory<>));
