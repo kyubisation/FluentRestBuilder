@@ -44,6 +44,11 @@ namespace FluentRestBuilder.Sources
 
         private void InitializeControllerServices()
         {
+            if (this.Controller == null)
+            {
+                return;
+            }
+
             var urlHelperStorage = this.GetService<IScopedStorage<IUrlHelper>>();
             if (urlHelperStorage.Value == null)
             {

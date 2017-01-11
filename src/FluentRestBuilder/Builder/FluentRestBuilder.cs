@@ -13,6 +13,8 @@ namespace FluentRestBuilder.Builder
             this.Services = services;
             new FluentRestBuilderCore(this.Services)
                 .RegisterStorage()
+                .RegisterSource()
+                .RegisterLazySource()
                 .RegisterActionPipe()
                 .RegisterClaimValidationPipe()
                 .RegisterEntityValidationPipe()

@@ -7,17 +7,26 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Threading.Tasks;
+    using Builder;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Sources.LazySource;
 
     public static partial class Integration
     {
+        public static IFluentRestBuilderCore RegisterLazySource(
+            this IFluentRestBuilderCore builder)
+        {
+            builder.Services.TryAddSingleton(
+                typeof(ILazySourceFactory<>), typeof(LazySourceFactory<>));
+            return builder;
+        }
+
         public static OutputPipe<TOutput> FromSource<TOutput>(
-            this ControllerBase controller, Func<Task<TOutput>> output) =>
-            new LazySource<TOutput>(output, controller.HttpContext.RequestServices)
-            {
-                Controller = controller
-            };
+                this ControllerBase controller, Func<Task<TOutput>> output) =>
+            controller.HttpContext.RequestServices.GetService<ILazySourceFactory<TOutput>>()
+                .Resolve(output, controller);
 
         public static OutputPipe<TOutput> FromSource<TOutput>(
             this ControllerBase controller, Func<TOutput> output) =>
