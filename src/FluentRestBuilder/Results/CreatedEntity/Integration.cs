@@ -20,12 +20,9 @@ namespace FluentRestBuilder
             Func<TLookup, object> routeValuesGenerator)
             where TInput : class
         {
-            IPipe createdEntityResultPipe = new CreatedEntityResultPipe<TInput>(
-                s =>
-                {
-                    var storage = s.GetService<IScopedStorage<TLookup>>();
-                    return routeValuesGenerator(storage.Value);
-                },
+            var storage = pipe.GetService<IScopedStorage<TLookup>>();
+            IPipe createdEntityResultPipe = new CreatedEntityResult<TInput>(
+                s => routeValuesGenerator(storage.Value),
                 routeName,
                 pipe);
             return createdEntityResultPipe.Execute();
@@ -37,7 +34,7 @@ namespace FluentRestBuilder
             Func<TInput, object> routeValuesGenerator)
             where TInput : class
         {
-            IPipe createdEntityResultPipe = new CreatedEntityResultPipe<TInput>(
+            IPipe createdEntityResultPipe = new CreatedEntityResult<TInput>(
                 routeValuesGenerator, routeName, pipe);
             return createdEntityResultPipe.Execute();
         }
