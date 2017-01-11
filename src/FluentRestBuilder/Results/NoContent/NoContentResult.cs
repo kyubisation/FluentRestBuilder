@@ -1,4 +1,4 @@
-﻿// <copyright file="NoContentResultPipe.cs" company="Kyubisation">
+﻿// <copyright file="NoContentResult.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -6,10 +6,10 @@ namespace FluentRestBuilder.Results.NoContent
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public class NoContentResultPipe<TInput> : ResultPipe<TInput>
+    public class NoContentResult<TInput> : ResultBase<TInput>
         where TInput : class
     {
-        public NoContentResultPipe(IOutputPipe<TInput> parent)
+        public NoContentResult(IOutputPipe<TInput> parent)
             : base(parent)
         {
         }

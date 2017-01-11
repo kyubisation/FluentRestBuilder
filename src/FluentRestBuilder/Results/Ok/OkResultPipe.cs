@@ -6,7 +6,7 @@ namespace FluentRestBuilder.Results.Ok
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public class OkResultPipe<TInput> : ResultPipe<TInput>
+    public class OkResultPipe<TInput> : ResultBase<TInput>
         where TInput : class
     {
         public OkResultPipe(IOutputPipe<TInput> parent)

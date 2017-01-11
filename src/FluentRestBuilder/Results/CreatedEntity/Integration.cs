@@ -7,25 +7,21 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Threading.Tasks;
+    using Builder;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Results.CreatedEntity;
     using Storage;
 
     public static partial class Integration
     {
-        public static Task<IActionResult> ToCreatedAtRouteResult<TInput, TLookup>(
-            this IOutputPipe<TInput> pipe,
-            string routeName,
-            Func<TLookup, object> routeValuesGenerator)
-            where TInput : class
+        public static IFluentRestBuilderCore RegisterCreatedEntityResult(
+            this IFluentRestBuilderCore builder)
         {
-            var storage = pipe.GetService<IScopedStorage<TLookup>>();
-            IPipe createdEntityResultPipe = new CreatedEntityResult<TInput>(
-                s => routeValuesGenerator(storage.Value),
-                routeName,
-                pipe);
-            return createdEntityResultPipe.Execute();
+            builder.Services.TryAddSingleton(
+                typeof(ICreatedEntityResultFactory<>), typeof(CreatedEntityResultFactory<>));
+            return builder;
         }
 
         public static Task<IActionResult> ToCreatedAtRouteResult<TInput>(
@@ -34,9 +30,20 @@ namespace FluentRestBuilder
             Func<TInput, object> routeValuesGenerator)
             where TInput : class
         {
-            IPipe createdEntityResultPipe = new CreatedEntityResult<TInput>(
-                routeValuesGenerator, routeName, pipe);
+            IPipe createdEntityResultPipe = pipe.GetService<ICreatedEntityResultFactory<TInput>>()
+                .Resolve(routeValuesGenerator, routeName, pipe);
             return createdEntityResultPipe.Execute();
+        }
+
+        public static Task<IActionResult> ToCreatedAtRouteResult<TInput, TLookup>(
+            this IOutputPipe<TInput> pipe,
+            string routeName,
+            Func<TLookup, object> routeValuesGenerator)
+            where TInput : class
+        {
+            var storage = pipe.GetService<IScopedStorage<TLookup>>();
+            return pipe.ToCreatedAtRouteResult(
+                routeName, s => routeValuesGenerator(storage.Value));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="CreatedEntityResultPipe.cs" company="Kyubisation">
+﻿// <copyright file="CreatedEntityResult.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -12,7 +12,7 @@ namespace FluentRestBuilder.Results.CreatedEntity
     {
         private readonly string routeName;
         private readonly Func<TInput, object> routeValuesGenerator;
-        
+
         public CreatedEntityResult(
             Func<TInput, object> routeValuesGenerator,
             string routeName,

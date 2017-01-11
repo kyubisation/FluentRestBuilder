@@ -6,16 +6,28 @@
 namespace FluentRestBuilder
 {
     using System.Threading.Tasks;
+    using Builder;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Results.Accepted;
 
     public static partial class Integration
     {
+        public static IFluentRestBuilderCore RegisterAcceptedResult(
+            this IFluentRestBuilderCore builder)
+        {
+            builder.Services.TryAddSingleton(
+                typeof(IAcceptedResultFactory<>), typeof(AcceptedResultFactory<>));
+            return builder;
+        }
+
         public static Task<IActionResult> ToAcceptedResult<TInput>(
             this IOutputPipe<TInput> pipe)
             where TInput : class
         {
-            IPipe resultPipe = new AcceptedResultPipe<TInput>(pipe);
+            IPipe resultPipe = pipe.GetService<IAcceptedResultFactory<TInput>>()
+                .Resolve(pipe);
             return resultPipe.Execute();
         }
     }

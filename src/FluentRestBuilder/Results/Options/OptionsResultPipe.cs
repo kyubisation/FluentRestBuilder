@@ -13,7 +13,7 @@ namespace FluentRestBuilder.Results.Options
     using Microsoft.Extensions.Primitives;
     using Storage;
 
-    public class OptionsResultPipe<TInput> : ResultPipe<TInput>
+    public class OptionsResultPipe<TInput> : ResultBase<TInput>
         where TInput : class
     {
         private readonly IScopedStorage<HttpContext> httpContextStorage;

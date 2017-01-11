@@ -1,4 +1,4 @@
-﻿// <copyright file="ResultPipe.cs" company="Kyubisation">
+﻿// <copyright file="ResultBase.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -8,12 +8,12 @@ namespace FluentRestBuilder.Results
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
-    public abstract class ResultPipe<TInput> : IInputPipe<TInput>
+    public abstract class ResultBase<TInput> : IInputPipe<TInput>
         where TInput : class
     {
         private readonly IOutputPipe<TInput> parent;
 
-        protected ResultPipe(IOutputPipe<TInput> parent)
+        protected ResultBase(IOutputPipe<TInput> parent)
         {
             this.parent = parent;
             this.parent.Attach(this);

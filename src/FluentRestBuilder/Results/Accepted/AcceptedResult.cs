@@ -1,4 +1,4 @@
-﻿// <copyright file="AcceptedResultPipe.cs" company="Kyubisation">
+﻿// <copyright file="AcceptedResult.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -7,10 +7,10 @@ namespace FluentRestBuilder.Results.Accepted
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    public class AcceptedResultPipe<TInput> : ResultPipe<TInput>
+    public class AcceptedResult<TInput> : ResultBase<TInput>
         where TInput : class
     {
-        public AcceptedResultPipe(IOutputPipe<TInput> parent)
+        public AcceptedResult(IOutputPipe<TInput> parent)
             : base(parent)
         {
         }
