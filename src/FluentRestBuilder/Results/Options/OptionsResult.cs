@@ -1,4 +1,4 @@
-﻿// <copyright file="OptionsResultPipe.cs" company="Kyubisation">
+﻿// <copyright file="OptionsResult.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -13,14 +13,14 @@ namespace FluentRestBuilder.Results.Options
     using Microsoft.Extensions.Primitives;
     using Storage;
 
-    public class OptionsResultPipe<TInput> : ResultBase<TInput>
+    public class OptionsResult<TInput> : ResultBase<TInput>
         where TInput : class
     {
         private readonly IScopedStorage<HttpContext> httpContextStorage;
         private readonly Func<TInput, IEnumerable<HttpVerb>> verbGeneration;
         private readonly IHttpVerbMap httpVerbMap;
 
-        public OptionsResultPipe(
+        public OptionsResult(
             Func<TInput, IEnumerable<HttpVerb>> verbGeneration,
             IHttpVerbMap httpVerbMap,
             IScopedStorage<HttpContext> httpContextStorage,

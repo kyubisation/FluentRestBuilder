@@ -30,6 +30,7 @@ namespace FluentRestBuilder.Builder
                 .RegisterAcceptedResult()
                 .RegisterCreatedEntityResult()
                 .RegisterNoContentResult()
+                .RegisterOkResult()
                 .RegisterOptionsResultPipe();
         }
 

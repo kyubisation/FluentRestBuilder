@@ -21,6 +21,9 @@ namespace FluentRestBuilder
             this IFluentRestBuilderCore builder)
         {
             builder.Services.TryAddScoped(
+                typeof(IOptionsResultFactory<>),
+                typeof(OptionsResultFactory<>));
+            builder.Services.TryAddScoped(
                 typeof(IAllowedOptionsBuilder<>),
                 typeof(AllowedOptionsBuilder<>));
             builder.Services.TryAddSingleton<IHttpVerbMap, HttpVerbMap>();
@@ -33,13 +36,9 @@ namespace FluentRestBuilder
             where TInput : class
         {
             var allowedOptionsBuilder = pipe.GetService<IAllowedOptionsBuilder<TInput>>();
-            var httpContextStorage = pipe.GetService<IScopedStorage<HttpContext>>();
-            var httpVerbMap = pipe.GetService<IHttpVerbMap>();
-            IPipe resultPipe = new OptionsResultPipe<TInput>(
-                input => builder(allowedOptionsBuilder).GenerateAllowedVerbs(input),
-                httpVerbMap,
-                httpContextStorage,
-                pipe);
+            IPipe resultPipe = pipe.GetService<IOptionsResultFactory<TInput>>()
+                .Resolve(
+                    input => builder(allowedOptionsBuilder).GenerateAllowedVerbs(input), pipe);
             return resultPipe.Execute();
         }
 
@@ -48,10 +47,8 @@ namespace FluentRestBuilder
             params HttpVerb[] verbs)
             where TInput : class
         {
-            var httpContextStorage = pipe.GetService<IScopedStorage<HttpContext>>();
-            var httpVerbMap = pipe.GetService<IHttpVerbMap>();
-            IPipe resultPipe = new OptionsResultPipe<TInput>(
-                input => verbs, httpVerbMap, httpContextStorage, pipe);
+            IPipe resultPipe = pipe.GetService<IOptionsResultFactory<TInput>>()
+                .Resolve(input => verbs, pipe);
             return resultPipe.Execute();
         }
     }
