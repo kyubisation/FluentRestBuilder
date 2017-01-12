@@ -8,12 +8,10 @@ namespace FluentRestBuilder
     using System;
     using System.Threading.Tasks;
     using Builder;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Results.Options;
-    using Storage;
 
     public static partial class Integration
     {

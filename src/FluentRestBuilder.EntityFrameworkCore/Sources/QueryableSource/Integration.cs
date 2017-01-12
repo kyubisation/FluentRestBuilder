@@ -5,8 +5,8 @@
 // ReSharper disable once CheckNamespace
 namespace FluentRestBuilder
 {
+    using System.Linq;
     using Builder;
-    using EntityFrameworkCore;
     using EntityFrameworkCore.Sources.QueryableSource;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +22,7 @@ namespace FluentRestBuilder
             return builder;
         }
 
-        public static QueryableSource<TEntity> FromQueryable<TEntity>(
+        public static OutputPipe<IQueryable<TEntity>> FromQueryable<TEntity>(
             this ControllerBase controller)
             where TEntity : class =>
             controller.HttpContext.RequestServices.GetService<IQueryableSourceFactory<TEntity>>()

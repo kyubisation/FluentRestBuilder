@@ -4,11 +4,11 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
 {
-    using System.Threading.Tasks;
+    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
 
     public interface IQueryableSourceFactory<TOutput>
     {
-        OutputPipe<TOutput> Resolve(ControllerBase controller);
+        OutputPipe<IQueryable<TOutput>> Resolve(ControllerBase controller);
     }
 }

@@ -5,7 +5,7 @@
 namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
 {
     using System;
-    using System.Threading.Tasks;
+    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
 
     public class QueryableSourceFactory<TOutput> : IQueryableSourceFactory<TOutput>
@@ -22,9 +22,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
             this.serviceProvider = serviceProvider;
         }
 
-        public OutputPipe<TOutput> Resolve(ControllerBase controller) =>
+        public OutputPipe<IQueryable<TOutput>> Resolve(ControllerBase controller) =>
             new QueryableSource<TOutput>(this.queryableFactory, this.serviceProvider)
-            { 
+            {
                 Controller = controller
             };
     }

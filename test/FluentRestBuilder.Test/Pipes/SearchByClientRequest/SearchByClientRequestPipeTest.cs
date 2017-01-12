@@ -65,7 +65,7 @@ namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
 
         private class Interpreter : ISearchByClientRequestInterpreter
         {
-            public string SearchValue { get; set; }
+            public string SearchValue { private get; set; }
 
             public string ParseRequestQuery() => this.SearchValue;
         }
