@@ -4,7 +4,9 @@
 
 namespace FluentRestBuilder.Test.Pipes.Mapping
 {
+    using System;
     using System.Threading.Tasks;
+    using Builder;
     using Common.Mocks;
     using FluentRestBuilder.Pipes.Mapping;
     using FluentRestBuilder.Sources.Source;
@@ -13,14 +15,21 @@ namespace FluentRestBuilder.Test.Pipes.Mapping
 
     public class MappingPipeTest : TestBaseWithServiceProvider
     {
+        private IServiceProvider provider;
+
+        public MappingPipeTest()
+        {
+            this.provider = new FluentRestBuilderCore(new ServiceCollection())
+                .RegisterMappingPipe()
+                .Services
+                .BuildServiceProvider();
+        }
+
         [Fact]
         public async Task TestMap()
         {
             var entity = new Entity { Id = 1, Name = "test" };
-            var provider = new ServiceCollection()
-                .AddTransient<IMappingPipeFactory<Entity, string>, MappingPipeFactory<Entity, string>>()
-                .BuildServiceProvider();
-            var result = await new Source<Entity>(entity, provider)
+            var result = await new Source<Entity>(entity, this.provider)
                 .Map(e => e.Name)
                 .ToObjectResultOrDefault();
             Assert.Equal(entity.Name, result);

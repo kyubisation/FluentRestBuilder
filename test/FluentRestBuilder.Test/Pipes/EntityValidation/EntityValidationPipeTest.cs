@@ -5,8 +5,8 @@
 namespace FluentRestBuilder.Test.Pipes.EntityValidation
 {
     using System.Threading.Tasks;
+    using Builder;
     using Common.Mocks;
-    using FluentRestBuilder.Pipes.EntityValidation;
     using FluentRestBuilder.Sources.Source;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -20,8 +20,9 @@ namespace FluentRestBuilder.Test.Pipes.EntityValidation
 
         public EntityValidationPipeTest()
         {
-            var provider = new ServiceCollection()
-                .AddTransient<IEntityValidationPipeFactory<Entity>, EntityValidationPipeFactory<Entity>>()
+            var provider = new FluentRestBuilderCore(new ServiceCollection())
+                .RegisterEntityValidationPipe()
+                .Services
                 .BuildServiceProvider();
             this.source = new Source<Entity>(this.entity, provider);
         }

@@ -5,8 +5,8 @@
 namespace FluentRestBuilder.Test.Pipes.ClaimValidation
 {
     using System.Threading.Tasks;
+    using Builder;
     using Common.Mocks;
-    using FluentRestBuilder.Pipes.ClaimValidation;
     using FluentRestBuilder.Sources.Source;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -24,12 +24,14 @@ namespace FluentRestBuilder.Test.Pipes.ClaimValidation
         public ClaimValidationPipeTest()
         {
             this.principal = new MockPrincipal();
-            var provider = new ServiceCollection()
+            var provider = new FluentRestBuilderCore(new ServiceCollection())
+                .RegisterStorage()
+                .RegisterClaimValidationPipe()
+                .Services
                 .AddSingleton<IScopedStorage<HttpContext>>(p => new ScopedStorage<HttpContext>
                 {
                     Value = new DefaultHttpContext { User = this.principal }
                 })
-                .AddTransient<IClaimValidationPipeFactory<Entity>, ClaimValidationPipeFactory<Entity>>()
                 .BuildServiceProvider();
             this.source = new Source<Entity>(new Entity(), provider);
         }
