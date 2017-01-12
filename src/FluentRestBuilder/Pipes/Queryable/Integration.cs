@@ -28,7 +28,7 @@ namespace FluentRestBuilder
             where TInputQueryable : class, IQueryable
             where TOutputQueryable : class, IQueryable =>
             pipe.GetService<IQueryablePipeFactory<TInputQueryable, TOutputQueryable>>()
-                .Resolve(mapping, pipe);
+                .Create(mapping, pipe);
 
         public static OutputPipe<IQueryable<TInput>> Where<TInput>(
             this IOutputPipe<IQueryable<TInput>> pipe, Expression<Func<TInput, bool>> predicate)

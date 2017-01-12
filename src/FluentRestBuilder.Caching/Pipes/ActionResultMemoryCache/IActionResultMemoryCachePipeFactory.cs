@@ -11,7 +11,7 @@ namespace FluentRestBuilder.Caching.Pipes.ActionResultMemoryCache
     public interface IActionResultMemoryCachePipeFactory<TInput>
         where TInput : class
     {
-        OutputPipe<TInput> Resolve(
+        OutputPipe<TInput> Create(
             object key,
             Action<ICacheEntry, IActionResult> cacheConfigurationCallback,
             IOutputPipe<TInput> parent);

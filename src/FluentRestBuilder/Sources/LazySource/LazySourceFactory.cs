@@ -17,7 +17,7 @@ namespace FluentRestBuilder.Sources.LazySource
             this.serviceProvider = serviceProvider;
         }
 
-        public OutputPipe<TInput> Resolve(Func<Task<TInput>> output, ControllerBase controller) =>
+        public OutputPipe<TInput> Create(Func<Task<TInput>> output, ControllerBase controller) =>
             new LazySource<TInput>(output, this.serviceProvider) { Controller = controller };
     }
 }

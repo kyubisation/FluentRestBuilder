@@ -29,7 +29,7 @@ namespace FluentRestBuilder
             object error = null)
             where TInput : class =>
             pipe.GetRequiredService<IClaimValidationPipeFactory<TInput>>()
-                .Resolve(predicate, error, pipe);
+                .Create(predicate, error, pipe);
 
         public static OutputPipe<TInput> CurrentUserHas<TInput>(
             this IOutputPipe<TInput> pipe,

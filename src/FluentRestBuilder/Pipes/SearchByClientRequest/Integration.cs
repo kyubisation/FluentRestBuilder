@@ -33,6 +33,6 @@ namespace FluentRestBuilder
                 this IOutputPipe<IQueryable<TInput>> pipe,
                 Func<string, Expression<Func<TInput, bool>>> search) =>
             pipe.GetService<ISearchByClientRequestPipeFactory<TInput>>()
-                .Resolve(search, pipe);
+                .Create(search, pipe);
     }
 }

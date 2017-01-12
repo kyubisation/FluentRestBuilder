@@ -7,7 +7,7 @@ namespace FluentRestBuilder.Results.NoContent
     public class NoContentResultFactory<TInput> : INoContentResultFactory<TInput>
         where TInput : class
     {
-        public ResultBase<TInput> Resolve(IOutputPipe<TInput> parent) =>
+        public ResultBase<TInput> Create(IOutputPipe<TInput> parent) =>
             new NoContentResult<TInput>(parent);
     }
 }

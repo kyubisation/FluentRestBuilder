@@ -31,7 +31,7 @@ namespace FluentRestBuilder
             where TInput : class
         {
             IPipe createdEntityResultPipe = pipe.GetService<ICreatedEntityResultFactory<TInput>>()
-                .Resolve(routeValuesGenerator, routeName, pipe);
+                .Create(routeValuesGenerator, routeName, pipe);
             return createdEntityResultPipe.Execute();
         }
 

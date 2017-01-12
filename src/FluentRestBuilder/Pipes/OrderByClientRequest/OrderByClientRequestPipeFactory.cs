@@ -17,7 +17,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
             this.interpreter = interpreter;
         }
 
-        public OutputPipe<IQueryable<TInput>> Resolve(
+        public OutputPipe<IQueryable<TInput>> Create(
             IDictionary<string, IOrderByExpressionFactory<TInput>> orderByDictionary,
             IOutputPipe<IQueryable<TInput>> parent) =>
             new OrderByClientRequestPipe<TInput>(

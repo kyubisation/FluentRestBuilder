@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
 
     public interface IOrderByClientRequestPipeFactory<TInput>
     {
-        OutputPipe<IQueryable<TInput>> Resolve(
+        OutputPipe<IQueryable<TInput>> Create(
             IDictionary<string, IOrderByExpressionFactory<TInput>> orderByDictionary,
             IOutputPipe<IQueryable<TInput>> parent);
     }

@@ -8,7 +8,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 
     public interface IPaginationByClientRequestPipeFactory<TInput>
     {
-        OutputPipe<IQueryable<TInput>> Resolve(
+        OutputPipe<IQueryable<TInput>> Create(
             PaginationOptions options,
             IOutputPipe<IQueryable<TInput>> parent);
     }

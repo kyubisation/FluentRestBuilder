@@ -22,7 +22,7 @@ namespace FluentRestBuilder.Caching.Pipes.ActionResultDistributedCache
             this.distributedCache = distributedCache;
         }
 
-        public OutputPipe<TInput> Resolve(
+        public OutputPipe<TInput> Create(
             string key, DistributedCacheEntryOptions options, IOutputPipe<TInput> parent) =>
             new ActionResultDistributedCachePipe<TInput>(
                 key, options, this.byteMapper, this.distributedCache, parent);

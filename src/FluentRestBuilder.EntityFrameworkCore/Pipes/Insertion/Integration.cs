@@ -24,6 +24,6 @@ namespace FluentRestBuilder
             this IOutputPipe<TInput> pipe)
             where TInput : class =>
             pipe.GetRequiredService<IEntityInsertionPipeFactory<TInput>>()
-                .Resolve(pipe);
+                .Create(pipe);
     }
 }

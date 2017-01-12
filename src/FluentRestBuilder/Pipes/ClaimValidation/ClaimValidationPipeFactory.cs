@@ -19,7 +19,7 @@ namespace FluentRestBuilder.Pipes.ClaimValidation
             this.user = httpContextStorage.Value.User;
         }
 
-        public OutputPipe<TInput> Resolve(
+        public OutputPipe<TInput> Create(
                 Func<ClaimsPrincipal, TInput, bool> predicate,
                 object error,
                 IOutputPipe<TInput> parent) =>

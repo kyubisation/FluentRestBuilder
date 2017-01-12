@@ -32,6 +32,6 @@ namespace FluentRestBuilder
                 this IOutputPipe<IQueryable<TInput>> pipe,
                 PaginationOptions options = null) =>
             pipe.GetService<IPaginationByClientRequestPipeFactory<TInput>>()
-                .Resolve(options, pipe);
+                .Create(options, pipe);
     }
 }

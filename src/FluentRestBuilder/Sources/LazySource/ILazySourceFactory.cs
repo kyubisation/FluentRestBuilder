@@ -10,6 +10,6 @@ namespace FluentRestBuilder.Sources.LazySource
 
     public interface ILazySourceFactory<TOutput>
     {
-        OutputPipe<TOutput> Resolve(Func<Task<TOutput>> output, ControllerBase controller);
+        OutputPipe<TOutput> Create(Func<Task<TOutput>> output, ControllerBase controller);
     }
 }

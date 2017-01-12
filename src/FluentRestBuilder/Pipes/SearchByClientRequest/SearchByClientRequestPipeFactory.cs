@@ -17,7 +17,7 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
             this.interpreter = interpreter;
         }
 
-        public OutputPipe<IQueryable<TInput>> Resolve(
+        public OutputPipe<IQueryable<TInput>> Create(
             Func<string, Expression<Func<TInput, bool>>> search,
             IOutputPipe<IQueryable<TInput>> parent) =>
             new SearchByClientRequestPipe<TInput>(this.interpreter, search, parent);

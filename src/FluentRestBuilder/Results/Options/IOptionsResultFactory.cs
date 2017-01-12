@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Results.Options
     public interface IOptionsResultFactory<TInput>
         where TInput : class
     {
-        ResultBase<TInput> Resolve(
+        ResultBase<TInput> Create(
             Func<TInput, IEnumerable<HttpVerb>> verbGeneration,
             IOutputPipe<TInput> parent);
     }

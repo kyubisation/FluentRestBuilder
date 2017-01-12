@@ -27,7 +27,7 @@ namespace FluentRestBuilder
             where TInput : class
         {
             IPipe resultPipe = pipe.GetService<IOkResultFactory<TInput>>()
-                .Resolve(pipe);
+                .Create(pipe);
             return resultPipe.Execute();
         }
     }

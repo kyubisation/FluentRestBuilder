@@ -17,7 +17,7 @@ namespace FluentRestBuilder.Sources.Source
             this.serviceProvider = serviceProvider;
         }
 
-        public OutputPipe<TOutput> Resolve(Task<TOutput> output, ControllerBase controller) =>
+        public OutputPipe<TOutput> Create(Task<TOutput> output, ControllerBase controller) =>
             new Source<TOutput>(output, this.serviceProvider) { Controller = controller };
     }
 }

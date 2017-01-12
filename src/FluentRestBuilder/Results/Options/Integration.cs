@@ -35,8 +35,7 @@ namespace FluentRestBuilder
         {
             var allowedOptionsBuilder = pipe.GetService<IAllowedOptionsBuilder<TInput>>();
             IPipe resultPipe = pipe.GetService<IOptionsResultFactory<TInput>>()
-                .Resolve(
-                    input => builder(allowedOptionsBuilder).GenerateAllowedVerbs(input), pipe);
+                .Create(input => builder(allowedOptionsBuilder).GenerateAllowedVerbs(input), pipe);
             return resultPipe.Execute();
         }
 
@@ -46,7 +45,7 @@ namespace FluentRestBuilder
             where TInput : class
         {
             IPipe resultPipe = pipe.GetService<IOptionsResultFactory<TInput>>()
-                .Resolve(input => verbs, pipe);
+                .Create(input => verbs, pipe);
             return resultPipe.Execute();
         }
     }

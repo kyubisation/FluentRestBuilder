@@ -35,7 +35,7 @@ namespace FluentRestBuilder
                 this IOutputPipe<IQueryable<TInput>> pipe,
                 IDictionary<string, IFilterExpressionProvider<TInput>> filterExpressionProviders) =>
             pipe.GetService<IFilterByClientRequestPipeFactory<TInput>>()
-                .Resolve(filterExpressionProviders, pipe);
+                .Create(filterExpressionProviders, pipe);
 
         public static OutputPipe<IQueryable<TInput>> ApplyFilterByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,

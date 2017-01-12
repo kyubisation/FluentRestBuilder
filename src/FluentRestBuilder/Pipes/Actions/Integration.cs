@@ -30,12 +30,12 @@ namespace FluentRestBuilder
                 action(entity);
                 return Task.FromResult(0);
             };
-            return pipe.GetService<IActionPipeFactory<TInput>>().Resolve(asyncAction, pipe);
+            return pipe.GetService<IActionPipeFactory<TInput>>().Create(asyncAction, pipe);
         }
 
         public static OutputPipe<TInput> Do<TInput>(
             this IOutputPipe<TInput> pipe, Func<TInput, Task> action)
             where TInput : class =>
-            pipe.GetService<IActionPipeFactory<TInput>>().Resolve(action, pipe);
+            pipe.GetService<IActionPipeFactory<TInput>>().Create(action, pipe);
     }
 }

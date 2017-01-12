@@ -7,7 +7,7 @@ namespace FluentRestBuilder.Results.Accepted
     public class AcceptedResultFactory<TInput> : IAcceptedResultFactory<TInput>
         where TInput : class
     {
-        public ResultBase<TInput> Resolve(IOutputPipe<TInput> parent) =>
+        public ResultBase<TInput> Create(IOutputPipe<TInput> parent) =>
             new AcceptedResult<TInput>(parent);
     }
 }

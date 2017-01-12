@@ -26,7 +26,7 @@ namespace FluentRestBuilder
             this IOutputPipe<TInput> pipe, string key, DistributedCacheEntryOptions options)
             where TInput : class =>
             pipe.GetRequiredService<IInputDistributedCachePipeFactory<TInput>>()
-                .Resolve(key, options, pipe);
+                .Create(key, options, pipe);
 
         public static OutputPipe<TInput> UseDistributedCacheForInput<TInput>(
             this IOutputPipe<TInput> pipe, string key)

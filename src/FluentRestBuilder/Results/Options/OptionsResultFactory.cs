@@ -23,7 +23,7 @@ namespace FluentRestBuilder.Results.Options
             this.httpContextStorage = httpContextStorage;
         }
 
-        public ResultBase<TInput> Resolve(
+        public ResultBase<TInput> Create(
             Func<TInput, IEnumerable<HttpVerb>> verbGeneration,
             IOutputPipe<TInput> parent) =>
             new OptionsResult<TInput>(

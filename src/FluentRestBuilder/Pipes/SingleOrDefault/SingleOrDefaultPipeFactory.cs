@@ -17,7 +17,7 @@ namespace FluentRestBuilder.Pipes.SingleOrDefault
             this.queryableTransformer = queryableTransformer;
         }
 
-        public OutputPipe<TInput> Resolve(
+        public OutputPipe<TInput> Create(
             Expression<Func<TInput, bool>> predicate, IOutputPipe<IQueryable<TInput>> parent) =>
             new SingleOrDefaultPipe<TInput>(predicate, this.queryableTransformer, parent);
     }

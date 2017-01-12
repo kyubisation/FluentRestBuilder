@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Pipes.EntityValidation
     public interface IEntityValidationPipeFactory<TInput>
         where TInput : class
     {
-        OutputPipe<TInput> Resolve(
+        OutputPipe<TInput> Create(
             Func<TInput, Task<bool>> invalidCheck,
             int statusCode,
             object error,

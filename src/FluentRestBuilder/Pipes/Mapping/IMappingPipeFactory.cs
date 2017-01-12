@@ -11,7 +11,7 @@ namespace FluentRestBuilder.Pipes.Mapping
         where TInput : class
         where TOutput : class
     {
-        OutputPipe<TOutput> Resolve(
+        OutputPipe<TOutput> Create(
             Func<TInput, Task<TOutput>> mapping, IOutputPipe<TInput> parent);
     }
 }

@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Pipes.ClaimValidation
     public interface IClaimValidationPipeFactory<TInput>
         where TInput : class
     {
-        OutputPipe<TInput> Resolve(
+        OutputPipe<TInput> Create(
             Func<ClaimsPrincipal, TInput, bool> predicate,
             object error,
             IOutputPipe<TInput> parent);

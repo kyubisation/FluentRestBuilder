@@ -14,7 +14,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Reload
             this.contextActions = contextActions;
         }
 
-        public OutputPipe<TInput> Resolve(IOutputPipe<TInput> parent) =>
+        public OutputPipe<TInput> Create(IOutputPipe<TInput> parent) =>
             new ReloadPipe<TInput>(this.contextActions, parent);
     }
 }

@@ -11,6 +11,6 @@ namespace FluentRestBuilder.Pipes.Queryable
         where TInput : class, IQueryable
         where TOutput : class, IQueryable
     {
-        OutputPipe<TOutput> Resolve(Func<TInput, TOutput> callback, IOutputPipe<TInput> parent);
+        OutputPipe<TOutput> Create(Func<TInput, TOutput> callback, IOutputPipe<TInput> parent);
     }
 }

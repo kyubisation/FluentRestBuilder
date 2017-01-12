@@ -23,6 +23,6 @@ namespace FluentRestBuilder
         public static OutputPipe<TInput> DeleteEntity<TInput>(this IOutputPipe<TInput> pipe)
             where TInput : class =>
             pipe.GetRequiredService<IEntityDeletionPipeFactory<TInput>>()
-                .Resolve(pipe);
+                .Create(pipe);
     }
 }

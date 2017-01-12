@@ -17,7 +17,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
             this.interpreter = interpreter;
         }
 
-        public OutputPipe<IQueryable<TInput>> Resolve(
+        public OutputPipe<IQueryable<TInput>> Create(
             IDictionary<string, IFilterExpressionProvider<TInput>> filterDictionary,
             IOutputPipe<IQueryable<TInput>> parent) =>
             new FilterByClientRequestPipe<TInput>(filterDictionary, this.interpreter, parent);

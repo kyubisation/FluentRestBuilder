@@ -28,7 +28,7 @@ namespace FluentRestBuilder
             Action<ICacheEntry, TInput> cacheConfigurationCallback)
             where TInput : class =>
             pipe.GetRequiredService<IInputMemoryCachePipeFactory<TInput>>()
-                .Resolve(key, cacheConfigurationCallback, pipe);
+                .Create(key, cacheConfigurationCallback, pipe);
 
         public static OutputPipe<TInput> UseMemoryCacheForInput<TInput>(
             this IOutputPipe<TInput> pipe,

@@ -27,7 +27,7 @@ namespace FluentRestBuilder
             where TInput : class
             where TOutput : class =>
             pipe.GetRequiredService<IMappingPipeFactory<TInput, TOutput>>()
-                .Resolve(mapping, pipe);
+                .Create(mapping, pipe);
 
         public static OutputPipe<TOutput> Map<TInput, TOutput>(
             this IOutputPipe<TInput> pipe, Func<TInput, TOutput> mapping)

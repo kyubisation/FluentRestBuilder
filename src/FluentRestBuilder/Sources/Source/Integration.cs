@@ -25,7 +25,7 @@ namespace FluentRestBuilder
         public static OutputPipe<TOutput> FromSource<TOutput>(
                 this ControllerBase controller, Task<TOutput> output) =>
             controller.HttpContext.RequestServices.GetService<ISourceFactory<TOutput>>()
-                .Resolve(output, controller);
+                .Create(output, controller);
 
         public static OutputPipe<TOutput> FromSource<TOutput>(
             this ControllerBase controller, TOutput output) =>

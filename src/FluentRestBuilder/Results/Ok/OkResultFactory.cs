@@ -7,7 +7,7 @@ namespace FluentRestBuilder.Results.Ok
     public class OkResultFactory<TInput> : IOkResultFactory<TInput>
         where TInput : class
     {
-        public ResultBase<TInput> Resolve(IOutputPipe<TInput> parent) =>
+        public ResultBase<TInput> Create(IOutputPipe<TInput> parent) =>
             new OkResult<TInput>(parent);
     }
 }

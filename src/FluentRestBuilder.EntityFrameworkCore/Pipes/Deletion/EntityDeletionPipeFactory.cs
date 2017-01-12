@@ -14,7 +14,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Deletion
             this.contextActions = contextActions;
         }
 
-        public OutputPipe<TInput> Resolve(IOutputPipe<TInput> parent) =>
+        public OutputPipe<TInput> Create(IOutputPipe<TInput> parent) =>
             new EntityDeletionPipe<TInput>(this.contextActions, parent);
     }
 }

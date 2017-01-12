@@ -29,6 +29,6 @@ namespace FluentRestBuilder
         public static OutputPipe<TInput> SingleOrDefault<TInput>(
             this IOutputPipe<IQueryable<TInput>> pipe, Expression<Func<TInput, bool>> predicate)
             where TInput : class =>
-            pipe.GetService<ISingleOrDefaultPipeFactory<TInput>>().Resolve(predicate, pipe);
+            pipe.GetService<ISingleOrDefaultPipeFactory<TInput>>().Create(predicate, pipe);
     }
 }

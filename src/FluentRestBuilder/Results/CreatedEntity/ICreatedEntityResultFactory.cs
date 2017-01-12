@@ -9,7 +9,7 @@ namespace FluentRestBuilder.Results.CreatedEntity
     public interface ICreatedEntityResultFactory<TInput>
         where TInput : class
     {
-        ResultBase<TInput> Resolve(
+        ResultBase<TInput> Create(
             Func<TInput, object> routeValuesGenerator,
             string routeName,
             IOutputPipe<TInput> parent);

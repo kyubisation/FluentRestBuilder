@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
 
     public interface ISearchByClientRequestPipeFactory<TInput>
     {
-        OutputPipe<IQueryable<TInput>> Resolve(
+        OutputPipe<IQueryable<TInput>> Create(
             Func<string, Expression<Func<TInput, bool>>> search,
             IOutputPipe<IQueryable<TInput>> parent);
     }

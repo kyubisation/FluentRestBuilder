@@ -26,7 +26,7 @@ namespace FluentRestBuilder
         public static OutputPipe<TOutput> FromSource<TOutput>(
                 this ControllerBase controller, Func<Task<TOutput>> output) =>
             controller.HttpContext.RequestServices.GetService<ILazySourceFactory<TOutput>>()
-                .Resolve(output, controller);
+                .Create(output, controller);
 
         public static OutputPipe<TOutput> FromSource<TOutput>(
             this ControllerBase controller, Func<TOutput> output) =>

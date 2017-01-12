@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Pipes.FirstOrDefault
 
     public interface IFirstOrDefaultPipeFactory<TInput>
     {
-        OutputPipe<TInput> Resolve(
+        OutputPipe<TInput> Create(
             Expression<Func<TInput, bool>> predicate, IOutputPipe<IQueryable<TInput>> parent);
     }
 }

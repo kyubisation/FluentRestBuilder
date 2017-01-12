@@ -23,7 +23,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
             this.queryableTransformer = queryableTransformer;
         }
 
-        public OutputPipe<IQueryable<TInput>> Resolve(
+        public OutputPipe<IQueryable<TInput>> Create(
             PaginationOptions options,
             IOutputPipe<IQueryable<TInput>> parent) =>
             new PaginationByClientRequestPipe<TInput>(

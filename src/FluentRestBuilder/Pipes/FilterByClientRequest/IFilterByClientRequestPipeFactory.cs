@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
 
     public interface IFilterByClientRequestPipeFactory<TInput>
     {
-        OutputPipe<IQueryable<TInput>> Resolve(
+        OutputPipe<IQueryable<TInput>> Create(
             IDictionary<string, IFilterExpressionProvider<TInput>> filterDictionary,
             IOutputPipe<IQueryable<TInput>> parent);
     }

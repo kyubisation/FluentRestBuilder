@@ -9,7 +9,7 @@ namespace FluentRestBuilder.Caching.Pipes.ActionResultDistributedCache
     public interface IActionResultDistributedCachePipeFactory<TInput>
         where TInput : class
     {
-        OutputPipe<TInput> Resolve(
+        OutputPipe<TInput> Create(
             string key, DistributedCacheEntryOptions options, IOutputPipe<TInput> parent);
     }
 }

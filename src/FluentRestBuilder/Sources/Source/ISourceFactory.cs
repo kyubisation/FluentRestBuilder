@@ -9,6 +9,6 @@ namespace FluentRestBuilder.Sources.Source
 
     public interface ISourceFactory<TOutput>
     {
-        OutputPipe<TOutput> Resolve(Task<TOutput> output, ControllerBase controller);
+        OutputPipe<TOutput> Create(Task<TOutput> output, ControllerBase controller);
     }
 }

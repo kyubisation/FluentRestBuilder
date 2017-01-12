@@ -17,7 +17,7 @@ namespace FluentRestBuilder.Caching.Pipes.InputMemoryCache
             this.memoryCache = memoryCache;
         }
 
-        public OutputPipe<TInput> Resolve(
+        public OutputPipe<TInput> Create(
             object key,
             Action<ICacheEntry, TInput> cacheConfigurationCallback,
             IOutputPipe<TInput> parent) =>

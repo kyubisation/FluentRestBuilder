@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Caching.Pipes.InputMemoryCache
     public interface IInputMemoryCachePipeFactory<TInput>
         where TInput : class
     {
-        OutputPipe<TInput> Resolve(
+        OutputPipe<TInput> Create(
             object key,
             Action<ICacheEntry, TInput> cacheConfigurationCallback,
             IOutputPipe<TInput> parent);
