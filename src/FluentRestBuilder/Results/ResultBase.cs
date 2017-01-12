@@ -22,10 +22,10 @@ namespace FluentRestBuilder.Results
         object IServiceProvider.GetService(Type serviceType) =>
             this.parent.GetService(serviceType);
 
-        Task<IActionResult> IPipe.Execute() => this.parent.Execute();
-
         Task<IActionResult> IInputPipe<TInput>.Execute(TInput input) =>
             this.CreateResultAsync(input);
+
+        public Task<IActionResult> Execute() => this.parent.Execute();
 
         protected virtual Task<IActionResult> CreateResultAsync(TInput source) =>
             Task.FromResult(this.CreateResult(source));

@@ -24,11 +24,9 @@ namespace FluentRestBuilder
 
         public static Task<IActionResult> ToOkResult<TInput>(
             this IOutputPipe<TInput> pipe)
-            where TInput : class
-        {
-            IPipe resultPipe = pipe.GetService<IOkResultFactory<TInput>>()
-                .Create(pipe);
-            return resultPipe.Execute();
-        }
+            where TInput : class =>
+            pipe.GetService<IOkResultFactory<TInput>>()
+                .Create(pipe)
+                .Execute();
     }
 }

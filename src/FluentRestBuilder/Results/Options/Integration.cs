@@ -34,19 +34,17 @@ namespace FluentRestBuilder
             where TInput : class
         {
             var allowedOptionsBuilder = pipe.GetService<IAllowedOptionsBuilder<TInput>>();
-            IPipe resultPipe = pipe.GetService<IOptionsResultFactory<TInput>>()
-                .Create(input => builder(allowedOptionsBuilder).GenerateAllowedVerbs(input), pipe);
-            return resultPipe.Execute();
+            return pipe.GetService<IOptionsResultFactory<TInput>>()
+                .Create(input => builder(allowedOptionsBuilder).GenerateAllowedVerbs(input), pipe)
+                .Execute();
         }
 
         public static Task<IActionResult> ToOptionsResult<TInput>(
             this IOutputPipe<TInput> pipe,
             params HttpVerb[] verbs)
-            where TInput : class
-        {
-            IPipe resultPipe = pipe.GetService<IOptionsResultFactory<TInput>>()
-                .Create(input => verbs, pipe);
-            return resultPipe.Execute();
-        }
+            where TInput : class =>
+            pipe.GetService<IOptionsResultFactory<TInput>>()
+                .Create(input => verbs, pipe)
+                .Execute();
     }
 }

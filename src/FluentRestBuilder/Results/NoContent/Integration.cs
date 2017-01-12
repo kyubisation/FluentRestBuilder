@@ -24,11 +24,9 @@ namespace FluentRestBuilder
 
         public static Task<IActionResult> ToNoContentResult<TInput>(
             this IOutputPipe<TInput> pipe)
-            where TInput : class
-        {
-            IPipe resultPipe = pipe.GetService<INoContentResultFactory<TInput>>()
-                .Create(pipe);
-            return resultPipe.Execute();
-        }
+            where TInput : class =>
+            pipe.GetService<INoContentResultFactory<TInput>>()
+                .Create(pipe)
+                .Execute();
     }
 }

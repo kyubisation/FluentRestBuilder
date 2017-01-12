@@ -24,11 +24,9 @@ namespace FluentRestBuilder
 
         public static Task<IActionResult> ToAcceptedResult<TInput>(
             this IOutputPipe<TInput> pipe)
-            where TInput : class
-        {
-            IPipe resultPipe = pipe.GetService<IAcceptedResultFactory<TInput>>()
-                .Create(pipe);
-            return resultPipe.Execute();
-        }
+            where TInput : class =>
+            pipe.GetService<IAcceptedResultFactory<TInput>>()
+                .Create(pipe)
+                .Execute();
     }
 }

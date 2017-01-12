@@ -28,12 +28,10 @@ namespace FluentRestBuilder
             this IOutputPipe<TInput> pipe,
             string routeName,
             Func<TInput, object> routeValuesGenerator)
-            where TInput : class
-        {
-            IPipe createdEntityResultPipe = pipe.GetService<ICreatedEntityResultFactory<TInput>>()
-                .Create(routeValuesGenerator, routeName, pipe);
-            return createdEntityResultPipe.Execute();
-        }
+            where TInput : class =>
+            pipe.GetService<ICreatedEntityResultFactory<TInput>>()
+                .Create(routeValuesGenerator, routeName, pipe)
+                .Execute();
 
         public static Task<IActionResult> ToCreatedAtRouteResult<TInput, TLookup>(
             this IOutputPipe<TInput> pipe,
