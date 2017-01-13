@@ -27,7 +27,7 @@ namespace FluentRestBuilder.Pipes.FirstOrDefault
         protected override Task<TInput> MapAsync(IQueryable<TInput> input)
         {
             var queryable = input.Where(this.predicate);
-            return this.queryableTransformer.SingleOrDefault(queryable);
+            return this.queryableTransformer.FirstOrDefault(queryable);
         }
     }
 }
