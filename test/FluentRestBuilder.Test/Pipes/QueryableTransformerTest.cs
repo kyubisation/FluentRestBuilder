@@ -55,6 +55,17 @@ namespace FluentRestBuilder.Test.Pipes
         }
 
         [Fact]
+        public async Task TestDuplicateSingleOrDefault()
+        {
+            var firstEntity = this.database
+                .CreateSimilarEntities(3)
+                .First();
+            var queryable = this.context.Entities.Where(e => e.Name == firstEntity.Name);
+            await Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await this.transformer.SingleOrDefault(queryable));
+        }
+
+        [Fact]
         public async Task TestMissingSingleOrDefault()
         {
             var queryable = this.context.Entities.Where(e => e.Id == 1);

@@ -4,6 +4,7 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using EntityFrameworkCore.Pipes;
@@ -52,6 +53,17 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes
             var queryable = this.context.Entities.Where(e => e.Id == firstEntity.Id);
             var entity = await this.transformer.SingleOrDefault(queryable);
             Assert.Equal(firstEntity.Id, entity.Id);
+        }
+
+        [Fact]
+        public async Task TestDuplicateSingleOrDefault()
+        {
+            var firstEntity = this.database
+                .CreateSimilarEntities(3)
+                .First();
+            var queryable = this.context.Entities.Where(e => e.Name == firstEntity.Name);
+            await Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await this.transformer.SingleOrDefault(queryable));
         }
 
         [Fact]
