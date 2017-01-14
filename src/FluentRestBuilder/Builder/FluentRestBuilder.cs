@@ -26,7 +26,6 @@ namespace FluentRestBuilder.Builder
                 .RegisterQueryablePipe()
                 .RegisterSearchByClientRequestPipe()
                 .RegisterSingleOrDefaultPipe()
-                .RegisterValidationPipe()
                 .RegisterAcceptedResult()
                 .RegisterCreatedEntityResult()
                 .RegisterNoContentResult()

@@ -41,10 +41,24 @@ namespace FluentRestBuilder
             where TEntity : class =>
             pipe.InvalidWhen(e => Task.FromResult(invalidCheck(e)), statusCode, error);
 
-        public static OutputPipe<TEntity> ForbiddenWhen<TEntity>(
-            this IOutputPipe<TEntity> pipe,
-            Func<TEntity, bool> invalidCheck,
+        public static OutputPipe<TInput> InvalidWhen<TInput>(
+            this IOutputPipe<TInput> pipe,
+            Func<Task<bool>> invalidCheck,
+            int statusCode,
             object error = null)
+            where TInput : class =>
+            pipe.InvalidWhen(e => invalidCheck(), statusCode, error);
+
+        public static OutputPipe<TInput> InvalidWhen<TInput>(
+            this IOutputPipe<TInput> pipe,
+            Func<bool> invalidCheck,
+            int statusCode,
+            object error = null)
+            where TInput : class =>
+            pipe.InvalidWhen(() => Task.FromResult(invalidCheck()), statusCode, error);
+
+        public static OutputPipe<TEntity> ForbiddenWhen<TEntity>(
+            this IOutputPipe<TEntity> pipe, Func<TEntity, bool> invalidCheck, object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status403Forbidden, error);
 
@@ -55,10 +69,18 @@ namespace FluentRestBuilder
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status403Forbidden, error);
 
+        public static OutputPipe<TInput> ForbiddenWhen<TInput>(
+            this IOutputPipe<TInput> pipe, Func<bool> invalidCheck, object error = null)
+            where TInput : class =>
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status403Forbidden, error);
+
+        public static OutputPipe<TInput> ForbiddenWhen<TInput>(
+            this IOutputPipe<TInput> pipe, Func<Task<bool>> invalidCheck, object error = null)
+            where TInput : class =>
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status403Forbidden, error);
+
         public static OutputPipe<TEntity> BadRequestWhen<TEntity>(
-            this IOutputPipe<TEntity> pipe,
-            Func<TEntity, bool> invalidCheck,
-            object error = null)
+            this IOutputPipe<TEntity> pipe, Func<TEntity, bool> invalidCheck, object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status400BadRequest, error);
 
@@ -67,6 +89,16 @@ namespace FluentRestBuilder
             Func<TEntity, Task<bool>> invalidCheck,
             object error = null)
             where TEntity : class =>
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status400BadRequest, error);
+
+        public static OutputPipe<TInput> BadRequestWhen<TInput>(
+            this IOutputPipe<TInput> pipe, Func<bool> invalidCheck, object error = null)
+            where TInput : class =>
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status400BadRequest, error);
+
+        public static OutputPipe<TInput> BadRequestWhen<TInput>(
+            this IOutputPipe<TInput> pipe, Func<Task<bool>> invalidCheck, object error = null)
+            where TInput : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status400BadRequest, error);
 
         public static OutputPipe<TEntity> NotFoundWhenEmpty<TEntity>(
@@ -75,9 +107,7 @@ namespace FluentRestBuilder
             InvalidWhen(pipe, e => e == null, StatusCodes.Status404NotFound, error);
 
         public static OutputPipe<TEntity> NotFoundWhen<TEntity>(
-            this IOutputPipe<TEntity> pipe,
-            Func<TEntity, bool> invalidCheck,
-            object error = null)
+            this IOutputPipe<TEntity> pipe, Func<TEntity, bool> invalidCheck, object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status404NotFound, error);
 
@@ -88,10 +118,18 @@ namespace FluentRestBuilder
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status404NotFound, error);
 
+        public static OutputPipe<TInput> NotFoundWhen<TInput>(
+            this IOutputPipe<TInput> pipe, Func<bool> invalidCheck, object error = null)
+            where TInput : class =>
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status404NotFound, error);
+
+        public static OutputPipe<TInput> NotFoundWhen<TInput>(
+            this IOutputPipe<TInput> pipe, Func<Task<bool>> invalidCheck, object error = null)
+            where TInput : class =>
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status404NotFound, error);
+
         public static OutputPipe<TEntity> GoneWhen<TEntity>(
-            this IOutputPipe<TEntity> pipe,
-            Func<TEntity, bool> invalidCheck,
-            object error = null)
+            this IOutputPipe<TEntity> pipe, Func<TEntity, bool> invalidCheck, object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status410Gone, error);
 
