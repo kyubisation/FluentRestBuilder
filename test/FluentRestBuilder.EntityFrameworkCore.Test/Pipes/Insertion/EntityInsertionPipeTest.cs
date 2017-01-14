@@ -9,6 +9,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Insertion
     using EntityFrameworkCore.Pipes.Insertion;
     using FluentRestBuilder.Sources.Source;
     using FluentRestBuilder.Test.Common.Mocks;
+    using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using Microsoft.Extensions.DependencyInjection;
     using Storage;
     using Xunit;

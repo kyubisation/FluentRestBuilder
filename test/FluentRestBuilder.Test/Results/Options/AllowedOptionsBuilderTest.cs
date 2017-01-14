@@ -6,6 +6,7 @@ namespace FluentRestBuilder.Test.Results.Options
 {
     using System.Linq;
     using Common.Mocks;
+    using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Results.Options;
     using Microsoft.AspNetCore.Http;
     using Storage;

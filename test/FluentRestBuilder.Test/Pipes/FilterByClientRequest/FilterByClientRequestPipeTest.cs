@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
     using System.Threading.Tasks;
     using Common;
     using Common.Mocks;
+    using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Pipes.FilterByClientRequest;
     using FluentRestBuilder.Pipes.FilterByClientRequest.Expressions;
     using FluentRestBuilder.Pipes.Mapping;

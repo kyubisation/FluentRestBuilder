@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Common.Mocks
+namespace FluentRestBuilder.Test.Common.Mocks.EntityFramework
 {
     public class Child
     {

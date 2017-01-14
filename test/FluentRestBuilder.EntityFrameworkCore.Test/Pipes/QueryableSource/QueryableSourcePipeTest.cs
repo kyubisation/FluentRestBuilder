@@ -10,6 +10,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
     using EntityFrameworkCore.Pipes.QueryableSource;
     using FluentRestBuilder.Sources.Source;
     using FluentRestBuilder.Test.Common.Mocks;
+    using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;

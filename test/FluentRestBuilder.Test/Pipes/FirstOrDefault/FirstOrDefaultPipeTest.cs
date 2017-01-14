@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Test.Pipes.FirstOrDefault
     using System.Threading.Tasks;
     using Builder;
     using Common.Mocks;
+    using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Sources.Source;
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;

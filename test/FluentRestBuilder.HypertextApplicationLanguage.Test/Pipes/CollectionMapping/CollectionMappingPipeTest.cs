@@ -10,6 +10,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
     using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Test.Common;
     using FluentRestBuilder.Test.Common.Mocks;
+    using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using HypertextApplicationLanguage.Pipes.CollectionMapping;
     using Links;
     using Microsoft.Extensions.DependencyInjection;

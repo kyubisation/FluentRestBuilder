@@ -8,6 +8,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.MetaModel
     using System.Threading.Tasks;
     using EntityFrameworkCore.MetaModel;
     using FluentRestBuilder.Test.Common.Mocks;
+    using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using Microsoft.EntityFrameworkCore;
     using Xunit;
 

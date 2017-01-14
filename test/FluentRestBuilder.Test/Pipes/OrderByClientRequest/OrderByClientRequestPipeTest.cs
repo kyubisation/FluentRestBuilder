@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
     using System.Threading.Tasks;
     using Common;
     using Common.Mocks;
+    using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Pipes.Mapping;
     using FluentRestBuilder.Pipes.OrderByClientRequest;
     using FluentRestBuilder.Pipes.OrderByClientRequest.Expressions;

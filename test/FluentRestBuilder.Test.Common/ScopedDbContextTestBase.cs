@@ -7,6 +7,7 @@ namespace FluentRestBuilder.Test.Common
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;
+    using Mocks.EntityFramework;
 
     public abstract class ScopedDbContextTestBase : TestBaseWithServiceProvider
     {

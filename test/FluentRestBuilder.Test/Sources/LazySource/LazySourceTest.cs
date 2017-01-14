@@ -7,6 +7,7 @@ namespace FluentRestBuilder.Test.Sources.LazySource
     using System;
     using System.Threading.Tasks;
     using Common.Mocks;
+    using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Sources.LazySource;
     using Xunit;
 

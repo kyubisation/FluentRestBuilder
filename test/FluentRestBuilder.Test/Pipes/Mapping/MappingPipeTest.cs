@@ -8,6 +8,7 @@ namespace FluentRestBuilder.Test.Pipes.Mapping
     using System.Threading.Tasks;
     using Builder;
     using Common.Mocks;
+    using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Pipes.Mapping;
     using FluentRestBuilder.Sources.Source;
     using Microsoft.Extensions.DependencyInjection;
