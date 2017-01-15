@@ -14,8 +14,8 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
         private readonly IScopedStorage<HttpContext> httpContextStorage;
 
         public SearchByClientRequestInterpreter(
-            IQueryArgumentKeys queryArgumentKeys,
-            IScopedStorage<HttpContext> httpContextStorage)
+            IScopedStorage<HttpContext> httpContextStorage,
+            IQueryArgumentKeys queryArgumentKeys)
         {
             this.queryArgumentKeys = queryArgumentKeys;
             this.httpContextStorage = httpContextStorage;
@@ -26,6 +26,7 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
             var queryCollection = this.httpContextStorage.Value.Request.Query;
             StringValues search;
             return queryCollection.TryGetValue(this.queryArgumentKeys.Search, out search)
+                && !string.IsNullOrEmpty(search)
                 ? search.ToString() : null;
         }
     }

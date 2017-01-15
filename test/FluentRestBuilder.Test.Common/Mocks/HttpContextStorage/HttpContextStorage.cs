@@ -38,6 +38,9 @@ namespace FluentRestBuilder.Test.Common.Mocks.HttpContextStorage
         public HttpContextStorage SetEntriesPerPageValue(string entriesPerPage) =>
             this.SetValue(this.keys.EntriesPerPage, entriesPerPage);
 
+        public HttpContextStorage SetSearchValue(string search) =>
+            this.SetValue(this.keys.Search, search);
+
         private HttpContextStorage SetValue(string key, string value)
         {
             this.queryValues[key] = new StringValues(value);
