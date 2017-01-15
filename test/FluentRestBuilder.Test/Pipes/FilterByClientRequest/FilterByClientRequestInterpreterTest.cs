@@ -6,14 +6,10 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Common.Mocks.HttpContextStorage;
     using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Pipes.FilterByClientRequest;
     using FluentRestBuilder.Pipes.FilterByClientRequest.Exceptions;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
-    using Microsoft.Extensions.Primitives;
-    using Newtonsoft.Json;
-    using Storage;
     using Xunit;
 
     public class FilterByClientRequestInterpreterTest
@@ -26,7 +22,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         public void TestNonExistantCase()
         {
             var interpreter = new FilterByClientRequestInterpreter(
-                this.CreateEmptyFilterContext(), this.keys);
+                new EmptyHttpContextStorage(), this.keys);
             var result = interpreter.ParseRequestQuery();
             Assert.Empty(result);
         }
@@ -35,7 +31,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         public void TestEmptyCase()
         {
             var interpreter = new FilterByClientRequestInterpreter(
-                this.CreateFilterContext(string.Empty), this.keys);
+                new HttpContextStorage().SetFilterValue(string.Empty), this.keys);
             var result = interpreter.ParseRequestQuery();
             Assert.Empty(result);
         }
@@ -44,7 +40,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         public void TestEquals()
         {
             var interpreter = new FilterByClientRequestInterpreter(
-                this.CreateFilterContext(Property, Filter), this.keys);
+                new HttpContextStorage().SetFilterValue(Property, Filter), this.keys);
             var result = interpreter.ParseRequestQuery().ToList();
             Assert.Equal(1, result.Count);
             var request = result.First();
@@ -80,7 +76,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             };
             var filters = filterRequests.ToDictionary(r => r.OriginalProperty, r => r.Filter);
             var interpreter = new FilterByClientRequestInterpreter(
-                this.CreateFilterContext(filters), this.keys);
+                new HttpContextStorage().SetFilterValue(filters), this.keys);
             var result = interpreter.ParseRequestQuery().ToList();
             foreach (var filterRequest in filterRequests)
             {
@@ -95,7 +91,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         public void InvalidFilter()
         {
             var interpreter = new FilterByClientRequestInterpreter(
-                this.CreateFilterContext("{"), this.keys);
+                new HttpContextStorage().SetFilterValue("{"), this.keys);
             Assert.Throws<FilterInterpreterException>(() => interpreter.ParseRequestQuery());
         }
 
@@ -104,7 +100,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         {
             var filterProperty = $"{Property}{filterSuffix}";
             var interpreter = new FilterByClientRequestInterpreter(
-                this.CreateFilterContext(filterProperty, Filter), this.keys);
+                new HttpContextStorage().SetFilterValue(filterProperty, Filter), this.keys);
             var result = interpreter.ParseRequestQuery().ToList();
             Assert.Equal(1, result.Count);
             var request = result.First();
@@ -112,34 +108,6 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             Assert.Equal(Property, request.Property);
             Assert.Equal(filterProperty, request.OriginalProperty);
             Assert.Equal(Filter, request.Filter);
-        }
-
-        private IScopedStorage<HttpContext> CreateEmptyFilterContext() =>
-            this.CreateFilterContext(new QueryCollection());
-
-        private IScopedStorage<HttpContext> CreateFilterContext(string property, string filter) =>
-            this.CreateFilterContext(new Dictionary<string, string> { [property] = filter });
-
-        private IScopedStorage<HttpContext> CreateFilterContext(Dictionary<string, string> filters) =>
-            this.CreateFilterContext(JsonConvert.SerializeObject(filters));
-
-        private IScopedStorage<HttpContext> CreateFilterContext(string value)
-        {
-            return this.CreateFilterContext(new QueryCollection(new Dictionary<string, StringValues>
-            {
-                [this.keys.Filter] = new StringValues(value)
-            }));
-        }
-
-        private IScopedStorage<HttpContext> CreateFilterContext(IQueryCollection collection)
-        {
-            return new ScopedStorage<HttpContext>
-            {
-                Value = new DefaultHttpContext
-                {
-                    Request = { Query = collection }
-                }
-            };
         }
     }
 }

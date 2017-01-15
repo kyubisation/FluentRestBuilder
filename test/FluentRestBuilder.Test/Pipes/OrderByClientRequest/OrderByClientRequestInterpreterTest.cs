@@ -6,12 +6,9 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Common.Mocks.HttpContextStorage;
     using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Pipes.OrderByClientRequest;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
-    using Microsoft.Extensions.Primitives;
-    using Storage;
     using Xunit;
 
     public class OrderByClientRequestInterpreterTest
@@ -23,7 +20,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
         public void TestNonExistantCase()
         {
             var interpreter = new OrderByClientRequestInterpreter(
-                this.CreateEmptyFilterContext(), this.keys);
+                new EmptyHttpContextStorage(), this.keys);
             var result = interpreter.ParseRequestQuery();
             Assert.Empty(result);
         }
@@ -32,7 +29,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
         public void TestEmptyCase()
         {
             var interpreter = new OrderByClientRequestInterpreter(
-                this.CreateFilterContext(string.Empty), this.keys);
+                new HttpContextStorage().SetOrderByValue(string.Empty), this.keys);
             var result = interpreter.ParseRequestQuery();
             Assert.Empty(result);
         }
@@ -41,7 +38,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
         public void TestAscendingOrder()
         {
             var interpreter = new OrderByClientRequestInterpreter(
-                this.CreateFilterContext(Property), this.keys);
+                new HttpContextStorage().SetOrderByValue(Property), this.keys);
             var result = interpreter.ParseRequestQuery().ToList();
             Assert.Equal(1, result.Count);
             var request = result.First();
@@ -55,7 +52,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
         {
             var orderByProperty = $"!{Property}";
             var interpreter = new OrderByClientRequestInterpreter(
-                this.CreateFilterContext(orderByProperty), this.keys);
+                new HttpContextStorage().SetOrderByValue(orderByProperty), this.keys);
             var result = interpreter.ParseRequestQuery().ToList();
             Assert.Equal(1, result.Count);
             var request = result.First();
@@ -75,31 +72,9 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
             var orderBy = orderByRequests.Select(o => o.OriginalProperty)
                 .Aggregate((current, next) => $"{current},{next}");
             var interpreter = new OrderByClientRequestInterpreter(
-                this.CreateFilterContext(orderBy), this.keys);
+                new HttpContextStorage().SetOrderByValue(orderBy), this.keys);
             var result = interpreter.ParseRequestQuery().ToList();
             Assert.Equal(orderByRequests, result, new OrderByRequestEqualityComparer());
-        }
-
-        private IScopedStorage<HttpContext> CreateEmptyFilterContext() =>
-            this.CreateFilterContext(new QueryCollection());
-
-        private IScopedStorage<HttpContext> CreateFilterContext(string value)
-        {
-            return this.CreateFilterContext(new QueryCollection(new Dictionary<string, StringValues>
-            {
-                [this.keys.OrderBy] = new StringValues(value)
-            }));
-        }
-
-        private IScopedStorage<HttpContext> CreateFilterContext(IQueryCollection collection)
-        {
-            return new ScopedStorage<HttpContext>
-            {
-                Value = new DefaultHttpContext
-                {
-                    Request = { Query = collection }
-                }
-            };
         }
 
         private class OrderByRequestEqualityComparer : EqualityComparer<OrderByRequest>
