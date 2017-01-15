@@ -4,23 +4,40 @@
 
 namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    using System;
     using System.Threading.Tasks;
-    using Common;
+    using Builder;
     using Common.Mocks;
     using Common.Mocks.EntityFramework;
-    using FluentRestBuilder.Pipes.Mapping;
-    using FluentRestBuilder.Pipes.Queryable;
     using FluentRestBuilder.Pipes.SearchByClientRequest;
-    using FluentRestBuilder.Sources.Source;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
-    public class SearchByClientRequestPipeTest : ScopedDbContextTestBase
+    public class SearchByClientRequestPipeTest : IDisposable
     {
         private readonly Interpreter interpreter = new Interpreter();
+        private readonly PersistantDatabase database;
+        private readonly MockController controller;
+
+        public SearchByClientRequestPipeTest()
+        {
+            this.database = new PersistantDatabase();
+            var provider = new FluentRestBuilderCore(new ServiceCollection())
+                .RegisterStorage()
+                .RegisterSource()
+                .RegisterSearchByClientRequestPipe()
+                .RegisterMappingPipe()
+                .Services
+                .AddScoped<ISearchByClientRequestInterpreter>(p => this.interpreter)
+                .BuildServiceProvider();
+            this.controller = new MockController(provider);
+        }
+
+        public void Dispose()
+        {
+            this.controller.Dispose();
+        }
 
         [Fact]
         public async Task TestBasicUseCase()
@@ -28,33 +45,16 @@ namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
             this.CreateOrderByEntities();
             this.interpreter.SearchValue = "b";
 
-            var result = await new Source<IQueryable<Entity>>(
-                    this.Context.Entities, this.ServiceProvider)
+            var result = await this.controller.FromSource(this.database.Create().Entities)
                 .ApplySearchByClientRequest(s => e => e.Name.Contains(s))
                 .Map(q => q.ToListAsync())
                 .ToObjectResultOrDefault();
             Assert.Equal(2, result.Count);
         }
 
-        protected override void Setup(IServiceCollection services)
-        {
-            base.Setup(services);
-            services.AddTransient<
-                ISearchByClientRequestPipeFactory<Entity>,
-                SearchByClientRequestPipeFactory<Entity>>();
-            services.AddScoped<
-                IMappingPipeFactory<IQueryable<Entity>, List<Entity>>,
-                MappingPipeFactory<IQueryable<Entity>, List<Entity>>>();
-            services.AddScoped<
-                IQueryablePipeFactory<IQueryable<Entity>, IOrderedQueryable<Entity>>,
-                QueryablePipeFactory<IQueryable<Entity>, IOrderedQueryable<Entity>>>();
-
-            services.AddSingleton<ISearchByClientRequestInterpreter>(p => this.interpreter);
-        }
-
         private void CreateOrderByEntities()
         {
-            using (var context = this.CreateContext())
+            using (var context = this.database.Create())
             {
                 context.Add(new Entity { Id = 1, Name = "ac" });
                 context.Add(new Entity { Id = 2, Name = "aa" });

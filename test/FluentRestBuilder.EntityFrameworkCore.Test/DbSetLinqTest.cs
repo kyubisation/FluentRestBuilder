@@ -6,7 +6,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test
 {
     using System;
     using System.Linq;
-    using FluentRestBuilder.Test.Common.Mocks;
     using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using Microsoft.EntityFrameworkCore;
     using Xunit;

@@ -7,7 +7,6 @@ namespace FluentRestBuilder.Test.Pipes
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Common.Mocks;
     using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Pipes;
     using Xunit;

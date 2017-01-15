@@ -5,7 +5,6 @@
 namespace FluentRestBuilder.EntityFrameworkCore.Test
 {
     using EntityFrameworkCore.MetaModel;
-    using FluentRestBuilder.Test.Common.Mocks;
     using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using Microsoft.Extensions.DependencyInjection;
 

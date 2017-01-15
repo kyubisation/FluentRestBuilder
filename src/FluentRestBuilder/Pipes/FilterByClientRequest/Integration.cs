@@ -28,6 +28,8 @@ namespace FluentRestBuilder
             builder.Services.TryAddSingleton<IQueryArgumentKeys, QueryArgumentKeys>();
             builder.Services.TryAddTransient(
                 typeof(IFilterExpressionBuilder<>), typeof(FilterExpressionBuilder<>));
+            builder.Services.TryAddTransient(
+                typeof(IFilterExpressionProviderBuilder<>), typeof(FilterExpressionProviderBuilder<>));
             return builder;
         }
 

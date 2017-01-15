@@ -6,9 +6,11 @@ namespace FluentRestBuilder.Test.Sources.LazySource
 {
     using System;
     using System.Threading.Tasks;
+    using Builder;
     using Common.Mocks;
     using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Sources.LazySource;
+    using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
     public class LazySourceTest
@@ -31,6 +33,27 @@ namespace FluentRestBuilder.Test.Sources.LazySource
                 .GetObjectResultOrDefault<Entity>();
             Assert.True(lazySource.IsValueCreated);
             Assert.Same(lazySource.Value, result);
+        }
+
+        [Fact]
+        public async Task TestFromController()
+        {
+            var provider = new FluentRestBuilderCore(new ServiceCollection())
+                .RegisterStorage()
+                .RegisterLazySource()
+                .Services
+                .BuildServiceProvider();
+            using (var controller = new MockController(provider))
+            {
+                var lazySource = new Lazy<Entity>(() => new Entity());
+                var resultPipe = controller.FromSource(() => lazySource.Value)
+                    .ToMockResultPipe();
+                Assert.False(lazySource.IsValueCreated);
+                var result = await resultPipe.Execute()
+                    .GetObjectResultOrDefault<Entity>();
+                Assert.True(lazySource.IsValueCreated);
+                Assert.Same(lazySource.Value, result);
+            }
         }
     }
 }

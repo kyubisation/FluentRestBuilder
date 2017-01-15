@@ -5,9 +5,11 @@
 namespace FluentRestBuilder.Test.Sources.Source
 {
     using System.Threading.Tasks;
+    using Builder;
     using Common.Mocks;
     using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Sources.Source;
+    using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
     public class SourceTest
@@ -27,6 +29,23 @@ namespace FluentRestBuilder.Test.Sources.Source
             var result = await new Source<Entity>(source, new EmptyServiceProvider())
                 .ToObjectResultOrDefault();
             Assert.Same(source, result);
+        }
+
+        [Fact]
+        public async Task TestFromController()
+        {
+            var provider = new FluentRestBuilderCore(new ServiceCollection())
+                .RegisterStorage()
+                .RegisterSource()
+                .Services
+                .BuildServiceProvider();
+            using (var controller = new MockController(provider))
+            {
+                var entity = new Entity();
+                var result = await controller.FromSource(entity)
+                    .ToObjectResultOrDefault();
+                Assert.Same(entity, result);
+            }
         }
     }
 }

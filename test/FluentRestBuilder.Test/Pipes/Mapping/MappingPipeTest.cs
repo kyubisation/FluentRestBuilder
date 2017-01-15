@@ -9,14 +9,13 @@ namespace FluentRestBuilder.Test.Pipes.Mapping
     using Builder;
     using Common.Mocks;
     using Common.Mocks.EntityFramework;
-    using FluentRestBuilder.Pipes.Mapping;
     using FluentRestBuilder.Sources.Source;
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
-    public class MappingPipeTest : TestBaseWithServiceProvider
+    public class MappingPipeTest
     {
-        private IServiceProvider provider;
+        private readonly IServiceProvider provider;
 
         public MappingPipeTest()
         {

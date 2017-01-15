@@ -12,7 +12,7 @@ namespace FluentRestBuilder.Test.Pipes.Actions
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
-    public class ActionPipeTest : TestBaseWithServiceProvider
+    public class ActionPipeTest
     {
         private const string NewName = "ActionPipeTest";
         private readonly Entity entity = new Entity { Id = 1, Name = "test" };

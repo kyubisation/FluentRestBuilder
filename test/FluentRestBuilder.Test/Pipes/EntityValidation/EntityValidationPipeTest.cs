@@ -14,7 +14,7 @@ namespace FluentRestBuilder.Test.Pipes.EntityValidation
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
-    public class EntityValidationPipeTest : TestBaseWithServiceProvider
+    public class EntityValidationPipeTest
     {
         private readonly Source<Entity> source;
         private readonly Entity entity = new Entity { Id = 1, Name = "test" };

@@ -4,24 +4,43 @@
 
 namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Common;
+    using Builder;
     using Common.Mocks;
     using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Pipes.FilterByClientRequest;
-    using FluentRestBuilder.Pipes.FilterByClientRequest.Expressions;
-    using FluentRestBuilder.Pipes.Mapping;
-    using FluentRestBuilder.Sources.Source;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
-    public class FilterByClientRequestPipeTest : ScopedDbContextTestBase
+    public class FilterByClientRequestPipeTest : IDisposable
     {
         private readonly Interpreter filterInterpreter = new Interpreter();
+        private readonly PersistantDatabase database;
+        private readonly MockController controller;
+
+        public FilterByClientRequestPipeTest()
+        {
+            this.database = new PersistantDatabase();
+            var provider = new FluentRestBuilderCore(new ServiceCollection())
+                .RegisterStorage()
+                .RegisterSource()
+                .RegisterFilterByClientRequestPipe()
+                .RegisterMappingPipe()
+                .Services
+                .AddScoped<IFilterByClientRequestInterpreter>(p => this.filterInterpreter)
+                .BuildServiceProvider();
+            this.controller = new MockController(provider);
+        }
+
+        public void Dispose()
+        {
+            this.controller.Dispose();
+        }
 
         [Fact]
         public async Task TestBasicUseCase()
@@ -29,8 +48,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             this.CreateFilterEntities();
             this.filterInterpreter.RequestedFilter.Add(
                 new FilterRequest(nameof(Entity.Name), FilterType.Equals, "a"));
-            var result = await new Source<IQueryable<Entity>>(
-                    this.Context.Entities, this.ServiceProvider)
+            var result = await this.controller.FromSource(this.database.Create().Entities)
                 .ApplyFilterByClientRequest(
                     builder => builder
                         .AddFilter(nameof(Entity.Name), (f, b) => b.AddEquals(e => e.Name == f)))
@@ -47,8 +65,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             this.CreateFilterEntities();
             this.filterInterpreter.RequestedFilter.Add(
                 new FilterRequest(nameof(Entity.Name), FilterType.Equals, "a"));
-            var result = await new Source<IQueryable<Entity>>(
-                    this.Context.Entities, this.ServiceProvider)
+            var result = await this.controller.FromSource(this.database.Create().Entities)
                 .ApplyFilterByClientRequest(builder => builder)
                 .Map(q => q.ToListAsync())
                 .ToMockResultPipe()
@@ -56,23 +73,9 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             Assert.IsAssignableFrom<BadRequestObjectResult>(result);
         }
 
-        protected override void Setup(IServiceCollection services)
-        {
-            base.Setup(services);
-            services.AddTransient<IFilterExpressionBuilder<Entity>, FilterExpressionBuilder<Entity>>();
-            services.AddTransient<
-                IFilterExpressionProviderBuilder<Entity>,
-                FilterExpressionProviderBuilder<Entity>>();
-            services.AddScoped<IFilterByClientRequestPipeFactory<Entity>>(
-                p => new FilterByClientRequestPipeFactory<Entity>(this.filterInterpreter));
-            services.AddScoped<
-                IMappingPipeFactory<IQueryable<Entity>, List<Entity>>,
-                MappingPipeFactory<IQueryable<Entity>, List<Entity>>>();
-        }
-
         private void CreateFilterEntities()
         {
-            using (var context = this.CreateContext())
+            using (var context = this.database.Create())
             {
                 context.Add(new Entity { Id = 1, Name = "c" });
                 context.Add(new Entity { Id = 2, Name = "a" });

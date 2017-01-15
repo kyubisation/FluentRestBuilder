@@ -15,7 +15,7 @@ namespace FluentRestBuilder.Test.Pipes.ClaimValidation
     using Storage;
     using Xunit;
 
-    public class ClaimValidationPipeTest : TestBaseWithServiceProvider
+    public class ClaimValidationPipeTest
     {
         public const string ClaimType = "claimType";
         public const string Claim = "claim";
