@@ -11,19 +11,19 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Reload
     public class ReloadPipe<TInput> : ChainPipe<TInput>
         where TInput : class
     {
-        private readonly IContextActions contextActions;
+        private readonly IDbContextContainer dbContextContainer;
 
         public ReloadPipe(
-            IContextActions contextActions,
+            IDbContextContainer dbContextContainer,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
-            this.contextActions = contextActions;
+            this.dbContextContainer = dbContextContainer;
         }
 
         protected override async Task<IActionResult> Execute(TInput input)
         {
-            await this.contextActions.Reload(input);
+            await this.dbContextContainer.Context.Entry(input).ReloadAsync();
             return await base.Execute(input);
         }
     }

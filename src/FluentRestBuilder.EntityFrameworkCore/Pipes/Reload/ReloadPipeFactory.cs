@@ -7,14 +7,14 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Reload
     public class ReloadPipeFactory<TInput> : IReloadPipeFactory<TInput>
         where TInput : class
     {
-        private readonly IContextActions contextActions;
+        private readonly IDbContextContainer dbContextContainer;
 
-        public ReloadPipeFactory(IContextActions contextActions)
+        public ReloadPipeFactory(IDbContextContainer dbContextContainer)
         {
-            this.contextActions = contextActions;
+            this.dbContextContainer = dbContextContainer;
         }
 
         public OutputPipe<TInput> Create(IOutputPipe<TInput> parent) =>
-            new ReloadPipe<TInput>(this.contextActions, parent);
+            new ReloadPipe<TInput>(this.dbContextContainer, parent);
     }
 }

@@ -6,7 +6,7 @@
 namespace FluentRestBuilder
 {
     using System.Linq;
-    using Builder;
+    using EntityFrameworkCore.Builder;
     using EntityFrameworkCore.Sources.QueryableSource;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -14,8 +14,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static IFluentRestBuilderCore RegisterQueryableSource(
-            this IFluentRestBuilderCore builder)
+        public static IFluentRestBuilderCoreEntityFrameworkCore RegisterQueryableSource(
+            this IFluentRestBuilderCoreEntityFrameworkCore builder)
         {
             builder.Services.TryAddSingleton(
                 typeof(IQueryableSourceFactory<>), typeof(QueryableSourceFactory<>));

@@ -7,24 +7,25 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.QueryableSource
     using System;
     using System.Linq;
     using FluentRestBuilder.Pipes;
+    using Microsoft.EntityFrameworkCore;
 
     public class QueryableSourcePipe<TInput, TOutput> : MappingPipeBase<TInput, IQueryable<TOutput>>
         where TOutput : class
     {
-        private readonly Func<IQueryableFactory, TInput, IQueryable<TOutput>> queryablePipe;
-        private readonly IQueryableFactory queryableFactory;
+        private readonly Func<DbContext, TInput, IQueryable<TOutput>> queryablePipe;
+        private readonly IDbContextContainer dbContextContainer;
 
         public QueryableSourcePipe(
-            Func<IQueryableFactory, TInput, IQueryable<TOutput>> queryablePipe,
-            IQueryableFactory queryableFactory,
+            Func<DbContext, TInput, IQueryable<TOutput>> queryablePipe,
+            IDbContextContainer dbContextContainer,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
             this.queryablePipe = queryablePipe;
-            this.queryableFactory = queryableFactory;
+            this.dbContextContainer = dbContextContainer;
         }
 
         protected override IQueryable<TOutput> Map(TInput input) =>
-            this.queryablePipe(this.queryableFactory, input);
+            this.queryablePipe(this.dbContextContainer.Context, input);
     }
 }

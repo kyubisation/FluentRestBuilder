@@ -6,13 +6,8 @@
 namespace FluentRestBuilder
 {
     using Builder;
-    using EntityFrameworkCore;
-    using EntityFrameworkCore.MetaModel;
-    using EntityFrameworkCore.Pipes;
+    using EntityFrameworkCore.Builder;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
-    using Pipes;
 
     public static class FluentRestBuilderExtension
     {
@@ -20,9 +15,7 @@ namespace FluentRestBuilder
             this IFluentRestBuilder builder)
             where TContext : DbContext
         {
-            RegisterEntityFrameworkRelatedServices<TContext>(builder.Services);
-
-            new FluentRestBuilderCore(builder.Services)
+            new FluentRestBuilderCoreEntityFrameworkCore<TContext>(builder.Services)
                 .RegisterDeletionPipe()
                 .RegisterInsertionPipe()
                 .RegisterQueryableSourcePipe()
@@ -30,18 +23,6 @@ namespace FluentRestBuilder
                 .RegisterUpdatePipe()
                 .RegisterQueryableSource();
             return builder;
-        }
-
-        private static void RegisterEntityFrameworkRelatedServices<TContext>(
-            IServiceCollection services)
-            where TContext : DbContext
-        {
-            services.TryAddScoped<IContextActions, ContextActions<TContext>>();
-            services.TryAddScoped<IQueryableFactory, ContextQueryableFactory<TContext>>();
-            services.TryAddScoped(typeof(IQueryableFactory<>), typeof(QueryableFactory<>));
-            services.TryAddSingleton(typeof(IModelContainer<>), typeof(ModelContainer<>));
-            services.AddSingleton(
-                typeof(IQueryableTransformer<>), typeof(AsyncQueryableTransformer<>));
         }
     }
 }

@@ -11,19 +11,19 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
     public class QueryableSourceFactory<TOutput> : IQueryableSourceFactory<TOutput>
         where TOutput : class
     {
-        private readonly IQueryableFactory<TOutput> queryableFactory;
+        private readonly IDbContextContainer dbContextContainer;
         private readonly IServiceProvider serviceProvider;
 
         public QueryableSourceFactory(
-            IQueryableFactory<TOutput> queryableFactory,
+            IDbContextContainer dbContextContainer,
             IServiceProvider serviceProvider)
         {
-            this.queryableFactory = queryableFactory;
+            this.dbContextContainer = dbContextContainer;
             this.serviceProvider = serviceProvider;
         }
 
         public OutputPipe<IQueryable<TOutput>> Resolve(ControllerBase controller) =>
-            new QueryableSource<TOutput>(this.queryableFactory, this.serviceProvider)
+            new QueryableSource<TOutput>(this.dbContextContainer, this.serviceProvider)
             {
                 Controller = controller
             };

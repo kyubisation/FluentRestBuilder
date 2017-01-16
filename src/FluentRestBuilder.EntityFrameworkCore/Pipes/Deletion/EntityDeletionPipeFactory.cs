@@ -7,14 +7,14 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Deletion
     public class EntityDeletionPipeFactory<TInput> : IEntityDeletionPipeFactory<TInput>
         where TInput : class
     {
-        private readonly IContextActions contextActions;
+        private readonly IDbContextContainer dbContextContainer;
 
-        public EntityDeletionPipeFactory(IContextActions contextActions)
+        public EntityDeletionPipeFactory(IDbContextContainer dbContextContainer)
         {
-            this.contextActions = contextActions;
+            this.dbContextContainer = dbContextContainer;
         }
 
         public OutputPipe<TInput> Create(IOutputPipe<TInput> parent) =>
-            new EntityDeletionPipe<TInput>(this.contextActions, parent);
+            new EntityDeletionPipe<TInput>(this.dbContextContainer, parent);
     }
 }

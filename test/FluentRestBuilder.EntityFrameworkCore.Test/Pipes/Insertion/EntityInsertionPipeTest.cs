@@ -4,38 +4,51 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Insertion
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using EntityFrameworkCore.Pipes.Insertion;
-    using FluentRestBuilder.Sources.Source;
+    using FluentRestBuilder.Builder;
     using FluentRestBuilder.Test.Common.Mocks;
     using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using Microsoft.Extensions.DependencyInjection;
-    using Storage;
     using Xunit;
 
-    public class EntityInsertionPipeTest : ScopedDbContextTestBase
+    public class EntityInsertionPipeTest : IDisposable
     {
+        private readonly PersistantDatabase database;
+        private readonly MockController controller;
+
+        public EntityInsertionPipeTest()
+        {
+            this.database = new PersistantDatabase();
+            var provider = new FluentRestBuilderCore(new ServiceCollection())
+                .RegisterStorage()
+                .RegisterSource()
+                .RegisterContext<MockDbContext>()
+                .RegisterInsertionPipe()
+                .Services
+                .AddScoped(p => this.database.Create())
+                .BuildServiceProvider();
+            this.controller = new MockController(provider);
+        }
+
+        public void Dispose()
+        {
+            this.controller.Dispose();
+        }
+
         [Fact]
         public async Task TestInsertion()
         {
             var entity = new Entity { Id = 1, Name = "test" };
-            var result = await new Source<Entity>(entity, this.ServiceProvider)
+            var result = await this.controller.FromSource(entity)
                 .InsertEntity()
                 .ToObjectResultOrDefault();
             Assert.Same(entity, result);
-            using (var context = this.CreateContext())
+            using (var context = this.database.Create())
             {
                 Assert.Equal(1, context.Entities.Count(e => e.Id == entity.Id));
             }
-        }
-
-        protected override void Setup(IServiceCollection services)
-        {
-            base.Setup(services);
-            services.AddScoped<IContextActions>(p => new ContextActions<MockDbContext>(this.Context));
-            services.AddTransient<IScopedStorage<Entity>, ScopedStorage<Entity>>();
-            services.AddTransient<IEntityInsertionPipeFactory<Entity>, EntityInsertionPipeFactory<Entity>>();
         }
     }
 }

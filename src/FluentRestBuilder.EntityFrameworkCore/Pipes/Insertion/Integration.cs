@@ -5,15 +5,15 @@
 // ReSharper disable once CheckNamespace
 namespace FluentRestBuilder
 {
-    using Builder;
+    using EntityFrameworkCore.Builder;
     using EntityFrameworkCore.Pipes.Insertion;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
 
     public static partial class Integration
     {
-        public static IFluentRestBuilderCore RegisterInsertionPipe(
-            this IFluentRestBuilderCore builder)
+        public static IFluentRestBuilderCoreEntityFrameworkCore RegisterInsertionPipe(
+            this IFluentRestBuilderCoreEntityFrameworkCore builder)
         {
             builder.Services.TryAddScoped(
                 typeof(IEntityInsertionPipeFactory<>), typeof(EntityInsertionPipeFactory<>));

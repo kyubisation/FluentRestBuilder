@@ -12,17 +12,20 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
     public class QueryableSource<TEntity> : SourceBase<IQueryable<TEntity>>
         where TEntity : class
     {
-        private readonly IQueryableFactory<TEntity> queryableFactory;
+        private readonly IDbContextContainer dbContextContainer;
 
         public QueryableSource(
-            IQueryableFactory<TEntity> queryableFactory,
+            IDbContextContainer dbContextContainer,
             IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
-            this.queryableFactory = queryableFactory;
+            this.dbContextContainer = dbContextContainer;
         }
 
-        protected override Task<IQueryable<TEntity>> GetOutput() =>
-            Task.FromResult(this.queryableFactory.Queryable);
+        protected override Task<IQueryable<TEntity>> GetOutput()
+        {
+            IQueryable<TEntity> queryable = this.dbContextContainer.Context.Set<TEntity>();
+            return Task.FromResult(queryable);
+        }
     }
 }

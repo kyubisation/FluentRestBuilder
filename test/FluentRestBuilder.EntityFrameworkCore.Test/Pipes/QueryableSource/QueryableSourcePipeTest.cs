@@ -4,26 +4,48 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using EntityFrameworkCore.Pipes.QueryableSource;
-    using FluentRestBuilder.Sources.Source;
+    using FluentRestBuilder.Builder;
     using FluentRestBuilder.Test.Common.Mocks;
     using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
-    public class QueryableSourcePipeTest : ScopedDbContextTestBase
+    public class QueryableSourcePipeTest : IDisposable
     {
+        private readonly PersistantDatabase database;
+        private readonly MockController controller;
+
+        public QueryableSourcePipeTest()
+        {
+            this.database = new PersistantDatabase();
+            var provider = new FluentRestBuilderCore(new ServiceCollection())
+                .RegisterStorage()
+                .RegisterSource()
+                .RegisterContext<MockDbContext>()
+                .RegisterQueryableSourcePipe()
+                .Services
+                .AddScoped(p => this.database.Create())
+                .BuildServiceProvider();
+            this.controller = new MockController(provider);
+        }
+
+        public void Dispose()
+        {
+            this.controller.Dispose();
+        }
+
         [Fact]
         public async Task TestCreationWithoutPredicate()
         {
             var parent = await this.CreateParentWithChildren();
             var parent2 = await this.CreateParentWithChildren();
-            var result = await new Source<Parent>(parent, this.ServiceProvider)
-                .SelectQueryableSource(f => f.Resolve<Child>())
+            var result = await this.controller.FromSource(parent)
+                .SelectQueryableSource(f => f.Set<Child>())
                 .ToObjectResultOrDefault();
             Assert.NotNull(result);
             Assert.Equal(
@@ -36,26 +58,16 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
         {
             var parent = await this.CreateParentWithChildren();
             await this.CreateParentWithChildren();
-            var result = await new Source<Parent>(parent, this.ServiceProvider)
-                .SelectQueryableSource((f, p) => f.Resolve<Child>().Where(c => c.ParentId == p.Id))
+            var result = await this.controller.FromSource(parent)
+                .SelectQueryableSource((f, p) => f.Set<Child>().Where(c => c.ParentId == p.Id))
                 .ToObjectResultOrDefault();
             Assert.NotNull(result);
             Assert.Equal(parent.Children.Count, await result.CountAsync());
         }
 
-        protected override void Setup(IServiceCollection services)
-        {
-            base.Setup(services);
-            services.AddTransient<
-                IQueryableSourcePipeFactory<Parent, Child>,
-                QueryableSourcePipeFactory<Parent, Child>>();
-            services.AddTransient<IQueryableFactory, ContextQueryableFactory<MockDbContext>>();
-            services.AddTransient(typeof(IQueryableFactory<>), typeof(QueryableFactory<>));
-        }
-
         private async Task<Parent> CreateParentWithChildren()
         {
-            using (var context = this.CreateContext())
+            using (var context = this.database.Create())
             {
                 var id = await context.Parents.CountAsync() + 1;
                 var parent = new Parent

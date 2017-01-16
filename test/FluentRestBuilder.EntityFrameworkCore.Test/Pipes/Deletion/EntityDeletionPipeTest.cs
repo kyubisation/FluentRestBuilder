@@ -4,37 +4,54 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Deletion
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using EntityFrameworkCore.Pipes.Deletion;
-    using FluentRestBuilder.Sources.Source;
+    using FluentRestBuilder.Builder;
     using FluentRestBuilder.Test.Common.Mocks;
     using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
-    public class EntityDeletionPipeTest : ScopedDbContextTestBase
+    public class EntityDeletionPipeTest : IDisposable
     {
+        private readonly PersistantDatabase database;
+        private readonly MockController controller;
+
+        public EntityDeletionPipeTest()
+        {
+            this.database = new PersistantDatabase();
+            var provider = new FluentRestBuilderCore(new ServiceCollection())
+                .RegisterStorage()
+                .RegisterSingleOrDefaultPipe()
+                .RegisterContext<MockDbContext>()
+                .RegisterQueryableSource()
+                .RegisterDeletionPipe()
+                .Services
+                .AddScoped(p => this.database.Create())
+                .BuildServiceProvider();
+            this.controller = new MockController(provider);
+        }
+
+        public void Dispose()
+        {
+            this.controller.Dispose();
+        }
+
         [Fact]
         public async Task TestDeletion()
         {
-            this.CreateEntities();
-            var entity = Entity.Entities.First();
-            var result = await new Source<Entity>(entity, this.ServiceProvider)
+            var entities = this.database.CreateEnumeratedEntities(10);
+            var entity = entities.First();
+            var result = await this.controller.FromQueryable<Entity>()
+                .SingleOrDefault(e => e.Id == entity.Id)
                 .DeleteEntity()
                 .ToObjectResultOrDefault();
             Assert.Equal(entity.Id, result.Id);
-            using (var context = this.CreateContext())
+            using (var context = this.database.Create())
             {
                 Assert.Equal(Entity.Entities.Count - 1, context.Entities.Count());
             }
-        }
-
-        protected override void Setup(IServiceCollection services)
-        {
-            base.Setup(services);
-            services.AddScoped<IContextActions>(p => new ContextActions<MockDbContext>(this.Context));
-            services.AddTransient<IEntityDeletionPipeFactory<Entity>, EntityDeletionPipeFactory<Entity>>();
         }
     }
 }

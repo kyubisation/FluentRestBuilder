@@ -6,14 +6,15 @@
 namespace FluentRestBuilder
 {
     using Builder;
+    using EntityFrameworkCore.Builder;
     using EntityFrameworkCore.Pipes.Reload;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
 
     public static partial class Integration
     {
-        public static IFluentRestBuilderCore RegisterReloadPipe(
-            this IFluentRestBuilderCore builder)
+        public static IFluentRestBuilderCoreEntityFrameworkCore RegisterReloadPipe(
+            this IFluentRestBuilderCoreEntityFrameworkCore builder)
         {
             builder.Services.TryAddScoped(
                 typeof(IReloadPipeFactory<>), typeof(ReloadPipeFactory<>));

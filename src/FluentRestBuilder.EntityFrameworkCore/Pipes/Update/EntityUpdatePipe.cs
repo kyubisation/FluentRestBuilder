@@ -13,21 +13,21 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
     public class EntityUpdatePipe<TInput> : ActionResultPipe<TInput>
         where TInput : class
     {
-        private readonly IContextActions contextActions;
+        private readonly IDbContextContainer dbContextContainer;
 
         public EntityUpdatePipe(
-            IContextActions contextActions,
+            IDbContextContainer dbContextContainer,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
-            this.contextActions = contextActions;
+            this.dbContextContainer = dbContextContainer;
         }
 
         protected override async Task<IActionResult> GenerateActionResultAsync(TInput entity)
         {
             try
             {
-                await this.contextActions.UpdateAndSave(entity);
+                await this.dbContextContainer.Context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {

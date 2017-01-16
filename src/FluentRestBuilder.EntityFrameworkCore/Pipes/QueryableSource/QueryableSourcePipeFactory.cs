@@ -6,21 +6,21 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.QueryableSource
 {
     using System;
     using System.Linq;
+    using Microsoft.EntityFrameworkCore;
 
     public class QueryableSourcePipeFactory<TInput, TOutput> :
         IQueryableSourcePipeFactory<TInput, TOutput>
         where TOutput : class
     {
-        private readonly IQueryableFactory queryableFactory;
+        private readonly IDbContextContainer dbContextContainer;
 
-        public QueryableSourcePipeFactory(IQueryableFactory queryableFactory)
+        public QueryableSourcePipeFactory(IDbContextContainer dbContextContainer)
         {
-            this.queryableFactory = queryableFactory;
+            this.dbContextContainer = dbContextContainer;
         }
 
         public QueryableSourcePipe<TInput, TOutput> Resolve(
-            Func<IQueryableFactory, TInput, IQueryable<TOutput>> selection,
-            IOutputPipe<TInput> pipe) =>
-            new QueryableSourcePipe<TInput, TOutput>(selection, this.queryableFactory, pipe);
+            Func<DbContext, TInput, IQueryable<TOutput>> selection, IOutputPipe<TInput> pipe) =>
+            new QueryableSourcePipe<TInput, TOutput>(selection, this.dbContextContainer, pipe);
     }
 }
