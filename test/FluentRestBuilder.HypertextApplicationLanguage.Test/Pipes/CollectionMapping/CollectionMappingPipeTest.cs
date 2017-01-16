@@ -30,7 +30,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
                 .RegisterSource()
                 .RegisterCollectionMappingPipe()
                 .Services
-                .AddScoped<IRestCollectionLinkGenerator, MockLinkGenerator>()
+                .AddScoped<IRestCollectionLinkGenerator>(p => new MockLinkGenerator())
                 .AddScoped(p => this.database.Create())
                 .BuildServiceProvider();
             this.controller = new MockController(provider);
