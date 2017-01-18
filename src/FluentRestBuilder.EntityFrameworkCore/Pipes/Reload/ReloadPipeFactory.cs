@@ -4,17 +4,20 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Reload
 {
+    using Microsoft.EntityFrameworkCore;
+    using Storage;
+
     public class ReloadPipeFactory<TInput> : IReloadPipeFactory<TInput>
         where TInput : class
     {
-        private readonly IDbContextContainer dbContextContainer;
+        private readonly IScopedStorage<DbContext> contextStorage;
 
-        public ReloadPipeFactory(IDbContextContainer dbContextContainer)
+        public ReloadPipeFactory(IScopedStorage<DbContext> contextStorage)
         {
-            this.dbContextContainer = dbContextContainer;
+            this.contextStorage = contextStorage;
         }
 
         public OutputPipe<TInput> Create(IOutputPipe<TInput> parent) =>
-            new ReloadPipe<TInput>(this.dbContextContainer, parent);
+            new ReloadPipe<TInput>(this.contextStorage, parent);
     }
 }

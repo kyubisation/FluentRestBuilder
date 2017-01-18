@@ -8,23 +8,25 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
     using System.Linq;
     using System.Threading.Tasks;
     using FluentRestBuilder.Sources;
+    using Microsoft.EntityFrameworkCore;
+    using Storage;
 
     public class QueryableSource<TEntity> : SourceBase<IQueryable<TEntity>>
         where TEntity : class
     {
-        private readonly IDbContextContainer dbContextContainer;
+        private readonly IScopedStorage<DbContext> contextStorage;
 
         public QueryableSource(
-            IDbContextContainer dbContextContainer,
+            IScopedStorage<DbContext> contextStorage,
             IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
-            this.dbContextContainer = dbContextContainer;
+            this.contextStorage = contextStorage;
         }
 
         protected override Task<IQueryable<TEntity>> GetOutput()
         {
-            IQueryable<TEntity> queryable = this.dbContextContainer.Context.Set<TEntity>();
+            IQueryable<TEntity> queryable = this.contextStorage.Value.Set<TEntity>();
             return Task.FromResult(queryable);
         }
     }

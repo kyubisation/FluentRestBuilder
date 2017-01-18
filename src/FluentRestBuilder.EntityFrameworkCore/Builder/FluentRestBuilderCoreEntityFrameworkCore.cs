@@ -7,6 +7,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Builder
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Storage;
 
     public class FluentRestBuilderCoreEntityFrameworkCore<TContext> : IFluentRestBuilderCoreEntityFrameworkCore
         where TContext : DbContext
@@ -14,7 +15,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Builder
         public FluentRestBuilderCoreEntityFrameworkCore(IServiceCollection services)
         {
             this.Services = services;
-            this.Services.TryAddScoped<IDbContextContainer, DbContextContainer<TContext>>();
+            this.Services.TryAddScoped<IScopedStorage<DbContext>, DbContextScopedStorage<TContext>>();
         }
 
         public IServiceCollection Services { get; }

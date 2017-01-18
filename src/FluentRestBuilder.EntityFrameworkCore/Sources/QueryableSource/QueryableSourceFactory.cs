@@ -7,23 +7,25 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
     using System;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Storage;
 
     public class QueryableSourceFactory<TOutput> : IQueryableSourceFactory<TOutput>
         where TOutput : class
     {
-        private readonly IDbContextContainer dbContextContainer;
+        private readonly IScopedStorage<DbContext> contextStorage;
         private readonly IServiceProvider serviceProvider;
 
         public QueryableSourceFactory(
-            IDbContextContainer dbContextContainer,
+            IScopedStorage<DbContext> contextStorage,
             IServiceProvider serviceProvider)
         {
-            this.dbContextContainer = dbContextContainer;
+            this.contextStorage = contextStorage;
             this.serviceProvider = serviceProvider;
         }
 
         public OutputPipe<IQueryable<TOutput>> Resolve(ControllerBase controller) =>
-            new QueryableSource<TOutput>(this.dbContextContainer, this.serviceProvider)
+            new QueryableSource<TOutput>(this.contextStorage, this.serviceProvider)
             {
                 Controller = controller
             };

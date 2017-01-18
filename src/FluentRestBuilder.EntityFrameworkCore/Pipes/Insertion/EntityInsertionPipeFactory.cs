@@ -4,17 +4,20 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Insertion
 {
+    using Microsoft.EntityFrameworkCore;
+    using Storage;
+
     public class EntityInsertionPipeFactory<TInput> : IEntityInsertionPipeFactory<TInput>
         where TInput : class
     {
-        private readonly IDbContextContainer dbContextContainer;
+        private readonly IScopedStorage<DbContext> contextStorage;
 
-        public EntityInsertionPipeFactory(IDbContextContainer dbContextContainer)
+        public EntityInsertionPipeFactory(IScopedStorage<DbContext> contextStorage)
         {
-            this.dbContextContainer = dbContextContainer;
+            this.contextStorage = contextStorage;
         }
 
         public OutputPipe<TInput> Create(IOutputPipe<TInput> parent) =>
-            new EntityInsertionPipe<TInput>(this.dbContextContainer, parent);
+            new EntityInsertionPipe<TInput>(this.contextStorage, parent);
     }
 }

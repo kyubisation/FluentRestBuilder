@@ -4,17 +4,20 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
 {
+    using Microsoft.EntityFrameworkCore;
+    using Storage;
+
     public class EntityUpdatePipeFactory<TInput> : IEntityUpdatePipeFactory<TInput>
         where TInput : class
     {
-        private readonly IDbContextContainer dbContextContainer;
+        private readonly IScopedStorage<DbContext> contextStorage;
 
-        public EntityUpdatePipeFactory(IDbContextContainer dbContextContainer)
+        public EntityUpdatePipeFactory(IScopedStorage<DbContext> contextStorage)
         {
-            this.dbContextContainer = dbContextContainer;
+            this.contextStorage = contextStorage;
         }
 
         public OutputPipe<TInput> Create(IOutputPipe<TInput> parent) =>
-            new EntityUpdatePipe<TInput>(this.dbContextContainer, parent);
+            new EntityUpdatePipe<TInput>(this.contextStorage, parent);
     }
 }

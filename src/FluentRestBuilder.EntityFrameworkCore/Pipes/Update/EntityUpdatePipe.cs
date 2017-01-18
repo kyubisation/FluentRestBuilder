@@ -9,25 +9,26 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Storage;
 
     public class EntityUpdatePipe<TInput> : ActionResultPipe<TInput>
         where TInput : class
     {
-        private readonly IDbContextContainer dbContextContainer;
+        private readonly IScopedStorage<DbContext> contextStorage;
 
         public EntityUpdatePipe(
-            IDbContextContainer dbContextContainer,
+            IScopedStorage<DbContext> contextStorage,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
-            this.dbContextContainer = dbContextContainer;
+            this.contextStorage = contextStorage;
         }
 
         protected override async Task<IActionResult> GenerateActionResultAsync(TInput entity)
         {
             try
             {
-                await this.dbContextContainer.Context.SaveChangesAsync();
+                await this.contextStorage.Value.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
