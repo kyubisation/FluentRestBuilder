@@ -10,11 +10,11 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
     using System.Threading.Tasks;
     using Builder;
     using FluentRestBuilder.Pipes;
-    using FluentRestBuilder.Test.Common.Mocks;
-    using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using HypertextApplicationLanguage.Pipes.CollectionMapping;
     using Links;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
+    using Mocks.EntityFramework;
     using Xunit;
 
     public class CollectionMappingPipeTest : IDisposable

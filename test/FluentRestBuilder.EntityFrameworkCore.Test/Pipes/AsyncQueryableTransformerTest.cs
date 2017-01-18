@@ -9,7 +9,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes
     using System.Threading.Tasks;
     using EntityFrameworkCore.Pipes;
     using FluentRestBuilder.Pipes;
-    using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
+    using Mocks.EntityFramework;
     using Xunit;
 
     public class AsyncQueryableTransformerTest

@@ -4,9 +4,9 @@
 
 namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
 {
-    using Common.Mocks.HttpContextStorage;
     using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Pipes.SearchByClientRequest;
+    using Mocks.HttpContextStorage;
     using Xunit;
 
     public class SearchByClientRequestInterpreterTest

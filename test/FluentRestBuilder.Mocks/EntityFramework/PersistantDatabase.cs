@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Common.Mocks.EntityFramework
+namespace FluentRestBuilder.Mocks.EntityFramework
 {
     using System;
     using System.Collections.Generic;

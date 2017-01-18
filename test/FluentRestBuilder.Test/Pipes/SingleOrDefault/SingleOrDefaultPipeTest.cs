@@ -8,12 +8,12 @@ namespace FluentRestBuilder.Test.Pipes.SingleOrDefault
     using System.Linq;
     using System.Threading.Tasks;
     using Builder;
-    using Common.Mocks;
-    using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Sources.Source;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
+    using Mocks.EntityFramework;
     using Xunit;
 
     public class SingleOrDefaultPipeTest : IDisposable

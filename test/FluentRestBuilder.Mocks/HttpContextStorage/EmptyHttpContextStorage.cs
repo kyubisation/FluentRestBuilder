@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Common.Mocks.HttpContextStorage
+namespace FluentRestBuilder.Mocks.HttpContextStorage
 {
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Internal;

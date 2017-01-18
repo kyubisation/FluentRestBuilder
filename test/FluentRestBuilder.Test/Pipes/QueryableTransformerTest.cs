@@ -7,8 +7,8 @@ namespace FluentRestBuilder.Test.Pipes
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Pipes;
+    using Mocks.EntityFramework;
     using Xunit;
 
     public class QueryableTransformerTest : IDisposable

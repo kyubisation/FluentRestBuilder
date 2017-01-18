@@ -6,9 +6,9 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Common.Mocks.HttpContextStorage;
     using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Pipes.OrderByClientRequest;
+    using Mocks.HttpContextStorage;
     using Xunit;
 
     public class OrderByClientRequestInterpreterTest

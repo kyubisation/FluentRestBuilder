@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FluentRestBuilder.Test.Common")]
+[assembly: AssemblyProduct("FluentRestBuilder.Mocks")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -19,4 +19,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("7d44de92-6284-4785-b6d5-29c880bc7a77")]
+[assembly: Guid("dbc8e79b-da24-4422-ae36-4deb0a76a45b")]

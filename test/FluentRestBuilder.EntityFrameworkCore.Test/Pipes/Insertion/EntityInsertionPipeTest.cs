@@ -8,9 +8,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Insertion
     using System.Linq;
     using System.Threading.Tasks;
     using FluentRestBuilder.Builder;
-    using FluentRestBuilder.Test.Common.Mocks;
-    using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
+    using Mocks.EntityFramework;
     using Xunit;
 
     public class EntityInsertionPipeTest : IDisposable

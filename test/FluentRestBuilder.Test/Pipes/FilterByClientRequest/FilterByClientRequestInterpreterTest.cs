@@ -6,10 +6,10 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Common.Mocks.HttpContextStorage;
     using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Pipes.FilterByClientRequest;
     using FluentRestBuilder.Pipes.FilterByClientRequest.Exceptions;
+    using Mocks.HttpContextStorage;
     using Xunit;
 
     public class FilterByClientRequestInterpreterTest

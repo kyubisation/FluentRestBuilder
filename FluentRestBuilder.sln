@@ -25,8 +25,6 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.Test", "t
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.EntityFrameworkCore.Test", "test\FluentRestBuilder.EntityFrameworkCore.Test\FluentRestBuilder.EntityFrameworkCore.Test.xproj", "{BCD5D0E1-EAE8-4138-A401-1C728C66A768}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.Test.Common", "test\FluentRestBuilder.Test.Common\FluentRestBuilder.Test.Common.xproj", "{7D44DE92-6284-4785-B6D5-29C880BC7A77}"
-EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.HypertextApplicationLanguage", "src\FluentRestBuilder.HypertextApplicationLanguage\FluentRestBuilder.HypertextApplicationLanguage.xproj", "{43C14424-FEC1-4D36-A521-41C0981A891D}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.HypertextApplicationLanguage.Test", "test\FluentRestBuilder.HypertextApplicationLanguage.Test\FluentRestBuilder.HypertextApplicationLanguage.Test.xproj", "{D6F7BB23-3696-4092-BFF1-F86C83535297}"
@@ -34,6 +32,8 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.Caching", "src\FluentRestBuilder.Caching\FluentRestBuilder.Caching.xproj", "{9D2901DB-6066-4B8B-95E2-F1C10E97BE2E}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.Caching.Test", "test\FluentRestBuilder.Caching.Test\FluentRestBuilder.Caching.Test.xproj", "{D29725D4-9FF2-4561-BC8B-1F5A7067D1D6}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.Mocks", "test\FluentRestBuilder.Mocks\FluentRestBuilder.Mocks.xproj", "{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,10 +57,6 @@ Global
 		{BCD5D0E1-EAE8-4138-A401-1C728C66A768}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCD5D0E1-EAE8-4138-A401-1C728C66A768}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCD5D0E1-EAE8-4138-A401-1C728C66A768}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D44DE92-6284-4785-B6D5-29C880BC7A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D44DE92-6284-4785-B6D5-29C880BC7A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D44DE92-6284-4785-B6D5-29C880BC7A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D44DE92-6284-4785-B6D5-29C880BC7A77}.Release|Any CPU.Build.0 = Release|Any CPU
 		{43C14424-FEC1-4D36-A521-41C0981A891D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43C14424-FEC1-4D36-A521-41C0981A891D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43C14424-FEC1-4D36-A521-41C0981A891D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,6 +73,10 @@ Global
 		{D29725D4-9FF2-4561-BC8B-1F5A7067D1D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D29725D4-9FF2-4561-BC8B-1F5A7067D1D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D29725D4-9FF2-4561-BC8B-1F5A7067D1D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,10 +86,10 @@ Global
 		{BC2DFEA2-1BD3-4AA6-A80E-55F2A66D59F1} = {A5FEDE24-9A04-4DEF-B7A0-EC3086FDD55B}
 		{C0B072B7-8184-4957-969A-1FA6D6ABF217} = {6BA317BE-1AB0-4A3E-BE16-1D58061D047E}
 		{BCD5D0E1-EAE8-4138-A401-1C728C66A768} = {6BA317BE-1AB0-4A3E-BE16-1D58061D047E}
-		{7D44DE92-6284-4785-B6D5-29C880BC7A77} = {6BA317BE-1AB0-4A3E-BE16-1D58061D047E}
 		{43C14424-FEC1-4D36-A521-41C0981A891D} = {A5FEDE24-9A04-4DEF-B7A0-EC3086FDD55B}
 		{D6F7BB23-3696-4092-BFF1-F86C83535297} = {6BA317BE-1AB0-4A3E-BE16-1D58061D047E}
 		{9D2901DB-6066-4B8B-95E2-F1C10E97BE2E} = {A5FEDE24-9A04-4DEF-B7A0-EC3086FDD55B}
 		{D29725D4-9FF2-4561-BC8B-1F5A7067D1D6} = {6BA317BE-1AB0-4A3E-BE16-1D58061D047E}
+		{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B} = {6BA317BE-1AB0-4A3E-BE16-1D58061D047E}
 	EndGlobalSection
 EndGlobal

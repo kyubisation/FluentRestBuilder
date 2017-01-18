@@ -9,10 +9,10 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
     using System.Linq;
     using System.Threading.Tasks;
     using FluentRestBuilder.Builder;
-    using FluentRestBuilder.Test.Common.Mocks;
-    using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
+    using Mocks.EntityFramework;
     using Xunit;
 
     public class QueryableSourcePipeTest : IDisposable

@@ -8,10 +8,10 @@ namespace FluentRestBuilder.Test.Pipes.FirstOrDefault
     using System.Linq;
     using System.Threading.Tasks;
     using Builder;
-    using Common.Mocks;
-    using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Sources.Source;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
+    using Mocks.EntityFramework;
     using Xunit;
 
     public class FirstOrDefaultPipeTest : IDisposable

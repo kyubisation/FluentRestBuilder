@@ -4,10 +4,10 @@
 
 namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
 {
-    using Common.Mocks.HttpContextStorage;
     using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Pipes.PaginationByClientRequest;
     using FluentRestBuilder.Pipes.PaginationByClientRequest.Exceptions;
+    using Mocks.HttpContextStorage;
     using Xunit;
 
     public class PaginationByClientRequestInterpreterTest

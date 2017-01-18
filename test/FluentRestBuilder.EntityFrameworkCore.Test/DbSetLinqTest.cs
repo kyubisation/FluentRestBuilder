@@ -6,8 +6,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test
 {
     using System;
     using System.Linq;
-    using FluentRestBuilder.Test.Common.Mocks.EntityFramework;
     using Microsoft.EntityFrameworkCore;
+    using Mocks.EntityFramework;
     using Xunit;
 
     public class DbSetLinqTest : IDisposable

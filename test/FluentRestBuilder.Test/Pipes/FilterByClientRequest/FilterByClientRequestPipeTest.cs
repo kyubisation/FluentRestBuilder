@@ -9,12 +9,12 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
     using System.Linq;
     using System.Threading.Tasks;
     using Builder;
-    using Common.Mocks;
-    using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Pipes.FilterByClientRequest;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
+    using Mocks.EntityFramework;
     using Xunit;
 
     public class FilterByClientRequestPipeTest : IDisposable

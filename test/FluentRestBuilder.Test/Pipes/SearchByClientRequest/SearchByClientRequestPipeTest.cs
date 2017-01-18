@@ -7,11 +7,11 @@ namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
     using System;
     using System.Threading.Tasks;
     using Builder;
-    using Common.Mocks;
-    using Common.Mocks.EntityFramework;
     using FluentRestBuilder.Pipes.SearchByClientRequest;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
+    using Mocks.EntityFramework;
     using Xunit;
 
     public class SearchByClientRequestPipeTest : IDisposable
