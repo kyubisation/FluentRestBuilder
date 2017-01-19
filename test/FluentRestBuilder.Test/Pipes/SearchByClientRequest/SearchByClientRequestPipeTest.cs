@@ -24,7 +24,6 @@ namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
         {
             this.database = new PersistantDatabase();
             var provider = new FluentRestBuilderCore(new ServiceCollection())
-                .RegisterStorage()
                 .RegisterSource()
                 .RegisterSearchByClientRequestPipe()
                 .RegisterMappingPipe()

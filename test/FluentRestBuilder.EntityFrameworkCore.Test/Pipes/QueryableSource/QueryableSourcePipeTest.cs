@@ -24,7 +24,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
         {
             this.database = new PersistantDatabase();
             var provider = new FluentRestBuilderCore(new ServiceCollection())
-                .RegisterStorage()
                 .RegisterSource()
                 .RegisterContext<MockDbContext>()
                 .RegisterQueryableSourcePipe()

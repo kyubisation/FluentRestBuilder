@@ -6,8 +6,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.QueryableSource
 {
     using System;
     using System.Linq;
+    using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class QueryableSourcePipeFactory<TInput, TOutput> :
         IQueryableSourcePipeFactory<TInput, TOutput>

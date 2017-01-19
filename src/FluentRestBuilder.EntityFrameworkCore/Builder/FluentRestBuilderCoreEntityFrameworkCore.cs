@@ -4,6 +4,7 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Builder
 {
+    using FluentRestBuilder.Storage;
     using MetaModel;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;

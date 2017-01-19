@@ -5,13 +5,11 @@
 // ReSharper disable once CheckNamespace
 namespace FluentRestBuilder
 {
-    using System.Linq;
     using Builder;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.AspNetCore.Mvc.Routing;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Storage;
 
     public static partial class Integration
     {
@@ -22,7 +20,7 @@ namespace FluentRestBuilder
             builder.Services.AddFluentRestBuilderCore();
 
         public static IFluentRestBuilderCore AddFluentRestBuilderCore(this IServiceCollection collection) =>
-            new FluentRestBuilderCore(collection).RegisterStorage();
+            new FluentRestBuilderCore(collection);
 
         public static IFluentRestBuilder AddFluentRestBuilder(this IMvcBuilder builder) =>
             builder.Services.AddFluentRestBuilder();
@@ -33,32 +31,22 @@ namespace FluentRestBuilder
         public static IFluentRestBuilder AddFluentRestBuilder(this IServiceCollection collection) =>
             new FluentRestBuilder(collection);
 
-        public static IFluentRestBuilderCore RegisterUrlHelper(this IFluentRestBuilderCore builder)
+        public static IFluentRestBuilderCore UseHttpContextAccessor(this IFluentRestBuilderCore builder)
         {
-            RegisterUrlHelper(builder.Services);
+            UseHttpContextAccessor(builder.Services);
             return builder;
         }
 
-        public static IFluentRestBuilder RegisterUrlHelper(this IFluentRestBuilder builder)
+        public static IFluentRestBuilder UseHttpContextAccessor(this IFluentRestBuilder builder)
         {
-            RegisterUrlHelper(builder.Services);
+            UseHttpContextAccessor(builder.Services);
             return builder;
         }
 
-        private static void RegisterUrlHelper(IServiceCollection services)
+        private static void UseHttpContextAccessor(IServiceCollection services)
         {
-            if (services.Any(d => d.ServiceType == typeof(IUrlHelper)))
-            {
-                return;
-            }
-
-            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.TryAddScoped(serviceProvider =>
-            {
-                var actionContextAccessor = serviceProvider.GetService<IActionContextAccessor>();
-                var urlHelperFactory = serviceProvider.GetService<IUrlHelperFactory>();
-                return urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
-            });
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IScopedStorage<HttpContext>, HttpContextStorage>();
         }
     }
 }

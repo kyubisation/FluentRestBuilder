@@ -5,11 +5,10 @@
 namespace FluentRestBuilder.EntityFrameworkCore.Sources.EntitySource
 {
     using System;
-    using System.Linq;
     using System.Linq.Expressions;
+    using FluentRestBuilder.Storage;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class EntitySourceFactory<TOutput> : IEntitySourceFactory<TOutput>
         where TOutput : class

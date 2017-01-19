@@ -9,9 +9,9 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
     using System.Linq;
     using System.Threading.Tasks;
     using FluentRestBuilder.Pipes;
+    using FluentRestBuilder.Storage;
     using HypertextApplicationLanguage;
     using Links;
-    using Storage;
 
     public class CollectionMappingPipe<TInput, TOutput>
         : MappingPipeBase<IQueryable<TInput>, RestEntityCollection>

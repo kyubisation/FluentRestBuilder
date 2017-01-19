@@ -22,7 +22,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Insertion
         {
             this.database = new PersistantDatabase();
             var provider = new FluentRestBuilderCore(new ServiceCollection())
-                .RegisterStorage()
                 .RegisterSource()
                 .RegisterContext<MockDbContext>()
                 .RegisterInsertionPipe()

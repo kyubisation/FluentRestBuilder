@@ -2,10 +2,10 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore
+namespace FluentRestBuilder.EntityFrameworkCore.Storage
 {
+    using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class DbContextScopedStorage<TContext> : ScopedStorage<DbContext>
         where TContext : DbContext

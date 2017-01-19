@@ -1,4 +1,4 @@
-﻿// <copyright file="FluentRestBuilderExtension.cs" company="Kyubisation">
+﻿// <copyright file="Integration.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -9,12 +9,14 @@ namespace FluentRestBuilder
     using Builder;
     using HypertextApplicationLanguage;
     using HypertextApplicationLanguage.Mapping;
+    using HypertextApplicationLanguage.Storage;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Storage;
 
-    public static class FluentRestBuilderExtension
+    public static partial class Integration
     {
         // ReSharper disable once InconsistentNaming
         public static IFluentRestBuilder AddHAL(
@@ -25,6 +27,20 @@ namespace FluentRestBuilder
             builder.Services.TryAddTransient(typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
             new FluentRestBuilderCore(builder.Services)
                 .RegisterCollectionMappingPipe();
+            return builder;
+        }
+
+        public static IFluentRestBuilder UseActionContextAccessorForUrlHelper(
+            this IFluentRestBuilder builder)
+        {
+            UseActionContextAccessorForUrlHelper(builder.Services);
+            return builder;
+        }
+
+        public static IFluentRestBuilderCore UseActionContextAccessorForUrlHelper(
+            this IFluentRestBuilderCore builder)
+        {
+            UseActionContextAccessorForUrlHelper(builder.Services);
             return builder;
         }
 
@@ -63,6 +79,12 @@ namespace FluentRestBuilder
                     configuration?.Invoke(mapper);
                     return mapper;
                 });
+        }
+
+        private static void UseActionContextAccessorForUrlHelper(IServiceCollection services)
+        {
+            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddScoped<IScopedStorage<IUrlHelper>, UrlHelperStorage>();
         }
     }
 }

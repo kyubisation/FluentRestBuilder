@@ -7,8 +7,8 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
     using System;
     using System.Linq;
     using FluentRestBuilder.Pipes;
+    using FluentRestBuilder.Storage;
     using HypertextApplicationLanguage;
-    using Storage;
 
     public class CollectionMappingPipeFactory<TInput, TOutput> :
         ICollectionMappingPipeFactory<TInput, TOutput>

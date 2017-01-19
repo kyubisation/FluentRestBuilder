@@ -6,10 +6,10 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Deletion
 {
     using System.Threading.Tasks;
     using FluentRestBuilder.Pipes;
+    using FluentRestBuilder.Storage;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class EntityDeletionPipe<TInput> : ActionResultPipe<TInput>
         where TInput : class

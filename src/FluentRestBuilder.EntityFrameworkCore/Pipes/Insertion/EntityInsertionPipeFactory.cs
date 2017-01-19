@@ -4,8 +4,8 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Insertion
 {
+    using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class EntityInsertionPipeFactory<TInput> : IEntityInsertionPipeFactory<TInput>
         where TInput : class

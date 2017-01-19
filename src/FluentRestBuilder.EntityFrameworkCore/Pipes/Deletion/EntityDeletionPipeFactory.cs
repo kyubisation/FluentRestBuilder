@@ -4,8 +4,8 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Deletion
 {
+    using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class EntityDeletionPipeFactory<TInput> : IEntityDeletionPipeFactory<TInput>
         where TInput : class

@@ -6,10 +6,10 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
 {
     using System.Threading.Tasks;
     using FluentRestBuilder.Pipes;
+    using FluentRestBuilder.Storage;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class EntityUpdatePipe<TInput> : ActionResultPipe<TInput>
         where TInput : class

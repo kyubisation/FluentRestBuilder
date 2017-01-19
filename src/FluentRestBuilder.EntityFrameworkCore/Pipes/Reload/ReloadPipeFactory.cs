@@ -4,8 +4,8 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Reload
 {
+    using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class ReloadPipeFactory<TInput> : IReloadPipeFactory<TInput>
         where TInput : class

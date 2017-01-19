@@ -26,7 +26,6 @@ namespace FluentRestBuilder.Test.Pipes.ClaimValidation
         {
             this.principal = new MockPrincipal();
             var provider = new FluentRestBuilderCore(new ServiceCollection())
-                .RegisterStorage()
                 .RegisterClaimValidationPipe()
                 .Services
                 .AddSingleton<IScopedStorage<HttpContext>>(p => new ScopedStorage<HttpContext>

@@ -27,7 +27,6 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         {
             this.database = new PersistantDatabase();
             var provider = new FluentRestBuilderCore(new ServiceCollection())
-                .RegisterStorage()
                 .RegisterSource()
                 .RegisterFilterByClientRequestPipe()
                 .RegisterMappingPipe()

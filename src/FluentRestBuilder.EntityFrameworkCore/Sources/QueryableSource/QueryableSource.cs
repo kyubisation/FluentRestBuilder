@@ -8,8 +8,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
     using System.Linq;
     using System.Threading.Tasks;
     using FluentRestBuilder.Sources;
+    using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class QueryableSource<TEntity> : SourceBase<IQueryable<TEntity>>
         where TEntity : class

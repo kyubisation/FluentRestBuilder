@@ -5,10 +5,10 @@
 namespace FluentRestBuilder.EntityFrameworkCore.MetaModel
 {
     using System;
+    using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata;
     using Microsoft.Extensions.DependencyInjection;
-    using Storage;
 
     public class ModelContainer : IModelContainer
     {

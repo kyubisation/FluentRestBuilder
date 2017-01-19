@@ -8,11 +8,11 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
     using System.Collections.Generic;
     using System.Linq;
     using FluentRestBuilder.Pipes;
+    using FluentRestBuilder.Storage;
     using Links;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.AspNetCore.WebUtilities;
-    using Storage;
 
     public class RestCollectionLinkGenerator : IRestCollectionLinkGenerator
     {

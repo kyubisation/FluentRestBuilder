@@ -6,9 +6,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Reload
 {
     using System.Threading.Tasks;
     using FluentRestBuilder.Pipes;
+    using FluentRestBuilder.Storage;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class ReloadPipe<TInput> : ChainPipe<TInput>
         where TInput : class

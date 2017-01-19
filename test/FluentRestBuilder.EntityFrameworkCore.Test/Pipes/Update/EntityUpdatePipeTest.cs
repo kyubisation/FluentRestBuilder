@@ -22,7 +22,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Update
         {
             this.database = new PersistantDatabase();
             var provider = new FluentRestBuilderCore(new ServiceCollection())
-                .RegisterStorage()
                 .RegisterActionPipe()
                 .RegisterSingleOrDefaultPipe()
                 .RegisterContext<MockDbContext>()

@@ -6,9 +6,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
 {
     using System;
     using System.Linq;
+    using FluentRestBuilder.Storage;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class QueryableSourceFactory<TOutput> : IQueryableSourceFactory<TOutput>
         where TOutput : class

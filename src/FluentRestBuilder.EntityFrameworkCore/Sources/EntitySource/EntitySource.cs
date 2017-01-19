@@ -8,8 +8,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.EntitySource
     using System.Linq.Expressions;
     using System.Threading.Tasks;
     using FluentRestBuilder.Sources;
+    using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class EntitySource<TEntity> : SourceBase<TEntity>
         where TEntity : class

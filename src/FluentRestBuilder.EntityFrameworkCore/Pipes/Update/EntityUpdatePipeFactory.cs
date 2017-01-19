@@ -4,8 +4,8 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
 {
+    using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
-    using Storage;
 
     public class EntityUpdatePipeFactory<TInput> : IEntityUpdatePipeFactory<TInput>
         where TInput : class

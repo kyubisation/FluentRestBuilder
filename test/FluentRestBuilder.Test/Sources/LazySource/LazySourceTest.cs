@@ -39,7 +39,6 @@ namespace FluentRestBuilder.Test.Sources.LazySource
         public async Task TestFromController()
         {
             var provider = new FluentRestBuilderCore(new ServiceCollection())
-                .RegisterStorage()
                 .RegisterLazySource()
                 .Services
                 .BuildServiceProvider();
