@@ -16,7 +16,8 @@ namespace FluentRestBuilder
                 .RegisterDistributedCacheInputStoragePipe()
                 .RegisterMemoryCacheInputStoragePipe()
                 .RegisterDistributedCacheActionResultStoragePipe()
-                .RegisterMemoryCacheActionResultStoragePipe();
+                .RegisterMemoryCacheActionResultStoragePipe()
+                .RegisterMemoryCacheInputBridgePipe();
             return builder;
         }
     }
