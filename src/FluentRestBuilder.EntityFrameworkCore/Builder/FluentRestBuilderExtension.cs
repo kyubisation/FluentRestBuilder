@@ -21,7 +21,8 @@ namespace FluentRestBuilder
                 .RegisterQueryableSourcePipe()
                 .RegisterReloadPipe()
                 .RegisterUpdatePipe()
-                .RegisterQueryableSource();
+                .RegisterQueryableSource()
+                .RegisterEntitySource();
             return builder;
         }
     }
