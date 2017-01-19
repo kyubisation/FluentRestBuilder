@@ -16,6 +16,25 @@ namespace FluentRestBuilder.Mocks.EntityFramework
 
         public MockDbContext Create() => new MockDbContext(this.options);
 
+        public List<MultiKeyEntity> CreateMultiKeyEntities(int amount)
+        {
+            using (var context = this.Create())
+            {
+                var multiKeyEntities = Enumerable.Range(1, amount)
+                    .Select(i => Tuple.Create(i, amount + 1 - i))
+                    .Select(keys => new MultiKeyEntity
+                    {
+                        FirstId = keys.Item1,
+                        SecondId = keys.Item2,
+                        Name = $"Name {keys.Item1} {keys.Item2}"
+                    })
+                    .ToList();
+                multiKeyEntities.ForEach(e => context.Add(e));
+                context.SaveChanges();
+                return multiKeyEntities;
+            }
+        }
+
         public List<Entity> CreateEnumeratedEntities(int amount) =>
             this.CreateEntities(amount, i => CreateEntity(i, $"Name {i}", $"Description {i}"));
 

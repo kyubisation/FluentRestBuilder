@@ -4,6 +4,7 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Builder
 {
+    using MetaModel;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -15,7 +16,11 @@ namespace FluentRestBuilder.EntityFrameworkCore.Builder
         public FluentRestBuilderCoreEntityFrameworkCore(IServiceCollection services)
         {
             this.Services = services;
-            this.Services.TryAddScoped<IScopedStorage<DbContext>, DbContextScopedStorage<TContext>>();
+            this.Services
+                .TryAddScoped<IScopedStorage<DbContext>, DbContextScopedStorage<TContext>>();
+            this.Services.TryAddSingleton<IModelContainer, ModelContainer>();
+            this.Services.TryAddSingleton(
+                typeof(IPredicateBuilder<>), typeof(PredicateBuilder<>));
         }
 
         public IServiceCollection Services { get; }

@@ -5,32 +5,23 @@
 namespace FluentRestBuilder.EntityFrameworkCore.MetaModel
 {
     using System;
-    using System.Collections.Generic;
-    using System.Collections.Immutable;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata;
     using Microsoft.Extensions.DependencyInjection;
+    using Storage;
 
-    public class ModelContainer<TEntity> : IModelContainer<TEntity>
+    public class ModelContainer : IModelContainer
     {
-        public ModelContainer(DbContextOptions contextOptions, IServiceProvider serviceProvider)
+        public ModelContainer(IServiceProvider serviceProvider)
         {
             using (var scope = serviceProvider.CreateScope())
             {
-                var context = (DbContext)scope.ServiceProvider.GetService(contextOptions.ContextType);
-                this.EntityType = context.Model.FindEntityType(typeof(TEntity));
-                this.PrimaryKey = this.EntityType.FindPrimaryKey();
-                this.Properties = this.EntityType.GetProperties().ToImmutableList();
-                this.Navigations = this.EntityType.GetNavigations().ToImmutableList();
+                var context = scope.ServiceProvider
+                    .GetRequiredService<IScopedStorage<DbContext>>();
+                this.Model = context.Value.Model;
             }
         }
 
-        public IEntityType EntityType { get; }
-
-        public IKey PrimaryKey { get; }
-
-        public IReadOnlyCollection<IProperty> Properties { get; }
-
-        public IReadOnlyCollection<INavigation> Navigations { get; }
+        public IModel Model { get; }
     }
 }
