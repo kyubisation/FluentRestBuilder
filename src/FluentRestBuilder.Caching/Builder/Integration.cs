@@ -1,4 +1,4 @@
-﻿// <copyright file="FluentRestBuilderExtension.cs" company="Kyubisation">
+﻿// <copyright file="Integration.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -7,12 +7,14 @@ namespace FluentRestBuilder
 {
     using Builder;
 
-    public static class FluentRestBuilderExtension
+    public static partial class Integration
     {
         public static IFluentRestBuilder AddCachingPipes(
             this IFluentRestBuilder builder)
         {
             new FluentRestBuilderCore(builder.Services)
+                .RegisterDistributedCacheInputStoragePipe()
+                .RegisterMemoryCacheInputStoragePipe()
                 .RegisterInputMemoryCachePipe()
                 .RegisterInputDistributedCachePipe()
                 .RegisterActionResultMemoryCachePipe()
