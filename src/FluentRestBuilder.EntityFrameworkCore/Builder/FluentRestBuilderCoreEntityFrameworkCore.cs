@@ -21,6 +21,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.Builder
             this.Services.TryAddSingleton<IModelContainer, ModelContainer>();
             this.Services.TryAddSingleton(
                 typeof(IPredicateBuilder<>), typeof(PredicateBuilder<>));
+            this.Services.TryAddSingleton(
+                typeof(IPrimaryKeyExpressionFactory<>), typeof(PrimaryKeyExpressionFactory<>));
         }
 
         public IServiceCollection Services { get; }
