@@ -27,7 +27,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
             this.queryableTransformer = queryableTransformer;
         }
 
-        public OutputPipe<RestEntityCollection> Resolve(
+        public OutputPipe<RestEntityCollection> Create(
                 Func<TInput, TOutput> mapping, IOutputPipe<IQueryable<TInput>> parent) =>
             new CollectionMappingPipe<TInput, TOutput>(
                 mapping,

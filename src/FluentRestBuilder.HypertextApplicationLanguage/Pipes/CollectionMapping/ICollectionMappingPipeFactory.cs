@@ -10,7 +10,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
 
     public interface ICollectionMappingPipeFactory<TInput, in TOutput>
     {
-        OutputPipe<RestEntityCollection> Resolve(
+        OutputPipe<RestEntityCollection> Create(
             Func<TInput, TOutput> mapping, IOutputPipe<IQueryable<TInput>> parent);
     }
 }

@@ -24,7 +24,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
             this.serviceProvider = serviceProvider;
         }
 
-        public OutputPipe<IQueryable<TOutput>> Resolve(ControllerBase controller) =>
+        public OutputPipe<IQueryable<TOutput>> Create(ControllerBase controller) =>
             new QueryableSource<TOutput>(this.contextStorage, this.serviceProvider)
             {
                 Controller = controller

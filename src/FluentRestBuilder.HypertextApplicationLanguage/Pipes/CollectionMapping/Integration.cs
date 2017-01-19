@@ -34,7 +34,7 @@ namespace FluentRestBuilder
             where TInput : class
             where TOutput : class =>
             pipe.GetRequiredService<ICollectionMappingPipeFactory<TInput, TOutput>>()
-                .Resolve(mapping, pipe);
+                .Create(mapping, pipe);
 
         public static OutputPipe<RestEntityCollection> UseMapperForCollection<TInput, TOutput>(
             this IOutputPipe<IQueryable<TInput>> pipe,

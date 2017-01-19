@@ -11,7 +11,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.QueryableSource
     public interface IQueryableSourcePipeFactory<TInput, TOutput>
         where TOutput : class
     {
-        QueryableSourcePipe<TInput, TOutput> Resolve(
+        QueryableSourcePipe<TInput, TOutput> Create(
             Func<DbContext, TInput, IQueryable<TOutput>> selection,
             IOutputPipe<TInput> pipe);
     }

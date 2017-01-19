@@ -28,7 +28,7 @@ namespace FluentRestBuilder
             Func<DbContext, TInput, IQueryable<TOutput>> selection)
             where TOutput : class =>
             pipe.GetRequiredService<IQueryableSourcePipeFactory<TInput, TOutput>>()
-                .Resolve(selection, pipe);
+                .Create(selection, pipe);
 
         public static QueryableSourcePipe<TInput, TOutput> SelectQueryableSource<TInput, TOutput>(
             this IOutputPipe<TInput> pipe,

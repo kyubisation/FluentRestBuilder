@@ -9,6 +9,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
 
     public interface IQueryableSourceFactory<TOutput>
     {
-        OutputPipe<IQueryable<TOutput>> Resolve(ControllerBase controller);
+        OutputPipe<IQueryable<TOutput>> Create(ControllerBase controller);
     }
 }

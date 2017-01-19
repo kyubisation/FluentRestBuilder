@@ -17,15 +17,16 @@ namespace FluentRestBuilder
         public static IFluentRestBuilderCoreEntityFrameworkCore RegisterQueryableSource(
             this IFluentRestBuilderCoreEntityFrameworkCore builder)
         {
-            builder.Services.TryAddSingleton(
+            builder.Services.TryAddScoped(
                 typeof(IQueryableSourceFactory<>), typeof(QueryableSourceFactory<>));
             return builder;
         }
 
-        public static OutputPipe<IQueryable<TEntity>> FromQueryable<TEntity>(
+        public static OutputPipe<IQueryable<TEntity>> WithQueryable<TEntity>(
             this ControllerBase controller)
             where TEntity : class =>
-            controller.HttpContext.RequestServices.GetService<IQueryableSourceFactory<TEntity>>()
-                .Resolve(controller);
+            controller.HttpContext.RequestServices
+                .GetService<IQueryableSourceFactory<TEntity>>()
+                .Create(controller);
     }
 }

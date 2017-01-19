@@ -20,7 +20,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.QueryableSource
             this.contextStorage = contextStorage;
         }
 
-        public QueryableSourcePipe<TInput, TOutput> Resolve(
+        public QueryableSourcePipe<TInput, TOutput> Create(
             Func<DbContext, TInput, IQueryable<TOutput>> selection, IOutputPipe<TInput> pipe) =>
             new QueryableSourcePipe<TInput, TOutput>(selection, this.contextStorage, pipe);
     }

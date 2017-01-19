@@ -36,7 +36,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.SingleOrDefault
         public async Task TestParamsResolution()
         {
             var entity = this.database.CreateEnumeratedEntities(3).First();
-            var result = await this.controller.FromQueryable<Entity>()
+            var result = await this.controller.WithQueryable<Entity>()
                 .SingleOrDefault(entity.Id)
                 .ToObjectResultOrDefault();
             Assert.Equal(entity, result, new PropertyComparer<Entity>());
@@ -45,7 +45,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.SingleOrDefault
         [Fact]
         public void TestKeyMismatch()
         {
-            var pipe = this.controller.FromQueryable<Entity>();
+            var pipe = this.controller.WithQueryable<Entity>();
             Assert.Throws<PrimaryKeyMismatchException>(() => pipe.SingleOrDefault(1, 2));
         }
     }

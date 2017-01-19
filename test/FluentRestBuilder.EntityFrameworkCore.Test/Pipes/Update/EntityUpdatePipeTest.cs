@@ -46,7 +46,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Update
             var entity = this.database.CreateEnumeratedEntities(3).First();
             Assert.NotEqual(newName, entity.Name);
 
-            var result = await this.controller.FromQueryable<Entity>()
+            var result = await this.controller.WithQueryable<Entity>()
                 .SingleOrDefault(e => e.Id == entity.Id)
                 .Do(e => e.Name = newName)
                 .UpdateEntity()

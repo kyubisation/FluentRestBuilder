@@ -43,7 +43,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Deletion
         {
             var entities = this.database.CreateEnumeratedEntities(10);
             var entity = entities.First();
-            var result = await this.controller.FromQueryable<Entity>()
+            var result = await this.controller.WithQueryable<Entity>()
                 .SingleOrDefault(e => e.Id == entity.Id)
                 .DeleteEntity()
                 .ToObjectResultOrDefault();
