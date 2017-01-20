@@ -6,6 +6,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Mapping
 {
     using System;
     using System.Collections.Generic;
+    using FluentRestBuilder.Storage;
     using HypertextApplicationLanguage;
     using Links;
     using Microsoft.AspNetCore.Mvc;
@@ -15,14 +16,17 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Mapping
     {
         private readonly IDictionary<string, object> embeddedResources = new Dictionary<string, object>();
         private readonly Func<TInput, TOutput> mapping;
+        private readonly ILinkAggregator linkAggregator;
         private readonly IUrlHelper urlHelper;
 
         public RestMapper(
             Func<TInput, TOutput> mapping,
-            IUrlHelper urlHelper)
+            IScopedStorage<IUrlHelper> urlHelper,
+            ILinkAggregator linkAggregator)
         {
             this.mapping = mapping;
-            this.urlHelper = urlHelper;
+            this.linkAggregator = linkAggregator;
+            this.urlHelper = urlHelper.Value;
         }
 
         public TOutput Map(TInput source)
@@ -37,11 +41,8 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Mapping
             return target;
         }
 
-        IMapper<TInput, TOutput> IMapper<TInput, TOutput>.Embed(string name, object value)
-        {
-            this.embeddedResources.Add(name, value);
-            return this;
-        }
+        IMapper<TInput, TOutput> IMapper<TInput, TOutput>.Embed(string name, object value) =>
+            this.Embed(name, value);
 
         public RestMapper<TInput, TOutput> Embed(string name, object value)
         {
@@ -64,7 +65,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Mapping
             ILinkGenerator<TInput> generator, TInput source)
         {
             var links = generator.GenerateLinks(this.urlHelper, source);
-            return NamedLink.BuildLinks(links);
+            return this.linkAggregator.BuildLinks(links);
         }
     }
 }

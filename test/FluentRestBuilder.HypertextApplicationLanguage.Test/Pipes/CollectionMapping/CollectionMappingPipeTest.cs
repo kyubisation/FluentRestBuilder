@@ -10,8 +10,8 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
     using System.Threading.Tasks;
     using Builder;
     using FluentRestBuilder.Pipes;
+    using HypertextApplicationLanguage.Links;
     using HypertextApplicationLanguage.Pipes.CollectionMapping;
-    using Links;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;
     using Mocks.EntityFramework;

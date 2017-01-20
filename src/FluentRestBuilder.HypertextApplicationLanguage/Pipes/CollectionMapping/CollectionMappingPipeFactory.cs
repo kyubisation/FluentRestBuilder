@@ -9,20 +9,24 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
     using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Storage;
     using HypertextApplicationLanguage;
+    using Links;
 
     public class CollectionMappingPipeFactory<TInput, TOutput> :
         ICollectionMappingPipeFactory<TInput, TOutput>
     {
         private readonly IRestCollectionLinkGenerator linkGenerator;
+        private readonly ILinkAggregator linkAggregator;
         private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
         private readonly IQueryableTransformer<TInput> queryableTransformer;
 
         public CollectionMappingPipeFactory(
             IRestCollectionLinkGenerator linkGenerator,
+            ILinkAggregator linkAggregator,
             IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
             IQueryableTransformer<TInput> queryableTransformer)
         {
             this.linkGenerator = linkGenerator;
+            this.linkAggregator = linkAggregator;
             this.paginationMetaInfoStorage = paginationMetaInfoStorage;
             this.queryableTransformer = queryableTransformer;
         }
@@ -32,6 +36,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
             new CollectionMappingPipe<TInput, TOutput>(
                 mapping,
                 this.linkGenerator,
+                this.linkAggregator,
                 this.paginationMetaInfoStorage,
                 this.queryableTransformer,
                 parent);

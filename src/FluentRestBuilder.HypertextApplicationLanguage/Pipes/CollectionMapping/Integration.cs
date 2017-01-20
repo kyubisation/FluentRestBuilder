@@ -9,6 +9,7 @@ namespace FluentRestBuilder
     using System.Linq;
     using Builder;
     using HypertextApplicationLanguage;
+    using HypertextApplicationLanguage.Links;
     using HypertextApplicationLanguage.Mapping;
     using HypertextApplicationLanguage.Pipes.CollectionMapping;
     using Microsoft.Extensions.DependencyInjection;
@@ -20,10 +21,14 @@ namespace FluentRestBuilder
         public static IFluentRestBuilderCore RegisterCollectionMappingPipe(
             this IFluentRestBuilderCore builder)
         {
+            builder.Services.TryAddSingleton<ILinkAggregator, LinkAggregator>();
+            builder.Services.TryAddScoped<IMapperFactory, MapperFactory>();
+            builder.Services.TryAddScoped(typeof(IMapperFactory<>), typeof(MapperFactory<>));
+            builder.Services.TryAddTransient(typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
             builder.Services.TryAddScoped(
                 typeof(ICollectionMappingPipeFactory<,>), typeof(CollectionMappingPipeFactory<,>));
-            builder.Services.TryAddScoped<
-                IRestCollectionLinkGenerator, RestCollectionLinkGenerator>();
+            builder.Services
+                .TryAddScoped<IRestCollectionLinkGenerator, RestCollectionLinkGenerator>();
             builder.Services.TryAddSingleton(
                 typeof(IQueryableTransformer<>), typeof(QueryableTransformer<>));
             return builder;

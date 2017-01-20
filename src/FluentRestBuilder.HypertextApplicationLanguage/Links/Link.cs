@@ -18,7 +18,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Links
         public string Href { get; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public bool Templated { get; set; }
+        public bool? Templated { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }

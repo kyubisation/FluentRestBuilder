@@ -17,6 +17,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
         : MappingPipeBase<IQueryable<TInput>, RestEntityCollection>
     {
         private readonly IRestCollectionLinkGenerator linkGenerator;
+        private readonly ILinkAggregator linkAggregator;
         private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
         private readonly IQueryableTransformer<TInput> queryableTransformer;
         private readonly Func<TInput, TOutput> mapping;
@@ -25,6 +26,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
         public CollectionMappingPipe(
             Func<TInput, TOutput> mapping,
             IRestCollectionLinkGenerator linkGenerator,
+            ILinkAggregator linkAggregator,
             IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
             IQueryableTransformer<TInput> queryableTransformer,
             IOutputPipe<IQueryable<TInput>> parent)
@@ -32,6 +34,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
         {
             this.mapping = mapping;
             this.linkGenerator = linkGenerator;
+            this.linkAggregator = linkAggregator;
             this.paginationMetaInfoStorage = paginationMetaInfoStorage;
             this.queryableTransformer = queryableTransformer;
         }
@@ -58,7 +61,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
         private void GenerateLinks()
         {
             var links = this.linkGenerator.GenerateLinks(this.paginationMetaInfoStorage.Value);
-            this.restEntityCollection.Links = NamedLink.BuildLinks(links);
+            this.restEntityCollection.Links = this.linkAggregator.BuildLinks(links);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace FluentRestBuilder
     using System;
     using Builder;
     using HypertextApplicationLanguage;
+    using HypertextApplicationLanguage.Links;
     using HypertextApplicationLanguage.Mapping;
     using HypertextApplicationLanguage.Storage;
     using Microsoft.AspNetCore.Mvc;
@@ -22,9 +23,6 @@ namespace FluentRestBuilder
         public static IFluentRestBuilder AddHAL(
             this IFluentRestBuilder builder)
         {
-            builder.Services.TryAddScoped<IMapperFactory, MapperFactory>();
-            builder.Services.TryAddScoped(typeof(IMapperFactory<>), typeof(MapperFactory<>));
-            builder.Services.TryAddTransient(typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
             new FluentRestBuilderCore(builder.Services)
                 .RegisterCollectionMappingPipe();
             return builder;
@@ -70,12 +68,17 @@ namespace FluentRestBuilder
             Action<RestMapper<TInput, TOutput>> configuration)
             where TOutput : RestEntity
         {
+            services.TryAddSingleton<ILinkAggregator, LinkAggregator>();
+            services.TryAddScoped<IMapperFactory, MapperFactory>();
+            services.TryAddScoped(typeof(IMapperFactory<>), typeof(MapperFactory<>));
+            services.TryAddTransient(typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
             services.AddScoped<IMapper<TInput, TOutput>>(
                 serviceProvider =>
                 {
-                    var urlHelper = serviceProvider.GetService<IScopedStorage<IUrlHelper>>()?.Value
-                        ?? serviceProvider.GetService<IUrlHelper>();
-                    var mapper = new RestMapper<TInput, TOutput>(mapping, urlHelper);
+                    var urlHelper = serviceProvider.GetService<IScopedStorage<IUrlHelper>>();
+                    var linkAggregator = serviceProvider.GetService<ILinkAggregator>();
+                    var mapper = new RestMapper<TInput, TOutput>(
+                        mapping, urlHelper, linkAggregator);
                     configuration?.Invoke(mapper);
                     return mapper;
                 });
