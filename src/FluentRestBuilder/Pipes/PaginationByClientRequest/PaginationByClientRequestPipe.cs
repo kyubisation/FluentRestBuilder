@@ -4,6 +4,7 @@
 
 namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Exceptions;
@@ -26,6 +27,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
             : base(parent)
         {
             this.options = options ?? new PaginationOptions();
+            this.AssertValidOptions();
             this.interpreter = interpreter;
             this.paginationMetaInfoStorage = paginationMetaInfoStorage;
             this.queryableTransformer = queryableTransformer;
@@ -56,6 +58,16 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
             return input
                 .Skip(paginationValues.PageOffset)
                 .Take(paginationValues.EntriesPerPage);
+        }
+
+        private void AssertValidOptions()
+        {
+            if (this.options.MaxEntriesPerPage < this.options.DefaultEntriesPerPage)
+            {
+                throw new InvalidOperationException(
+                    $"${nameof(PaginationOptions.MaxEntriesPerPage)} must not be " +
+                    $"smaller than ${nameof(PaginationOptions.DefaultEntriesPerPage)}!");
+            }
         }
 
         private int ResolveEntriesPerPage(PaginationRequest request)
