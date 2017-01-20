@@ -6,21 +6,16 @@ namespace FluentRestBuilder.Results.Options
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.AspNetCore.Http;
-    using Storage;
 
     public class OptionsResultFactory<TInput> : IOptionsResultFactory<TInput>
         where TInput : class
     {
         private readonly IHttpVerbMap httpVerbMap;
-        private readonly IScopedStorage<HttpContext> httpContextStorage;
 
         public OptionsResultFactory(
-            IHttpVerbMap httpVerbMap,
-            IScopedStorage<HttpContext> httpContextStorage)
+            IHttpVerbMap httpVerbMap)
         {
             this.httpVerbMap = httpVerbMap;
-            this.httpContextStorage = httpContextStorage;
         }
 
         public ResultBase<TInput> Create(
@@ -29,7 +24,6 @@ namespace FluentRestBuilder.Results.Options
             new OptionsResult<TInput>(
                 verbGeneration,
                 this.httpVerbMap,
-                this.httpContextStorage,
                 parent);
     }
 }
