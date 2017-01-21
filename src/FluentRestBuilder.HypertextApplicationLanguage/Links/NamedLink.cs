@@ -4,9 +4,6 @@
 
 namespace FluentRestBuilder.HypertextApplicationLanguage.Links
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     public class NamedLink
     {
         public NamedLink(string name, Link link)
