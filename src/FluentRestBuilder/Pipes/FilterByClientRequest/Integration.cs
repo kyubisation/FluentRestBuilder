@@ -26,10 +26,6 @@ namespace FluentRestBuilder
             builder.Services.TryAddScoped<
                 IFilterByClientRequestInterpreter, FilterByClientRequestInterpreter>();
             builder.Services.TryAddSingleton<IQueryArgumentKeys, QueryArgumentKeys>();
-            builder.Services.TryAddTransient(
-                typeof(IFilterExpressionBuilder<>), typeof(FilterExpressionBuilder<>));
-            builder.Services.TryAddTransient(
-                typeof(IFilterExpressionProviderBuilder<>), typeof(FilterExpressionProviderBuilder<>));
             return builder;
         }
 
@@ -41,10 +37,12 @@ namespace FluentRestBuilder
 
         public static OutputPipe<IQueryable<TInput>> ApplyFilterByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
-                Func<IFilterExpressionBuilder<TInput>, IFilterExpressionBuilder<TInput>> builder)
+                Func<
+                    FilterExpressionProviderDictionary<TInput>,
+                    IDictionary<string, IFilterExpressionProvider<TInput>>> builder)
         {
-            var filterExpressionBuilder = pipe.GetService<IFilterExpressionBuilder<TInput>>();
-            return pipe.ApplyFilterByClientRequest(builder(filterExpressionBuilder).Build());
+            var dictionary = builder(new FilterExpressionProviderDictionary<TInput>());
+            return pipe.ApplyFilterByClientRequest(dictionary);
         }
     }
 }
