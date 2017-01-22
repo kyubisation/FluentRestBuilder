@@ -46,7 +46,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Mapping
 
         public RestMapper<TInput, TOutput> Embed(string name, object value)
         {
-            this.embeddedResources.Add(name, value);
+            this.embeddedResources[name] = value;
             return this;
         }
 

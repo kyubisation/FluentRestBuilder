@@ -69,9 +69,7 @@ namespace FluentRestBuilder
             where TOutput : RestEntity
         {
             services.TryAddSingleton<ILinkAggregator, LinkAggregator>();
-            services.TryAddScoped<IMapperFactory, MapperFactory>();
-            services.TryAddScoped(typeof(IMapperFactory<>), typeof(MapperFactory<>));
-            services.TryAddTransient(typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
+            services.RegisterMappingServices();
             services.AddScoped<IMapper<TInput, TOutput>>(
                 serviceProvider =>
                 {

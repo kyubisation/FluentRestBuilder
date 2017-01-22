@@ -8,13 +8,13 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Builder;
+    using FluentRestBuilder.Builder;
+    using FluentRestBuilder.Mocks;
+    using FluentRestBuilder.Mocks.EntityFramework;
     using FluentRestBuilder.Pipes;
     using HypertextApplicationLanguage.Links;
     using HypertextApplicationLanguage.Pipes.CollectionMapping;
     using Microsoft.Extensions.DependencyInjection;
-    using Mocks;
-    using Mocks.EntityFramework;
     using Xunit;
 
     public class CollectionMappingPipeTest : IDisposable

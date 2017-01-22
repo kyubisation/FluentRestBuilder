@@ -5,12 +5,12 @@
 namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Mapping
 {
     using System.Collections.Generic;
+    using FluentRestBuilder.Mocks;
+    using FluentRestBuilder.Mocks.EntityFramework;
     using FluentRestBuilder.Storage;
     using HypertextApplicationLanguage.Links;
     using HypertextApplicationLanguage.Mapping;
     using Microsoft.AspNetCore.Mvc;
-    using Mocks;
-    using Mocks.EntityFramework;
     using Xunit;
 
     public class RestMapperTest

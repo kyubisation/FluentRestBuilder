@@ -22,9 +22,7 @@ namespace FluentRestBuilder
             this IFluentRestBuilderCore builder)
         {
             builder.Services.TryAddSingleton<ILinkAggregator, LinkAggregator>();
-            builder.Services.TryAddScoped<IMapperFactory, MapperFactory>();
-            builder.Services.TryAddScoped(typeof(IMapperFactory<>), typeof(MapperFactory<>));
-            builder.Services.TryAddTransient(typeof(IMappingBuilder<>), typeof(MappingBuilder<>));
+            builder.Services.RegisterMappingServices();
             builder.Services.TryAddScoped(
                 typeof(ICollectionMappingPipeFactory<,>), typeof(CollectionMappingPipeFactory<,>));
             builder.Services
