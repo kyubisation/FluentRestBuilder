@@ -139,5 +139,15 @@ namespace FluentRestBuilder
             object error = null)
             where TEntity : class =>
             InvalidWhen(pipe, invalidCheck, StatusCodes.Status410Gone, error);
+
+        public static OutputPipe<TInput> GoneWhen<TInput>(
+            this IOutputPipe<TInput> pipe, Func<bool> invalidCheck, object error = null)
+            where TInput : class =>
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status410Gone, error);
+
+        public static OutputPipe<TInput> GoneWhen<TInput>(
+            this IOutputPipe<TInput> pipe, Func<Task<bool>> invalidCheck, object error = null)
+            where TInput : class =>
+            InvalidWhen(pipe, invalidCheck, StatusCodes.Status410Gone, error);
     }
 }
