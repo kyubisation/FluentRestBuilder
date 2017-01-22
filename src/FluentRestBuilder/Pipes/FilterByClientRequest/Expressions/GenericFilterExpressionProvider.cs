@@ -33,12 +33,19 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
             }
         }
 
-        public Expression<Func<TEntity, bool>> TryResolve(FilterType type, string filter)
+        private Expression<Func<TEntity, bool>> TryResolve(FilterType type, string filter)
         {
-            var filterValue = this.conversion(filter);
-            var dictionary = this.filterBuilder(filterValue);
-            Expression<Func<TEntity, bool>> filterExpression;
-            return dictionary.TryGetValue(type, out filterExpression) ? filterExpression : null;
+            try
+            {
+                var filterValue = this.conversion(filter);
+                var dictionary = this.filterBuilder(filterValue);
+                Expression<Func<TEntity, bool>> filterExpression;
+                return dictionary.TryGetValue(type, out filterExpression) ? filterExpression : null;
+            }
+            catch (Exception) when (!this.filterBuilder(default(TFilter)).ContainsKey(type))
+            {
+                return null;
+            }
         }
     }
 }
