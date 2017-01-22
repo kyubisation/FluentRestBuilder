@@ -42,7 +42,14 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputStorage
         {
             var cacheBytes = this.byteMapper.ToByteArray(input);
             var options = this.optionGenerator?.Invoke(input);
-            await this.distributedCache.SetAsync(this.key, cacheBytes, options);
+            if (options == null)
+            {
+                await this.distributedCache.SetAsync(this.key, cacheBytes);
+            }
+            else
+            {
+                await this.distributedCache.SetAsync(this.key, cacheBytes, options);
+            }
         }
     }
 }
