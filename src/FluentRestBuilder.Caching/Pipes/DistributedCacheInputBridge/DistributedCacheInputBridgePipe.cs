@@ -43,7 +43,6 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputBridge
             }
             catch (MappingException)
             {
-                await this.distributedCache.RemoveAsync(this.key);
                 return await base.Execute();
             }
         }
