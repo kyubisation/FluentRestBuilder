@@ -19,6 +19,7 @@ namespace FluentRestBuilder.Caching.Test.Pipes.DistributedCacheInputBridge
 
     public class DistributedCacheInputBridgePipeTest
     {
+        private const string Key = "key";
         private readonly IServiceProvider provider;
         private readonly MemoryDistributedCache cache =
             new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions()));
@@ -35,10 +36,9 @@ namespace FluentRestBuilder.Caching.Test.Pipes.DistributedCacheInputBridge
         [Fact]
         public async Task TestNoCacheEntryAvailable()
         {
-            const string key = "key";
             var lazyEntity = new Lazy<Entity>(() => new Entity { Id = 1 });
             var result = await new LazySource<Entity>(() => lazyEntity.Value, this.provider)
-                .BridgeIfInputAvailableInDistributedCache(key)
+                .BridgeIfInputAvailableInDistributedCache(Key)
                 .ToObjectResultOrDefault();
             Assert.True(lazyEntity.IsValueCreated);
             Assert.Same(lazyEntity.Value, result);
@@ -47,14 +47,13 @@ namespace FluentRestBuilder.Caching.Test.Pipes.DistributedCacheInputBridge
         [Fact]
         public async Task TestCacheEntryAvailable()
         {
-            const string key = "key";
             var entity = new Entity { Id = 1 };
             var mapper = this.provider.GetService<IByteMapper<Entity>>();
-            await this.cache.SetAsync(key, mapper.ToByteArray(entity));
+            await this.cache.SetAsync(Key, mapper.ToByteArray(entity));
 
             var lazyEntity = new Lazy<Entity>(() => entity);
             var result = await new LazySource<Entity>(() => lazyEntity.Value, this.provider)
-                .BridgeIfInputAvailableInDistributedCache(key)
+                .BridgeIfInputAvailableInDistributedCache(Key)
                 .ToObjectResultOrDefault();
             Assert.False(lazyEntity.IsValueCreated);
             Assert.Equal(entity, result, new PropertyComparer<Entity>());
@@ -63,15 +62,14 @@ namespace FluentRestBuilder.Caching.Test.Pipes.DistributedCacheInputBridge
         [Fact]
         public async Task TestFaultyCacheEntryAvailable()
         {
-            const string key = "key";
             var entity = new Entity { Id = 1 };
             var mapper = this.provider.GetService<IByteMapper<Entity>>();
             var bytes = mapper.ToByteArray(entity);
-            await this.cache.SetAsync(key, bytes.Take(bytes.Length / 2).ToArray());
+            await this.cache.SetAsync(Key, bytes.Take(bytes.Length / 2).ToArray());
 
             var lazyEntity = new Lazy<Entity>(() => entity);
             var result = await new LazySource<Entity>(() => lazyEntity.Value, this.provider)
-                .BridgeIfInputAvailableInDistributedCache(key)
+                .BridgeIfInputAvailableInDistributedCache(Key)
                 .ToObjectResultOrDefault();
             Assert.True(lazyEntity.IsValueCreated);
             Assert.Same(lazyEntity.Value, result);
