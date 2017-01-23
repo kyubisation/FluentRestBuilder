@@ -5,6 +5,7 @@
 namespace FluentRestBuilder.Caching.Pipes.MemoryCacheActionResultStorage
 {
     using System;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
 
     public class MemoryCacheActionResultStoragePipeFactory<TInput> : IMemoryCacheActionResultStoragePipeFactory<TInput>
@@ -17,10 +18,10 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheActionResultStorage
         }
 
         public OutputPipe<TInput> Create(
-            object key,
-            Action<ICacheEntry, TInput> cacheConfigurationCallback,
-            IOutputPipe<TInput> pipe) =>
-            new MemoryCacheInputStorage.MemoryCacheInputStoragePipe<TInput>(
-                key, cacheConfigurationCallback, this.memoryCache, pipe);
+                object key,
+                Func<TInput, IActionResult, MemoryCacheEntryOptions> optionFactory,
+                IOutputPipe<TInput> pipe) =>
+            new MemoryCacheActionResultStoragePipe<TInput>(
+                key, optionFactory, this.memoryCache, pipe);
     }
 }

@@ -8,6 +8,7 @@ namespace FluentRestBuilder
     using System;
     using Builder;
     using Caching.Pipes.MemoryCacheActionResultStorage;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -26,28 +27,28 @@ namespace FluentRestBuilder
         public static OutputPipe<TInput> StoreActionResultInMemoryCache<TInput>(
             this IOutputPipe<TInput> pipe,
             object key,
-            Action<ICacheEntry, TInput> cacheConfigurationCallback)
+            Func<TInput, IActionResult, MemoryCacheEntryOptions> optionFactory)
             where TInput : class =>
             pipe.GetRequiredService<IMemoryCacheActionResultStoragePipeFactory<TInput>>()
-                .Create(key, cacheConfigurationCallback, pipe);
+                .Create(key, optionFactory, pipe);
 
         public static OutputPipe<TInput> StoreActionResultInMemoryCache<TInput>(
             this IOutputPipe<TInput> pipe,
             object key,
-            Action<ICacheEntry> cacheConfigurationCallback)
+            Func<IActionResult, MemoryCacheEntryOptions> optionFactory)
             where TInput : class =>
-            pipe.StoreActionResultInMemoryCache(key, (e, i) => cacheConfigurationCallback(e));
+            pipe.StoreActionResultInMemoryCache(key, (i, r) => optionFactory(r));
 
         public static OutputPipe<TInput> StoreActionResultInMemoryCache<TInput>(
             this IOutputPipe<TInput> pipe,
             object key,
             MemoryCacheEntryOptions options)
             where TInput : class =>
-            pipe.StoreActionResultInMemoryCache(key, e => e.SetOptions(options));
+            pipe.StoreActionResultInMemoryCache(key, (i, r) => options);
 
         public static OutputPipe<TInput> StoreActionResultInMemoryCache<TInput>(
             this IOutputPipe<TInput> pipe, object key)
             where TInput : class =>
-            pipe.StoreActionResultInMemoryCache(key, (Action<ICacheEntry, TInput>)null);
+            pipe.StoreActionResultInMemoryCache(key, (MemoryCacheEntryOptions)null);
     }
 }
