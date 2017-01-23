@@ -13,18 +13,18 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputStorage
     public class MemoryCacheInputStoragePipe<TInput> : ChainPipe<TInput>
     {
         private readonly object key;
-        private readonly Action<ICacheEntry, TInput> cacheConfigurationCallback;
+        private readonly Func<TInput, MemoryCacheEntryOptions> optionsFactory;
         private readonly IMemoryCache memoryCache;
 
         public MemoryCacheInputStoragePipe(
             object key,
-            Action<ICacheEntry, TInput> cacheConfigurationCallback,
+            Func<TInput, MemoryCacheEntryOptions> optionsFactory,
             IMemoryCache memoryCache,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
             this.key = key;
-            this.cacheConfigurationCallback = cacheConfigurationCallback;
+            this.optionsFactory = optionsFactory;
             this.memoryCache = memoryCache;
         }
 
@@ -36,9 +36,8 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputStorage
 
         private void StoreInCache(TInput input)
         {
-            var cacheEntry = this.memoryCache.CreateEntry(this.key);
-            cacheEntry.Value = input;
-            this.cacheConfigurationCallback?.Invoke(cacheEntry, input);
+            var options = this.optionsFactory?.Invoke(input);
+            this.memoryCache.Set(this.key, input, options);
         }
     }
 }

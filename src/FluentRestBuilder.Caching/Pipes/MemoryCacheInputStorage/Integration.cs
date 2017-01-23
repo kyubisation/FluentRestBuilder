@@ -18,35 +18,27 @@ namespace FluentRestBuilder
             this IFluentRestBuilderCore builder)
         {
             builder.Services.TryAddScoped(
-                typeof(IMemoryCacheInputStoragePipeFactory<>), typeof(MemoryCacheInputStoragePipeFactory<>));
+                typeof(IMemoryCacheInputStoragePipeFactory<>),
+                typeof(MemoryCacheInputStoragePipeFactory<>));
             return builder;
         }
 
         public static OutputPipe<TInput> StoreInputInMemoryCache<TInput>(
             this IOutputPipe<TInput> pipe,
             object key,
-            Action<ICacheEntry, TInput> cacheConfigurationCallback)
+            Func<TInput, MemoryCacheEntryOptions> optionsFactory)
             where TInput : class =>
             pipe.GetRequiredService<IMemoryCacheInputStoragePipeFactory<TInput>>()
-                .Create(key, cacheConfigurationCallback, pipe);
+                .Create(key, optionsFactory, pipe);
 
         public static OutputPipe<TInput> StoreInputInMemoryCache<TInput>(
-            this IOutputPipe<TInput> pipe,
-            object key,
-            Action<ICacheEntry> cacheConfigurationCallback)
+            this IOutputPipe<TInput> pipe, object key, MemoryCacheEntryOptions options)
             where TInput : class =>
-            pipe.StoreInputInMemoryCache(key, (e, i) => cacheConfigurationCallback(e));
-
-        public static OutputPipe<TInput> StoreInputInMemoryCache<TInput>(
-            this IOutputPipe<TInput> pipe,
-            object key,
-            MemoryCacheEntryOptions options)
-            where TInput : class =>
-            pipe.StoreInputInMemoryCache(key, e => e.SetOptions(options));
+            pipe.StoreInputInMemoryCache(key, e => options);
 
         public static OutputPipe<TInput> StoreInputInMemoryCache<TInput>(
             this IOutputPipe<TInput> pipe, object key)
             where TInput : class =>
-            pipe.StoreInputInMemoryCache(key, (Action<ICacheEntry, TInput>)null);
+            pipe.StoreInputInMemoryCache(key, (MemoryCacheEntryOptions)null);
     }
 }

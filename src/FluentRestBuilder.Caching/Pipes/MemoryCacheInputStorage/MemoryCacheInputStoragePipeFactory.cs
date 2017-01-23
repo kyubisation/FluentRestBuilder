@@ -18,9 +18,9 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputStorage
 
         public OutputPipe<TInput> Create(
             object key,
-            Action<ICacheEntry, TInput> cacheConfigurationCallback,
+            Func<TInput, MemoryCacheEntryOptions> optionsFactory,
             IOutputPipe<TInput> pipe) =>
             new MemoryCacheInputStoragePipe<TInput>(
-                key, cacheConfigurationCallback, this.memoryCache, pipe);
+                key, optionsFactory, this.memoryCache, pipe);
     }
 }
