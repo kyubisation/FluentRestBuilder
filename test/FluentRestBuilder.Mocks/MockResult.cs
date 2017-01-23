@@ -28,18 +28,5 @@ namespace FluentRestBuilder.Mocks
             Task.FromResult((IActionResult)new MockActionResult(input));
 
         public Task<IActionResult> Execute() => this.parent.Execute();
-
-        private class MockActionResult : ObjectResult
-        {
-            public MockActionResult(object value)
-                : base(value)
-            {
-            }
-
-            public override Task ExecuteResultAsync(ActionContext context)
-            {
-                throw new NotImplementedException();
-            }
-        }
     }
 }
