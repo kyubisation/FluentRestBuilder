@@ -14,11 +14,9 @@ namespace FluentRestBuilder
         {
             new FluentRestBuilderCore(builder.Services)
                 .RegisterDistributedCacheInputStoragePipe()
-                .RegisterMemoryCacheInputStoragePipe()
-                .RegisterMemoryCacheActionResultStoragePipe()
                 .RegisterDistributedCacheInputBridgePipe()
-                .RegisterMemoryCacheInputBridgePipe()
-                .RegisterMemoryCacheActionResultBridgePipe();
+                .RegisterMemoryCacheInputStoragePipe()
+                .RegisterMemoryCacheInputBridgePipe();
             return builder;
         }
     }
