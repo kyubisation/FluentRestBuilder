@@ -6,26 +6,24 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test
 {
     using System;
     using System.Linq;
-    using Microsoft.EntityFrameworkCore;
     using Mocks.EntityFramework;
     using Xunit;
 
     public class DbSetLinqTest : IDisposable
     {
-        private readonly DbContextOptions<MockDbContext> options;
+        private readonly PersistantDatabase database;
         private MockDbContext context;
 
         public DbSetLinqTest()
         {
-            this.options = MockDbContext.ConfigureInMemoryContextOptions();
-
-            this.context = new MockDbContext(this.options);
+            this.database = new PersistantDatabase();
+            this.context = this.database.Create();
         }
 
         [Fact]
         public void TestTakeOrderFilter()
         {
-            MockDbContext.CreateEntities(this.options);
+            this.database.CreateEnumeratedEntities(10);
             var result = this.context.Entities
                 .Take(5)
                 .OrderByDescending(e => e.Id)
@@ -37,7 +35,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test
         [Fact]
         public void TestOrderByOverwrite()
         {
-            using (var localContext = new MockDbContext(this.options))
+            using (var localContext = this.database.Create())
             {
                 localContext.Add(new Entity { Id = 1, Name = "za" });
                 localContext.Add(new Entity { Id = 2, Name = "za" });

@@ -44,24 +44,6 @@ namespace FluentRestBuilder.Mocks.EntityFramework
                    .Options;
         }
 
-        public static void CreateEntities(DbContextOptions<MockDbContext> options)
-        {
-            using (var context = new MockDbContext(options))
-            {
-                context.Entities.AddRange(Entity.Entities);
-                context.SaveChanges();
-            }
-        }
-
-        public static void CreateMultiKeyEntities(DbContextOptions<MockDbContext> options)
-        {
-            using (var context = new MockDbContext(options))
-            {
-                context.MultiKeyEntities.AddRange(MultiKeyEntity.Entities);
-                context.SaveChanges();
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

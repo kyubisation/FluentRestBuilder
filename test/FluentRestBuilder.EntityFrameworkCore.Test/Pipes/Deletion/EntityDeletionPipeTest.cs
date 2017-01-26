@@ -49,7 +49,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Deletion
             Assert.Equal(entity.Id, result.Id);
             using (var context = this.database.Create())
             {
-                Assert.Equal(Entity.Entities.Count - 1, context.Entities.Count());
+                Assert.Null(context.Entities.SingleOrDefault(e => e.Id == entity.Id));
             }
         }
     }
