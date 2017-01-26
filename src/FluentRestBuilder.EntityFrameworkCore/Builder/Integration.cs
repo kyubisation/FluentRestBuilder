@@ -22,6 +22,7 @@ namespace FluentRestBuilder
         {
             new FluentRestBuilderCoreEntityFrameworkCore<TContext>(builder.Services)
                 .RegisterDeletionPipe()
+                .RegisterInputEntryAccessPipe()
                 .RegisterInsertionPipe()
                 .RegisterQueryableSourcePipe()
                 .RegisterReloadPipe()
