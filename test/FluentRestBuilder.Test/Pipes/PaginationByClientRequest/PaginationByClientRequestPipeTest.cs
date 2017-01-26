@@ -131,9 +131,9 @@ namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
 
         private class Interpreter : IPaginationByClientRequestInterpreter
         {
-            public int? Page { get; set; }
+            public int? Page { private get; set; }
 
-            public int? EntriesPerPage { get; set; }
+            public int? EntriesPerPage { private get; set; }
 
             public PaginationRequest ParseRequestQuery()
             {
