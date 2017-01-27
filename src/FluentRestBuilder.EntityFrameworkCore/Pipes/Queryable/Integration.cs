@@ -14,7 +14,7 @@ namespace FluentRestBuilder
     public static partial class Integration
     {
         public static OutputPipe<IQueryable<TInput>> AsNoTracking<TInput>(
-            this IOutputPipe<IQueryable<TInput>> pipe, Expression<Func<TInput, bool>> predicate)
+            this IOutputPipe<IQueryable<TInput>> pipe)
             where TInput : class =>
             pipe.MapQueryable(q => q.AsNoTracking());
 
