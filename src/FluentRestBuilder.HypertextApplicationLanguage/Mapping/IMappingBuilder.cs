@@ -8,11 +8,14 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Mapping
 
     public interface IMappingBuilder<TInput>
     {
+        IMappingBuilder<TInput> Embed(string name, Func<TInput, object> embeddedObjectFactory);
+
         IMappingBuilder<TInput> Embed<TEmbeddedResource, TMappedResource>(
             string name,
             Func<TInput, TEmbeddedResource> resourceSelector,
-            Func<IMapperFactory<TEmbeddedResource>, IMapper<TEmbeddedResource, TMappedResource>>
-                mapperSelector);
+            Func<
+                IMapperFactory<TEmbeddedResource>,
+                IMapper<TEmbeddedResource, TMappedResource>> mapperSelector);
 
         Func<TInput, TOutput> UseMapper<TOutput>(
             Func<IMapperFactory<TInput>, IMapper<TInput, TOutput>> selection);

@@ -4,13 +4,13 @@
 
 namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Mapping
 {
-    using System.Collections.Generic;
     using FluentRestBuilder.Mocks;
     using FluentRestBuilder.Mocks.EntityFramework;
     using FluentRestBuilder.Storage;
     using HypertextApplicationLanguage.Links;
     using HypertextApplicationLanguage.Mapping;
     using Microsoft.AspNetCore.Mvc;
+    using Mocks;
     using Xunit;
 
     public class RestMapperTest
@@ -73,28 +73,6 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Mapping
                 },
                 new ScopedStorage<IUrlHelper> { Value = new UrlHelperMock() },
                 new LinkAggregator());
-        }
-
-        private class EntityResponse : RestEntity
-        {
-            public int Id { get; set; }
-
-            public string Name { get; set; }
-
-            public string Description { get; set; }
-        }
-
-        private class ExtendedEntityResponse : EntityResponse, ILinkGenerator<Entity>
-        {
-            public IEnumerable<NamedLink> GenerateLinks(IUrlHelper urlHelper, Entity entity)
-            {
-                return new[]
-                {
-                    new LinkToSelf(new Link($"/{entity.Id}")),
-                    new NamedLink("asdf", new Link("/asdf")),
-                    new NamedLink("qwer", new Link("/qwer"))
-                };
-            }
         }
     }
 }
