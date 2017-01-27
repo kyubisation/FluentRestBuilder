@@ -6,6 +6,8 @@
 namespace FluentRestBuilder
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using EntityFrameworkCore.Builder;
     using EntityFrameworkCore.Pipes.InputEntryAccess;
@@ -38,5 +40,22 @@ namespace FluentRestBuilder
                 entryAction(e);
                 return Task.FromResult(0);
             });
+
+        public static OutputPipe<TInput> ReloadEntity<TInput>(this IOutputPipe<TInput> pipe)
+            where TInput : class =>
+            pipe.WithEntityEntry(async e => await e.ReloadAsync());
+
+        public static OutputPipe<TInput> LoadReference<TInput, TProperty>(
+            this IOutputPipe<TInput> pipe, Expression<Func<TInput, TProperty>> propertyExpression)
+            where TInput : class
+            where TProperty : class =>
+            pipe.WithEntityEntry(async e => await e.Reference(propertyExpression).LoadAsync());
+
+        public static OutputPipe<TInput> LoadCollection<TInput, TProperty>(
+            this IOutputPipe<TInput> pipe,
+            Expression<Func<TInput, IEnumerable<TProperty>>> propertyExpression)
+            where TInput : class
+            where TProperty : class =>
+            pipe.WithEntityEntry(async e => await e.Collection(propertyExpression).LoadAsync());
     }
 }
