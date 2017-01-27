@@ -35,6 +35,32 @@ namespace FluentRestBuilder.Mocks.EntityFramework
             }
         }
 
+        public List<Parent> CreateParentsWithChildren(int amount)
+        {
+            using (var context = this.Create())
+            {
+                var childCounter = 0;
+                var random = new Random();
+                var parents = Enumerable.Range(1, amount)
+                    .Select(i => new Parent
+                    {
+                        Id = i,
+                        Name = $"name{i}",
+                        Children = Enumerable.Range(1, random.Next(3, 5))
+                            .Select(k => new Child
+                            {
+                                Id = ++childCounter,
+                                Name = $"child name {i} {k}"
+                            })
+                            .ToList()
+                    })
+                    .ToList();
+                parents.ForEach(p => context.Add(p));
+                context.SaveChanges();
+                return parents;
+            }
+        }
+
         public List<Entity> CreateEnumeratedEntities(int amount) =>
             this.CreateEntities(amount, i => CreateEntity(i, $"Name {i}", $"Description {i}"));
 
