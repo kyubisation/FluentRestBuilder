@@ -4,15 +4,25 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Storage
 {
+    using System;
     using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
 
-    public class DbContextScopedStorage<TContext> : ScopedStorage<DbContext>
+    public class DbContextScopedStorage<TContext> : IScopedStorage<DbContext>
         where TContext : DbContext
     {
-        public DbContextScopedStorage(TContext context)
+        private Lazy<DbContext> lazyContext;
+
+        public DbContextScopedStorage(IServiceProvider serviceProvider)
         {
-            this.Value = context;
+            this.lazyContext = new Lazy<DbContext>(serviceProvider.GetService<TContext>);
+        }
+
+        public DbContext Value
+        {
+            get { return this.lazyContext.Value; }
+            set { this.lazyContext = new Lazy<DbContext>(() => value); }
         }
     }
 }
