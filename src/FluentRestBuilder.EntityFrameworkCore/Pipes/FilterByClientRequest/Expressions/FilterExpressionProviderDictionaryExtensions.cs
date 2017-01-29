@@ -43,7 +43,7 @@ namespace FluentRestBuilder
             Func<string, int> conversion = null) =>
             dictionary.AddTypedFilter(
                 property,
-                conversion ?? int.Parse,
+                conversion,
                 (f, expressions) => expressions
                     .AddEquals(e => EF.Property<int>(e, property) == f)
                     .AddGreaterThan(e => EF.Property<int>(e, property) > f)
@@ -66,7 +66,7 @@ namespace FluentRestBuilder
             Func<string, double> conversion = null) =>
             dictionary.AddTypedFilter(
                 property,
-                conversion ?? double.Parse,
+                conversion,
                 (f, expressions) => expressions
                     //// ReSharper disable once CompareOfFloatsByEqualityOperator
                     .AddEquals(e => EF.Property<double>(e, property) == f)
