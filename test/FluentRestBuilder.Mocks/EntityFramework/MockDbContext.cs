@@ -27,6 +27,8 @@ namespace FluentRestBuilder.Mocks.EntityFramework
 
         public DbSet<Child> Children { get; set; }
 
+        public DbSet<OtherEntity> OtherEntities { get; set; }
+
         public static DbContextOptions<MockDbContext> ConfigureInMemoryContextOptions()
         {
             var builder = new DbContextOptionsBuilder<MockDbContext>();

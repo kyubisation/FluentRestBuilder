@@ -37,28 +37,22 @@ namespace FluentRestBuilder.Mocks.EntityFramework
 
         public List<Parent> CreateParentsWithChildren(int amount)
         {
-            using (var context = this.Create())
+            var childCounter = 0;
+            var random = new Random();
+            return this.CreateEntities(
+                amount,
+                i => new Parent
             {
-                var childCounter = 0;
-                var random = new Random();
-                var parents = Enumerable.Range(1, amount)
-                    .Select(i => new Parent
+                Id = i,
+                Name = $"name{i}",
+                Children = Enumerable.Range(1, random.Next(3, 5))
+                    .Select(k => new Child
                     {
-                        Id = i,
-                        Name = $"name{i}",
-                        Children = Enumerable.Range(1, random.Next(3, 5))
-                            .Select(k => new Child
-                            {
-                                Id = ++childCounter,
-                                Name = $"child name {i} {k}"
-                            })
-                            .ToList()
+                        Id = ++childCounter,
+                        Name = $"child name {i} {k}"
                     })
-                    .ToList();
-                parents.ForEach(p => context.Add(p));
-                context.SaveChanges();
-                return parents;
-            }
+                    .ToList()
+            });
         }
 
         public List<Entity> CreateEnumeratedEntities(int amount) =>
@@ -68,6 +62,20 @@ namespace FluentRestBuilder.Mocks.EntityFramework
             int amount, string name = "Name", string description = "Description") =>
             this.CreateEntities(amount, i => CreateEntity(i, name, description));
 
+        public List<OtherEntity> CreateOtherEntities(int amount)
+        {
+            return this.CreateEntities(
+                amount,
+                i => new OtherEntity
+            {
+                Id = i,
+                Name = $"Name {i}",
+                Description = $"Description {i}",
+                Rate = 0.11 + i,
+                CreatedOn = new DateTime(2017, 1, i, 0, 0, 0)
+            });
+        }
+
         private static Entity CreateEntity(int id, string name, string description) =>
             new Entity
             {
@@ -76,12 +84,13 @@ namespace FluentRestBuilder.Mocks.EntityFramework
                 Description = description
             };
 
-        private List<Entity> CreateEntities(int amount, Func<int, Entity> callback)
+        private List<TEntity> CreateEntities<TEntity>(int amount, Func<int, TEntity> factory)
+            where TEntity : class
         {
             using (var context = this.Create())
             {
                 var entities = Enumerable.Range(1, amount)
-                    .Select(callback)
+                    .Select(factory)
                     .ToList();
                 entities.ForEach(e => context.Add(e));
                 context.SaveChanges();

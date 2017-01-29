@@ -4,6 +4,7 @@
 
 namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.FilterByClientRequest.Expressions
 {
+    using System.Globalization;
     using System.Linq;
     using FluentRestBuilder.Pipes.FilterByClientRequest;
     using FluentRestBuilder.Pipes.FilterByClientRequest.Expressions;
@@ -49,6 +50,25 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.FilterByClientRequest
             using (var context = this.database.Create())
             {
                 Assert.Equal(expectedResults, context.Entities.Count(filter));
+            }
+        }
+
+        [Theory]
+        [InlineData(FilterType.Equals, 1)]
+        [InlineData(FilterType.GreaterThan, 9)]
+        [InlineData(FilterType.GreaterThanOrEqual, 10)]
+        [InlineData(FilterType.LessThan, 10)]
+        [InlineData(FilterType.LessThanOrEqual, 11)]
+        public void TestDoubleFilters(FilterType filterType, int expectedResults)
+        {
+            var entity = this.database.CreateOtherEntities(20).Skip(10).First();
+            var dictionary = new FilterExpressionProviderDictionary<OtherEntity>()
+                .AddDoubleFilters(e => e.Rate);
+            var filter = dictionary[nameof(OtherEntity.Rate)]
+                .Resolve(filterType, entity.Rate.ToString(CultureInfo.CurrentCulture));
+            using (var context = this.database.Create())
+            {
+                Assert.Equal(expectedResults, context.OtherEntities.Count(filter));
             }
         }
     }
