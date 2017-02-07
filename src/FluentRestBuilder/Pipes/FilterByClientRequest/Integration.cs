@@ -13,6 +13,7 @@ namespace FluentRestBuilder
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Pipes;
     using Pipes.FilterByClientRequest;
+    using Pipes.FilterByClientRequest.Converters;
     using Pipes.FilterByClientRequest.Expressions;
 
     public static partial class Integration
@@ -25,6 +26,25 @@ namespace FluentRestBuilder
                 typeof(FilterByClientRequestPipeFactory<>));
             builder.Services.TryAddScoped<
                 IFilterByClientRequestInterpreter, FilterByClientRequestInterpreter>();
+            builder.Services.TryAddSingleton(
+                typeof(IFilterToTypeConverter<>), typeof(GenericFilterToTypeConverter<>));
+            builder.Services.TryAddSingleton<
+                IFilterToTypeConverter<short>, FilterToShortConverter>();
+            builder.Services.TryAddSingleton<
+                IFilterToTypeConverter<int>, FilterToIntegerConverter>();
+            builder.Services.TryAddSingleton<
+                IFilterToTypeConverter<long>, FilterToLongConverter>();
+            builder.Services.TryAddSingleton<
+                IFilterToTypeConverter<decimal>, FilterToDecimalConverter>();
+            builder.Services.TryAddSingleton<
+                IFilterToTypeConverter<float>, FilterToFloatConverter>();
+            builder.Services.TryAddSingleton<
+                IFilterToTypeConverter<double>, FilterToDoubleConverter>();
+            builder.Services.TryAddSingleton<
+                IFilterToTypeConverter<bool>, FilterToBooleanConverter>();
+            builder.Services.TryAddSingleton<
+                IFilterToTypeConverter<DateTime>, FilterToDateTimeConverter>();
+            builder.Services.TryAddTransient(typeof(FilterExpressionProviderDictionary<>));
             builder.Services.TryAddSingleton<IQueryArgumentKeys, QueryArgumentKeys>();
             return builder;
         }
@@ -41,7 +61,8 @@ namespace FluentRestBuilder
                     FilterExpressionProviderDictionary<TInput>,
                     IDictionary<string, IFilterExpressionProvider<TInput>>> builder)
         {
-            var dictionary = builder(new FilterExpressionProviderDictionary<TInput>());
+            var providerDictionary = pipe.GetService<FilterExpressionProviderDictionary<TInput>>();
+            var dictionary = builder(providerDictionary);
             return pipe.ApplyFilterByClientRequest(dictionary);
         }
     }

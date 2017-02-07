@@ -7,18 +7,19 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using Converters;
 
     public class GenericFilterExpressionProvider<TEntity, TFilter> : IFilterExpressionProvider<TEntity>
     {
         private readonly Func<TFilter, IDictionary<FilterType, Expression<Func<TEntity, bool>>>> filterBuilder;
-        private readonly Func<string, TFilter> conversion;
+        private readonly IFilterToTypeConverter<TFilter> converter;
 
         public GenericFilterExpressionProvider(
             Func<TFilter, IDictionary<FilterType, Expression<Func<TEntity, bool>>>> filterBuilder,
-            Func<string, TFilter> conversion)
+            IFilterToTypeConverter<TFilter> converter)
         {
             this.filterBuilder = filterBuilder;
-            this.conversion = conversion;
+            this.converter = converter;
         }
 
         public Expression<Func<TEntity, bool>> Resolve(FilterType type, string filter)
@@ -29,23 +30,36 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
             }
             catch (Exception)
             {
-                return e => false;
+                return this.CheckForExistingFilterOnError(type);
             }
         }
 
         private Expression<Func<TEntity, bool>> TryResolve(FilterType type, string filter)
         {
-            try
+            var conversionResult = this.converter.Parse(filter);
+            if (conversionResult.Success)
             {
-                var filterValue = this.conversion(filter);
-                var dictionary = this.filterBuilder(filterValue);
-                Expression<Func<TEntity, bool>> filterExpression;
-                return dictionary.TryGetValue(type, out filterExpression) ? filterExpression : null;
+                return this.BuildFilter(type, conversionResult.Value);
             }
-            catch (Exception) when (!this.filterBuilder(default(TFilter)).ContainsKey(type))
+
+            return this.CheckForExistingFilterOnError(type);
+        }
+
+        private Expression<Func<TEntity, bool>> BuildFilter(FilterType type, TFilter filter)
+        {
+            var dictionary = this.filterBuilder(filter);
+            Expression<Func<TEntity, bool>> filterExpression;
+            return dictionary.TryGetValue(type, out filterExpression) ? filterExpression : null;
+        }
+
+        private Expression<Func<TEntity, bool>> CheckForExistingFilterOnError(FilterType type)
+        {
+            if (this.filterBuilder(default(TFilter)).ContainsKey(type))
             {
-                return null;
+                return e => false;
             }
+
+            return null;
         }
     }
 }

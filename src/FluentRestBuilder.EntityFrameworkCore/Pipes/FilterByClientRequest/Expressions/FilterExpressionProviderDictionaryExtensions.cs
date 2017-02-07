@@ -30,20 +30,17 @@ namespace FluentRestBuilder
 
         public static FilterExpressionProviderDictionary<TEntity> AddIntegerFilters<TEntity>(
             this FilterExpressionProviderDictionary<TEntity> dictionary,
-            Expression<Func<TEntity, int>> propertySelector,
-            Func<string, int> conversion = null)
+            Expression<Func<TEntity, int>> propertySelector)
         {
             var member = (MemberExpression)propertySelector.Body;
-            return dictionary.AddIntegerFilters(member.Member.Name, conversion);
+            return dictionary.AddIntegerFilters(member.Member.Name);
         }
 
         public static FilterExpressionProviderDictionary<TEntity> AddIntegerFilters<TEntity>(
             this FilterExpressionProviderDictionary<TEntity> dictionary,
-            string property,
-            Func<string, int> conversion = null) =>
-            dictionary.AddTypedFilter(
+            string property) =>
+            dictionary.AddTypedFilter<int>(
                 property,
-                conversion,
                 (f, expressions) => expressions
                     .AddEquals(e => EF.Property<int>(e, property) == f)
                     .AddGreaterThan(e => EF.Property<int>(e, property) > f)
@@ -53,20 +50,17 @@ namespace FluentRestBuilder
 
         public static FilterExpressionProviderDictionary<TEntity> AddDoubleFilters<TEntity>(
             this FilterExpressionProviderDictionary<TEntity> dictionary,
-            Expression<Func<TEntity, double>> propertySelector,
-            Func<string, double> conversion = null)
+            Expression<Func<TEntity, double>> propertySelector)
         {
             var member = (MemberExpression)propertySelector.Body;
-            return dictionary.AddDoubleFilters(member.Member.Name, conversion);
+            return dictionary.AddDoubleFilters(member.Member.Name);
         }
 
         public static FilterExpressionProviderDictionary<TEntity> AddDoubleFilters<TEntity>(
             this FilterExpressionProviderDictionary<TEntity> dictionary,
-            string property,
-            Func<string, double> conversion = null) =>
-            dictionary.AddTypedFilter(
+            string property) =>
+            dictionary.AddTypedFilter<double>(
                 property,
-                conversion,
                 (f, expressions) => expressions
                     //// ReSharper disable once CompareOfFloatsByEqualityOperator
                     .AddEquals(e => EF.Property<double>(e, property) == f)
@@ -77,20 +71,17 @@ namespace FluentRestBuilder
 
         public static FilterExpressionProviderDictionary<TEntity> AddDateTimeFilters<TEntity>(
             this FilterExpressionProviderDictionary<TEntity> dictionary,
-            Expression<Func<TEntity, DateTime>> propertySelector,
-            Func<string, DateTime> conversion)
+            Expression<Func<TEntity, DateTime>> propertySelector)
         {
             var member = (MemberExpression)propertySelector.Body;
-            return dictionary.AddDateTimeFilters(member.Member.Name, conversion);
+            return dictionary.AddDateTimeFilters(member.Member.Name);
         }
 
         public static FilterExpressionProviderDictionary<TEntity> AddDateTimeFilters<TEntity>(
             this FilterExpressionProviderDictionary<TEntity> dictionary,
-            string property,
-            Func<string, DateTime> conversion) =>
-            dictionary.AddTypedFilter(
+            string property) =>
+            dictionary.AddTypedFilter<DateTime>(
                 property,
-                conversion,
                 (f, expressions) => expressions
                     .AddEquals(e => EF.Property<DateTime>(e, property) == f)
                     .AddGreaterThan(e => EF.Property<DateTime>(e, property) > f)

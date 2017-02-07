@@ -7,6 +7,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Expressions
     using System.Linq;
     using System.Linq.Expressions;
     using FluentRestBuilder.Pipes.FilterByClientRequest;
+    using FluentRestBuilder.Pipes.FilterByClientRequest.Converters;
     using FluentRestBuilder.Pipes.FilterByClientRequest.Expressions;
     using Mocks.EntityFramework;
     using Xunit;
@@ -17,7 +18,8 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Expressions
         public void TestEmptyCase()
         {
             var provider = new GenericFilterExpressionProvider<Entity, int>(
-                i => new FilterExpressionDictionary<Entity>(), int.Parse);
+                i => new FilterExpressionDictionary<Entity>(),
+                new FilterToIntegerConverter());
             Assert.Null(provider.Resolve(FilterType.Equals, "1"));
         }
 
@@ -25,7 +27,8 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Expressions
         public void TestIncompatibleFilter()
         {
             var provider = new GenericFilterExpressionProvider<Entity, int>(
-                i => new FilterExpressionDictionary<Entity>(), int.Parse);
+                i => new FilterExpressionDictionary<Entity>(),
+                new FilterToIntegerConverter());
             Assert.Null(provider.Resolve(FilterType.Equals, "a"));
         }
 
@@ -34,7 +37,8 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Expressions
         {
             const int id = 1;
             var provider = new GenericFilterExpressionProvider<Entity, int>(
-                i => new FilterExpressionDictionary<Entity>().AddEquals(e => e.Id == i), int.Parse);
+                i => new FilterExpressionDictionary<Entity>().AddEquals(e => e.Id == i),
+                new FilterToIntegerConverter());
             var expression = provider.Resolve(FilterType.Equals, id.ToString());
             using (var context = new MockDbContext())
             {
@@ -48,7 +52,8 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Expressions
         public void TestExistingFilterWithIncompatibleValue()
         {
             var provider = new GenericFilterExpressionProvider<Entity, int>(
-                i => new FilterExpressionDictionary<Entity>().AddEquals(e => e.Id == i), int.Parse);
+                i => new FilterExpressionDictionary<Entity>().AddEquals(e => e.Id == i),
+                new FilterToIntegerConverter());
             var expression = provider.Resolve(FilterType.Equals, "a");
             var constant = (ConstantExpression)expression.Body;
             Assert.False((bool)constant.Value);
