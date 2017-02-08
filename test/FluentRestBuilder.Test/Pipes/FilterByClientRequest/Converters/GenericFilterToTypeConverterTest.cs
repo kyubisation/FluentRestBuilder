@@ -6,6 +6,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
 {
     using System.Globalization;
     using FluentRestBuilder.Pipes.FilterByClientRequest.Converters;
+    using Mocks;
     using Xunit;
 
     public class GenericFilterToTypeConverterTest
@@ -21,6 +22,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
         public void TestLocalDoubleConversion()
         {
             const double value = 1.1;
+            new CultureInfo("fr-FR").AssignAsCurrentUiCulture();
             var result = this.provider.Parse(value.ToString(CultureInfo.CurrentUICulture));
             Assert.True(result.Success);
             Assert.Equal(value, result.Value);
