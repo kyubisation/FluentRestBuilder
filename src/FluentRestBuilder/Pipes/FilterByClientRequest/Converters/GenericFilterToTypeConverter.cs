@@ -9,10 +9,13 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
 
     public class GenericFilterToTypeConverter<TFilter> : IFilterToTypeConverter<TFilter>
     {
+        private readonly ICultureInfoConversionPriority cultureInfoConversionPriority;
         private readonly TypeConverter converter;
 
-        public GenericFilterToTypeConverter()
+        public GenericFilterToTypeConverter(
+            ICultureInfoConversionPriority cultureInfoConversionPriority)
         {
+            this.cultureInfoConversionPriority = cultureInfoConversionPriority;
             var typeConverter = TypeDescriptor.GetConverter(typeof(TFilter));
             if (typeConverter.CanConvertFrom(typeof(string)))
             {
@@ -27,20 +30,31 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
                 return FilterConversionResult<TFilter>.CreateFailure();
             }
 
-            return FilterConversionResult<TFilter>.CreateSuccess(
-                (TFilter)this.ParseFilter(filter));
+            var result = this.ParseFilter(filter);
+            if (result == null)
+            {
+                return FilterConversionResult<TFilter>.CreateFailure();
+            }
+
+            return FilterConversionResult<TFilter>.CreateSuccess((TFilter)result);
         }
 
         private object ParseFilter(string filter)
         {
-            try
+            foreach (var cultureInfo in this.cultureInfoConversionPriority)
             {
-                return this.converter.ConvertFromString(filter);
+                try
+                {
+                    // ReSharper disable once AssignNullToNotNullAttribute
+                    return this.converter.ConvertFromString(null, cultureInfo, filter);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
             }
-            catch (Exception)
-            {
-                return this.converter.ConvertFromInvariantString(filter);
-            }
+
+            return null;
         }
     }
 }
