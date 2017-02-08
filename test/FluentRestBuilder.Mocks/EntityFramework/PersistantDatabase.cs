@@ -89,7 +89,8 @@ namespace FluentRestBuilder.Mocks.EntityFramework
         {
             using (var context = this.Create())
             {
-                var entities = Enumerable.Range(1, amount)
+                var newId = context.Entities.Count() + 1;
+                var entities = Enumerable.Range(newId, amount)
                     .Select(factory)
                     .ToList();
                 entities.ForEach(e => context.Add(e));
