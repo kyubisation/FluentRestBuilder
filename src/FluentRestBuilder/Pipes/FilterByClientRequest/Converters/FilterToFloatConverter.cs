@@ -4,11 +4,18 @@
 
 namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
 {
-    public class FilterToFloatConverter : FilterToNumericTypeConverter<float>
+    using System.Globalization;
+
+    public class FilterToFloatConverter : FilterToTypeConverterBase<float>
     {
-        public FilterToFloatConverter()
-            : base(float.TryParse)
+        public FilterToFloatConverter(
+            ICultureInfoConversionPriority cultureInfoConversionPriority)
+            : base(cultureInfoConversionPriority)
         {
         }
+
+        protected override bool TryParse(
+            string filter, CultureInfo cultureInfo, out float result) =>
+            float.TryParse(filter, NumberStyles.Any, cultureInfo, out result);
     }
 }

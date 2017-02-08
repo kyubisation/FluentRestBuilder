@@ -15,7 +15,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
 
         public FilterToFloatConverterTest()
         {
-            this.converter = new FilterToFloatConverter();
+            this.converter = new FilterToFloatConverter(new CultureInfoConversionPriority());
             new CultureInfo("fr-FR").AssignAsCurrentUiCulture();
         }
 

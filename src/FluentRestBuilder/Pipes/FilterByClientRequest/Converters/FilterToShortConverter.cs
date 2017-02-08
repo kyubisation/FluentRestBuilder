@@ -4,11 +4,18 @@
 
 namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
 {
-    public class FilterToShortConverter : FilterToNumericTypeConverter<short>
+    using System.Globalization;
+
+    public class FilterToShortConverter : FilterToTypeConverterBase<short>
     {
-        public FilterToShortConverter()
-            : base(short.TryParse)
+        public FilterToShortConverter(
+            ICultureInfoConversionPriority cultureInfoConversionPriority)
+            : base(cultureInfoConversionPriority)
         {
         }
+
+        protected override bool TryParse(
+            string filter, CultureInfo cultureInfo, out short result) =>
+            short.TryParse(filter, NumberStyles.Any, cultureInfo, out result);
     }
 }

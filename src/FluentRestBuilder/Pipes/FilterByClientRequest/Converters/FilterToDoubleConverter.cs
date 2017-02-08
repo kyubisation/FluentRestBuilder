@@ -4,11 +4,18 @@
 
 namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
 {
-    public class FilterToDoubleConverter : FilterToNumericTypeConverter<double>
+    using System.Globalization;
+
+    public class FilterToDoubleConverter : FilterToTypeConverterBase<double>
     {
-        public FilterToDoubleConverter()
-            : base(double.TryParse)
+        public FilterToDoubleConverter(
+            ICultureInfoConversionPriority cultureInfoConversionPriority)
+            : base(cultureInfoConversionPriority)
         {
         }
+
+        protected override bool TryParse(
+            string filter, CultureInfo cultureInfo, out double result) =>
+            double.TryParse(filter, NumberStyles.Any, cultureInfo, out result);
     }
 }

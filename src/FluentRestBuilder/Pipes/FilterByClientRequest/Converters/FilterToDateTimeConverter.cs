@@ -7,15 +7,16 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
     using System;
     using System.Globalization;
 
-    public class FilterToDateTimeConverter : IFilterToTypeConverter<DateTime>
+    public class FilterToDateTimeConverter : FilterToTypeConverterBase<DateTime>
     {
-        public FilterConversionResult<DateTime> Parse(string filter)
+        public FilterToDateTimeConverter(
+            ICultureInfoConversionPriority cultureInfoConversionPriority)
+            : base(cultureInfoConversionPriority)
         {
-            DateTime result;
-            return DateTime.TryParse(filter, CultureInfo.CurrentUICulture, DateTimeStyles.None, out result) ||
-                   DateTime.TryParse(filter, CultureInfo.InvariantCulture, DateTimeStyles.None, out result)
-                ? FilterConversionResult<DateTime>.CreateSuccess(result)
-                : FilterConversionResult<DateTime>.CreateFailure();
         }
+
+        protected override bool TryParse(
+            string filter, CultureInfo cultureInfo, out DateTime result) =>
+            DateTime.TryParse(filter, cultureInfo, DateTimeStyles.None, out result);
     }
 }

@@ -25,6 +25,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.FilterByClientRequest
             this.provider = new ServiceCollection()
                 .AddSingleton<IFilterToTypeConverter<int>, FilterToIntegerConverter>()
                 .AddSingleton<IFilterToTypeConverter<double>, FilterToDoubleConverter>()
+                .AddSingleton<ICultureInfoConversionPriority, CultureInfoConversionPriority>()
                 .BuildServiceProvider();
         }
 

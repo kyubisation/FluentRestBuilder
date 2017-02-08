@@ -15,7 +15,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
 
         public FilterToDecimalConverterTest()
         {
-            this.converter = new FilterToDecimalConverter();
+            this.converter = new FilterToDecimalConverter(new CultureInfoConversionPriority());
             new CultureInfo("fr-FR").AssignAsCurrentUiCulture();
         }
 

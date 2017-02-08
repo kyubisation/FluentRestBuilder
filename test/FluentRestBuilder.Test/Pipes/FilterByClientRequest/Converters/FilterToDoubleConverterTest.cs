@@ -15,7 +15,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
 
         public FilterToDoubleConverterTest()
         {
-            this.converter = new FilterToDoubleConverter();
+            this.converter = new FilterToDoubleConverter(new CultureInfoConversionPriority());
             new CultureInfo("fr-FR").AssignAsCurrentUiCulture();
         }
 

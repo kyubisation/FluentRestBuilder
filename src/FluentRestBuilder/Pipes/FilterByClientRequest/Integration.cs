@@ -26,6 +26,8 @@ namespace FluentRestBuilder
                 typeof(FilterByClientRequestPipeFactory<>));
             builder.Services.TryAddScoped<
                 IFilterByClientRequestInterpreter, FilterByClientRequestInterpreter>();
+            builder.Services.TryAddSingleton<
+                ICultureInfoConversionPriority, CultureInfoConversionPriority>();
             builder.Services.TryAddSingleton(
                 typeof(IFilterToTypeConverter<>), typeof(GenericFilterToTypeConverter<>));
             builder.Services.TryAddSingleton<
