@@ -25,6 +25,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.FilterByClientRequest
             this.provider = new ServiceCollection()
                 .AddSingleton<IFilterToTypeConverter<int>, FilterToIntegerConverter>()
                 .AddSingleton<IFilterToTypeConverter<double>, FilterToDoubleConverter>()
+                .AddSingleton<IFilterToTypeConverter<DateTime>, FilterToDateTimeConverter>()
                 .AddSingleton<ICultureInfoConversionPriority, CultureInfoConversionPriority>()
                 .BuildServiceProvider();
         }
@@ -75,6 +76,25 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.FilterByClientRequest
                 .AddDoubleFilters(e => e.Rate);
             var filter = dictionary[nameof(OtherEntity.Rate)]
                 .Resolve(filterType, entity.Rate.ToString(CultureInfo.InvariantCulture));
+            using (var context = this.database.Create())
+            {
+                Assert.Equal(expectedResults, context.OtherEntities.Count(filter));
+            }
+        }
+
+        [Theory]
+        [InlineData(FilterType.Equals, 1)]
+        [InlineData(FilterType.GreaterThan, 9)]
+        [InlineData(FilterType.GreaterThanOrEqual, 10)]
+        [InlineData(FilterType.LessThan, 10)]
+        [InlineData(FilterType.LessThanOrEqual, 11)]
+        public void TestDateTimeFilters(FilterType filterType, int expectedResults)
+        {
+            var entity = this.database.CreateOtherEntities(20).Skip(10).First();
+            var dictionary = new FilterExpressionProviderDictionary<OtherEntity>(this.provider)
+                .AddDateTimeFilters(e => e.CreatedOn);
+            var filterString = entity.CreatedOn.ToString(CultureInfo.InvariantCulture);
+            var filter = dictionary[nameof(OtherEntity.CreatedOn)].Resolve(filterType, filterString);
             using (var context = this.database.Create())
             {
                 Assert.Equal(expectedResults, context.OtherEntities.Count(filter));
