@@ -4,6 +4,7 @@
 
 namespace FluentRestBuilder.Test.Results.Options
 {
+    using System;
     using System.Linq;
     using FluentRestBuilder.Results.Options;
     using Microsoft.AspNetCore.Http;
@@ -63,10 +64,66 @@ namespace FluentRestBuilder.Test.Results.Options
             var result = this.builder
                 .IsAllowed(new[] { HttpVerb.Get, HttpVerb.Delete }, (p, e) => false)
                 .IsAllowed(new[] { HttpVerb.Get, HttpVerb.Post }, (p, e) => true)
-                .GenerateAllowedVerbs(new Entity()).ToList();
+                .GenerateAllowedVerbs(new Entity())
+                .ToList();
             Assert.Equal(2, result.Count);
             Assert.Contains(HttpVerb.Get, result);
             Assert.Contains(HttpVerb.Post, result);
+        }
+
+        [Fact]
+        public void TestAllowedForAll()
+        {
+            var result = this.builder
+                .IsAllowedForAll(e => true)
+                .GenerateAllowedVerbs(new Entity())
+                .ToList();
+            var verbs = Enum.GetValues(typeof(HttpVerb))
+                .Cast<HttpVerb>();
+            foreach (var httpVerb in verbs)
+            {
+                Assert.Contains(result, v => v == httpVerb);
+            }
+        }
+
+        [Fact]
+        public void TestDelete()
+        {
+            var result = this.builder
+                .IsDeleteAllowed(e => true)
+                .GenerateAllowedVerbs(new Entity())
+                .ToList();
+            Assert.Contains(result, v => v == HttpVerb.Delete);
+        }
+
+        [Fact]
+        public void TestPatch()
+        {
+            var result = this.builder
+                .IsPatchAllowed(e => true)
+                .GenerateAllowedVerbs(new Entity())
+                .ToList();
+            Assert.Contains(result, v => v == HttpVerb.Patch);
+        }
+
+        [Fact]
+        public void TestPost()
+        {
+            var result = this.builder
+                .IsPostAllowed(e => true)
+                .GenerateAllowedVerbs(new Entity())
+                .ToList();
+            Assert.Contains(result, v => v == HttpVerb.Post);
+        }
+
+        [Fact]
+        public void TestPut()
+        {
+            var result = this.builder
+                .IsPutAllowed(e => true)
+                .GenerateAllowedVerbs(new Entity())
+                .ToList();
+            Assert.Contains(result, v => v == HttpVerb.Put);
         }
     }
 }
