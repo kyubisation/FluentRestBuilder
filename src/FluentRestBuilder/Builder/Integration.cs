@@ -60,7 +60,7 @@ namespace FluentRestBuilder
         /// want to create sources without a controller.
         /// </summary>
         /// <param name="builder">The FluentRestBuilder configuration instance.</param>
-        /// <returns>The FluentRestBuilder configuration instance.</returns>
+        /// <returns>The provided FluentRestBuilder configuration instance.</returns>
         public static IFluentRestBuilder UseHttpContextAccessor(this IFluentRestBuilder builder)
         {
             UseHttpContextAccessor(builder.Services);
