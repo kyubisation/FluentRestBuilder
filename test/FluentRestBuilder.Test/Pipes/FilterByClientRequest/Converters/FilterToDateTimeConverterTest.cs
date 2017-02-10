@@ -32,6 +32,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
         [Fact]
         public void TestLocalFullDateTimeString()
         {
+            new CultureInfo("de-CH").AssignAsCurrentUiCulture();
             var date = DateTime.UtcNow.ToString(CultureInfo.CurrentUICulture);
             var result = this.converter.Parse(date);
             Assert.True(result.Success);
@@ -41,7 +42,8 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
         [Fact]
         public void TestDateString()
         {
-            var date = DateTime.UtcNow.Date;
+            new CultureInfo("de-CH").AssignAsCurrentUiCulture();
+            var date = new DateTime(2017, 1, 31);
             var dateString = date.ToString("d", CultureInfo.InvariantCulture);
             var result = this.converter.Parse(dateString);
             Assert.True(result.Success);
