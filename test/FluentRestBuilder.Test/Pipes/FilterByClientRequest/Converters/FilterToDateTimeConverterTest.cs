@@ -22,7 +22,8 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
         [Fact]
         public void TestInvariantFullDateTimeString()
         {
-            var date = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
+            new CultureInfo("de-CH").AssignAsCurrentUiCulture();
+            var date = new DateTime(2017, 1, 31).ToString(CultureInfo.InvariantCulture);
             var result = this.converter.Parse(date);
             Assert.True(result.Success);
             Assert.Equal(date, result.Value.ToString(CultureInfo.InvariantCulture));
