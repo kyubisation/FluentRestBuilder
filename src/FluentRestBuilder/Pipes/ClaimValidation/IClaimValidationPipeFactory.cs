@@ -12,7 +12,7 @@ namespace FluentRestBuilder.Pipes.ClaimValidation
     {
         OutputPipe<TInput> Create(
             Func<ClaimsPrincipal, TInput, bool> predicate,
-            object error,
+            Func<TInput, object> errorFactory,
             IOutputPipe<TInput> parent);
     }
 }

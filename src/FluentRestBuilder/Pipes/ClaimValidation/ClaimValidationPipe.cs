@@ -18,9 +18,9 @@ namespace FluentRestBuilder.Pipes.ClaimValidation
         public ClaimValidationPipe(
             Func<ClaimsPrincipal, TInput, bool> validCheck,
             ClaimsPrincipal principal,
-            object error,
+            Func<TInput, object> errorFactory,
             IOutputPipe<TInput> parent)
-            : base(StatusCodes.Status403Forbidden, error, parent)
+            : base(StatusCodes.Status403Forbidden, errorFactory, parent)
         {
             this.principal = principal;
             this.validCheck = validCheck;

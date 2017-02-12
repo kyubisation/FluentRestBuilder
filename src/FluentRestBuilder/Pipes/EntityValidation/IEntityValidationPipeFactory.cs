@@ -13,7 +13,7 @@ namespace FluentRestBuilder.Pipes.EntityValidation
         OutputPipe<TInput> Create(
             Func<TInput, Task<bool>> invalidCheck,
             int statusCode,
-            object error,
+            Func<TInput, object> errorFactory,
             IOutputPipe<TInput> parent);
     }
 }

@@ -15,9 +15,9 @@ namespace FluentRestBuilder.Pipes.EntityValidation
         public EntityValidationPipe(
             Func<TInput, Task<bool>> invalidCheck,
             int statusCode,
-            object error,
+            Func<TInput, object> errorFactory,
             IOutputPipe<TInput> parent)
-            : base(statusCode, error, parent)
+            : base(statusCode, errorFactory, parent)
         {
             this.invalidCheck = invalidCheck;
         }

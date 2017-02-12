@@ -4,6 +4,7 @@
 
 namespace FluentRestBuilder.Pipes
 {
+    using System;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -11,31 +12,30 @@ namespace FluentRestBuilder.Pipes
     public abstract class ValidationPipeBase<TInput> : ActionResultPipe<TInput>
         where TInput : class
     {
-        private readonly object error;
+        private readonly Func<TInput, object> errorFactory;
         private readonly int statusCode;
 
         protected ValidationPipeBase(
             int statusCode,
-            object error,
+            Func<TInput, object> errorFactory,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
             this.statusCode = statusCode;
-            this.error = error;
+            this.errorFactory = errorFactory;
         }
 
-        protected override async Task<IActionResult> GenerateActionResultAsync(TInput entity)
+        protected override async Task<IActionResult> GenerateActionResultAsync(TInput input) =>
+            await this.IsInvalid(input) ? this.CreateErrorResult(input) : null;
+
+        protected abstract Task<bool> IsInvalid(TInput input);
+
+        private IActionResult CreateErrorResult(TInput input)
         {
-            if (!await this.IsInvalid(entity))
-            {
-                return null;
-            }
-
-            return this.error == null
-                ? this.CreateErrorActionResult() : this.CreateErrorObjectResult();
+            var error = this.errorFactory?.Invoke(input);
+            return error == null
+                ? this.CreateErrorActionResult() : this.CreateErrorObjectResult(error);
         }
-
-        protected abstract Task<bool> IsInvalid(TInput entity);
 
         private IActionResult CreateErrorActionResult()
         {
@@ -50,16 +50,16 @@ namespace FluentRestBuilder.Pipes
             }
         }
 
-        private IActionResult CreateErrorObjectResult()
+        private IActionResult CreateErrorObjectResult(object error)
         {
             switch (this.statusCode)
             {
                 case StatusCodes.Status400BadRequest:
-                    return new BadRequestObjectResult(this.error);
+                    return new BadRequestObjectResult(error);
                 case StatusCodes.Status404NotFound:
-                    return new NotFoundObjectResult(this.error);
+                    return new NotFoundObjectResult(error);
                 default:
-                    return new ObjectResult(this.error) { StatusCode = this.statusCode };
+                    return new ObjectResult(error) { StatusCode = this.statusCode };
             }
         }
     }

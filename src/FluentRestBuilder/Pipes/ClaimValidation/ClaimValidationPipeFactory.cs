@@ -21,8 +21,8 @@ namespace FluentRestBuilder.Pipes.ClaimValidation
 
         public OutputPipe<TInput> Create(
                 Func<ClaimsPrincipal, TInput, bool> predicate,
-                object error,
+                Func<TInput, object> errorFactory,
                 IOutputPipe<TInput> parent) =>
-            new ClaimValidationPipe<TInput>(predicate, this.user, error, parent);
+            new ClaimValidationPipe<TInput>(predicate, this.user, errorFactory, parent);
     }
 }
