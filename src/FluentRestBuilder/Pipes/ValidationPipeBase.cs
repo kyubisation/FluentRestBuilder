@@ -25,7 +25,7 @@ namespace FluentRestBuilder.Pipes
             this.errorFactory = errorFactory;
         }
 
-        protected override async Task<IActionResult> GenerateActionResultAsync(TInput input) =>
+        protected override async Task<IActionResult> GenerateActionResult(TInput input) =>
             await this.IsInvalid(input) ? this.CreateErrorResult(input) : null;
 
         protected abstract Task<bool> IsInvalid(TInput input);

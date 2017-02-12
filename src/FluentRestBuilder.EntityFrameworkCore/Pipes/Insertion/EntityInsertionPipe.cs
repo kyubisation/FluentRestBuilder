@@ -24,7 +24,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Insertion
             this.contextStorage = contextStorage;
         }
 
-        protected override async Task<IActionResult> GenerateActionResultAsync(TInput entity)
+        protected override async Task<IActionResult> GenerateActionResult(TInput entity)
         {
             try
             {

@@ -17,7 +17,7 @@ namespace FluentRestBuilder.Pipes
 
         protected override async Task<IActionResult> Execute(TInput input)
         {
-            var result = await this.GenerateActionResultAsync(input);
+            var result = await this.GenerateActionResult(input);
             if (result != null)
             {
                 return result;
@@ -26,9 +26,7 @@ namespace FluentRestBuilder.Pipes
             return await base.Execute(input);
         }
 
-        protected virtual Task<IActionResult> GenerateActionResultAsync(TInput entity) =>
-            Task.FromResult(this.GenerateActionResult(entity));
-
-        protected virtual IActionResult GenerateActionResult(TInput entity) => null;
+        protected virtual Task<IActionResult> GenerateActionResult(TInput entity) =>
+            Task.FromResult<IActionResult>(null);
     }
 }
