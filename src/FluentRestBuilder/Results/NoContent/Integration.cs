@@ -22,6 +22,14 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Executes the pipe chain and returns
+        /// a no content action result on success.
+        /// (Does not wrap the resulting input.)
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <returns>An asynchronous <see cref="IActionResult"/>.</returns>
         public static Task<IActionResult> ToNoContentResult<TInput>(
             this IOutputPipe<TInput> pipe)
             where TInput : class =>

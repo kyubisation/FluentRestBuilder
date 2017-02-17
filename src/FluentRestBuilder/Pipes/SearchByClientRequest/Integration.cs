@@ -29,6 +29,14 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Configure the search capabilities for this pipe chain.
+        /// Provide a factory function that searches an input according to a single search value.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="search">The search factory.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<IQueryable<TInput>> ApplySearchByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
                 Func<string, Expression<Func<TInput, bool>>> search) =>

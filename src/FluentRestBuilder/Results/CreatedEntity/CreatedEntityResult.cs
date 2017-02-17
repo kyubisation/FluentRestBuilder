@@ -11,19 +11,20 @@ namespace FluentRestBuilder.Results.CreatedEntity
         where TInput : class
     {
         private readonly string routeName;
-        private readonly Func<TInput, object> routeValuesGenerator;
+        private readonly Func<TInput, object> routeValuesFactory;
 
         public CreatedEntityResult(
-            Func<TInput, object> routeValuesGenerator,
+            Func<TInput, object> routeValuesFactory,
             string routeName,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
-            this.routeValuesGenerator = routeValuesGenerator;
+            this.routeValuesFactory = routeValuesFactory;
             this.routeName = routeName;
         }
 
         protected override IActionResult CreateResult(TInput source) =>
-            new CreatedAtRouteResult(this.routeName, this.routeValuesGenerator(source), source);
+            new CreatedAtRouteResult(
+                this.routeName, this.routeValuesFactory.Invoke(source), source);
     }
 }

@@ -26,9 +26,20 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Retrieves a single value from the provided <see cref="IQueryable{TInput}"/> or
+        /// null, if empty.
+        /// Throws an exception, if the received <see cref="IQueryable{TInput}"/>
+        /// contains more than one element.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="predicate">The predicate expression.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TInput> SingleOrDefault<TInput>(
             this IOutputPipe<IQueryable<TInput>> pipe, Expression<Func<TInput, bool>> predicate)
             where TInput : class =>
-            pipe.GetService<ISingleOrDefaultPipeFactory<TInput>>().Create(predicate, pipe);
+            pipe.GetService<ISingleOrDefaultPipeFactory<TInput>>()
+                .Create(predicate, pipe);
     }
 }

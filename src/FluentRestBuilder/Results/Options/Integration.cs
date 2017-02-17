@@ -28,6 +28,14 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Executes the pipe chain and creates an empty ok action result.
+        /// The builder generates the allowed HTTP verbs and sets the Allow header.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="builder">The allowed options builder.</param>
+        /// <returns>An asynchronous <see cref="IActionResult"/>.</returns>
         public static Task<IActionResult> ToOptionsResult<TInput>(
             this IOutputPipe<TInput> pipe,
             Func<IAllowedOptionsBuilder<TInput>, IAllowedOptionsBuilder<TInput>> builder)
@@ -39,6 +47,14 @@ namespace FluentRestBuilder
                 .Execute();
         }
 
+        /// <summary>
+        /// Executes the pipe chain and creates an empty ok action result.
+        /// The given HTTP verbs will be set as the Allow header.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="verbs">The allowed HTTP verbs.</param>
+        /// <returns>An asynchronous <see cref="IActionResult"/>.</returns>
         public static Task<IActionResult> ToOptionsResult<TInput>(
             this IOutputPipe<TInput> pipe,
             params HttpVerb[] verbs)

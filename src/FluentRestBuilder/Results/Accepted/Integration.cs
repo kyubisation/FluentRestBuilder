@@ -22,6 +22,13 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Executes the pipe chain and wraps the result in
+        /// an accepted action result on success.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <returns>An asynchronous <see cref="IActionResult"/>.</returns>
         public static Task<IActionResult> ToAcceptedResult<TInput>(
             this IOutputPipe<TInput> pipe)
             where TInput : class =>

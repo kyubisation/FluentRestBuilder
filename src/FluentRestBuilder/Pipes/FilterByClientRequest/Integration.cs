@@ -73,16 +73,16 @@ namespace FluentRestBuilder
         /// </summary>
         /// <typeparam name="TInput">The input type.</typeparam>
         /// <param name="pipe">The parent pipe.</param>
-        /// <param name="builder">The configuration builder.</param>
+        /// <param name="factory">The configuration factory.</param>
         /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<IQueryable<TInput>> ApplyFilterByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
                 Func<
                     FilterExpressionProviderDictionary<TInput>,
-                    IDictionary<string, IFilterExpressionProvider<TInput>>> builder)
+                    IDictionary<string, IFilterExpressionProvider<TInput>>> factory)
         {
             var providerDictionary = new FilterExpressionProviderDictionary<TInput>(pipe);
-            var dictionary = builder(providerDictionary);
+            var dictionary = factory(providerDictionary);
             return pipe.ApplyFilterByClientRequest(dictionary);
         }
 
@@ -95,17 +95,17 @@ namespace FluentRestBuilder
         /// </summary>
         /// <typeparam name="TInput">The input type.</typeparam>
         /// <param name="pipe">The parent pipe.</param>
-        /// <param name="builder">The configuration builder.</param>
+        /// <param name="factory">The configuration factory.</param>
         /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<IQueryable<TInput>> ApplyCaseInsensitiveFilterByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
                 Func<
                     FilterExpressionProviderDictionary<TInput>,
-                    IDictionary<string, IFilterExpressionProvider<TInput>>> builder)
+                    IDictionary<string, IFilterExpressionProvider<TInput>>> factory)
         {
             var providerDictionary = new FilterExpressionProviderDictionary<TInput>(
                 pipe, StringComparer.InvariantCultureIgnoreCase);
-            var dictionary = builder(providerDictionary);
+            var dictionary = factory(providerDictionary);
             return pipe.ApplyFilterByClientRequest(dictionary);
         }
     }
