@@ -22,6 +22,14 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Asynchronously map the input to the desired output.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <typeparam name="TOutput">The output type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="mapping">The asynchronous mapping function.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TOutput> Map<TInput, TOutput>(
             this IOutputPipe<TInput> pipe, Func<TInput, Task<TOutput>> mapping)
             where TInput : class
@@ -29,6 +37,14 @@ namespace FluentRestBuilder
             pipe.GetRequiredService<IMappingPipeFactory<TInput, TOutput>>()
                 .Create(mapping, pipe);
 
+        /// <summary>
+        /// Map the input to the desired output.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <typeparam name="TOutput">The output type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="mapping">The mapping function.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TOutput> Map<TInput, TOutput>(
             this IOutputPipe<TInput> pipe, Func<TInput, TOutput> mapping)
             where TInput : class

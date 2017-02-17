@@ -26,9 +26,18 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Retrieves the first value from the provided <see cref="IQueryable{TInput}"/> or
+        /// null, if empty.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="predicate">The predicate expression.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TInput> FirstOrDefault<TInput>(
             this IOutputPipe<IQueryable<TInput>> pipe, Expression<Func<TInput, bool>> predicate)
             where TInput : class =>
-            pipe.GetService<IFirstOrDefaultPipeFactory<TInput>>().Create(predicate, pipe);
+            pipe.GetService<IFirstOrDefaultPipeFactory<TInput>>()
+                .Create(predicate, pipe);
     }
 }

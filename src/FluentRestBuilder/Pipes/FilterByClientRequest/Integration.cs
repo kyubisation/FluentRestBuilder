@@ -46,24 +46,65 @@ namespace FluentRestBuilder
                 IFilterToTypeConverter<bool>, FilterToBooleanConverter>();
             builder.Services.TryAddSingleton<
                 IFilterToTypeConverter<DateTime>, FilterToDateTimeConverter>();
-            builder.Services.TryAddTransient(typeof(FilterExpressionProviderDictionary<>));
             builder.Services.TryAddSingleton<IQueryArgumentKeys, QueryArgumentKeys>();
             return builder;
         }
 
+        /// <summary>
+        /// Configure the filter capabilities for this pipe chain.
+        /// Provide a dictionary where the keys are filterable fields/properties
+        /// and the values are implementations of <see cref="IFilterExpressionProvider{TInput}"/>
+        /// which provide the filter logic.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="filterExpressionProviders">The filter dictionary.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<IQueryable<TInput>> ApplyFilterByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
                 IDictionary<string, IFilterExpressionProvider<TInput>> filterExpressionProviders) =>
             pipe.GetService<IFilterByClientRequestPipeFactory<TInput>>()
                 .Create(filterExpressionProviders, pipe);
 
+        /// <summary>
+        /// Configure the filter capabilities for this pipe chain.
+        /// Use the <see cref="FilterExpressionProviderDictionary{TInput}"/> to configure
+        /// the available filters.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="builder">The configuration builder.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<IQueryable<TInput>> ApplyFilterByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
                 Func<
                     FilterExpressionProviderDictionary<TInput>,
                     IDictionary<string, IFilterExpressionProvider<TInput>>> builder)
         {
-            var providerDictionary = pipe.GetService<FilterExpressionProviderDictionary<TInput>>();
+            var providerDictionary = new FilterExpressionProviderDictionary<TInput>(pipe);
+            var dictionary = builder(providerDictionary);
+            return pipe.ApplyFilterByClientRequest(dictionary);
+        }
+
+        /// <summary>
+        /// Configure the filter capabilities for this pipe chain.
+        /// Use the <see cref="FilterExpressionProviderDictionary{TInput}"/> to configure
+        /// the available filters.
+        /// This uses the <see cref="StringComparer.InvariantCultureIgnoreCase"/> for
+        /// key comparison.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="builder">The configuration builder.</param>
+        /// <returns>An output pipe to continue with.</returns>
+        public static OutputPipe<IQueryable<TInput>> ApplyCaseInsensitiveFilterByClientRequest<TInput>(
+                this IOutputPipe<IQueryable<TInput>> pipe,
+                Func<
+                    FilterExpressionProviderDictionary<TInput>,
+                    IDictionary<string, IFilterExpressionProvider<TInput>>> builder)
+        {
+            var providerDictionary = new FilterExpressionProviderDictionary<TInput>(
+                pipe, StringComparer.InvariantCultureIgnoreCase);
             var dictionary = builder(providerDictionary);
             return pipe.ApplyFilterByClientRequest(dictionary);
         }
