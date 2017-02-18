@@ -24,7 +24,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Update
             var provider = new FluentRestBuilderCore(new ServiceCollection())
                 .RegisterActionPipe()
                 .RegisterSingleOrDefaultPipe()
-                .RegisterContext<MockDbContext>()
+                .RegisterDbContext<MockDbContext>()
                 .RegisterQueryableSource()
                 .RegisterUpdatePipe()
                 .Services

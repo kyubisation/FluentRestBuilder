@@ -22,7 +22,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Sources.EntitySource
         {
             this.database = new PersistantDatabase();
             var provider = new FluentRestBuilderCore(new ServiceCollection())
-                .RegisterContext<MockDbContext>()
+                .RegisterDbContext<MockDbContext>()
                 .RegisterEntitySource()
                 .Services
                 .AddScoped(p => this.database.Create())

@@ -9,6 +9,7 @@ namespace FluentRestBuilder
     using EntityFrameworkCore.Builder;
     using EntityFrameworkCore.Sources.QueryableSource;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -22,6 +23,12 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Gets an <see cref="IQueryable{TEntity}"/> from the <see cref="DbContext"/>;
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        /// <param name="controller">The MVC controller.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<IQueryable<TEntity>> WithQueryable<TEntity>(
             this ControllerBase controller)
             where TEntity : class =>

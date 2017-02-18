@@ -25,7 +25,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Queryable
             var provider = new FluentRestBuilderCore(new ServiceCollection())
                 .RegisterQueryablePipe()
                 .RegisterSingleOrDefaultPipe()
-                .RegisterContext<MockDbContext>()
+                .RegisterDbContext<MockDbContext>()
                 .RegisterQueryableSource()
                 .Services
                 .AddScoped(p => this.database.Create())

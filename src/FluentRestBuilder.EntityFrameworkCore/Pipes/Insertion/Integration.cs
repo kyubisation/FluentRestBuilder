@@ -20,6 +20,12 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Inserts the input into the database.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TInput> InsertEntity<TInput>(
             this IOutputPipe<TInput> pipe)
             where TInput : class =>

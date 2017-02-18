@@ -29,8 +29,7 @@ namespace FluentRestBuilder
         /// <summary>
         /// Retrieves a single value from the provided <see cref="IQueryable{TInput}"/> or
         /// null, if empty.
-        /// Throws an exception, if the received <see cref="IQueryable{TInput}"/>
-        /// contains more than one element.
+        /// Throws an exception, if the result of the predicate contains more than one element.
         /// </summary>
         /// <typeparam name="TInput">The input type.</typeparam>
         /// <param name="pipe">The parent pipe.</param>

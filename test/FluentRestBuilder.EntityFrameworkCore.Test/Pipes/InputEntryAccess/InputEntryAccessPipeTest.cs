@@ -24,7 +24,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.InputEntryAccess
             var provider = new FluentRestBuilderCore(new ServiceCollection())
                 .RegisterSingleOrDefaultPipe()
                 .RegisterActionPipe()
-                .RegisterContext<MockDbContext>()
+                .RegisterDbContext<MockDbContext>()
                 .RegisterQueryableSource()
                 .RegisterInputEntryAccessPipe()
                 .Services

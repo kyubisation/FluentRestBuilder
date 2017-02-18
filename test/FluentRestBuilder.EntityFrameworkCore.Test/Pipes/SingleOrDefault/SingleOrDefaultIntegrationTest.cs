@@ -23,7 +23,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.SingleOrDefault
             this.database = new PersistantDatabase();
             var provider = new FluentRestBuilderCore(new ServiceCollection())
                 .RegisterSingleOrDefaultPipe()
-                .RegisterContext<MockDbContext>()
+                .RegisterDbContext<MockDbContext>()
                 .RegisterQueryableSource()
                 .Services
                 .AddScoped(p => this.database.Create())

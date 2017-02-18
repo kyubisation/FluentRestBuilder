@@ -12,32 +12,70 @@ namespace FluentRestBuilder
 
     public static class FilterExpressionProviderDictionaryExtensions
     {
-        public static FilterExpressionProviderDictionary<TEntity> AddEqualAndContainsStringFilter<TEntity>(
-            this FilterExpressionProviderDictionary<TEntity> dictionary,
-            Expression<Func<TEntity, string>> propertySelector)
+        /// <summary>
+        /// Adds equals and contains filter for the given string field/property.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="dictionary">The expression provider dictionary.</param>
+        /// <param name="propertySelector">The field/property selection.</param>
+        /// <returns>
+        /// Itself, an <see cref="FilterExpressionProviderDictionary{TInput}"/> instance.
+        /// </returns>
+        public static FilterExpressionProviderDictionary<TInput> AddEqualAndContainsStringFilter<TInput>(
+            this FilterExpressionProviderDictionary<TInput> dictionary,
+            Expression<Func<TInput, string>> propertySelector)
         {
             var member = (MemberExpression)propertySelector.Body;
             return dictionary.AddEqualAndContainsStringFilter(member.Member.Name);
         }
 
-        public static FilterExpressionProviderDictionary<TEntity> AddEqualAndContainsStringFilter<TEntity>(
-            this FilterExpressionProviderDictionary<TEntity> dictionary, string property) =>
+        /// <summary>
+        /// Adds equals and contains filter for the given string field/property.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="dictionary">The expression provider dictionary.</param>
+        /// <param name="property">The field/property name.</param>
+        /// <returns>
+        /// Itself, an <see cref="FilterExpressionProviderDictionary{TInput}"/> instance.
+        /// </returns>
+        public static FilterExpressionProviderDictionary<TInput> AddEqualAndContainsStringFilter<TInput>(
+            this FilterExpressionProviderDictionary<TInput> dictionary, string property) =>
             dictionary.AddFilter(
                 property,
                 (f, expressions) => expressions
                     .AddEquals(e => EF.Property<string>(e, property) == f)
                     .AddContains(e => EF.Property<string>(e, property).Contains(f)));
 
-        public static FilterExpressionProviderDictionary<TEntity> AddIntegerFilters<TEntity>(
-            this FilterExpressionProviderDictionary<TEntity> dictionary,
-            Expression<Func<TEntity, int>> propertySelector)
+        /// <summary>
+        /// Adds equals, greater than, greater than or equal, less than, less than or equal
+        /// filter for the given integer field/property.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="dictionary">The expression provider dictionary.</param>
+        /// <param name="propertySelector">The field/property selection.</param>
+        /// <returns>
+        /// Itself, an <see cref="FilterExpressionProviderDictionary{TInput}"/> instance.
+        /// </returns>
+        public static FilterExpressionProviderDictionary<TInput> AddIntegerFilters<TInput>(
+            this FilterExpressionProviderDictionary<TInput> dictionary,
+            Expression<Func<TInput, int>> propertySelector)
         {
             var member = (MemberExpression)propertySelector.Body;
             return dictionary.AddIntegerFilters(member.Member.Name);
         }
 
-        public static FilterExpressionProviderDictionary<TEntity> AddIntegerFilters<TEntity>(
-            this FilterExpressionProviderDictionary<TEntity> dictionary,
+        /// <summary>
+        /// Adds equals, greater than, greater than or equal, less than, less than or equal
+        /// filter for the given integer field/property.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="dictionary">The expression provider dictionary.</param>
+        /// <param name="property">The field/property name.</param>
+        /// <returns>
+        /// Itself, an <see cref="FilterExpressionProviderDictionary{TInput}"/> instance.
+        /// </returns>
+        public static FilterExpressionProviderDictionary<TInput> AddIntegerFilters<TInput>(
+            this FilterExpressionProviderDictionary<TInput> dictionary,
             string property) =>
             dictionary.AddTypedFilter<int>(
                 property,
@@ -48,16 +86,36 @@ namespace FluentRestBuilder
                     .AddLessThan(e => EF.Property<int>(e, property) < f)
                     .AddLessThanOrEqual(e => EF.Property<int>(e, property) <= f));
 
-        public static FilterExpressionProviderDictionary<TEntity> AddDoubleFilters<TEntity>(
-            this FilterExpressionProviderDictionary<TEntity> dictionary,
-            Expression<Func<TEntity, double>> propertySelector)
+        /// <summary>
+        /// Adds equals, greater than, greater than or equal, less than, less than or equal
+        /// filter for the given double field/property.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="dictionary">The expression provider dictionary.</param>
+        /// <param name="propertySelector">The field/property selection.</param>
+        /// <returns>
+        /// Itself, an <see cref="FilterExpressionProviderDictionary{TInput}"/> instance.
+        /// </returns>
+        public static FilterExpressionProviderDictionary<TInput> AddDoubleFilters<TInput>(
+            this FilterExpressionProviderDictionary<TInput> dictionary,
+            Expression<Func<TInput, double>> propertySelector)
         {
             var member = (MemberExpression)propertySelector.Body;
             return dictionary.AddDoubleFilters(member.Member.Name);
         }
 
-        public static FilterExpressionProviderDictionary<TEntity> AddDoubleFilters<TEntity>(
-            this FilterExpressionProviderDictionary<TEntity> dictionary,
+        /// <summary>
+        /// Adds equals, greater than, greater than or equal, less than, less than or equal
+        /// filter for the given double field/property.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="dictionary">The expression provider dictionary.</param>
+        /// <param name="property">The field/property name.</param>
+        /// <returns>
+        /// Itself, an <see cref="FilterExpressionProviderDictionary{TInput}"/> instance.
+        /// </returns>
+        public static FilterExpressionProviderDictionary<TInput> AddDoubleFilters<TInput>(
+            this FilterExpressionProviderDictionary<TInput> dictionary,
             string property) =>
             dictionary.AddTypedFilter<double>(
                 property,
@@ -69,16 +127,36 @@ namespace FluentRestBuilder
                     .AddLessThan(e => EF.Property<double>(e, property) < f)
                     .AddLessThanOrEqual(e => EF.Property<double>(e, property) <= f));
 
-        public static FilterExpressionProviderDictionary<TEntity> AddDateTimeFilters<TEntity>(
-            this FilterExpressionProviderDictionary<TEntity> dictionary,
-            Expression<Func<TEntity, DateTime>> propertySelector)
+        /// <summary>
+        /// Adds equals, greater than, greater than or equal, less than, less than or equal
+        /// filter for the given <see cref="DateTime"/> field/property.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="dictionary">The expression provider dictionary.</param>
+        /// <param name="propertySelector">The field/property selection.</param>
+        /// <returns>
+        /// Itself, an <see cref="FilterExpressionProviderDictionary{TInput}"/> instance.
+        /// </returns>
+        public static FilterExpressionProviderDictionary<TInput> AddDateTimeFilters<TInput>(
+            this FilterExpressionProviderDictionary<TInput> dictionary,
+            Expression<Func<TInput, DateTime>> propertySelector)
         {
             var member = (MemberExpression)propertySelector.Body;
             return dictionary.AddDateTimeFilters(member.Member.Name);
         }
 
-        public static FilterExpressionProviderDictionary<TEntity> AddDateTimeFilters<TEntity>(
-            this FilterExpressionProviderDictionary<TEntity> dictionary,
+        /// <summary>
+        /// Adds equals, greater than, greater than or equal, less than, less than or equal
+        /// filter for the given <see cref="DateTime"/> field/property.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="dictionary">The expression provider dictionary.</param>
+        /// <param name="property">The field/property name.</param>
+        /// <returns>
+        /// Itself, an <see cref="FilterExpressionProviderDictionary{TInput}"/> instance.
+        /// </returns>
+        public static FilterExpressionProviderDictionary<TInput> AddDateTimeFilters<TInput>(
+            this FilterExpressionProviderDictionary<TInput> dictionary,
             string property) =>
             dictionary.AddTypedFilter<DateTime>(
                 property,

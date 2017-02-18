@@ -25,7 +25,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
             this.database = new PersistantDatabase();
             var provider = new FluentRestBuilderCore(new ServiceCollection())
                 .RegisterSource()
-                .RegisterContext<MockDbContext>()
+                .RegisterDbContext<MockDbContext>()
                 .RegisterQueryableSourcePipe()
                 .Services
                 .AddScoped(p => this.database.Create())
@@ -44,7 +44,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
             var parent = await this.CreateParentWithChildren();
             var parent2 = await this.CreateParentWithChildren();
             var result = await this.controller.FromSource(parent)
-                .SelectQueryableSource(f => f.Set<Child>())
+                .WithQueryable(f => f.Set<Child>())
                 .ToObjectResultOrDefault();
             Assert.NotNull(result);
             Assert.Equal(
@@ -58,7 +58,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
             var parent = await this.CreateParentWithChildren();
             await this.CreateParentWithChildren();
             var result = await this.controller.FromSource(parent)
-                .SelectQueryableSource((f, p) => f.Set<Child>().Where(c => c.ParentId == p.Id))
+                .MapToQueryable((f, p) => f.Set<Child>().Where(c => c.ParentId == p.Id))
                 .ToObjectResultOrDefault();
             Assert.NotNull(result);
             Assert.Equal(parent.Children.Count, await result.CountAsync());

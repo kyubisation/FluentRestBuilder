@@ -24,6 +24,13 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Retrieves an entity from the database based on the predicate.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        /// <param name="controller">The MVC controller.</param>
+        /// <param name="predicate">The predicate.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TEntity> WithEntity<TEntity>(
             this ControllerBase controller, Expression<Func<TEntity, bool>> predicate)
             where TEntity : class =>
@@ -31,6 +38,13 @@ namespace FluentRestBuilder
                 .GetService<IEntitySourceFactory<TEntity>>()
                 .Create(controller, predicate);
 
+        /// <summary>
+        /// Retrieves an entity from the database based on the primary key.
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        /// <param name="controller">The MVC controller.</param>
+        /// <param name="primaryKey">The primary key value or values.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TEntity> WithEntity<TEntity>(
             this ControllerBase controller, params object[] primaryKey)
             where TEntity : class
