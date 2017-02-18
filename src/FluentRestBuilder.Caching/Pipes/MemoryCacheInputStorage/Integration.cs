@@ -93,7 +93,7 @@ namespace FluentRestBuilder
             pipe.StoreInputInMemoryCache(key, e => options);
 
         /// <summary>
-        /// Store the received input in cache with the given key and options.
+        /// Store the received input in cache with the given key.
         /// </summary>
         /// <typeparam name="TInput">The input type.</typeparam>
         /// <param name="pipe">The parent pipe.</param>
