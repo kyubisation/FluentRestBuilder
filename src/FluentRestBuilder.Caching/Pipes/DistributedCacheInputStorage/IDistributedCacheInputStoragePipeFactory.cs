@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputStorage
     public interface IDistributedCacheInputStoragePipeFactory<TInput>
     {
         OutputPipe<TInput> Create(
-            string key,
+            Func<TInput, string> keyFactory,
             Func<TInput, DistributedCacheEntryOptions> optionGenerator,
             IOutputPipe<TInput> pipe);
     }

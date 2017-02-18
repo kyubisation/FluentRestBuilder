@@ -10,7 +10,7 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputStorage
     public interface IMemoryCacheInputStoragePipeFactory<TInput>
     {
         OutputPipe<TInput> Create(
-            object key,
+            Func<TInput, object> keyFactory,
             Func<TInput, MemoryCacheEntryOptions> optionsFactory,
             IOutputPipe<TInput> pipe);
     }

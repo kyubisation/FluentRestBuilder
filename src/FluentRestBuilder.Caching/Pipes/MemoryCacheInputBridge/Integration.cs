@@ -21,6 +21,15 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Special pipe that acts as a shortcut, if the cache contains the given key and
+        /// the value is of the type TInput.
+        /// If that condition is met, the above pipes will be skipped.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="key">The cache key.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TInput> BridgeIfInputAvailableInMemoryCache<TInput>(
             this IOutputPipe<TInput> pipe, object key)
             where TInput : class =>

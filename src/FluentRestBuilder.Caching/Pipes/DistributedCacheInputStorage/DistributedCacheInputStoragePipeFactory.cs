@@ -22,10 +22,10 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputStorage
         }
 
         public OutputPipe<TInput> Create(
-            string key,
+            Func<TInput, string> keyFactory,
             Func<TInput, DistributedCacheEntryOptions> optionGenerator,
             IOutputPipe<TInput> pipe) =>
             new DistributedCacheInputStoragePipe<TInput>(
-                key, optionGenerator, this.byteMapper, this.distributedCache, pipe);
+                keyFactory, optionGenerator, this.byteMapper, this.distributedCache, pipe);
     }
 }

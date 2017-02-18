@@ -26,19 +26,85 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Store the received input in cache with the given key and options.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="keyFactory">The key factory.</param>
+        /// <param name="optionsFactory">The option factory.</param>
+        /// <returns>An output pipe to continue with.</returns>
+        public static OutputPipe<TInput> StoreInputInDistributedCache<TInput>(
+            this IOutputPipe<TInput> pipe,
+            Func<TInput, string> keyFactory,
+            Func<TInput, DistributedCacheEntryOptions> optionsFactory)
+            where TInput : class =>
+            pipe.GetRequiredService<IDistributedCacheInputStoragePipeFactory<TInput>>()
+                .Create(keyFactory, optionsFactory, pipe);
+
+        /// <summary>
+        /// Store the received input in cache with the given key and options.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="keyFactory">The key factory.</param>
+        /// <param name="options">The options.</param>
+        /// <returns>An output pipe to continue with.</returns>
+        public static OutputPipe<TInput> StoreInputInDistributedCache<TInput>(
+            this IOutputPipe<TInput> pipe,
+            Func<TInput, string> keyFactory,
+            DistributedCacheEntryOptions options)
+            where TInput : class =>
+            pipe.StoreInputInDistributedCache(keyFactory, i => options);
+
+        /// <summary>
+        /// Store the received input in cache with the given key and options.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="keyFactory">The key factory.</param>
+        /// <returns>An output pipe to continue with.</returns>
+        public static OutputPipe<TInput> StoreInputInDistributedCache<TInput>(
+            this IOutputPipe<TInput> pipe, Func<TInput, string> keyFactory)
+            where TInput : class =>
+            pipe.StoreInputInDistributedCache(
+                keyFactory, (Func<TInput, DistributedCacheEntryOptions>)null);
+
+        /// <summary>
+        /// Store the received input in cache with the given key and options.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="optionsFactory">The option factory.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TInput> StoreInputInDistributedCache<TInput>(
             this IOutputPipe<TInput> pipe,
             string key,
-            Func<TInput, DistributedCacheEntryOptions> optionGenerator)
+            Func<TInput, DistributedCacheEntryOptions> optionsFactory)
             where TInput : class =>
-            pipe.GetRequiredService<IDistributedCacheInputStoragePipeFactory<TInput>>()
-                .Create(key, optionGenerator, pipe);
+            pipe.StoreInputInDistributedCache(i => key, optionsFactory);
 
+        /// <summary>
+        /// Store the received input in cache with the given key and options.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="options">The options.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TInput> StoreInputInDistributedCache<TInput>(
             this IOutputPipe<TInput> pipe, string key, DistributedCacheEntryOptions options)
             where TInput : class =>
             pipe.StoreInputInDistributedCache(key, i => options);
 
+        /// <summary>
+        /// Store the received input in cache with the given key and options.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="key">The key.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TInput> StoreInputInDistributedCache<TInput>(
             this IOutputPipe<TInput> pipe, string key)
             where TInput : class =>

@@ -13,21 +13,21 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputStorage
 
     public class DistributedCacheInputStoragePipe<TInput> : ChainPipe<TInput>
     {
-        private readonly string key;
-        private readonly Func<TInput, DistributedCacheEntryOptions> optionGenerator;
+        private readonly Func<TInput, string> keyFactory;
+        private readonly Func<TInput, DistributedCacheEntryOptions> optionFactory;
         private readonly IByteMapper<TInput> byteMapper;
         private readonly IDistributedCache distributedCache;
 
         public DistributedCacheInputStoragePipe(
-            string key,
-            Func<TInput, DistributedCacheEntryOptions> optionGenerator,
+            Func<TInput, string> keyFactory,
+            Func<TInput, DistributedCacheEntryOptions> optionFactory,
             IByteMapper<TInput> byteMapper,
             IDistributedCache distributedCache,
             IOutputPipe<TInput> parent)
             : base(parent)
         {
-            this.key = key;
-            this.optionGenerator = optionGenerator;
+            this.keyFactory = keyFactory;
+            this.optionFactory = optionFactory;
             this.byteMapper = byteMapper;
             this.distributedCache = distributedCache;
         }
@@ -41,14 +41,15 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputStorage
         private async Task StoreInCache(TInput input)
         {
             var cacheBytes = this.byteMapper.ToByteArray(input);
-            var options = this.optionGenerator?.Invoke(input);
+            var options = this.optionFactory?.Invoke(input);
+            var key = this.keyFactory(input);
             if (options == null)
             {
-                await this.distributedCache.SetAsync(this.key, cacheBytes);
+                await this.distributedCache.SetAsync(key, cacheBytes);
             }
             else
             {
-                await this.distributedCache.SetAsync(this.key, cacheBytes, options);
+                await this.distributedCache.SetAsync(key, cacheBytes, options);
             }
         }
     }

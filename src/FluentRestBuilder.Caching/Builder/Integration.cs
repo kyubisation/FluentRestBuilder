@@ -9,6 +9,11 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
+        /// <summary>
+        /// Registers the caching pipes.
+        /// </summary>
+        /// <param name="builder">The FluentRestBuilder configuration instance.</param>
+        /// <returns>The given FluentRestBuilder configuration instance.</returns>
         public static IFluentRestBuilder AddCachingPipes(
             this IFluentRestBuilder builder)
         {
