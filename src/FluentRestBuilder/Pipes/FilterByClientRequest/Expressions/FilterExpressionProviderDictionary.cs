@@ -70,10 +70,11 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
         /// Provide a factory function receiving the filter value for this field/property and
         /// <see cref="FilterExpressionDictionary{TEntity}"/> to create the appropriate
         /// filter type implementations.
-        /// 
+        ///
         /// This uses <see cref="IFilterToTypeConverter{TFilter}"/> to parse the filter
         /// value from to client to the given filter type. Most native types are supported.
         /// </summary>
+        /// <typeparam name="TFilter">The filter type.</typeparam>
         /// <param name="property">The field/property name.</param>
         /// <param name="builder">The filter factory.</param>
         /// <returns>
@@ -92,10 +93,11 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
         /// Add a filter for a field/property with a non-string type.
         /// Provide a factory function receiving the filter value for this field/property and
         /// returning a dictionary of supported filter types with appropriate implementation.
-        /// 
+        ///
         /// This uses <see cref="IFilterToTypeConverter{TFilter}"/> to parse the filter
         /// value from to client to the given filter type. Most native types are supported.
         /// </summary>
+        /// <typeparam name="TFilter">The filter type.</typeparam>
         /// <param name="property">The field/property name.</param>
         /// <param name="builder">The filter factory.</param>
         /// <returns>

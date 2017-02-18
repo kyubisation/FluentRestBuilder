@@ -1,4 +1,4 @@
-﻿// <copyright file="OrderByExpressionBuilder.cs" company="Kyubisation">
+﻿// <copyright file="OrderByExpressionDictionary.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 

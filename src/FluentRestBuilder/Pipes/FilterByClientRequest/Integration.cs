@@ -90,8 +90,7 @@ namespace FluentRestBuilder
         /// Configure the filter capabilities for this pipe chain.
         /// Use the <see cref="FilterExpressionProviderDictionary{TInput}"/> to configure
         /// the available filters.
-        /// This uses the <see cref="StringComparer.InvariantCultureIgnoreCase"/> for
-        /// key comparison.
+        /// This uses the StringComparer.OrdinalIgnoreCase for key comparison.
         /// </summary>
         /// <typeparam name="TInput">The input type.</typeparam>
         /// <param name="pipe">The parent pipe.</param>
@@ -104,7 +103,7 @@ namespace FluentRestBuilder
                     IDictionary<string, IFilterExpressionProvider<TInput>>> factory)
         {
             var providerDictionary = new FilterExpressionProviderDictionary<TInput>(
-                pipe, StringComparer.InvariantCultureIgnoreCase);
+                pipe, StringComparer.OrdinalIgnoreCase);
             var dictionary = factory(providerDictionary);
             return pipe.ApplyFilterByClientRequest(dictionary);
         }

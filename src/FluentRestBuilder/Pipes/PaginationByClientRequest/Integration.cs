@@ -33,7 +33,7 @@ namespace FluentRestBuilder
 
         /// <summary>
         /// Configure the pagination capabilities for this pipe chain.
-        /// 
+        ///
         /// WARNING: Do not use this pipe before the
         /// <see cref="FilterByClientRequestPipe{TInput}"/>, the
         /// <see cref="SearchByClientRequestPipe{TInput}"/> or the

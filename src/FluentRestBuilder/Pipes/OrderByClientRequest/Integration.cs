@@ -32,7 +32,7 @@ namespace FluentRestBuilder
         /// Provide a dictionary where the keys are filterable fields/properties
         /// and the values are implementations of <see cref="IOrderByExpressionFactory{TInput}"/>
         /// which provide the order by logic.
-        /// 
+        ///
         /// To define the default order by, use the order by extension methods before this pipe
         /// (<see cref="OrderBy{TInput,TKey}"/>, <see cref="OrderByDescending{TInput,TKey}"/>,
         /// <see cref="ThenBy{TInput,TKey}"/> and/or <see cref="ThenByDescending{TInput,TKey}"/>).
@@ -51,7 +51,7 @@ namespace FluentRestBuilder
         /// Configure the order by capabilities for this pipe chain.
         /// Use the <see cref="OrderByExpressionDictionary{TInput}"/> to configure
         /// the available order by possibilities.
-        /// 
+        ///
         /// To define the default order by, use the order by extension methods before this pipe
         /// (<see cref="OrderBy{TInput,TKey}"/>, <see cref="OrderByDescending{TInput,TKey}"/>,
         /// <see cref="ThenBy{TInput,TKey}"/> and/or <see cref="ThenByDescending{TInput,TKey}"/>).
@@ -74,9 +74,9 @@ namespace FluentRestBuilder
         /// Configure the order by capabilities for this pipe chain.
         /// Use the <see cref="OrderByExpressionDictionary{TInput}"/> to configure
         /// the available order by possibilities.
-        /// This uses the <see cref="StringComparer.InvariantCultureIgnoreCase"/> for
+        /// This uses the StringComparer.OrdinalIgnoreCase for
         /// key comparison.
-        /// 
+        ///
         /// To define the default order by, use the order by extension methods before this pipe
         /// (<see cref="OrderBy{TInput,TKey}"/>, <see cref="OrderByDescending{TInput,TKey}"/>,
         /// <see cref="ThenBy{TInput,TKey}"/> and/or <see cref="ThenByDescending{TInput,TKey}"/>).
@@ -93,7 +93,7 @@ namespace FluentRestBuilder
         {
             var dictionary = factory(
                 new OrderByExpressionDictionary<TInput>(
-                    StringComparer.InvariantCultureIgnoreCase));
+                    StringComparer.OrdinalIgnoreCase));
             return pipe.ApplyOrderByClientRequest(dictionary);
         }
     }
