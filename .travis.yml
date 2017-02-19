@@ -22,6 +22,9 @@ branches:
   only:
     - master
     - dev
+	- /^feature\/.*$/
+	- /^release\/.*$/
+	- /^hotfix\/.*$/
 before_install:  
   - if test "$TRAVIS_OS_NAME" == "osx"; then brew update; mkdir -p /usr/local/lib; fi
 script:

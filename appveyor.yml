@@ -5,6 +5,9 @@ branches:
   only:
   - master
   - dev
+  - /feature\/.*/
+  - /release\/.*/
+  - /hotfix\/.*/
 nuget:  
   disable_publish_on_pr: true
 build_script:  
@@ -20,7 +23,7 @@ deploy:
     secure: 5Nf/5WDJ5K0rIMMTMh+sSnN3TdkILOQFgODchMX+g6s1CxHTXFhvkqu3IGkQDND3
   skip_symbols: true
   on:
-    branch: master
+    branch: dev
 - provider: NuGet
   name: production
   api_key:
