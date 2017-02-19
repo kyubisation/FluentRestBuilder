@@ -67,14 +67,15 @@ namespace FluentRestBuilder
             new FluentRestBuilder(collection);
 
         /// <summary>
-        /// Registers the IHttpContextAccessor to be used as the access for the HttpContext.
-        /// By default the controller extension methods to create the sources use the HttpContext
-        /// provided by the controller.
-        /// This is only necessary if you want to use pipes that require the HttpContext and
-        /// want to create sources without a controller.
+        /// Registers the <see cref="IHttpContextAccessor"/> to be used as the access for the
+        /// <see cref="HttpContext"/>.
+        /// By default the controller extension methods to create the sources use the
+        /// <see cref="HttpContext"/> provided by the controller.
+        /// This is only necessary if you want to use pipes that require the
+        ///  <see cref="HttpContext"/> and want to create sources without a controller.
         /// </summary>
         /// <remarks>
-        /// The ASP.NET Core Identity registers IHttpContextAccessor.
+        /// The ASP.NET Core Identity package registers <see cref="IHttpContextAccessor"/>.
         /// </remarks>
         /// <param name="builder">The FluentRestBuilderCore configuration instance.</param>
         /// <returns>The provided FluentRestBuilderCore configuration instance.</returns>
@@ -86,14 +87,15 @@ namespace FluentRestBuilder
         }
 
         /// <summary>
-        /// Registers the IHttpContextAccessor to be used as the access for the HttpContext.
-        /// By default the controller extension methods to create the sources use the HttpContext
-        /// provided by the controller.
-        /// This is only necessary if you want to use pipes that require the HttpContext and
-        /// want to create sources without a controller.
+        /// Registers the <see cref="IHttpContextAccessor"/> to be used as the access for the
+        /// <see cref="HttpContext"/>.
+        /// By default the controller extension methods to create the sources use the
+        /// <see cref="HttpContext"/> provided by the controller.
+        /// This is only necessary if you want to use pipes that require the
+        ///  <see cref="HttpContext"/> and want to create sources without a controller.
         /// </summary>
         /// <remarks>
-        /// The ASP.NET Core Identity registers IHttpContextAccessor.
+        /// The ASP.NET Core Identity package registers <see cref="IHttpContextAccessor"/>.
         /// </remarks>
         /// <param name="builder">The FluentRestBuilder configuration instance.</param>
         /// <returns>The provided FluentRestBuilder configuration instance.</returns>
