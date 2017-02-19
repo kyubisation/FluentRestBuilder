@@ -32,6 +32,16 @@ namespace FluentRestBuilder
             return builder;
         }
 
+        /// <summary>
+        /// Maps the entries of the received <see cref="IQueryable{TInput}"/>
+        /// according to the given mapping function and wraps the result
+        /// in an <see cref="RestEntityCollection"/>.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <typeparam name="TOutput">The output type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="mapping">The mapping function.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<RestEntityCollection> MapToRestCollection<TInput, TOutput>(
             this IOutputPipe<IQueryable<TInput>> pipe, Func<TInput, TOutput> mapping)
             where TInput : class
@@ -39,6 +49,16 @@ namespace FluentRestBuilder
             pipe.GetRequiredService<ICollectionMappingPipeFactory<TInput, TOutput>>()
                 .Create(mapping, pipe);
 
+        /// <summary>
+        /// Maps the entries of the received <see cref="IQueryable{TInput}"/>
+        /// according to the selected <see cref="IMapper{TInput,TOutput}"/> and
+        /// wraps the result in an <see cref="RestEntityCollection"/>.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <typeparam name="TOutput">The output type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="selection">The <see cref="IMapper{TInput,TOutput}"/> selection.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<RestEntityCollection> UseMapperForCollection<TInput, TOutput>(
             this IOutputPipe<IQueryable<TInput>> pipe,
             Func<IMapperFactory<TInput>, IMapper<TInput, TOutput>> selection)
@@ -49,6 +69,16 @@ namespace FluentRestBuilder
             return pipe.MapToRestCollection(i => selection(transformer).Map(i));
         }
 
+        /// <summary>
+        /// Maps the entries of the received <see cref="IQueryable{TInput}"/>
+        /// according to the built mapping function and
+        /// wraps the result in an <see cref="RestEntityCollection"/>.
+        /// </summary>
+        /// <typeparam name="TInput">The input type.</typeparam>
+        /// <typeparam name="TOutput">The output type.</typeparam>
+        /// <param name="pipe">The parent pipe.</param>
+        /// <param name="builder">The builder for the mapping.</param>
+        /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<RestEntityCollection> BuildMappingForCollection<TInput, TOutput>(
             this IOutputPipe<IQueryable<TInput>> pipe,
             Func<IMappingBuilder<TInput>, Func<TInput, TOutput>> builder)
