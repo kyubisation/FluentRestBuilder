@@ -18,15 +18,15 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Builder
             const string embed1 = "test";
             const string embed2 = "test1";
             var provider = new FluentRestBuilderCore(new ServiceCollection())
-                .AddRestMapper<Target, TargetResponse>(
+                .AddRestMapper(p => RestMapper<Target, TargetResponse>.Create(
+                    p,
                     target => new TargetResponse
                     {
                         Id = target.Id,
                         Id2 = target.Id2,
                         Id3 = target.Id3,
                         Id4 = target.Id4
-                    },
-                    mapper => mapper.Embed(embed1, embed1))
+                    }).Embed(embed1, embed1))
                 .Services
                 .BuildServiceProvider();
             using (var scope = provider.CreateScope())

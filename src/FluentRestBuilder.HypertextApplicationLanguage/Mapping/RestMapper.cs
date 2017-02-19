@@ -10,6 +10,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Mapping
     using HypertextApplicationLanguage;
     using Links;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
 
     public class RestMapper<TInput, TOutput> : IMapper<TInput, TOutput>
         where TOutput : RestEntity
@@ -27,6 +28,14 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Mapping
             this.mapping = mapping;
             this.linkAggregator = linkAggregator;
             this.urlHelper = urlHelper.Value;
+        }
+
+        public static RestMapper<TInput, TOutput> Create(
+            IServiceProvider serviceProvider, Func<TInput, TOutput> mapping)
+        {
+            var urlHelper = serviceProvider.GetService<IScopedStorage<IUrlHelper>>();
+            var linkAggregator = serviceProvider.GetService<ILinkAggregator>();
+            return new RestMapper<TInput, TOutput>(mapping, urlHelper, linkAggregator);
         }
 
         public TOutput Map(TInput source)
