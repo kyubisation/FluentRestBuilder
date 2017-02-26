@@ -28,8 +28,11 @@ namespace FluentRestBuilder
         /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TInput> InsertEntity<TInput>(
             this IOutputPipe<TInput> pipe)
-            where TInput : class =>
-            pipe.GetRequiredService<IEntityInsertionPipeFactory<TInput>>()
-                .Create(pipe);
+            where TInput : class
+        {
+            var factory = pipe.GetService<IEntityInsertionPipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(EntityInsertionPipe<>));
+            return factory.Create(pipe);
+        }
     }
 }

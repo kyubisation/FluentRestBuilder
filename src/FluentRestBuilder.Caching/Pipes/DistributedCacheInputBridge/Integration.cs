@@ -35,8 +35,11 @@ namespace FluentRestBuilder
         /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TInput> BridgeIfInputAvailableInDistributedCache<TInput>(
             this IOutputPipe<TInput> pipe, string key)
-            where TInput : class =>
-            pipe.GetService<IDistributedCacheInputBridgePipeFactory<TInput>>()
-                .Create(key, pipe);
+            where TInput : class
+        {
+            var factory = pipe.GetService<IDistributedCacheInputBridgePipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(DistributedCacheInputBridgePipe<>));
+            return factory.Create(key, pipe);
+        }
     }
 }

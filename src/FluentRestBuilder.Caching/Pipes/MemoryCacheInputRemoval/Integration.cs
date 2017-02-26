@@ -31,9 +31,12 @@ namespace FluentRestBuilder
         /// <param name="keyFactory">The key factory.</param>
         /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TInput> RemoveFromMemoryCache<TInput>(
-            this IOutputPipe<TInput> pipe, Func<TInput, object> keyFactory) =>
-            pipe.GetRequiredService<IMemoryCacheInputRemovalPipeFactory<TInput>>()
-                .Create(keyFactory, pipe);
+            this IOutputPipe<TInput> pipe, Func<TInput, object> keyFactory)
+        {
+            var factory = pipe.GetService<IMemoryCacheInputRemovalPipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(MemoryCacheInputRemovalPipe<>));
+            return factory.Create(keyFactory, pipe);
+        }
 
         /// <summary>
         /// Removes an entry from the cache.

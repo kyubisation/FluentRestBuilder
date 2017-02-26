@@ -15,5 +15,14 @@ namespace FluentRestBuilder
                 throw new NoPipeAttachedException();
             }
         }
+
+        public static void IsPipeRegistered(object value, Type pipe)
+        {
+            if (value == null)
+            {
+                throw new InvalidOperationException(
+                    $"{pipe} has not been registered. Has FluentRestBuilder been added?");
+            }
+        }
     }
 }

@@ -43,9 +43,12 @@ namespace FluentRestBuilder
         /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<IQueryable<TInput>> ApplyOrderByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
-                IDictionary<string, IOrderByExpressionFactory<TInput>> orderByExpressions) =>
-            pipe.GetService<IOrderByClientRequestPipeFactory<TInput>>()
-                .Create(orderByExpressions, pipe);
+                IDictionary<string, IOrderByExpressionFactory<TInput>> orderByExpressions)
+        {
+            var factory = pipe.GetService<IOrderByClientRequestPipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(OrderByClientRequestPipe<>));
+            return factory.Create(orderByExpressions, pipe);
+        }
 
         /// <summary>
         /// Configure the order by capabilities for this pipe chain.

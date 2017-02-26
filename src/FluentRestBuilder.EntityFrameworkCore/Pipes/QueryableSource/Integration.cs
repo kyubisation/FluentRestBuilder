@@ -36,9 +36,12 @@ namespace FluentRestBuilder
         public static QueryableSourcePipe<TInput, TOutput> MapToQueryable<TInput, TOutput>(
             this IOutputPipe<TInput> pipe,
             Func<DbContext, TInput, IQueryable<TOutput>> selection)
-            where TOutput : class =>
-            pipe.GetRequiredService<IQueryableSourcePipeFactory<TInput, TOutput>>()
-                .Create(selection, pipe);
+            where TOutput : class
+        {
+            var factory = pipe.GetService<IQueryableSourcePipeFactory<TInput, TOutput>>();
+            Check.IsPipeRegistered(factory, typeof(QueryableSourcePipe<,>));
+            return factory.Create(selection, pipe);
+        }
 
         /// <summary>
         /// Use the <see cref="DbContext.Set{TEntity}"/> method to select the appropriate

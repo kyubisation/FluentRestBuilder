@@ -33,9 +33,12 @@ namespace FluentRestBuilder
         public static OutputPipe<TOutput> Map<TInput, TOutput>(
             this IOutputPipe<TInput> pipe, Func<TInput, Task<TOutput>> mapping)
             where TInput : class
-            where TOutput : class =>
-            pipe.GetRequiredService<IMappingPipeFactory<TInput, TOutput>>()
-                .Create(mapping, pipe);
+            where TOutput : class
+        {
+            var factory = pipe.GetService<IMappingPipeFactory<TInput, TOutput>>();
+            Check.IsPipeRegistered(factory, typeof(MappingPipe<,>));
+            return factory.Create(mapping, pipe);
+        }
 
         /// <summary>
         /// Map the input to the desired output.

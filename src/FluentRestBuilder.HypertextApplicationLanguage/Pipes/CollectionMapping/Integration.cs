@@ -45,9 +45,12 @@ namespace FluentRestBuilder
         public static OutputPipe<RestEntityCollection> MapToRestCollection<TInput, TOutput>(
             this IOutputPipe<IQueryable<TInput>> pipe, Func<TInput, TOutput> mapping)
             where TInput : class
-            where TOutput : class =>
-            pipe.GetRequiredService<ICollectionMappingPipeFactory<TInput, TOutput>>()
-                .Create(mapping, pipe);
+            where TOutput : class
+        {
+            var factory = pipe.GetService<ICollectionMappingPipeFactory<TInput, TOutput>>();
+            Check.IsPipeRegistered(factory, typeof(CollectionMappingPipe<,>));
+            return factory.Create(mapping, pipe);
+        }
 
         /// <summary>
         /// Maps the entries of the received <see cref="IQueryable{TInput}"/>

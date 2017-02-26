@@ -28,8 +28,11 @@ namespace FluentRestBuilder
         /// <param name="pipe">The parent pipe.</param>
         /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TInput> DeleteEntity<TInput>(this IOutputPipe<TInput> pipe)
-            where TInput : class =>
-            pipe.GetRequiredService<IEntityDeletionPipeFactory<TInput>>()
-                .Create(pipe);
+            where TInput : class
+        {
+            var factory = pipe.GetService<IEntityDeletionPipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(EntityDeletionPipe<>));
+            return factory.Create(pipe);
+        }
     }
 }

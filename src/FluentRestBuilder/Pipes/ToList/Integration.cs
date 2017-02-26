@@ -33,8 +33,11 @@ namespace FluentRestBuilder
         /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<List<TInput>> ToList<TInput>(
             this IOutputPipe<IQueryable<TInput>> pipe)
-            where TInput : class =>
-            pipe.GetService<IToListPipeFactory<TInput>>()
-                .Create(pipe);
+            where TInput : class
+        {
+            var factory = pipe.GetService<IToListPipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(ToListPipe<>));
+            return factory.Create(pipe);
+        }
     }
 }

@@ -62,9 +62,12 @@ namespace FluentRestBuilder
         /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<IQueryable<TInput>> ApplyFilterByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
-                IDictionary<string, IFilterExpressionProvider<TInput>> filterExpressionProviders) =>
-            pipe.GetService<IFilterByClientRequestPipeFactory<TInput>>()
-                .Create(filterExpressionProviders, pipe);
+                IDictionary<string, IFilterExpressionProvider<TInput>> filterExpressionProviders)
+        {
+            var factory = pipe.GetService<IFilterByClientRequestPipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(FilterByClientRequestPipe<>));
+            return factory.Create(filterExpressionProviders, pipe);
+        }
 
         /// <summary>
         /// Configure the filter capabilities for this pipe chain.

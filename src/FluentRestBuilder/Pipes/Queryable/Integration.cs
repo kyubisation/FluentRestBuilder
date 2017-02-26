@@ -35,9 +35,13 @@ namespace FluentRestBuilder
         public static OutputPipe<TOutputQueryable> MapQueryable<TInputQueryable, TOutputQueryable>(
             this IOutputPipe<TInputQueryable> pipe, Func<TInputQueryable, TOutputQueryable> mapping)
             where TInputQueryable : class, IQueryable
-            where TOutputQueryable : class, IQueryable =>
-            pipe.GetService<IQueryablePipeFactory<TInputQueryable, TOutputQueryable>>()
-                .Create(mapping, pipe);
+            where TOutputQueryable : class, IQueryable
+        {
+            var factory = pipe
+                .GetService<IQueryablePipeFactory<TInputQueryable, TOutputQueryable>>();
+            Check.IsPipeRegistered(factory, typeof(QueryablePipe<,>));
+            return factory.Create(mapping, pipe);
+        }
 
         /// <summary>
         /// Filter the received <see cref="IQueryable{TInput}"/> with the given predicate.

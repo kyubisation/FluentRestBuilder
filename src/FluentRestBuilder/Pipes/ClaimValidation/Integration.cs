@@ -36,9 +36,12 @@ namespace FluentRestBuilder
             this IOutputPipe<TInput> pipe,
             Func<ClaimsPrincipal, TInput, bool> predicate,
             Func<TInput, object> errorFactory = null)
-            where TInput : class =>
-            pipe.GetRequiredService<IClaimValidationPipeFactory<TInput>>()
-                .Create(predicate, errorFactory, pipe);
+            where TInput : class
+        {
+            var factory = pipe.GetService<IClaimValidationPipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(ClaimValidationPipe<>));
+            return factory.Create(predicate, errorFactory, pipe);
+        }
 
         /// <summary>
         /// Validate permissions for the current user.

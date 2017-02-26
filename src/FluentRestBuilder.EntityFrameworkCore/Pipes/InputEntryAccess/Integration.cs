@@ -35,9 +35,12 @@ namespace FluentRestBuilder
         /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<TInput> WithEntityEntry<TInput>(
             this IOutputPipe<TInput> pipe, Func<EntityEntry<TInput>, Task> entryAction)
-            where TInput : class =>
-            pipe.GetRequiredService<IInputEntryAccessPipeFactory<TInput>>()
-                .Create(entryAction, pipe);
+            where TInput : class
+        {
+            var factory = pipe.GetService<IInputEntryAccessPipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(InputEntryAccessPipe<>));
+            return factory.Create(entryAction, pipe);
+        }
 
         /// <summary>
         /// Perform an action with the <see cref="EntityEntry{TInput}"/>

@@ -22,8 +22,11 @@ namespace FluentRestBuilder
 
         public static OutputPipe<TInput> UpdateEntity<TInput>(
             this IOutputPipe<TInput> pipe)
-            where TInput : class =>
-            pipe.GetRequiredService<IEntityUpdatePipeFactory<TInput>>()
-                .Create(pipe);
+            where TInput : class
+        {
+            var factory = pipe.GetService<IEntityUpdatePipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(EntityUpdatePipe<>));
+            return factory.Create(pipe);
+        }
     }
 }

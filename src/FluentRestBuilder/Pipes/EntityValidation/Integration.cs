@@ -39,9 +39,12 @@ namespace FluentRestBuilder
             Func<TInput, Task<bool>> invalidCheck,
             int statusCode,
             Func<TInput, object> errorFactory = null)
-            where TInput : class =>
-            pipe.GetService<IEntityValidationPipeFactory<TInput>>()
-                .Create(invalidCheck, statusCode, errorFactory, pipe);
+            where TInput : class
+        {
+            var factory = pipe.GetService<IEntityValidationPipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(EntityValidationPipe<>));
+            return factory.Create(invalidCheck, statusCode, errorFactory, pipe);
+        }
 
         /// <summary>
         /// Invalidate the input on the given condition.

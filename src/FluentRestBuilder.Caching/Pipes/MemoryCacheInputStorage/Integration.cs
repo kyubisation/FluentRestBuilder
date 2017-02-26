@@ -35,9 +35,12 @@ namespace FluentRestBuilder
             this IOutputPipe<TInput> pipe,
             Func<TInput, object> keyFactory,
             Func<TInput, MemoryCacheEntryOptions> optionsFactory)
-            where TInput : class =>
-            pipe.GetRequiredService<IMemoryCacheInputStoragePipeFactory<TInput>>()
-                .Create(keyFactory, optionsFactory, pipe);
+            where TInput : class
+        {
+            var factory = pipe.GetService<IMemoryCacheInputStoragePipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(MemoryCacheInputStoragePipe<>));
+            return factory.Create(keyFactory, optionsFactory, pipe);
+        }
 
         /// <summary>
         /// Store the received input in cache with the given key and options.

@@ -39,8 +39,11 @@ namespace FluentRestBuilder
         /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<IQueryable<TInput>> ApplySearchByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
-                Func<string, Expression<Func<TInput, bool>>> search) =>
-            pipe.GetService<ISearchByClientRequestPipeFactory<TInput>>()
-                .Create(search, pipe);
+                Func<string, Expression<Func<TInput, bool>>> search)
+        {
+            var factory = pipe.GetService<ISearchByClientRequestPipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(SearchByClientRequestPipe<>));
+            return factory.Create(search, pipe);
+        }
     }
 }

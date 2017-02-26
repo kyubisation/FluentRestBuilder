@@ -46,8 +46,11 @@ namespace FluentRestBuilder
         /// <returns>An output pipe to continue with.</returns>
         public static OutputPipe<IQueryable<TInput>> ApplyPaginationByClientRequest<TInput>(
                 this IOutputPipe<IQueryable<TInput>> pipe,
-                PaginationOptions options = null) =>
-            pipe.GetService<IPaginationByClientRequestPipeFactory<TInput>>()
-                .Create(options, pipe);
+                PaginationOptions options = null)
+        {
+            var factory = pipe.GetService<IPaginationByClientRequestPipeFactory<TInput>>();
+            Check.IsPipeRegistered(factory, typeof(PaginationByClientRequestPipe<>));
+            return factory.Create(options, pipe);
+        }
     }
 }
