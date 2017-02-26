@@ -6,6 +6,7 @@ namespace FluentRestBuilder.Pipes.Mapping
 {
     using System;
     using System.Threading.Tasks;
+    using Microsoft.Extensions.Logging;
 
     public class MappingPipe<TInput, TOutput> : MappingPipeBase<TInput, TOutput>
         where TInput : class
@@ -15,8 +16,9 @@ namespace FluentRestBuilder.Pipes.Mapping
 
         public MappingPipe(
             Func<TInput, Task<TOutput>> mapping,
+            ILogger<MappingPipe<TInput, TOutput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.mapping = mapping;
         }

@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputBridge
     using FluentRestBuilder.Pipes;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Distributed;
+    using Microsoft.Extensions.Logging;
 
     public class DistributedCacheInputBridgePipe<TInput> : ChainPipe<TInput>
     {
@@ -20,8 +21,9 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputBridge
             string key,
             IByteMapper<TInput> byteMapper,
             IDistributedCache distributedCache,
+            ILogger<DistributedCacheInputBridgePipe<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.key = key;
             this.byteMapper = byteMapper;

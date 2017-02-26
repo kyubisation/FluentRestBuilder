@@ -10,6 +10,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
 
     public class EntityUpdatePipe<TInput> : ActionResultPipe<TInput>
         where TInput : class
@@ -18,8 +19,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
 
         public EntityUpdatePipe(
             IScopedStorage<DbContext> contextStorage,
+            ILogger<EntityUpdatePipe<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.contextStorage = contextStorage;
         }

@@ -8,6 +8,7 @@ namespace FluentRestBuilder.Pipes.ClaimValidation
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Logging;
 
     public class ClaimValidationPipe<TInput> : ValidationPipeBase<TInput>
         where TInput : class
@@ -19,8 +20,9 @@ namespace FluentRestBuilder.Pipes.ClaimValidation
             Func<ClaimsPrincipal, TInput, bool> validCheck,
             ClaimsPrincipal principal,
             Func<TInput, object> errorFactory,
+            ILogger<ClaimValidationPipe<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(StatusCodes.Status403Forbidden, errorFactory, parent)
+            : base(StatusCodes.Status403Forbidden, errorFactory, logger, parent)
         {
             this.principal = principal;
             this.validCheck = validCheck;

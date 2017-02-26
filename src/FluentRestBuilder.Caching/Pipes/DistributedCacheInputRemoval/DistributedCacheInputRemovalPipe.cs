@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputRemoval
     using FluentRestBuilder.Pipes;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Distributed;
+    using Microsoft.Extensions.Logging;
 
     public class DistributedCacheInputRemovalPipe<TInput> : ChainPipe<TInput>
     {
@@ -18,8 +19,9 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputRemoval
         public DistributedCacheInputRemovalPipe(
             Func<TInput, string> keyFactory,
             IDistributedCache distributedCache,
+            ILogger<DistributedCacheInputRemovalPipe<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.keyFactory = keyFactory;
             this.distributedCache = distributedCache;

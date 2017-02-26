@@ -11,6 +11,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.InputEntryAccess
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
+    using Microsoft.Extensions.Logging;
 
     public class InputEntryAccessPipe<TInput> : ChainPipe<TInput>
         where TInput : class
@@ -21,8 +22,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.InputEntryAccess
         public InputEntryAccessPipe(
             Func<EntityEntry<TInput>, Task> entryAction,
             IScopedStorage<DbContext> contextStorage,
+            ILogger<InputEntryAccessPipe<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.entryAction = entryAction;
             this.contextStorage = contextStorage;

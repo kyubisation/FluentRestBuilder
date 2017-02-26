@@ -7,6 +7,7 @@ namespace FluentRestBuilder.Pipes.Actions
     using System;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class ActionPipe<TInput> : ChainPipe<TInput>
         where TInput : class
@@ -15,8 +16,9 @@ namespace FluentRestBuilder.Pipes.Actions
 
         public ActionPipe(
             Func<TInput, Task> action,
+            ILogger<ActionPipe<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.action = action;
         }

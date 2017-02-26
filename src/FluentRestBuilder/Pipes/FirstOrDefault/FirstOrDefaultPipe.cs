@@ -8,6 +8,7 @@ namespace FluentRestBuilder.Pipes.FirstOrDefault
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
+    using Microsoft.Extensions.Logging;
 
     public class FirstOrDefaultPipe<TInput> : MappingPipeBase<IQueryable<TInput>, TInput>
     {
@@ -17,8 +18,9 @@ namespace FluentRestBuilder.Pipes.FirstOrDefault
         public FirstOrDefaultPipe(
             Expression<Func<TInput, bool>> predicate,
             IQueryableTransformer<TInput> queryableTransformer,
+            ILogger<FirstOrDefaultPipe<TInput>> logger,
             IOutputPipe<IQueryable<TInput>> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.predicate = predicate;
             this.queryableTransformer = queryableTransformer;

@@ -10,6 +10,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
     using FluentRestBuilder.Storage;
     using HypertextApplicationLanguage;
     using Links;
+    using Microsoft.Extensions.Logging;
 
     public class CollectionMappingPipeFactory<TInput, TOutput> :
         ICollectionMappingPipeFactory<TInput, TOutput>
@@ -18,17 +19,20 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
         private readonly ILinkAggregator linkAggregator;
         private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
         private readonly IQueryableTransformer<TInput> queryableTransformer;
+        private readonly ILogger<CollectionMappingPipe<TInput, TOutput>> logger;
 
         public CollectionMappingPipeFactory(
             IRestCollectionLinkGenerator linkGenerator,
             ILinkAggregator linkAggregator,
             IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
-            IQueryableTransformer<TInput> queryableTransformer)
+            IQueryableTransformer<TInput> queryableTransformer,
+            ILogger<CollectionMappingPipe<TInput, TOutput>> logger = null)
         {
             this.linkGenerator = linkGenerator;
             this.linkAggregator = linkAggregator;
             this.paginationMetaInfoStorage = paginationMetaInfoStorage;
             this.queryableTransformer = queryableTransformer;
+            this.logger = logger;
         }
 
         public OutputPipe<RestEntityCollection> Create(
@@ -39,6 +43,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
                 this.linkAggregator,
                 this.paginationMetaInfoStorage,
                 this.queryableTransformer,
+                this.logger,
                 parent);
     }
 }

@@ -7,6 +7,7 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using Microsoft.Extensions.Logging;
 
     public class SearchByClientRequestPipe<TInput> : MappingPipeBase<IQueryable<TInput>, IQueryable<TInput>>
     {
@@ -16,8 +17,9 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
         public SearchByClientRequestPipe(
             ISearchByClientRequestInterpreter interpreter,
             Func<string, Expression<Func<TInput, bool>>> search,
+            ILogger<SearchByClientRequestPipe<TInput>> logger,
             IOutputPipe<IQueryable<TInput>> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.interpreter = interpreter;
             this.search = search;

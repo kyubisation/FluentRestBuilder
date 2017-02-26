@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputStorage
     using FluentRestBuilder.Pipes;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Logging;
 
     public class MemoryCacheInputStoragePipe<TInput> : ChainPipe<TInput>
     {
@@ -20,8 +21,9 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputStorage
             Func<TInput, object> keyFactory,
             Func<TInput, MemoryCacheEntryOptions> optionsFactory,
             IMemoryCache memoryCache,
+            ILogger<MemoryCacheInputStoragePipe<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.keyFactory = keyFactory;
             this.optionsFactory = optionsFactory;

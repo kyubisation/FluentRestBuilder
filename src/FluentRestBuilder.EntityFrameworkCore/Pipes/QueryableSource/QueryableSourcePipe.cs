@@ -9,6 +9,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.QueryableSource
     using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
 
     public class QueryableSourcePipe<TInput, TOutput> : MappingPipeBase<TInput, IQueryable<TOutput>>
         where TOutput : class
@@ -19,8 +20,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.QueryableSource
         public QueryableSourcePipe(
             Func<DbContext, TInput, IQueryable<TOutput>> queryablePipe,
             IScopedStorage<DbContext> contextStorage,
+            ILogger<QueryableSourcePipe<TInput, TOutput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.queryablePipe = queryablePipe;
             this.contextStorage = contextStorage;

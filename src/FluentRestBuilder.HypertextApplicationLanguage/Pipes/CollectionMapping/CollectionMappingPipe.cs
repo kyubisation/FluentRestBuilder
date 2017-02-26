@@ -12,6 +12,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
     using FluentRestBuilder.Storage;
     using HypertextApplicationLanguage;
     using Links;
+    using Microsoft.Extensions.Logging;
 
     public class CollectionMappingPipe<TInput, TOutput>
         : MappingPipeBase<IQueryable<TInput>, RestEntityCollection>
@@ -29,8 +30,9 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
             ILinkAggregator linkAggregator,
             IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
             IQueryableTransformer<TInput> queryableTransformer,
+            ILogger<CollectionMappingPipe<TInput, TOutput>> logger,
             IOutputPipe<IQueryable<TInput>> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.mapping = mapping;
             this.linkGenerator = linkGenerator;

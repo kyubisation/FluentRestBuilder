@@ -8,6 +8,7 @@ namespace FluentRestBuilder.Pipes
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public abstract class ValidationPipeBase<TInput> : ActionResultPipe<TInput>
         where TInput : class
@@ -18,8 +19,9 @@ namespace FluentRestBuilder.Pipes
         protected ValidationPipeBase(
             int statusCode,
             Func<TInput, object> errorFactory,
+            ILogger logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.statusCode = statusCode;
             this.errorFactory = errorFactory;

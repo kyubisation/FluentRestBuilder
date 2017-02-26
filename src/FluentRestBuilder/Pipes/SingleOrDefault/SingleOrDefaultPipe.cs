@@ -10,6 +10,7 @@ namespace FluentRestBuilder.Pipes.SingleOrDefault
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class SingleOrDefaultPipe<TInput> : MappingPipeBase<IQueryable<TInput>, TInput>
     {
@@ -19,8 +20,9 @@ namespace FluentRestBuilder.Pipes.SingleOrDefault
         public SingleOrDefaultPipe(
             Expression<Func<TInput, bool>> predicate,
             IQueryableTransformer<TInput> queryableTransformer,
+            ILogger<SingleOrDefaultPipe<TInput>> logger,
             IOutputPipe<IQueryable<TInput>> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.predicate = predicate;
             this.queryableTransformer = queryableTransformer;

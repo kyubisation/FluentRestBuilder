@@ -10,6 +10,7 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputStorage
     using FluentRestBuilder.Pipes;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Distributed;
+    using Microsoft.Extensions.Logging;
 
     public class DistributedCacheInputStoragePipe<TInput> : ChainPipe<TInput>
     {
@@ -23,8 +24,9 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputStorage
             Func<TInput, DistributedCacheEntryOptions> optionFactory,
             IByteMapper<TInput> byteMapper,
             IDistributedCache distributedCache,
+            ILogger<DistributedCacheInputStoragePipe<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.keyFactory = keyFactory;
             this.optionFactory = optionFactory;

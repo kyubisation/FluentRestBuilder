@@ -7,6 +7,7 @@ namespace FluentRestBuilder.Pipes.ToList
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.Extensions.Logging;
 
     public class ToListPipe<TInput> : MappingPipeBase<IQueryable<TInput>, List<TInput>>
     {
@@ -14,8 +15,9 @@ namespace FluentRestBuilder.Pipes.ToList
 
         public ToListPipe(
             IQueryableTransformer<TInput> queryableTransformer,
+            ILogger<ToListPipe<TInput>> logger,
             IOutputPipe<IQueryable<TInput>> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.queryableTransformer = queryableTransformer;
         }

@@ -7,18 +7,22 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputStorage
     using System;
     using DistributedCache;
     using Microsoft.Extensions.Caching.Distributed;
+    using Microsoft.Extensions.Logging;
 
     public class DistributedCacheInputStoragePipeFactory<TInput> : IDistributedCacheInputStoragePipeFactory<TInput>
     {
         private readonly IByteMapper<TInput> byteMapper;
         private readonly IDistributedCache distributedCache;
+        private readonly ILogger<DistributedCacheInputStoragePipe<TInput>> logger;
 
         public DistributedCacheInputStoragePipeFactory(
             IByteMapper<TInput> byteMapper,
-            IDistributedCache distributedCache)
+            IDistributedCache distributedCache,
+            ILogger<DistributedCacheInputStoragePipe<TInput>> logger = null)
         {
             this.byteMapper = byteMapper;
             this.distributedCache = distributedCache;
+            this.logger = logger;
         }
 
         public OutputPipe<TInput> Create(
@@ -26,6 +30,11 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputStorage
             Func<TInput, DistributedCacheEntryOptions> optionGenerator,
             IOutputPipe<TInput> pipe) =>
             new DistributedCacheInputStoragePipe<TInput>(
-                keyFactory, optionGenerator, this.byteMapper, this.distributedCache, pipe);
+                keyFactory,
+                optionGenerator,
+                this.byteMapper,
+                this.distributedCache,
+                this.logger,
+                pipe);
     }
 }

@@ -6,6 +6,7 @@ namespace FluentRestBuilder.Pipes.Queryable
 {
     using System;
     using System.Linq;
+    using Microsoft.Extensions.Logging;
 
     public class QueryablePipe<TInput, TOutput> : MappingPipeBase<TInput, TOutput>
         where TInput : class, IQueryable
@@ -15,8 +16,9 @@ namespace FluentRestBuilder.Pipes.Queryable
 
         public QueryablePipe(
             Func<TInput, TOutput> callback,
+            ILogger<QueryablePipe<TInput, TOutput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.callback = callback;
         }

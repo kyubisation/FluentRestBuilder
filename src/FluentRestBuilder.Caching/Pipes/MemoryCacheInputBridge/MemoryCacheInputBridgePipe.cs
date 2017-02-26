@@ -8,6 +8,7 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputBridge
     using FluentRestBuilder.Pipes;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Logging;
 
     public class MemoryCacheInputBridgePipe<TInput> : ChainPipe<TInput>
     {
@@ -17,8 +18,9 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputBridge
         public MemoryCacheInputBridgePipe(
             object key,
             IMemoryCache memoryCache,
+            ILogger<MemoryCacheInputBridgePipe<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.key = key;
             this.memoryCache = memoryCache;

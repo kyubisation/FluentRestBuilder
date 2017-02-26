@@ -10,6 +10,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Deletion
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
 
     public class EntityDeletionPipe<TInput> : ActionResultPipe<TInput>
         where TInput : class
@@ -18,8 +19,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Deletion
 
         public EntityDeletionPipe(
             IScopedStorage<DbContext> contextStorage,
+            ILogger<EntityDeletionPipe<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.contextStorage = contextStorage;
         }

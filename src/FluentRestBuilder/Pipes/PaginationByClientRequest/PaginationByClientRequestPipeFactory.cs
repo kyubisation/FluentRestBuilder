@@ -5,6 +5,7 @@
 namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 {
     using System.Linq;
+    using Microsoft.Extensions.Logging;
     using Storage;
 
     public class PaginationByClientRequestPipeFactory<TInput> : IPaginationByClientRequestPipeFactory<TInput>
@@ -12,15 +13,18 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
         private readonly IPaginationByClientRequestInterpreter interpreter;
         private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
         private readonly IQueryableTransformer<TInput> queryableTransformer;
+        private readonly ILogger<PaginationByClientRequestPipe<TInput>> logger;
 
         public PaginationByClientRequestPipeFactory(
             IPaginationByClientRequestInterpreter interpreter,
             IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
-            IQueryableTransformer<TInput> queryableTransformer)
+            IQueryableTransformer<TInput> queryableTransformer,
+            ILogger<PaginationByClientRequestPipe<TInput>> logger = null)
         {
             this.interpreter = interpreter;
             this.paginationMetaInfoStorage = paginationMetaInfoStorage;
             this.queryableTransformer = queryableTransformer;
+            this.logger = logger;
         }
 
         public OutputPipe<IQueryable<TInput>> Create(
@@ -31,6 +35,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
                 this.interpreter,
                 this.paginationMetaInfoStorage,
                 this.queryableTransformer,
+                this.logger,
                 parent);
     }
 }

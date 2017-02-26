@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputRemoval
     using FluentRestBuilder.Pipes;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Logging;
 
     public class MemoryCacheInputRemovalPipe<TInput> : ChainPipe<TInput>
     {
@@ -18,8 +19,9 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputRemoval
         public MemoryCacheInputRemovalPipe(
             Func<TInput, object> keyFactory,
             IMemoryCache memoryCache,
+            ILogger<MemoryCacheInputRemovalPipe<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.keyFactory = keyFactory;
             this.memoryCache = memoryCache;

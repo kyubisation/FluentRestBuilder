@@ -6,6 +6,7 @@ namespace FluentRestBuilder.Pipes.EntityValidation
 {
     using System;
     using System.Threading.Tasks;
+    using Microsoft.Extensions.Logging;
 
     public class EntityValidationPipe<TInput> : ValidationPipeBase<TInput>
         where TInput : class
@@ -16,8 +17,9 @@ namespace FluentRestBuilder.Pipes.EntityValidation
             Func<TInput, Task<bool>> invalidCheck,
             int statusCode,
             Func<TInput, object> errorFactory,
+            ILogger<EntityValidationPipe<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(statusCode, errorFactory, parent)
+            : base(statusCode, errorFactory, logger, parent)
         {
             this.invalidCheck = invalidCheck;
         }

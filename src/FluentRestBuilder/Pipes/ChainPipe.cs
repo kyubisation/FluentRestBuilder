@@ -6,19 +6,33 @@ namespace FluentRestBuilder.Pipes
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public abstract class ChainPipe<TInput> : OutputPipe<TInput>, IInputPipe<TInput>
     {
         private readonly IOutputPipe<TInput> parent;
 
-        protected ChainPipe(IOutputPipe<TInput> parent)
-            : base(parent)
+        protected ChainPipe(ILogger logger, IOutputPipe<TInput> parent)
+            : base(logger, parent)
         {
             this.parent = parent;
             this.parent.Attach(this);
         }
 
-        Task<IActionResult> IInputPipe<TInput>.Execute(TInput input) => this.Execute(input);
+        Task<IActionResult> IInputPipe<TInput>.Execute(TInput input)
+        {
+            this.Logger.Debug?.Log(
+                "Entering method {0} of pipe {1} with input",
+                nameof(IInputPipe<TInput>.Execute),
+                this.GetType());
+            this.Logger.Trace?.Log("Received input in pipe {0} is {1}", this.GetType(), input);
+            var result = this.Execute(input);
+            this.Logger.Debug?.Log(
+                "Exiting method {0} of pipe {1} with input",
+                nameof(IInputPipe<TInput>.Execute),
+                this.GetType());
+            return result;
+        }
 
         protected virtual async Task<IActionResult> Execute(TInput input) =>
             await this.ExecuteChild(input);
@@ -27,7 +41,7 @@ namespace FluentRestBuilder.Pipes
 
         protected virtual async Task<IActionResult> ExecuteChild(TInput input)
         {
-            NoPipeAttachedException.Check(this.Child);
+            Check.IsPipeAttached(this.Child);
             return await this.Child.Execute(input);
         }
     }

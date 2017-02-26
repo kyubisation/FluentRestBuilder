@@ -6,12 +6,13 @@ namespace FluentRestBuilder.Pipes
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public abstract class ActionResultPipe<TInput> : ChainPipe<TInput>
         where TInput : class
     {
-        protected ActionResultPipe(IOutputPipe<TInput> parent)
-            : base(parent)
+        protected ActionResultPipe(ILogger logger, IOutputPipe<TInput> parent)
+            : base(logger, parent)
         {
         }
 

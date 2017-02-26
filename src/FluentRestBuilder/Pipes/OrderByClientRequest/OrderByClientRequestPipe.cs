@@ -10,6 +10,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
     using Exceptions;
     using Expressions;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class OrderByClientRequestPipe<TInput> : MappingPipeBase<IQueryable<TInput>, IQueryable<TInput>>
     {
@@ -19,8 +20,9 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
         public OrderByClientRequestPipe(
             IDictionary<string, IOrderByExpressionFactory<TInput>> orderByDictionary,
             IOrderByClientRequestInterpreter orderByClientRequestInterpreter,
+            ILogger<OrderByClientRequestPipe<TInput>> logger,
             IOutputPipe<IQueryable<TInput>> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.orderByDictionary = orderByDictionary;
             this.orderByClientRequestInterpreter = orderByClientRequestInterpreter;

@@ -12,6 +12,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
     using Exceptions;
     using Expressions;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class FilterByClientRequestPipe<TInput> : MappingPipeBase<IQueryable<TInput>, IQueryable<TInput>>
     {
@@ -21,8 +22,9 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
         public FilterByClientRequestPipe(
             IDictionary<string, IFilterExpressionProvider<TInput>> filterDictionary,
             IFilterByClientRequestInterpreter interpreter,
+            ILogger<FilterByClientRequestPipe<TInput>> logger,
             IOutputPipe<IQueryable<TInput>> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.filterDictionary = filterDictionary;
             this.interpreter = interpreter;

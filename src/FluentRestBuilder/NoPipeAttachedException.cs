@@ -12,13 +12,5 @@ namespace FluentRestBuilder
             : base("Must have a pipe attached!")
         {
         }
-
-        public static void Check(object check)
-        {
-            if (check == null)
-            {
-                throw new NoPipeAttachedException();
-            }
-        }
     }
 }

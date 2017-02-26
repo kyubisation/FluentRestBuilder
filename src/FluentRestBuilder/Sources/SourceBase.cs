@@ -16,7 +16,7 @@ namespace FluentRestBuilder.Sources
         private ControllerBase controller;
 
         protected SourceBase(IServiceProvider serviceProvider)
-            : base(serviceProvider)
+            : base(null, serviceProvider)
         {
         }
 
@@ -36,7 +36,7 @@ namespace FluentRestBuilder.Sources
 
         protected override async Task<IActionResult> Execute()
         {
-            NoPipeAttachedException.Check(this.Child);
+            Check.IsPipeAttached(this.Child);
             return await this.Child.Execute(await this.GetOutput());
         }
 

@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
     using System.Threading.Tasks;
     using Exceptions;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
     using Storage;
 
     public class PaginationByClientRequestPipe<TInput> : MappingPipeBase<IQueryable<TInput>, IQueryable<TInput>>
@@ -23,8 +24,9 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
             IPaginationByClientRequestInterpreter interpreter,
             IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
             IQueryableTransformer<TInput> queryableTransformer,
+            ILogger<PaginationByClientRequestPipe<TInput>> logger,
             IOutputPipe<IQueryable<TInput>> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.options = options ?? new PaginationOptions();
             this.AssertValidOptions();
