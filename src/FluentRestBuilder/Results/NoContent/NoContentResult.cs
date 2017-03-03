@@ -5,12 +5,15 @@
 namespace FluentRestBuilder.Results.NoContent
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class NoContentResult<TInput> : ResultBase<TInput>
         where TInput : class
     {
-        public NoContentResult(IOutputPipe<TInput> parent)
-            : base(parent)
+        public NoContentResult(
+            ILogger<NoContentResult<TInput>> logger,
+            IOutputPipe<TInput> parent)
+            : base(logger, parent)
         {
         }
 

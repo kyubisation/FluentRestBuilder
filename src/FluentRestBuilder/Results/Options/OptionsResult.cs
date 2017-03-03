@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Results.Options
     using System.Linq;
     using System.Text;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class OptionsResult<TInput> : ResultBase<TInput>
         where TInput : class
@@ -19,8 +20,9 @@ namespace FluentRestBuilder.Results.Options
         public OptionsResult(
             Func<TInput, IEnumerable<HttpVerb>> verbGeneration,
             IHttpVerbMap httpVerbMap,
+            ILogger<OptionsResult<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.verbGeneration = verbGeneration;
             this.httpVerbMap = httpVerbMap;

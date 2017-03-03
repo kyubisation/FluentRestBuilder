@@ -42,8 +42,16 @@ namespace FluentRestBuilder.Pipes.SingleOrDefault
 
         protected override Task<TInput> MapAsync(IQueryable<TInput> input)
         {
-            var queryable = input.Where(this.predicate);
-            return this.queryableTransformer.SingleOrDefault(queryable);
+            try
+            {
+                var queryable = input.Where(this.predicate);
+                return this.queryableTransformer.SingleOrDefault(queryable);
+            }
+            catch (Exception exception)
+            {
+                this.Logger.Error?.Log(0, exception, "SingleOrDefault failed");
+                throw;
+            }
         }
     }
 }

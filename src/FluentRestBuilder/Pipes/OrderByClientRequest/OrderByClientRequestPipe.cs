@@ -36,6 +36,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
             }
             catch (OrderByNotSupportedException exception)
             {
+                this.Logger.Information?.Log(0, exception, "Ordering failed");
                 return new BadRequestObjectResult(new { error = exception.Message });
             }
         }
@@ -50,8 +51,14 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
         private List<IOrderByExpression<TInput>> ResolveOrderBySequence() =>
             this.orderByClientRequestInterpreter
                 .ParseRequestQuery()
-                .Select(o => this.ResolveFactory(o).Create(o.Direction))
+                .Select(this.CreateExpression)
                 .ToList();
+
+        private IOrderByExpression<TInput> CreateExpression(OrderByRequest request)
+        {
+            this.Logger.Debug?.Log("Attempting to order according to {0}", request);
+            return this.ResolveFactory(request).Create(request.Direction);
+        }
 
         private IOrderByExpressionFactory<TInput> ResolveFactory(OrderByRequest request)
         {

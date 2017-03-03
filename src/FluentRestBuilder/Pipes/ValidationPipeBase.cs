@@ -41,6 +41,8 @@ namespace FluentRestBuilder.Pipes
 
         private IActionResult CreateErrorActionResult()
         {
+            this.Logger.Information?.Log(
+                "Validation with status {0} failed without error message", this.statusCode);
             switch (this.statusCode)
             {
                 case StatusCodes.Status400BadRequest:
@@ -54,6 +56,10 @@ namespace FluentRestBuilder.Pipes
 
         private IActionResult CreateErrorObjectResult(object error)
         {
+            this.Logger.Information?.Log(
+                "Validation with status {0} failed with error message {1}",
+                this.statusCode,
+                error);
             switch (this.statusCode)
             {
                 case StatusCodes.Status400BadRequest:

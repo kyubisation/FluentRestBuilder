@@ -19,12 +19,13 @@ namespace FluentRestBuilder.Pipes
         protected override async Task<IActionResult> Execute(TInput input)
         {
             var result = await this.GenerateActionResult(input);
-            if (result != null)
+            if (result == null)
             {
-                return result;
+                return await base.Execute(input);
             }
 
-            return await base.Execute(input);
+            this.Logger.Information?.Log("Aborting pipe chain");
+            return result;
         }
 
         protected virtual Task<IActionResult> GenerateActionResult(TInput entity) =>

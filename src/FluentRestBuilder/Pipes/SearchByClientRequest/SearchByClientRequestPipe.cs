@@ -28,6 +28,7 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
         protected override IQueryable<TInput> Map(IQueryable<TInput> input)
         {
             var searchValue = this.interpreter.ParseRequestQuery();
+            this.Logger.Debug?.Log("Search for value {0}", searchValue);
             return searchValue == null ? input : this.ApplySearch(input, searchValue);
         }
 

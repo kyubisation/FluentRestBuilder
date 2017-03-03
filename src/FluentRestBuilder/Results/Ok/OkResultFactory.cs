@@ -4,10 +4,19 @@
 
 namespace FluentRestBuilder.Results.Ok
 {
+    using Microsoft.Extensions.Logging;
+
     public class OkResultFactory<TInput> : IOkResultFactory<TInput>
         where TInput : class
     {
+        private readonly ILogger<OkResult<TInput>> logger;
+
+        public OkResultFactory(ILogger<OkResult<TInput>> logger = null)
+        {
+            this.logger = logger;
+        }
+
         public ResultBase<TInput> Create(IOutputPipe<TInput> parent) =>
-            new OkResult<TInput>(parent);
+            new OkResult<TInput>(this.logger, parent);
     }
 }

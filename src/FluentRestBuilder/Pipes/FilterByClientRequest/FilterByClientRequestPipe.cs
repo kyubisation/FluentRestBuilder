@@ -38,6 +38,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
             }
             catch (FilterException exception)
             {
+                this.Logger.Information?.Log(0, exception, "Filtering failed");
                 return new BadRequestObjectResult(new { error = exception.Message });
             }
         }
@@ -56,6 +57,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
 
         private Expression<Func<TInput, bool>> ResolveFilterExpression(FilterRequest request)
         {
+            this.Logger.Debug?.Log("Attempting to filter according to {0}", request);
             IFilterExpressionProvider<TInput> provider;
             this.filterDictionary.TryGetValue(request.Property, out provider);
             var expression = provider?.Resolve(request.Type, request.Filter);

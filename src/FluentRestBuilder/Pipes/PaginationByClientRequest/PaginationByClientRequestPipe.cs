@@ -43,6 +43,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
             }
             catch (PaginationException exception)
             {
+                this.Logger.Information?.Log(0, exception, "Pagination failed");
                 return new BadRequestObjectResult(new { error = exception.Message });
             }
         }
@@ -50,6 +51,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
         protected override async Task<IQueryable<TInput>> MapAsync(IQueryable<TInput> input)
         {
             var paginationRequest = this.interpreter.ParseRequestQuery();
+            this.Logger.Debug?.Log("Pagination request {0}", paginationRequest);
             var paginationValues = new PaginationValues
             {
                 Page = paginationRequest.Page ?? 1,

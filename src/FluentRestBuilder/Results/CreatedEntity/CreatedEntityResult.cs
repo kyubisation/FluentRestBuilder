@@ -6,6 +6,7 @@ namespace FluentRestBuilder.Results.CreatedEntity
 {
     using System;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class CreatedEntityResult<TInput> : ResultBase<TInput>
         where TInput : class
@@ -16,8 +17,9 @@ namespace FluentRestBuilder.Results.CreatedEntity
         public CreatedEntityResult(
             Func<TInput, object> routeValuesFactory,
             string routeName,
+            ILogger<CreatedEntityResult<TInput>> logger,
             IOutputPipe<TInput> parent)
-            : base(parent)
+            : base(logger, parent)
         {
             this.routeValuesFactory = routeValuesFactory;
             this.routeName = routeName;

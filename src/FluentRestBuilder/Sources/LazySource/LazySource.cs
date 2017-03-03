@@ -6,19 +6,26 @@ namespace FluentRestBuilder.Sources.LazySource
 {
     using System;
     using System.Threading.Tasks;
+    using Microsoft.Extensions.Logging;
 
     public class LazySource<TOutput> : SourceBase<TOutput>
     {
         private readonly Func<Task<TOutput>> output;
 
-        public LazySource(Func<Task<TOutput>> output, IServiceProvider serviceProvider)
-            : base(serviceProvider)
+        public LazySource(
+            Func<Task<TOutput>> output,
+            IServiceProvider serviceProvider,
+            ILogger<LazySource<TOutput>> logger = null)
+            : base(logger, serviceProvider)
         {
             this.output = output;
         }
 
-        public LazySource(Func<TOutput> output, IServiceProvider serviceProvider)
-            : this(() => Task.FromResult(output()), serviceProvider)
+        public LazySource(
+            Func<TOutput> output,
+            IServiceProvider serviceProvider,
+            ILogger<LazySource<TOutput>> logger = null)
+            : this(() => Task.FromResult(output()), serviceProvider, logger)
         {
         }
 

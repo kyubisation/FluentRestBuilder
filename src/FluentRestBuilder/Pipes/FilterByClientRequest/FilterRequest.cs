@@ -4,6 +4,9 @@
 
 namespace FluentRestBuilder.Pipes.FilterByClientRequest
 {
+    using System.ComponentModel;
+    using System.Linq;
+
     public class FilterRequest
     {
         public FilterRequest(
@@ -27,5 +30,14 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
         public FilterType Type { get; }
 
         public string Filter { get; }
+
+        public override string ToString()
+        {
+            var properties = TypeDescriptor.GetProperties(this)
+                .Cast<PropertyDescriptor>()
+                .Select(p => $"{p.Name}: {p.GetValue(this)}")
+                .Aggregate((current, next) => $"{current}, {next}");
+            return $"{nameof(FilterRequest)} {{{properties}}}";
+        }
     }
 }

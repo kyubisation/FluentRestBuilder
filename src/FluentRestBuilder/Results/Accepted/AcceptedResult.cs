@@ -6,12 +6,15 @@ namespace FluentRestBuilder.Results.Accepted
 {
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class AcceptedResult<TInput> : ResultBase<TInput>
         where TInput : class
     {
-        public AcceptedResult(IOutputPipe<TInput> parent)
-            : base(parent)
+        public AcceptedResult(
+            ILogger<AcceptedResult<TInput>> logger,
+            IOutputPipe<TInput> parent)
+            : base(logger, parent)
         {
         }
 

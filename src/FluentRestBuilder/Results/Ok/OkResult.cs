@@ -5,12 +5,15 @@
 namespace FluentRestBuilder.Results.Ok
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class OkResult<TInput> : ResultBase<TInput>
         where TInput : class
     {
-        public OkResult(IOutputPipe<TInput> parent)
-            : base(parent)
+        public OkResult(
+            ILogger<OkResult<TInput>> logger,
+            IOutputPipe<TInput> parent)
+            : base(logger, parent)
         {
         }
 
