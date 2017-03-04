@@ -40,8 +40,9 @@ namespace FluentRestBuilder.Sources
         protected override async Task<IActionResult> Execute()
         {
             Check.IsPipeAttached(this.Child);
+            this.Logger.Information?.Log("Retrieving source instance");
             var output = await this.GetOutput();
-            this.Logger.Trace?.Log("Using output {0}", output);
+            this.Logger.Trace?.Log("Using value {0} as source", output);
             return await this.Child.Execute(output);
         }
 
