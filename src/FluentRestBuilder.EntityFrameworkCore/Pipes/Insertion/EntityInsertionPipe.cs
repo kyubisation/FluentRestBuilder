@@ -30,11 +30,19 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Insertion
         {
             try
             {
+                this.Logger.Information?.Log(
+                    "Attempting to insert an instance of {0} into the database", typeof(TInput));
                 this.contextStorage.Value.Add(entity);
                 await this.contextStorage.Value.SaveChangesAsync();
+                this.Logger.Debug?.Log("Insertion of {0} was successful", typeof(TInput));
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException exception)
             {
+                this.Logger.Information?.Log(
+                    0,
+                    exception,
+                    "Failed to insert the received value due to a conflict",
+                    typeof(TInput));
                 return new StatusCodeResult(StatusCodes.Status409Conflict);
             }
 

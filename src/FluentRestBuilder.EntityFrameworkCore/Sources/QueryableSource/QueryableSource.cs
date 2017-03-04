@@ -10,6 +10,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
     using FluentRestBuilder.Sources;
     using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
 
     public class QueryableSource<TEntity> : SourceBase<IQueryable<TEntity>>
         where TEntity : class
@@ -18,8 +19,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
 
         public QueryableSource(
             IScopedStorage<DbContext> contextStorage,
+            ILogger<QueryableSource<TEntity>> logger,
             IServiceProvider serviceProvider)
-            : base(serviceProvider)
+            : base(logger, serviceProvider)
         {
             this.contextStorage = contextStorage;
         }

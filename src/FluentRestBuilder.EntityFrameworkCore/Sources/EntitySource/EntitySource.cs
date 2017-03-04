@@ -10,6 +10,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.EntitySource
     using FluentRestBuilder.Sources;
     using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
 
     public class EntitySource<TEntity> : SourceBase<TEntity>
         where TEntity : class
@@ -20,8 +21,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.EntitySource
         public EntitySource(
             Expression<Func<TEntity, bool>> predicate,
             IScopedStorage<DbContext> contextStorage,
+            ILogger<EntitySource<TEntity>> logger,
             IServiceProvider serviceProvider)
-            : base(serviceProvider)
+            : base(logger, serviceProvider)
         {
             this.predicate = predicate;
             this.contextStorage = contextStorage;

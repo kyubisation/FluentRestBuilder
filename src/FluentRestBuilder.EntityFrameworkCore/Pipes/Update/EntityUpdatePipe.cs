@@ -30,10 +30,18 @@ namespace FluentRestBuilder.EntityFrameworkCore.Pipes.Update
         {
             try
             {
+                this.Logger.Information?.Log(
+                    "Attempting to update an instance of {0} in the database", typeof(TInput));
                 await this.contextStorage.Value.SaveChangesAsync();
+                this.Logger.Debug?.Log("Insertion of {0} was successful", typeof(TInput));
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException exception)
             {
+                this.Logger.Information?.Log(
+                    0,
+                    exception,
+                    "Failed to update the received value due to a conflict",
+                    typeof(TInput));
                 return new StatusCodeResult(StatusCodes.Status409Conflict);
             }
 
