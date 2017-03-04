@@ -39,7 +39,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
             catch (FilterException exception)
             {
                 this.Logger.Information?.Log(0, exception, "Filtering failed");
-                return new BadRequestObjectResult(new { error = exception.Message });
+                return new BadRequestObjectResult(new ErrorResult(exception));
             }
         }
 

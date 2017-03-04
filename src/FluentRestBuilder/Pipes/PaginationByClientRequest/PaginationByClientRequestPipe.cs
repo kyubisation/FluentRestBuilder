@@ -44,7 +44,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
             catch (PaginationException exception)
             {
                 this.Logger.Information?.Log(0, exception, "Pagination failed");
-                return new BadRequestObjectResult(new { error = exception.Message });
+                return new BadRequestObjectResult(new ErrorResult(exception));
             }
         }
 

@@ -37,7 +37,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
             catch (OrderByNotSupportedException exception)
             {
                 this.Logger.Information?.Log(0, exception, "Ordering failed");
-                return new BadRequestObjectResult(new { error = exception.Message });
+                return new BadRequestObjectResult(new ErrorResult(exception));
             }
         }
 
