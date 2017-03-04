@@ -29,12 +29,22 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputBridge
         protected override Task<IActionResult> Execute()
         {
             object cacheEntry;
-            if (this.memoryCache.TryGetValue(this.key, out cacheEntry) && cacheEntry is TInput)
+            if (!this.memoryCache.TryGetValue(this.key, out cacheEntry))
             {
-                return this.ExecuteChild((TInput)cacheEntry);
+                this.Logger.Information?.Log("No cache entry found with key {0}", this.key);
+                return base.Execute();
             }
 
-            return base.Execute();
+            if (!(cacheEntry is TInput))
+            {
+                this.Logger.Warning?.Log(
+                    "Cache entry with key {0} was not of type {1}", this.key, typeof(TInput));
+                return base.Execute();
+            }
+
+            this.Logger.Information?.Log("Found cache entry with key {0}", this.key);
+            this.Logger.Trace?.Log("Cache entry: {0}", cacheEntry);
+            return this.ExecuteChild((TInput)cacheEntry);
         }
     }
 }

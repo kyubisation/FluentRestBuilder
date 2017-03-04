@@ -40,6 +40,9 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputStorage
         {
             var options = this.optionsFactory?.Invoke(input);
             var key = this.keyFactory(input);
+            this.Logger.Information?.Log(
+                "Caching input value of type {0} with key {1}", typeof(TInput), key);
+            this.Logger.Trace?.Log("Cache value {0}", input);
             this.memoryCache.Set(key, input, options);
         }
     }

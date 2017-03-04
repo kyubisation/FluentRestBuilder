@@ -36,6 +36,7 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputRemoval
         private async Task RemoveFromCache(TInput input)
         {
             var key = this.keyFactory(input);
+            this.Logger.Information?.Log("Removing cache entry with key {0}", key);
             await this.distributedCache.RemoveAsync(key);
         }
     }

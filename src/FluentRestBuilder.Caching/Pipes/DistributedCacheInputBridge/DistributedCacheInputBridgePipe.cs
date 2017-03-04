@@ -35,16 +35,23 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputBridge
             var bytes = await this.distributedCache.GetAsync(this.key);
             if (bytes == null || bytes.Length == 0)
             {
+                this.Logger.Information?.Log("No cache entry found with key {0}", this.key);
                 return await base.Execute();
             }
 
             try
             {
                 var input = this.byteMapper.FromByteArray(bytes);
+                this.Logger.Information?.Log("Found cache entry with key {0}", this.key);
+                this.Logger.Trace?.Log("Cache entry: {0}", input);
                 return await this.ExecuteChild(input);
             }
             catch (MappingException)
             {
+                this.Logger.Warning?.Log(
+                    "Cache entry with key {0} could not be mapped to {1}",
+                    this.key,
+                    typeof(TInput));
                 return await base.Execute();
             }
         }

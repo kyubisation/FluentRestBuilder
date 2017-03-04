@@ -45,6 +45,9 @@ namespace FluentRestBuilder.Caching.Pipes.DistributedCacheInputStorage
             var cacheBytes = this.byteMapper.ToByteArray(input);
             var options = this.optionFactory?.Invoke(input);
             var key = this.keyFactory(input);
+            this.Logger.Information?.Log(
+                "Caching input value of type {0} with key {1}", typeof(TInput), key);
+            this.Logger.Trace?.Log("Cache value {0}", input);
             if (options == null)
             {
                 await this.distributedCache.SetAsync(key, cacheBytes);

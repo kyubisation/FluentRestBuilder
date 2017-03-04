@@ -36,6 +36,7 @@ namespace FluentRestBuilder.Caching.Pipes.MemoryCacheInputRemoval
         private void RemoveFromCache(TInput input)
         {
             var key = this.keyFactory(input);
+            this.Logger.Information?.Log("Removing cache entry with key {0}", key);
             this.memoryCache.Remove(key);
         }
     }
