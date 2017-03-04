@@ -4,17 +4,22 @@
 
 namespace FluentRestBuilder.Caching.DistributedCache
 {
+    using System.Text;
     using Newtonsoft.Json;
 
-    public class JsonMapper<TCacheEntry> : StringMapperBase<TCacheEntry>
+    public class JsonMapper<TCacheEntry> : IByteMapper<TCacheEntry>
     {
-        protected override string ToString(TCacheEntry cacheEntry) =>
-            JsonConvert.SerializeObject(cacheEntry);
+        public byte[] ToByteArray(TCacheEntry cacheEntry)
+        {
+            var stringValue = JsonConvert.SerializeObject(cacheEntry);
+            return Encoding.UTF8.GetBytes(stringValue);
+        }
 
-        protected override TCacheEntry FromString(string cacheValue)
+        public TCacheEntry FromByteArray(byte[] bytes)
         {
             try
             {
+                var cacheValue = Encoding.UTF8.GetString(bytes);
                 return JsonConvert.DeserializeObject<TCacheEntry>(cacheValue);
             }
             catch (JsonSerializationException exception)
