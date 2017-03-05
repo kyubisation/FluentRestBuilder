@@ -50,7 +50,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
         [Fact]
         public void TestDescendingOrder()
         {
-            var orderByProperty = $"!{Property}";
+            var orderByProperty = $"-{Property}";
             var interpreter = new OrderByClientRequestInterpreter(
                 new HttpContextStorage().SetOrderByValue(orderByProperty), this.keys);
             var result = interpreter.ParseRequestQuery().ToList();
@@ -67,7 +67,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
             var orderByRequests = new List<OrderByRequest>
             {
                 new OrderByRequest("p1", OrderByDirection.Ascending),
-                new OrderByRequest("!p2", "p2", OrderByDirection.Descending)
+                new OrderByRequest("-p2", "p2", OrderByDirection.Descending)
             };
             var orderBy = orderByRequests.Select(o => o.OriginalProperty)
                 .Aggregate((current, next) => $"{current},{next}");

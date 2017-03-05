@@ -41,10 +41,11 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
 
         private OrderByRequest ParseOrderBy(string orderByString)
         {
-            return orderByString.StartsWith("!")
+            return orderByString.StartsWith("-")
                 ? new OrderByRequest(
-                    orderByString, orderByString.TrimStart('!', ' '), OrderByDirection.Descending)
-                : new OrderByRequest(orderByString, OrderByDirection.Ascending);
+                    orderByString, orderByString.TrimStart('-'), OrderByDirection.Descending)
+                : new OrderByRequest(
+                    orderByString, orderByString.TrimStart('+'), OrderByDirection.Ascending);
         }
     }
 }
