@@ -12,21 +12,19 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
 
     public class OrderByClientRequestInterpreter : IOrderByClientRequestInterpreter
     {
-        private readonly IQueryArgumentKeys queryArgumentKeys;
         private readonly IQueryCollection queryCollection;
 
-        public OrderByClientRequestInterpreter(
-            IScopedStorage<HttpContext> httpContextStorage,
-            IQueryArgumentKeys queryArgumentKeys)
+        public OrderByClientRequestInterpreter(IScopedStorage<HttpContext> httpContextStorage)
         {
-            this.queryArgumentKeys = queryArgumentKeys;
             this.queryCollection = httpContextStorage.Value.Request.Query;
         }
+
+        public string OrderByQueryArgumentKey { get; set; } = "sort";
 
         public IEnumerable<OrderByRequest> ParseRequestQuery()
         {
             StringValues orderByValues;
-            if (!this.queryCollection.TryGetValue(this.queryArgumentKeys.OrderBy, out orderByValues))
+            if (!this.queryCollection.TryGetValue(this.OrderByQueryArgumentKey, out orderByValues))
             {
                 return Enumerable.Empty<OrderByRequest>();
             }

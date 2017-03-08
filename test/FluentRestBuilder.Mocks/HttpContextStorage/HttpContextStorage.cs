@@ -21,7 +21,7 @@ namespace FluentRestBuilder.Mocks.HttpContextStorage
         }
 
         public HttpContextStorage SetOrderByValue(string orderBy) =>
-            this.SetValue(this.keys.OrderBy, orderBy);
+            this.SetValue("sort", orderBy);
 
         public HttpContextStorage SetPageValue(string page) => this.SetValue(this.keys.Page, page);
 
