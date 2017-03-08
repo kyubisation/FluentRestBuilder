@@ -10,7 +10,6 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
     using System.Threading.Tasks;
     using Builder;
     using FluentRestBuilder.Pipes.OrderByClientRequest;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;
@@ -86,21 +85,6 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
             Assert.Equal(new[] { "a", "b", "c" }, result.Select(e => e.Name));
         }
 
-        [Fact]
-        public async Task TestNotSupported()
-        {
-            this.orderByInterpreter.RequestedOrderBy
-                .Add(new OrderByRequest(nameof(Entity.Name), OrderByDirection.Ascending));
-            this.CreateOrderByEntities();
-
-            var result = await this.controller.FromSource(this.database.Create().Entities)
-                .ApplyOrderByClientRequest(b => b)
-                .Map(q => q.ToListAsync())
-                .ToMockResultPipe()
-                .Execute();
-            Assert.IsAssignableFrom<BadRequestObjectResult>(result);
-        }
-
         private void CreateOrderByEntities()
         {
             using (var context = this.database.Create())
@@ -116,7 +100,8 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
         {
             public List<OrderByRequest> RequestedOrderBy { get; } = new List<OrderByRequest>();
 
-            public IEnumerable<OrderByRequest> ParseRequestQuery() =>
+            public IEnumerable<OrderByRequest> ParseRequestQuery(
+                ICollection<string> supportedOrderBys) =>
                 this.RequestedOrderBy;
         }
     }

@@ -6,10 +6,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
-    using Exceptions;
     using Expressions;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
     public class OrderByClientRequestPipe<TInput> : MappingPipeBase<IQueryable<TInput>, IQueryable<TInput>>
@@ -28,19 +25,6 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
             this.orderByClientRequestInterpreter = orderByClientRequestInterpreter;
         }
 
-        protected override async Task<IActionResult> Execute(IQueryable<TInput> input)
-        {
-            try
-            {
-                return await base.Execute(input);
-            }
-            catch (OrderByNotSupportedException exception)
-            {
-                this.Logger.Information?.Log(0, exception, "Ordering failed");
-                return new BadRequestObjectResult(new ErrorResult(exception));
-            }
-        }
-
         protected override IQueryable<TInput> Map(IQueryable<TInput> input)
         {
             var orderByExpressions = this.ResolveOrderBySequence();
@@ -50,25 +34,14 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
 
         private List<IOrderByExpression<TInput>> ResolveOrderBySequence() =>
             this.orderByClientRequestInterpreter
-                .ParseRequestQuery()
+                .ParseRequestQuery(this.orderByDictionary.Keys)
                 .Select(this.CreateExpression)
                 .ToList();
 
         private IOrderByExpression<TInput> CreateExpression(OrderByRequest request)
         {
-            this.Logger.Debug?.Log("Attempting to order according to {0}", request);
-            return this.ResolveFactory(request).Create(request.Direction);
-        }
-
-        private IOrderByExpressionFactory<TInput> ResolveFactory(OrderByRequest request)
-        {
-            IOrderByExpressionFactory<TInput> factory;
-            if (!this.orderByDictionary.TryGetValue(request.Property, out factory))
-            {
-                throw new OrderByNotSupportedException(request.OriginalProperty);
-            }
-
-            return factory;
+            this.Logger.Debug?.Log("Resolving order by expression for {0}", request);
+            return this.orderByDictionary[request.Property].Create(request.Direction);
         }
 
         private IQueryable<TInput> ApplyOrderBy(

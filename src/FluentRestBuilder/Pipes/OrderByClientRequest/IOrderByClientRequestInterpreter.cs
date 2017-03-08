@@ -8,6 +8,6 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
 
     public interface IOrderByClientRequestInterpreter
     {
-        IEnumerable<OrderByRequest> ParseRequestQuery();
+        IEnumerable<OrderByRequest> ParseRequestQuery(ICollection<string> supportedOrderBys);
     }
 }

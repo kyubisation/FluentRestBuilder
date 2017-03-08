@@ -21,7 +21,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
 
         public string OrderByQueryArgumentKey { get; set; } = "sort";
 
-        public IEnumerable<OrderByRequest> ParseRequestQuery()
+        public IEnumerable<OrderByRequest> ParseRequestQuery(ICollection<string> supportedOrderBys)
         {
             StringValues orderByValues;
             if (!this.queryCollection.TryGetValue(this.OrderByQueryArgumentKey, out orderByValues))
@@ -34,6 +34,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
                 .Select(o => o.Trim())
                 .Where(o => !string.IsNullOrEmpty(o))
                 .Select(this.ParseOrderBy)
+                .Where(o => supportedOrderBys.Contains(o.Property))
                 .ToList();
         }
 
