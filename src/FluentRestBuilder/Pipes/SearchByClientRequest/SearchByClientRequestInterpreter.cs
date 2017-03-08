@@ -10,22 +10,20 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
 
     public class SearchByClientRequestInterpreter : ISearchByClientRequestInterpreter
     {
-        private readonly IQueryArgumentKeys queryArgumentKeys;
         private readonly IScopedStorage<HttpContext> httpContextStorage;
 
-        public SearchByClientRequestInterpreter(
-            IScopedStorage<HttpContext> httpContextStorage,
-            IQueryArgumentKeys queryArgumentKeys)
+        public SearchByClientRequestInterpreter(IScopedStorage<HttpContext> httpContextStorage)
         {
-            this.queryArgumentKeys = queryArgumentKeys;
             this.httpContextStorage = httpContextStorage;
         }
+
+        public string SearchQueryArgumentKey { get; set; } = "q";
 
         public string ParseRequestQuery()
         {
             var queryCollection = this.httpContextStorage.Value.Request.Query;
             StringValues search;
-            return queryCollection.TryGetValue(this.queryArgumentKeys.Search, out search)
+            return queryCollection.TryGetValue(this.SearchQueryArgumentKey, out search)
                 && !string.IsNullOrEmpty(search)
                 ? search.ToString() : null;
         }

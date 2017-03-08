@@ -4,20 +4,16 @@
 
 namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
 {
-    using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Pipes.SearchByClientRequest;
     using Mocks.HttpContextStorage;
     using Xunit;
 
     public class SearchByClientRequestInterpreterTest
     {
-        private readonly IQueryArgumentKeys keys = new QueryArgumentKeys();
-
         [Fact]
         public void TestNonExistantCase()
         {
-            var interpreter = new SearchByClientRequestInterpreter(
-                new EmptyHttpContextStorage(), this.keys);
+            var interpreter = new SearchByClientRequestInterpreter(new EmptyHttpContextStorage());
             var result = interpreter.ParseRequestQuery();
             Assert.Null(result);
         }
@@ -26,7 +22,7 @@ namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
         public void TestEmptyPageCase()
         {
             var interpreter = new SearchByClientRequestInterpreter(
-                new HttpContextStorage().SetSearchValue(string.Empty), this.keys);
+                new HttpContextStorage().SetSearchValue(string.Empty));
             var result = interpreter.ParseRequestQuery();
             Assert.Null(result);
         }
@@ -36,7 +32,7 @@ namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
         {
             const string search = "Search";
             var interpreter = new SearchByClientRequestInterpreter(
-                new HttpContextStorage().SetSearchValue(search), this.keys);
+                new HttpContextStorage().SetSearchValue(search));
             var result = interpreter.ParseRequestQuery();
             Assert.Equal(search, result);
         }
