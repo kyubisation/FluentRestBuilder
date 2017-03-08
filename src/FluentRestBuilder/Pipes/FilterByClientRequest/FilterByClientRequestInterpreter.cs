@@ -12,14 +12,16 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
 
     public class FilterByClientRequestInterpreter : IFilterByClientRequestInterpreter
     {
-        private static readonly IReadOnlyDictionary<string, FilterType> TypeMap =
-            new FilterTypeDictionary();
+        private readonly IReadOnlyDictionary<string, FilterType> typeMap;
 
         private readonly IQueryCollection queryCollection;
 
-        public FilterByClientRequestInterpreter(IScopedStorage<HttpContext> httpContextStorage)
+        public FilterByClientRequestInterpreter(
+            IScopedStorage<HttpContext> httpContextStorage,
+            IReadOnlyDictionary<string, FilterType> typeMap)
         {
             this.queryCollection = httpContextStorage.Value.Request.Query;
+            this.typeMap = typeMap;
         }
 
         public IEnumerable<FilterRequest> ParseRequestQuery(
@@ -44,7 +46,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
 
         private FilterRequest InterpretFilterRequest(string property, string filter)
         {
-            foreach (var filterType in TypeMap.Where(f => filter.StartsWith(f.Key)))
+            foreach (var filterType in this.typeMap.Where(f => filter.StartsWith(f.Key)))
             {
                 return new FilterRequest(
                     property,

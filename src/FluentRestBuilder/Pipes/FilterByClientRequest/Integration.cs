@@ -24,6 +24,8 @@ namespace FluentRestBuilder
             builder.Services.TryAddScoped(
                 typeof(IFilterByClientRequestPipeFactory<>),
                 typeof(FilterByClientRequestPipeFactory<>));
+            builder.Services.TryAddSingleton<
+                IReadOnlyDictionary<string, FilterType>, FilterTypeDictionary>();
             builder.Services.TryAddScoped<
                 IFilterByClientRequestInterpreter, FilterByClientRequestInterpreter>();
             builder.Services.TryAddSingleton<

@@ -19,7 +19,8 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         [Fact]
         public void TestNonExistantCase()
         {
-            var interpreter = new FilterByClientRequestInterpreter(new EmptyHttpContextStorage());
+            var interpreter = new FilterByClientRequestInterpreter(
+                new EmptyHttpContextStorage(), new FilterTypeDictionary());
             var result = interpreter.ParseRequestQuery(new[] { "p1", "p2" });
             Assert.Empty(result);
         }
@@ -27,7 +28,8 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         [Fact]
         public void TestEmptyCase()
         {
-            var interpreter = new FilterByClientRequestInterpreter(new HttpContextStorage());
+            var interpreter = new FilterByClientRequestInterpreter(
+                new HttpContextStorage(), new FilterTypeDictionary());
             var result = interpreter.ParseRequestQuery(new[] { "p1", "p2" });
             Assert.Empty(result);
         }
@@ -36,7 +38,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         public void TestEquals()
         {
             var interpreter = new FilterByClientRequestInterpreter(
-                new HttpContextStorage().SetValue(Property, Filter));
+                new HttpContextStorage().SetValue(Property, Filter), new FilterTypeDictionary());
             var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
             Assert.Equal(1, result.Count);
             var request = result.First();
@@ -78,7 +80,8 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
                 context.SetValue(filterRequest.Property, $"{prefix}{filterRequest.Filter}");
             }
 
-            var interpreter = new FilterByClientRequestInterpreter(context);
+            var interpreter = new FilterByClientRequestInterpreter(
+                context, new FilterTypeDictionary());
             var result = interpreter
                 .ParseRequestQuery(filterRequests.Select(r => r.Property))
                 .ToList();
@@ -92,7 +95,8 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         private void TestSingleFilterCase(string filterPrefix, FilterType expectedType)
         {
             var interpreter = new FilterByClientRequestInterpreter(
-                new HttpContextStorage().SetValue(Property, $"{filterPrefix}{Filter}"));
+                new HttpContextStorage().SetValue(Property, $"{filterPrefix}{Filter}"),
+                new FilterTypeDictionary());
             var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
             Assert.Equal(1, result.Count);
             var request = result.First();
