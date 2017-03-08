@@ -6,76 +6,50 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Exceptions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
-    using Newtonsoft.Json;
     using Storage;
 
     public class FilterByClientRequestInterpreter : IFilterByClientRequestInterpreter
     {
-        private static readonly IDictionary<string, FilterType> TypeMap = new Dictionary<string, FilterType>
-        {
-            ["~"] = FilterType.Contains,
-            ["<="] = FilterType.LessThanOrEqual,
-            [">="] = FilterType.GreaterThanOrEqual,
-            ["<"] = FilterType.LessThan,
-            [">"] = FilterType.GreaterThan,
-            ["="] = FilterType.Equals
-        };
+        private static readonly IReadOnlyDictionary<string, FilterType> TypeMap =
+            new FilterTypeDictionary();
 
-        private readonly IQueryArgumentKeys queryArgumentKeys;
         private readonly IQueryCollection queryCollection;
 
-        public FilterByClientRequestInterpreter(
-            IScopedStorage<HttpContext> httpContextStorage,
-            IQueryArgumentKeys queryArgumentKeys)
+        public FilterByClientRequestInterpreter(IScopedStorage<HttpContext> httpContextStorage)
         {
-            this.queryArgumentKeys = queryArgumentKeys;
             this.queryCollection = httpContextStorage.Value.Request.Query;
         }
 
-        public IEnumerable<FilterRequest> ParseRequestQuery() =>
-            this.TryParseRequestQuery() ?? Enumerable.Empty<FilterRequest>();
+        public IEnumerable<FilterRequest> ParseRequestQuery(
+            IEnumerable<string> supportedFilters) =>
+            this.TryParseRequestQuery(supportedFilters) ?? Enumerable.Empty<FilterRequest>();
 
-        private IEnumerable<FilterRequest> TryParseRequestQuery()
+        private IEnumerable<FilterRequest> TryParseRequestQuery(
+            IEnumerable<string> supportedFilters)
         {
-            StringValues filterValues;
-            return !this.queryCollection.TryGetValue(this.queryArgumentKeys.Filter, out filterValues)
-                ? null : this.DeserializeFiltersAndCreateFilterRequests(filterValues);
-        }
-
-        private IEnumerable<FilterRequest> DeserializeFiltersAndCreateFilterRequests(StringValues filterValues)
-        {
-            return filterValues.ToArray()
-                .Select(this.DeserializeFilter)
+            return supportedFilters
+                .Select(this.ResolveFilterRequest)
                 .Where(f => f != null)
-                .SelectMany(f => f)
-                .Select(f => this.InterpretFilterRequest(f.Key, f.Value))
                 .ToList();
         }
 
-        private IDictionary<string, string> DeserializeFilter(string filter)
+        private FilterRequest ResolveFilterRequest(string supportedFilter)
         {
-            try
-            {
-                return JsonConvert.DeserializeObject<Dictionary<string, string>>(filter);
-            }
-            catch (JsonSerializationException)
-            {
-                throw new FilterInterpreterException(filter);
-            }
+            StringValues filterValues;
+            return this.queryCollection.TryGetValue(supportedFilter, out filterValues)
+                ? this.InterpretFilterRequest(supportedFilter, filterValues) : null;
         }
 
         private FilterRequest InterpretFilterRequest(string property, string filter)
         {
-            foreach (var filterType in TypeMap.Where(f => property.EndsWith(f.Key)))
+            foreach (var filterType in TypeMap.Where(f => filter.StartsWith(f.Key)))
             {
                 return new FilterRequest(
                     property,
-                    property.TrimEnd($"{filterType.Key} ".ToCharArray()),
                     filterType.Value,
-                    filter);
+                    filter.Substring(filterType.Key.Length));
             }
 
             return new FilterRequest(property, FilterType.Equals, filter);

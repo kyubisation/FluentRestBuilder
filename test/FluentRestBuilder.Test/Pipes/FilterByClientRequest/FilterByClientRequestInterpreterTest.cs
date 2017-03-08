@@ -6,9 +6,8 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
 {
     using System.Collections.Generic;
     using System.Linq;
-    using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Pipes.FilterByClientRequest;
-    using FluentRestBuilder.Pipes.FilterByClientRequest.Exceptions;
+    using Mocks;
     using Mocks.HttpContextStorage;
     using Xunit;
 
@@ -16,23 +15,20 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
     {
         private const string Property = "Property";
         private const string Filter = "Filter";
-        private readonly IQueryArgumentKeys keys = new QueryArgumentKeys();
 
         [Fact]
         public void TestNonExistantCase()
         {
-            var interpreter = new FilterByClientRequestInterpreter(
-                new EmptyHttpContextStorage(), this.keys);
-            var result = interpreter.ParseRequestQuery();
+            var interpreter = new FilterByClientRequestInterpreter(new EmptyHttpContextStorage());
+            var result = interpreter.ParseRequestQuery(new[] { "p1", "p2" });
             Assert.Empty(result);
         }
 
         [Fact]
         public void TestEmptyCase()
         {
-            var interpreter = new FilterByClientRequestInterpreter(
-                new HttpContextStorage().SetFilterValue(string.Empty), this.keys);
-            var result = interpreter.ParseRequestQuery();
+            var interpreter = new FilterByClientRequestInterpreter(new HttpContextStorage());
+            var result = interpreter.ParseRequestQuery(new[] { "p1", "p2" });
             Assert.Empty(result);
         }
 
@@ -40,13 +36,12 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         public void TestEquals()
         {
             var interpreter = new FilterByClientRequestInterpreter(
-                new HttpContextStorage().SetFilterValue(Property, Filter), this.keys);
-            var result = interpreter.ParseRequestQuery().ToList();
+                new HttpContextStorage().SetValue(Property, Filter));
+            var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
             Assert.Equal(1, result.Count);
             var request = result.First();
             Assert.Equal(FilterType.Equals, request.Type);
             Assert.Equal(Property, request.Property);
-            Assert.Equal(Property, request.OriginalProperty);
             Assert.Equal(Filter, request.Filter);
         }
 
@@ -56,9 +51,9 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         [InlineData(">=", FilterType.GreaterThanOrEqual)]
         [InlineData("<", FilterType.LessThan)]
         [InlineData(">", FilterType.GreaterThan)]
-        public void TestFilterTheory(string suffix, FilterType type)
+        public void TestFilterTheory(string prefix, FilterType type)
         {
-            this.TestSingleFilterCase(suffix, type);
+            this.TestSingleFilterCase(prefix, type);
         }
 
         [Fact]
@@ -67,46 +62,42 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             var filterRequests = new List<FilterRequest>
             {
                 new FilterRequest("p1", FilterType.Equals, "p1"),
-                new FilterRequest("p2=", "p2", FilterType.Equals, "p2"),
-                new FilterRequest("p3~", "p3", FilterType.Contains, "p3"),
-                new FilterRequest("p4<", "p4", FilterType.LessThan, "p4"),
-                new FilterRequest("p5>", "p5", FilterType.GreaterThan, "p5"),
-                new FilterRequest("p6<=", "p6", FilterType.LessThanOrEqual, "p6"),
-                new FilterRequest("p7>=", "p7", FilterType.GreaterThanOrEqual, "p7")
+                new FilterRequest("p3", FilterType.Contains, "p3"),
+                new FilterRequest("p4", FilterType.LessThan, "p4"),
+                new FilterRequest("p5", FilterType.GreaterThan, "p5"),
+                new FilterRequest("p6", FilterType.LessThanOrEqual, "p6"),
+                new FilterRequest("p7", FilterType.GreaterThanOrEqual, "p7")
             };
-            var filters = filterRequests.ToDictionary(r => r.OriginalProperty, r => r.Filter);
-            var interpreter = new FilterByClientRequestInterpreter(
-                new HttpContextStorage().SetFilterValue(filters), this.keys);
-            var result = interpreter.ParseRequestQuery().ToList();
+            var context = new HttpContextStorage();
             foreach (var filterRequest in filterRequests)
             {
-                Assert.Contains(result, r => r.OriginalProperty == filterRequest.OriginalProperty
-                    && r.Property == filterRequest.Property
-                    && r.Type == filterRequest.Type
-                    && r.Filter == filterRequest.Filter);
+                var prefix = new FilterTypeDictionary()
+                    .Where(p => p.Value == filterRequest.Type)
+                    .Select(p => p.Key)
+                    .First();
+                context.SetValue(filterRequest.Property, $"{prefix}{filterRequest.Filter}");
+            }
+
+            var interpreter = new FilterByClientRequestInterpreter(context);
+            var result = interpreter
+                .ParseRequestQuery(filterRequests.Select(r => r.Property))
+                .ToList();
+            foreach (var filterRequest in filterRequests)
+            {
+                Assert.Contains(filterRequest, result, new PropertyComparer<FilterRequest>());
             }
         }
 
-        [Fact]
-        public void InvalidFilter()
-        {
-            var interpreter = new FilterByClientRequestInterpreter(
-                new HttpContextStorage().SetFilterValue("{"), this.keys);
-            Assert.Throws<FilterInterpreterException>(() => interpreter.ParseRequestQuery());
-        }
-
         // ReSharper disable once UnusedParameter.Local
-        private void TestSingleFilterCase(string filterSuffix, FilterType expectedType)
+        private void TestSingleFilterCase(string filterPrefix, FilterType expectedType)
         {
-            var filterProperty = $"{Property}{filterSuffix}";
             var interpreter = new FilterByClientRequestInterpreter(
-                new HttpContextStorage().SetFilterValue(filterProperty, Filter), this.keys);
-            var result = interpreter.ParseRequestQuery().ToList();
+                new HttpContextStorage().SetValue(Property, $"{filterPrefix}{Filter}"));
+            var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
             Assert.Equal(1, result.Count);
             var request = result.First();
             Assert.Equal(expectedType, request.Type);
             Assert.Equal(Property, request.Property);
-            Assert.Equal(filterProperty, request.OriginalProperty);
             Assert.Equal(Filter, request.Filter);
         }
     }

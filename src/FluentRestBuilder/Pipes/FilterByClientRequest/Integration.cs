@@ -73,6 +73,7 @@ namespace FluentRestBuilder
         /// Configure the filter capabilities for this pipe chain.
         /// Use the <see cref="FilterExpressionProviderDictionary{TInput}"/> to configure
         /// the available filters.
+        /// StringComparer.OrdinalIgnoreCase is used for key comparison.
         /// </summary>
         /// <typeparam name="TInput">The input type.</typeparam>
         /// <param name="pipe">The parent pipe.</param>
@@ -85,28 +86,6 @@ namespace FluentRestBuilder
                     IDictionary<string, IFilterExpressionProvider<TInput>>> factory)
         {
             var providerDictionary = new FilterExpressionProviderDictionary<TInput>(pipe);
-            var dictionary = factory(providerDictionary);
-            return pipe.ApplyFilterByClientRequest(dictionary);
-        }
-
-        /// <summary>
-        /// Configure the filter capabilities for this pipe chain.
-        /// Use the <see cref="FilterExpressionProviderDictionary{TInput}"/> to configure
-        /// the available filters.
-        /// This uses the StringComparer.OrdinalIgnoreCase for key comparison.
-        /// </summary>
-        /// <typeparam name="TInput">The input type.</typeparam>
-        /// <param name="pipe">The parent pipe.</param>
-        /// <param name="factory">The configuration factory.</param>
-        /// <returns>An output pipe to continue with.</returns>
-        public static OutputPipe<IQueryable<TInput>> ApplyCaseInsensitiveFilterByClientRequest<TInput>(
-                this IOutputPipe<IQueryable<TInput>> pipe,
-                Func<
-                    FilterExpressionProviderDictionary<TInput>,
-                    IDictionary<string, IFilterExpressionProvider<TInput>>> factory)
-        {
-            var providerDictionary = new FilterExpressionProviderDictionary<TInput>(
-                pipe, StringComparer.OrdinalIgnoreCase);
             var dictionary = factory(providerDictionary);
             return pipe.ApplyFilterByClientRequest(dictionary);
         }

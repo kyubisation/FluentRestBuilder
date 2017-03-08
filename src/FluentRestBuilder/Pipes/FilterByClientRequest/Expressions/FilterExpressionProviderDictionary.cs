@@ -14,15 +14,8 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
     {
         private readonly IServiceProvider serviceProvider;
 
-        public FilterExpressionProviderDictionary(
-            IServiceProvider serviceProvider,
-            IEqualityComparer<string> equalityComparer)
-            : base(equalityComparer)
-        {
-            this.serviceProvider = serviceProvider;
-        }
-
         public FilterExpressionProviderDictionary(IServiceProvider serviceProvider)
+            : base(StringComparer.OrdinalIgnoreCase)
         {
             this.serviceProvider = serviceProvider;
         }

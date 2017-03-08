@@ -45,7 +45,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
 
         protected override IQueryable<TInput> Map(IQueryable<TInput> input)
         {
-            var filterRequests = this.interpreter.ParseRequestQuery();
+            var filterRequests = this.interpreter.ParseRequestQuery(this.filterDictionary.Keys);
             return this.ApplyFilters(filterRequests, input);
         }
 
@@ -63,7 +63,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
             var expression = provider?.Resolve(request.Type, request.Filter);
             if (expression == null)
             {
-                throw new FilterNotSupportedException(request.OriginalProperty);
+                throw new FilterNotSupportedException(request.Property);
             }
 
             return expression;

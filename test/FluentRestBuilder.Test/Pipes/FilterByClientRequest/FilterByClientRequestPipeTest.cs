@@ -88,7 +88,8 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         {
             public List<FilterRequest> RequestedFilter { get; } = new List<FilterRequest>();
 
-            IEnumerable<FilterRequest> IFilterByClientRequestInterpreter.ParseRequestQuery() =>
+            IEnumerable<FilterRequest> IFilterByClientRequestInterpreter.ParseRequestQuery(
+                IEnumerable<string> supportedFilers) =>
                 this.RequestedFilter;
         }
     }
