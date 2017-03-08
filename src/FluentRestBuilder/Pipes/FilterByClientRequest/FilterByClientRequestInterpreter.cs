@@ -25,7 +25,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
         }
 
         public IEnumerable<FilterRequest> ParseRequestQuery(
-            IEnumerable<string> supportedFilters) =>
+            ICollection<string> supportedFilters) =>
             this.TryParseRequestQuery(supportedFilters) ?? Enumerable.Empty<FilterRequest>();
 
         private IEnumerable<FilterRequest> TryParseRequestQuery(

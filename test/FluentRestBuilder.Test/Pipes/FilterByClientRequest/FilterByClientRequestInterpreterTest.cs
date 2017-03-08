@@ -83,7 +83,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             var interpreter = new FilterByClientRequestInterpreter(
                 context, new FilterTypeDictionary());
             var result = interpreter
-                .ParseRequestQuery(filterRequests.Select(r => r.Property))
+                .ParseRequestQuery(filterRequests.Select(r => r.Property).ToList())
                 .ToList();
             foreach (var filterRequest in filterRequests)
             {

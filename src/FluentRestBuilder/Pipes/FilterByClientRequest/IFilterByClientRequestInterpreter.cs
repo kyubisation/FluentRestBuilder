@@ -8,6 +8,6 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
 
     public interface IFilterByClientRequestInterpreter
     {
-        IEnumerable<FilterRequest> ParseRequestQuery(IEnumerable<string> supportedFilters);
+        IEnumerable<FilterRequest> ParseRequestQuery(ICollection<string> supportedFilters);
     }
 }
