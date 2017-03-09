@@ -58,20 +58,6 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             Assert.Contains(4, result.Select(e => e.Id));
         }
 
-        [Fact]
-        public async Task TestNotSupported()
-        {
-            this.CreateFilterEntities();
-            this.filterInterpreter.RequestedFilter.Add(
-                new FilterRequest(nameof(Entity.Name), FilterType.Equals, "a"));
-            var result = await this.controller.FromSource(this.database.Create().Entities)
-                .ApplyFilterByClientRequest(builder => builder)
-                .Map(q => q.ToListAsync())
-                .ToMockResultPipe()
-                .Execute();
-            Assert.IsAssignableFrom<BadRequestObjectResult>(result);
-        }
-
         private void CreateFilterEntities()
         {
             using (var context = this.database.Create())

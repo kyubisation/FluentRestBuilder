@@ -8,10 +8,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Threading.Tasks;
-    using Exceptions;
     using Expressions;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
     public class FilterByClientRequestPipe<TInput> : MappingPipeBase<IQueryable<TInput>, IQueryable<TInput>>
@@ -30,19 +27,6 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
             this.interpreter = interpreter;
         }
 
-        protected override async Task<IActionResult> Execute(IQueryable<TInput> input)
-        {
-            try
-            {
-                return await base.Execute(input);
-            }
-            catch (FilterException exception)
-            {
-                this.Logger.Information?.Log(0, exception, "Filtering failed");
-                return new BadRequestObjectResult(new ErrorResult(exception));
-            }
-        }
-
         protected override IQueryable<TInput> Map(IQueryable<TInput> input)
         {
             var filterRequests = this.interpreter.ParseRequestQuery(this.filterDictionary.Keys);
@@ -53,20 +37,13 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
             IEnumerable<FilterRequest> filterRequests, IQueryable<TInput> queryable) =>
             filterRequests
                 .Select(this.ResolveFilterExpression)
+                .Where(f => f != null)
                 .Aggregate(queryable, (current, next) => current.Where(next));
 
         private Expression<Func<TInput, bool>> ResolveFilterExpression(FilterRequest request)
         {
             this.Logger.Debug?.Log("Attempting to filter according to {0}", request);
-            IFilterExpressionProvider<TInput> provider;
-            this.filterDictionary.TryGetValue(request.Property, out provider);
-            var expression = provider?.Resolve(request.Type, request.Filter);
-            if (expression == null)
-            {
-                throw new FilterNotSupportedException(request.Property);
-            }
-
-            return expression;
+            return this.filterDictionary[request.Property].Resolve(request.Type, request.Filter);
         }
     }
 }
