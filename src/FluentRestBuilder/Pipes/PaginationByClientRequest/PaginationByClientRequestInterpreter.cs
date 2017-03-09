@@ -4,63 +4,77 @@
 
 namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 {
-    using Exceptions;
+    using System.Text.RegularExpressions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
     using Storage;
 
     public class PaginationByClientRequestInterpreter : IPaginationByClientRequestInterpreter
     {
-        private readonly IQueryArgumentKeys queryArgumentKeys;
         private readonly IQueryCollection queryCollection;
+        private readonly IHeaderDictionary requestHeader;
+        private readonly Regex rangeRegex =
+            new Regex("items=(?<rangeStart>[0-9]+)-(?<rangeEnd>[0-9]+)");
 
-        public PaginationByClientRequestInterpreter(
-            IScopedStorage<HttpContext> httpContextStorage,
-            IQueryArgumentKeys queryArgumentKeys)
+        public PaginationByClientRequestInterpreter(IScopedStorage<HttpContext> httpContextStorage)
         {
             this.queryCollection = httpContextStorage.Value.Request.Query;
-            this.queryArgumentKeys = queryArgumentKeys;
+            this.requestHeader = httpContextStorage.Value.Request.Headers;
         }
+
+        public string LimitQueryArgumentKey { get; set; } = "limit";
+
+        public string OffsetQueryArgumentKey { get; set; } = "offset";
 
         public PaginationRequest ParseRequestQuery() =>
-            new PaginationRequest(this.ParsePage(), this.ParseEntriesPerPage());
+            this.ParseQueryString() ?? this.ParseHeaderRange() ?? new PaginationRequest();
 
-        private int? ParsePage()
+        private PaginationRequest ParseQueryString()
         {
-            StringValues pageValue;
-            if (!this.queryCollection.TryGetValue(this.queryArgumentKeys.Page, out pageValue)
-                || string.IsNullOrEmpty(pageValue.ToString()))
-            {
-                return null;
-            }
-
-            int page;
-            if (!int.TryParse(pageValue.ToString(), out page) || page < 1)
-            {
-                throw new NotSupportedPageException(pageValue.ToString());
-            }
-
-            return page;
+            var offset = this.ParseQueryStringOffset();
+            var limit = this.ParseQueryStringLimit();
+            return offset == null && limit == null
+                ? null
+                : new PaginationRequest(offset, limit);
         }
 
-        private int? ParseEntriesPerPage()
+        private int? ParseQueryStringOffset() => this.ParseQueryValue(this.OffsetQueryArgumentKey);
+
+        private int? ParseQueryStringLimit() => this.ParseQueryValue(this.LimitQueryArgumentKey);
+
+        private int? ParseQueryValue(string key)
         {
-            StringValues entriesPerPageValue;
-            if (!this.queryCollection
-                .TryGetValue(this.queryArgumentKeys.EntriesPerPage, out entriesPerPageValue)
-                || string.IsNullOrEmpty(entriesPerPageValue.ToString()))
+            StringValues stringValue;
+            int value;
+            if (!this.queryCollection.TryGetValue(key, out stringValue)
+                || string.IsNullOrEmpty(stringValue.ToString())
+                || !int.TryParse(stringValue.ToString(), out value)
+                || value < 1)
             {
                 return null;
             }
 
-            int entriesPerPage;
-            if (!int.TryParse(entriesPerPageValue.ToString(), out entriesPerPage)
-                || entriesPerPage < 1)
+            return value;
+        }
+
+        private PaginationRequest ParseHeaderRange()
+        {
+            StringValues rangeValue;
+            if (!this.requestHeader.TryGetValue("Range", out rangeValue))
             {
-                throw new NotSupportedEntriesPerPageException(entriesPerPageValue.ToString());
+                return null;
             }
 
-            return entriesPerPage;
+            var match = this.rangeRegex.Match(rangeValue);
+            if (!match.Success)
+            {
+                return null;
+            }
+
+            var rangeStart = int.Parse(match.Groups["rangeStart"].Value);
+            var rangeEnd = int.Parse(match.Groups["rangeEnd"].Value);
+            return rangeStart > rangeEnd
+                ? null : new PaginationRequest(rangeStart, rangeEnd + 1 - rangeStart);
         }
     }
 }

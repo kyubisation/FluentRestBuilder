@@ -6,8 +6,8 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 {
     public class PaginationOptions
     {
-        public int DefaultEntriesPerPage { get; set; } = 10;
+        public int DefaultLimit { get; set; } = 10;
 
-        public int MaxEntriesPerPage { get; set; } = 100;
+        public int MaxLimit { get; set; } = 100;
     }
 }

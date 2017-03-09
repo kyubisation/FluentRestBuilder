@@ -16,16 +16,16 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
 
     public class RestCollectionLinkGenerator : IRestCollectionLinkGenerator
     {
-        private readonly IQueryArgumentKeys queryArgumentKeys;
         private readonly HttpRequest request;
 
-        public RestCollectionLinkGenerator(
-            IScopedStorage<HttpContext> httpContextStorage,
-            IQueryArgumentKeys queryArgumentKeys)
+        public RestCollectionLinkGenerator(IScopedStorage<HttpContext> httpContextStorage)
         {
             this.request = httpContextStorage.Value.Request;
-            this.queryArgumentKeys = queryArgumentKeys;
         }
+
+        public string LimitQueryArgumentKey { get; set; } = "limit";
+
+        public string OffsetQueryArgumentKey { get; set; } = "offset";
 
         public IEnumerable<NamedLink> GenerateLinks(PaginationMetaInfo paginationMetaInfo)
         {
@@ -36,27 +36,49 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
                 yield break;
             }
 
-            if (paginationMetaInfo.Page > 1)
+            if (paginationMetaInfo.Offset > 0)
             {
-                yield return new NamedLink("first", new Link(this.CreatePageLink(1)));
-                yield return new NamedLink(
-                    "previous", new Link(this.CreatePageLink(paginationMetaInfo.Page - 1)));
+                yield return this.CreateFirstPageLink(paginationMetaInfo);
+                yield return this.CreatePreviousPageLink(paginationMetaInfo);
             }
 
-            if (paginationMetaInfo.Page < paginationMetaInfo.TotalPages)
+            if (paginationMetaInfo.Offset + paginationMetaInfo.Limit < paginationMetaInfo.Total)
             {
-                yield return new NamedLink(
-                    "next", new Link(this.CreatePageLink(paginationMetaInfo.Page + 1)));
-                yield return new NamedLink(
-                    "last", new Link(this.CreatePageLink(paginationMetaInfo.TotalPages)));
+                yield return this.CreateNextPageLink(paginationMetaInfo);
+                yield return this.CreateLastPageLink(paginationMetaInfo);
             }
         }
 
-        private string CreatePageLink(int page)
+        private NamedLink CreateFirstPageLink(PaginationMetaInfo metaInfo) =>
+            new NamedLink("first", this.CreatePageLink(0, metaInfo.Limit));
+
+        private NamedLink CreatePreviousPageLink(PaginationMetaInfo metaInfo)
+        {
+            var previousOffset = metaInfo.Offset - metaInfo.Limit;
+            return new NamedLink("previous", this.CreatePageLink(previousOffset, metaInfo.Limit));
+        }
+
+        private NamedLink CreateNextPageLink(PaginationMetaInfo metaInfo)
+        {
+            var nextOffset = metaInfo.Offset + metaInfo.Limit;
+            return new NamedLink("next", this.CreatePageLink(nextOffset, metaInfo.Limit));
+        }
+
+        private NamedLink CreateLastPageLink(PaginationMetaInfo metaInfo)
+        {
+            var modulo = metaInfo.Total % metaInfo.Limit;
+            var lastOffset = modulo == 0
+                ? metaInfo.Total - metaInfo.Limit : metaInfo.Total - modulo;
+            return new NamedLink("last", this.CreatePageLink(lastOffset, metaInfo.Limit));
+        }
+
+        private string CreatePageLink(int offset, int limit)
         {
             var queryParameters = this.request.Query
-                .ToDictionary(q => q.Key, q => q.Value.ToString());
-            queryParameters[this.queryArgumentKeys.Page] = page.ToString();
+                .ToDictionary(
+                    q => q.Key, q => q.Value.ToString(), StringComparer.OrdinalIgnoreCase);
+            queryParameters[this.OffsetQueryArgumentKey] = offset.ToString();
+            queryParameters[this.LimitQueryArgumentKey] = limit.ToString();
 
             var hostComponents = this.request.Host.ToUriComponent().Split(':');
             var uriBuilder = new UriBuilder

@@ -12,6 +12,11 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Links
             this.Link = link;
         }
 
+        public NamedLink(string name, string url)
+            : this(name, new Link(url))
+        {
+        }
+
         public string Name { get; }
 
         public Link Link { get; }

@@ -7,8 +7,6 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Exceptions;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Storage;
 
@@ -35,56 +33,36 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
             this.queryableTransformer = queryableTransformer;
         }
 
-        protected override async Task<IActionResult> Execute(IQueryable<TInput> input)
-        {
-            try
-            {
-                return await base.Execute(input);
-            }
-            catch (PaginationException exception)
-            {
-                this.Logger.Information?.Log(0, exception, "Pagination failed");
-                return new BadRequestObjectResult(new ErrorResult(exception));
-            }
-        }
-
         protected override async Task<IQueryable<TInput>> MapAsync(IQueryable<TInput> input)
         {
             var paginationRequest = this.interpreter.ParseRequestQuery();
             this.Logger.Debug?.Log("Pagination request {0}", paginationRequest);
             var paginationValues = new PaginationValues
             {
-                Page = paginationRequest.Page ?? 1,
-                EntriesPerPage = this.ResolveEntriesPerPage(paginationRequest)
+                Offset = paginationRequest.Offset ?? 0,
+                Limit = this.ResolveLimit(paginationRequest)
             };
             await this.CalculateMetaInfo(input, paginationValues);
 
             return input
-                .Skip(paginationValues.PageOffset)
-                .Take(paginationValues.EntriesPerPage);
+                .Skip(paginationValues.Offset)
+                .Take(paginationValues.Limit);
         }
 
         private void AssertValidOptions()
         {
-            if (this.options.MaxEntriesPerPage < this.options.DefaultEntriesPerPage)
+            if (this.options.MaxLimit < this.options.DefaultLimit)
             {
                 throw new InvalidOperationException(
-                    $"${nameof(PaginationOptions.MaxEntriesPerPage)} must not be " +
-                    $"smaller than ${nameof(PaginationOptions.DefaultEntriesPerPage)}!");
+                    $"${nameof(PaginationOptions.MaxLimit)} must not be " +
+                    $"smaller than ${nameof(PaginationOptions.DefaultLimit)}!");
             }
         }
 
-        private int ResolveEntriesPerPage(PaginationRequest request)
+        private int ResolveLimit(PaginationRequest request)
         {
-            var entriesPerPage = request.EntriesPerPage
-                ?? this.options.DefaultEntriesPerPage;
-            if (entriesPerPage > this.options.MaxEntriesPerPage)
-            {
-                throw new MaxEntriesPerPageExceededException(
-                    entriesPerPage, this.options.MaxEntriesPerPage);
-            }
-
-            return entriesPerPage;
+            var limit = request.Limit ?? this.options.DefaultLimit;
+            return limit > this.options.MaxLimit ? this.options.MaxLimit : limit;
         }
 
         private async Task CalculateMetaInfo(
@@ -92,16 +70,14 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
         {
             var count = await this.queryableTransformer.Count(queryable);
             this.paginationMetaInfoStorage.Value = new PaginationMetaInfo(
-                count, paginationValues.Page, paginationValues.EntriesPerPage);
+                count, paginationValues.Offset, paginationValues.Limit);
         }
 
-        private class PaginationValues
+        private struct PaginationValues
         {
-            public int Page { get; set; }
+            public int Offset;
 
-            public int EntriesPerPage { get; set; }
-
-            public int PageOffset => this.EntriesPerPage * (this.Page - 1);
+            public int Limit;
         }
     }
 }

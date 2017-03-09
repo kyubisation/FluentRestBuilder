@@ -9,15 +9,19 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 
     public class PaginationRequest
     {
-        public PaginationRequest(int? page, int? entriesPerPage)
+        public PaginationRequest()
         {
-            this.Page = page;
-            this.EntriesPerPage = entriesPerPage;
         }
 
-        public int? Page { get; set; }
+        public PaginationRequest(int? offset, int? limit)
+        {
+            this.Offset = offset;
+            this.Limit = limit;
+        }
 
-        public int? EntriesPerPage { get; set; }
+        public int? Offset { get; set; }
+
+        public int? Limit { get; set; }
 
         public override string ToString()
         {

@@ -29,7 +29,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
         public void TestSinglePage()
         {
             var generator = this.Create();
-            var result = generator.GenerateLinks(new PaginationMetaInfo(1, 1, 1))
+            var result = generator.GenerateLinks(new PaginationMetaInfo(1, 0, 1))
                 .ToList();
             Assert.Equal(1, result.Count);
             var first = result.First();
@@ -40,7 +40,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
         public void TestFirstPage()
         {
             var generator = this.Create();
-            var result = generator.GenerateLinks(new PaginationMetaInfo(2, 1, 1))
+            var result = generator.GenerateLinks(new PaginationMetaInfo(2, 0, 1))
                 .ToList();
             Assert.Equal(3, result.Count);
             Assert.Contains(Link.Self, result.Select(l => l.Name));
@@ -64,7 +64,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
         public void TestMultiplePages()
         {
             var generator = this.Create();
-            var result = generator.GenerateLinks(new PaginationMetaInfo(3, 2, 1))
+            var result = generator.GenerateLinks(new PaginationMetaInfo(3, 1, 1))
                 .ToList();
             Assert.Equal(5, result.Count);
             Assert.Contains(Link.Self, result.Select(l => l.Name));
@@ -90,8 +90,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
                             Scheme = "http"
                         }
                     }
-                },
-                new QueryArgumentKeys());
+                });
         }
     }
 }

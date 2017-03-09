@@ -10,7 +10,6 @@ namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
     using System.Threading.Tasks;
     using Builder;
     using FluentRestBuilder.Pipes.PaginationByClientRequest;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;
@@ -53,7 +52,7 @@ namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
         [Fact]
         public async Task TestDefaultCase()
         {
-            var amount = new PaginationOptions().DefaultEntriesPerPage;
+            var amount = new PaginationOptions().DefaultLimit;
             var entities = this.database.CreateEnumeratedEntities(20).Take(amount);
             await this.BuildPipeTestAndAssertResult(entities);
         }
@@ -62,7 +61,7 @@ namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
         public async Task TestChangedDefaultEntriesPerPageAmount()
         {
             const int amount = 5;
-            var options = new PaginationOptions { DefaultEntriesPerPage = amount };
+            var options = new PaginationOptions { DefaultLimit = amount };
             var entities = this.database.CreateEnumeratedEntities(20)
                 .Take(amount);
             await this.BuildPipeTestAndAssertResult(entities, options);
@@ -73,8 +72,8 @@ namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
         {
             var options = new PaginationOptions
             {
-                MaxEntriesPerPage = 5,
-                DefaultEntriesPerPage = 10
+                MaxLimit = 5,
+                DefaultLimit = 10
             };
             var source = this.controller.FromSource(this.context.Entities);
             Assert.Throws<InvalidOperationException>(
@@ -84,11 +83,11 @@ namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
         [Fact]
         public async Task TestSecondPage()
         {
-            var amount = new PaginationOptions().DefaultEntriesPerPage;
+            var amount = new PaginationOptions().DefaultLimit;
             var entities = this.database.CreateEnumeratedEntities(20)
                 .Skip(amount)
                 .Take(amount);
-            this.interpreter.Page = 2;
+            this.interpreter.Offset = 2;
             await this.BuildPipeTestAndAssertResult(entities);
         }
 
@@ -96,7 +95,7 @@ namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
         public async Task TestRequestedEntriesPerPage()
         {
             const int entriesPerPage = 5;
-            this.interpreter.EntriesPerPage = entriesPerPage;
+            this.interpreter.Limit = entriesPerPage;
             var entities = this.database.CreateEnumeratedEntities(20)
                 .Take(entriesPerPage);
             await this.BuildPipeTestAndAssertResult(entities);
@@ -105,13 +104,14 @@ namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
         [Fact]
         public async Task TestRequestedEntriesPerPageExceedsMaximum()
         {
-            this.interpreter.EntriesPerPage = 20;
+            const int maxLimit = 10;
+            this.interpreter.Limit = 20;
+            this.database.CreateEnumeratedEntities(20);
             var result = await this.controller.FromSource(this.context.Entities)
-                .ApplyPaginationByClientRequest(new PaginationOptions { MaxEntriesPerPage = 10 })
+                .ApplyPaginationByClientRequest(new PaginationOptions { MaxLimit = maxLimit })
                 .Map(q => q.ToListAsync())
-                .ToMockResultPipe()
-                .Execute();
-            Assert.IsType<BadRequestObjectResult>(result);
+                .ToObjectResultOrDefault();
+            Assert.Equal(maxLimit, result.Count);
         }
 
         private async Task BuildPipeTestAndAssertResult(
@@ -131,13 +131,13 @@ namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
 
         private class Interpreter : IPaginationByClientRequestInterpreter
         {
-            public int? Page { private get; set; }
+            public int? Offset { private get; set; }
 
-            public int? EntriesPerPage { private get; set; }
+            public int? Limit { private get; set; }
 
             public PaginationRequest ParseRequestQuery()
             {
-                return new PaginationRequest(this.Page, this.EntriesPerPage);
+                return new PaginationRequest(this.Offset, this.Limit);
             }
         }
     }

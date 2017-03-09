@@ -4,27 +4,22 @@
 
 namespace FluentRestBuilder.Pipes
 {
-    using System;
-
     public class PaginationMetaInfo
     {
         public PaginationMetaInfo(
             int total,
-            int page,
-            int entriesPerPage)
+            int offset,
+            int limit)
         {
             this.Total = total;
-            this.Page = page;
-            this.EntriesPerPage = entriesPerPage;
-            this.TotalPages = (int)Math.Ceiling(total / (double)entriesPerPage);
+            this.Offset = offset;
+            this.Limit = limit;
         }
 
         public int Total { get; }
 
-        public int Page { get; }
+        public int Offset { get; }
 
-        public int EntriesPerPage { get; }
-
-        public int TotalPages { get; }
+        public int Limit { get; }
     }
 }
