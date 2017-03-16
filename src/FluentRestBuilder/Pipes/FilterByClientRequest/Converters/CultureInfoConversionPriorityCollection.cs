@@ -1,4 +1,4 @@
-﻿// <copyright file="CultureInfoConversionPriority.cs" company="Kyubisation">
+﻿// <copyright file="CultureInfoConversionPriorityCollection.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -8,7 +8,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
     using System.Collections.Generic;
     using System.Globalization;
 
-    public class CultureInfoConversionPriority : ICultureInfoConversionPriority
+    public class CultureInfoConversionPriorityCollection : ICultureInfoConversionPriorityCollection
     {
         public IEnumerator<CultureInfo> GetEnumerator()
         {

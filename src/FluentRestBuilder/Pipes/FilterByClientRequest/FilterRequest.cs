@@ -9,16 +9,16 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
 
     public class FilterRequest
     {
-        public FilterRequest(string property, FilterType type, string filter)
+        public FilterRequest(string property, FilterType filterType, string filter)
         {
             this.Property = property;
-            this.Type = type;
+            this.FilterType = filterType;
             this.Filter = filter;
         }
 
         public string Property { get; }
 
-        public FilterType Type { get; }
+        public FilterType FilterType { get; }
 
         public string Filter { get; }
 

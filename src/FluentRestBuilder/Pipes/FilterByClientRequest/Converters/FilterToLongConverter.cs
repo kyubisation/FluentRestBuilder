@@ -9,8 +9,8 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
     public class FilterToLongConverter : FilterToTypeConverterBase<long>
     {
         public FilterToLongConverter(
-            ICultureInfoConversionPriority cultureInfoConversionPriority)
-            : base(cultureInfoConversionPriority)
+            ICultureInfoConversionPriorityCollection cultureInfoConversionPriorityCollection)
+            : base(cultureInfoConversionPriorityCollection)
         {
         }
 

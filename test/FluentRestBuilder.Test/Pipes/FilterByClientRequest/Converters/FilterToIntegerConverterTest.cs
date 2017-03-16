@@ -15,7 +15,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
 
         public FilterToIntegerConverterTest()
         {
-            this.converter = new FilterToIntegerConverter(new CultureInfoConversionPriority());
+            this.converter = new FilterToIntegerConverter(new CultureInfoConversionPriorityCollection());
             new CultureInfo("fr-FR").AssignAsCurrentUiCulture();
         }
 

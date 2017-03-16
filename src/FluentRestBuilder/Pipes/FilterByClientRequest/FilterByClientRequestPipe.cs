@@ -43,7 +43,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
         private Expression<Func<TInput, bool>> ResolveFilterExpression(FilterRequest request)
         {
             this.Logger.Debug?.Log("Attempting to filter according to {0}", request);
-            return this.filterDictionary[request.Property].Resolve(request.Type, request.Filter);
+            return this.filterDictionary[request.Property].Resolve(request.FilterType, request.Filter);
         }
     }
 }

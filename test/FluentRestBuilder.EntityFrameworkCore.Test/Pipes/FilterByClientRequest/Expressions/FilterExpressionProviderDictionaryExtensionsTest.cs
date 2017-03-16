@@ -26,7 +26,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.FilterByClientRequest
                 .AddSingleton<IFilterToTypeConverter<int>, FilterToIntegerConverter>()
                 .AddSingleton<IFilterToTypeConverter<double>, FilterToDoubleConverter>()
                 .AddSingleton<IFilterToTypeConverter<DateTime>, FilterToDateTimeConverter>()
-                .AddSingleton<ICultureInfoConversionPriority, CultureInfoConversionPriority>()
+                .AddSingleton<ICultureInfoConversionPriorityCollection, CultureInfoConversionPriorityCollection>()
                 .BuildServiceProvider();
         }
 

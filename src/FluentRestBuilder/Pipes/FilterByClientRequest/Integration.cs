@@ -29,7 +29,7 @@ namespace FluentRestBuilder
             builder.Services.TryAddScoped<
                 IFilterByClientRequestInterpreter, FilterByClientRequestInterpreter>();
             builder.Services.TryAddSingleton<
-                ICultureInfoConversionPriority, CultureInfoConversionPriority>();
+                ICultureInfoConversionPriorityCollection, CultureInfoConversionPriorityCollection>();
             builder.Services.TryAddSingleton(
                 typeof(IFilterToTypeConverter<>), typeof(GenericFilterToTypeConverter<>));
             builder.Services.TryAddSingleton<

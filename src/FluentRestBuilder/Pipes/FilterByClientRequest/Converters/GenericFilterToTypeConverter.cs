@@ -6,16 +6,17 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
 {
     using System;
     using System.ComponentModel;
+    using Results;
 
     public class GenericFilterToTypeConverter<TFilter> : IFilterToTypeConverter<TFilter>
     {
-        private readonly ICultureInfoConversionPriority cultureInfoConversionPriority;
+        private readonly ICultureInfoConversionPriorityCollection cultureInfoConversionPriorityCollection;
         private readonly TypeConverter converter;
 
         public GenericFilterToTypeConverter(
-            ICultureInfoConversionPriority cultureInfoConversionPriority)
+            ICultureInfoConversionPriorityCollection cultureInfoConversionPriorityCollection)
         {
-            this.cultureInfoConversionPriority = cultureInfoConversionPriority;
+            this.cultureInfoConversionPriorityCollection = cultureInfoConversionPriorityCollection;
             var typeConverter = TypeDescriptor.GetConverter(typeof(TFilter));
             if (typeConverter.CanConvertFrom(typeof(string)))
             {
@@ -27,21 +28,21 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
         {
             if (this.converter == null)
             {
-                return FilterConversionResult<TFilter>.CreateFailure();
+                return new FilterConversionFailure<TFilter>();
             }
 
             var result = this.ParseFilter(filter);
             if (result == null)
             {
-                return FilterConversionResult<TFilter>.CreateFailure();
+                return new FilterConversionFailure<TFilter>();
             }
 
-            return FilterConversionResult<TFilter>.CreateSuccess((TFilter)result);
+            return new FilterConversionSuccess<TFilter>((TFilter)result);
         }
 
         private object ParseFilter(string filter)
         {
-            foreach (var cultureInfo in this.cultureInfoConversionPriority)
+            foreach (var cultureInfo in this.cultureInfoConversionPriorityCollection)
             {
                 try
                 {

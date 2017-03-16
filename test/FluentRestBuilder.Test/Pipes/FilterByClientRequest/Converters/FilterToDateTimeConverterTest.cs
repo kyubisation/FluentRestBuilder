@@ -16,7 +16,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
 
         public FilterToDateTimeConverterTest()
         {
-            this.converter = new FilterToDateTimeConverter(new CultureInfoConversionPriority());
+            this.converter = new FilterToDateTimeConverter(new CultureInfoConversionPriorityCollection());
         }
 
         [Fact]

@@ -4,6 +4,8 @@
 
 namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
 {
+    using Results;
+
     public interface IFilterToTypeConverter<TFilter>
     {
         FilterConversionResult<TFilter> Parse(string filter);

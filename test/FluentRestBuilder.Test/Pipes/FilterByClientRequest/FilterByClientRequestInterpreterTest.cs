@@ -42,7 +42,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
             Assert.Equal(1, result.Count);
             var request = result.First();
-            Assert.Equal(FilterType.Equals, request.Type);
+            Assert.Equal(FilterType.Equals, request.FilterType);
             Assert.Equal(Property, request.Property);
             Assert.Equal(Filter, request.Filter);
         }
@@ -74,7 +74,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             foreach (var filterRequest in filterRequests)
             {
                 var prefix = new FilterTypeDictionary()
-                    .Where(p => p.Value == filterRequest.Type)
+                    .Where(p => p.Value == filterRequest.FilterType)
                     .Select(p => p.Key)
                     .First();
                 context.SetValue(filterRequest.Property, $"{prefix}{filterRequest.Filter}");
@@ -100,7 +100,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
             Assert.Equal(1, result.Count);
             var request = result.First();
-            Assert.Equal(expectedType, request.Type);
+            Assert.Equal(expectedType, request.FilterType);
             Assert.Equal(Property, request.Property);
             Assert.Equal(Filter, request.Filter);
         }

@@ -19,7 +19,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Expressions
         {
             var provider = new GenericFilterExpressionProvider<Entity, int>(
                 i => new FilterExpressionDictionary<Entity>(),
-                new FilterToIntegerConverter(new CultureInfoConversionPriority()));
+                new FilterToIntegerConverter(new CultureInfoConversionPriorityCollection()));
             Assert.Null(provider.Resolve(FilterType.Equals, "1"));
         }
 
@@ -28,7 +28,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Expressions
         {
             var provider = new GenericFilterExpressionProvider<Entity, int>(
                 i => new FilterExpressionDictionary<Entity>(),
-                new FilterToIntegerConverter(new CultureInfoConversionPriority()));
+                new FilterToIntegerConverter(new CultureInfoConversionPriorityCollection()));
             Assert.Null(provider.Resolve(FilterType.Equals, "a"));
         }
 
@@ -38,7 +38,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Expressions
             const int id = 1;
             var provider = new GenericFilterExpressionProvider<Entity, int>(
                 i => new FilterExpressionDictionary<Entity>().AddEquals(e => e.Id == i),
-                new FilterToIntegerConverter(new CultureInfoConversionPriority()));
+                new FilterToIntegerConverter(new CultureInfoConversionPriorityCollection()));
             var expression = provider.Resolve(FilterType.Equals, id.ToString());
             using (var context = new MockDbContext())
             {
@@ -53,7 +53,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Expressions
         {
             var provider = new GenericFilterExpressionProvider<Entity, int>(
                 i => new FilterExpressionDictionary<Entity>().AddEquals(e => e.Id == i),
-                new FilterToIntegerConverter(new CultureInfoConversionPriority()));
+                new FilterToIntegerConverter(new CultureInfoConversionPriorityCollection()));
             var expression = provider.Resolve(FilterType.Equals, "a");
             var constant = (ConstantExpression)expression.Body;
             Assert.False((bool)constant.Value);

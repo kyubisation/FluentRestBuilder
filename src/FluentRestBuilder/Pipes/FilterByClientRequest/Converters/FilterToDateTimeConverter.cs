@@ -10,8 +10,8 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
     public class FilterToDateTimeConverter : FilterToTypeConverterBase<DateTime>
     {
         public FilterToDateTimeConverter(
-            ICultureInfoConversionPriority cultureInfoConversionPriority)
-            : base(cultureInfoConversionPriority)
+            ICultureInfoConversionPriorityCollection cultureInfoConversionPriorityCollection)
+            : base(cultureInfoConversionPriorityCollection)
         {
         }
 

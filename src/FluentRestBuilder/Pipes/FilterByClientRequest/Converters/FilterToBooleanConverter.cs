@@ -4,14 +4,18 @@
 
 namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
 {
+    using Results;
+
     public class FilterToBooleanConverter : IFilterToTypeConverter<bool>
     {
         public FilterConversionResult<bool> Parse(string filter)
         {
-            bool result;
-            return bool.TryParse(filter, out result) || TryParse(filter, out result)
-                ? FilterConversionResult<bool>.CreateSuccess(result)
-                : FilterConversionResult<bool>.CreateFailure();
+            if (bool.TryParse(filter, out var result) || TryParse(filter, out result))
+            {
+                return new FilterConversionSuccess<bool>(result);
+            }
+
+            return new FilterConversionFailure<bool>();
         }
 
         private static bool TryParse(string filter, out bool result)

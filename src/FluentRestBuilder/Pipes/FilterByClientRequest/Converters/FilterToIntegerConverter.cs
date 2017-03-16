@@ -9,8 +9,8 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
     public class FilterToIntegerConverter : FilterToTypeConverterBase<int>
     {
         public FilterToIntegerConverter(
-            ICultureInfoConversionPriority cultureInfoConversionPriority)
-            : base(cultureInfoConversionPriority)
+            ICultureInfoConversionPriorityCollection cultureInfoConversionPriorityCollection)
+            : base(cultureInfoConversionPriorityCollection)
         {
         }
 

@@ -9,8 +9,8 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
     public class FilterToFloatConverter : FilterToTypeConverterBase<float>
     {
         public FilterToFloatConverter(
-            ICultureInfoConversionPriority cultureInfoConversionPriority)
-            : base(cultureInfoConversionPriority)
+            ICultureInfoConversionPriorityCollection cultureInfoConversionPriorityCollection)
+            : base(cultureInfoConversionPriorityCollection)
         {
         }
 

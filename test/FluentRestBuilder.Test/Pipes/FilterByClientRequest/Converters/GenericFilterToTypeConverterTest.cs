@@ -16,7 +16,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
         public GenericFilterToTypeConverterTest()
         {
             this.provider = new GenericFilterToTypeConverter<double>(
-                new CultureInfoConversionPriority());
+                new CultureInfoConversionPriorityCollection());
         }
 
         [Fact]

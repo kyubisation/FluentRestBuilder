@@ -9,8 +9,8 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
     public class FilterToDoubleConverter : FilterToTypeConverterBase<double>
     {
         public FilterToDoubleConverter(
-            ICultureInfoConversionPriority cultureInfoConversionPriority)
-            : base(cultureInfoConversionPriority)
+            ICultureInfoConversionPriorityCollection cultureInfoConversionPriorityCollection)
+            : base(cultureInfoConversionPriorityCollection)
         {
         }
 

@@ -15,7 +15,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
 
         public FilterToShortConverterTest()
         {
-            this.converter = new FilterToShortConverter(new CultureInfoConversionPriority());
+            this.converter = new FilterToShortConverter(new CultureInfoConversionPriorityCollection());
             new CultureInfo("fr-FR").AssignAsCurrentUiCulture();
         }
 

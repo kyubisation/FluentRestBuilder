@@ -15,7 +15,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest.Converters
 
         public FilterToLongConverterTest()
         {
-            this.converter = new FilterToLongConverter(new CultureInfoConversionPriority());
+            this.converter = new FilterToLongConverter(new CultureInfoConversionPriorityCollection());
             new CultureInfo("fr-FR").AssignAsCurrentUiCulture();
         }
 
