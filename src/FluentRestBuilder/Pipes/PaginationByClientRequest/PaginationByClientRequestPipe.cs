@@ -72,12 +72,5 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
             this.paginationMetaInfoStorage.Value = new PaginationMetaInfo(
                 count, paginationValues.Offset, paginationValues.Limit);
         }
-
-        private struct PaginationValues
-        {
-            public int Offset;
-
-            public int Limit;
-        }
     }
 }
