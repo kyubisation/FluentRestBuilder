@@ -23,7 +23,7 @@ namespace FluentRestBuilder.Test.Pipes.EntityValidation
 
         public EntityValidationPipeTest()
         {
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterEntityValidationPipe()
                 .RegisterMappingPipe()
                 .Services

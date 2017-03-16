@@ -15,8 +15,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static IFluentRestBuilderCore RegisterEntityValidationPipe(
-            this IFluentRestBuilderCore builder)
+        public static IFluentRestBuilderCoreConfiguration RegisterEntityValidationPipe(
+            this IFluentRestBuilderCoreConfiguration builder)
         {
             builder.Services.TryAddSingleton(
                 typeof(IEntityValidationPipeFactory<>),

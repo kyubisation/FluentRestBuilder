@@ -23,7 +23,7 @@ namespace FluentRestBuilder.Test.Pipes.ToList
         public ToListPipeTest()
         {
             this.database = new PersistantDatabase();
-            this.provider = new FluentRestBuilderCore(new ServiceCollection())
+            this.provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterToListPipe()
                 .Services
                 .BuildServiceProvider();

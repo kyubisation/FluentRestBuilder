@@ -17,8 +17,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static IFluentRestBuilderCoreEntityFrameworkCore RegisterInputEntryAccessPipe(
-            this IFluentRestBuilderCoreEntityFrameworkCore builder)
+        public static IFluentRestBuilderEntityFrameworkCoreConfiguration RegisterInputEntryAccessPipe(
+            this IFluentRestBuilderEntityFrameworkCoreConfiguration builder)
         {
             builder.Services.TryAddScoped(
                 typeof(IInputEntryAccessPipeFactory<>), typeof(InputEntryAccessPipeFactory<>));

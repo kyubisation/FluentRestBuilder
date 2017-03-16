@@ -25,7 +25,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
         public CollectionMappingPipeTest()
         {
             this.database = new PersistantDatabase();
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterSource()
                 .RegisterCollectionMappingPipe()
                 .Services

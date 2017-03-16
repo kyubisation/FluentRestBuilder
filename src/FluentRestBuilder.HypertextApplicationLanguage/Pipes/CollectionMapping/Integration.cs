@@ -18,8 +18,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static IFluentRestBuilderCore RegisterCollectionMappingPipe(
-            this IFluentRestBuilderCore builder)
+        public static IFluentRestBuilderCoreConfiguration RegisterCollectionMappingPipe(
+            this IFluentRestBuilderCoreConfiguration builder)
         {
             builder.Services.TryAddSingleton<ILinkAggregator, LinkAggregator>();
             builder.Services.RegisterMappingServices();

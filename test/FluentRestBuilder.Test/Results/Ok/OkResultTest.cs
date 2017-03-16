@@ -20,7 +20,7 @@ namespace FluentRestBuilder.Test.Results.Ok
 
         public OkResultTest()
         {
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterSource()
                 .RegisterOkResult()
                 .Services

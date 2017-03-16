@@ -26,7 +26,7 @@ namespace FluentRestBuilder.Caching.Test.Pipes.DistributedCacheInputBridge
 
         public DistributedCacheInputBridgePipeTest()
         {
-            this.provider = new FluentRestBuilderCore(new ServiceCollection())
+            this.provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterDistributedCacheInputBridgePipe()
                 .Services
                 .AddSingleton<IDistributedCache>(p => this.cache)

@@ -20,7 +20,7 @@ namespace FluentRestBuilder.Test.Pipes.Actions
 
         public ActionPipeTest()
         {
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterActionPipe()
                 .Services
                 .BuildServiceProvider();

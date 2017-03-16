@@ -26,7 +26,7 @@ namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
         public PaginationByClientRequestPipeTest()
         {
             this.database = new PersistantDatabase();
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterSource()
                 .RegisterPaginationByClientRequestPipe()
                 .RegisterMappingPipe()

@@ -19,7 +19,7 @@ namespace FluentRestBuilder.Test.Pipes.Mapping
 
         public MappingPipeTest()
         {
-            this.provider = new FluentRestBuilderCore(new ServiceCollection())
+            this.provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterMappingPipe()
                 .Services
                 .BuildServiceProvider();

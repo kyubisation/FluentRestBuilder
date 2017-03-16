@@ -21,7 +21,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.Deletion
         public EntityDeletionPipeTest()
         {
             this.database = new PersistantDatabase();
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterSingleOrDefaultPipe()
                 .RegisterDbContext<MockDbContext>()
                 .RegisterQueryableSource()

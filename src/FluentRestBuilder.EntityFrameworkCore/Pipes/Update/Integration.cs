@@ -12,8 +12,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static IFluentRestBuilderCoreEntityFrameworkCore RegisterUpdatePipe(
-            this IFluentRestBuilderCoreEntityFrameworkCore builder)
+        public static IFluentRestBuilderEntityFrameworkCoreConfiguration RegisterUpdatePipe(
+            this IFluentRestBuilderEntityFrameworkCoreConfiguration builder)
         {
             builder.Services.TryAddScoped(
                 typeof(IEntityUpdatePipeFactory<>), typeof(EntityUpdatePipeFactory<>));

@@ -23,7 +23,7 @@ namespace FluentRestBuilder.Test.Results.Options
 
         public OptionsResultTest()
         {
-            this.provider = new FluentRestBuilderCore(new ServiceCollection())
+            this.provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterSource()
                 .RegisterOptionsResultPipe()
                 .Services

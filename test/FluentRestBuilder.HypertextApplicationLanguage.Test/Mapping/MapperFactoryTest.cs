@@ -18,7 +18,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Mapping
 
         public MapperFactoryTest()
         {
-            this.provider = new FluentRestBuilder(new ServiceCollection())
+            this.provider = new FluentRestBuilderConfiguration(new ServiceCollection())
                 .AddHAL()
                 .Services
                 .BuildServiceProvider();

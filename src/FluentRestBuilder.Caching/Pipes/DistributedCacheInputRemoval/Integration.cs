@@ -13,8 +13,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static IFluentRestBuilderCore RegisterDistributedCacheInputRemovalPipe(
-            this IFluentRestBuilderCore builder)
+        public static IFluentRestBuilderCoreConfiguration RegisterDistributedCacheInputRemovalPipe(
+            this IFluentRestBuilderCoreConfiguration builder)
         {
             builder.Services.TryAddScoped(
                 typeof(IDistributedCacheInputRemovalPipeFactory<>),

@@ -20,7 +20,7 @@ namespace FluentRestBuilder.Test.Results.CreatedEntity
 
         public CreatedEntityResultTest()
         {
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterSource()
                 .RegisterCreatedEntityResult()
                 .Services

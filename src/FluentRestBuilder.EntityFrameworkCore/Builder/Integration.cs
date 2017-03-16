@@ -11,10 +11,10 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static IFluentRestBuilderCoreEntityFrameworkCore RegisterDbContext<TContext>(
-            this IFluentRestBuilderCore builder)
+        public static IFluentRestBuilderEntityFrameworkCoreConfiguration RegisterDbContext<TContext>(
+            this IFluentRestBuilderCoreConfiguration builder)
             where TContext : DbContext =>
-            new FluentRestBuilderCoreEntityFrameworkCore<TContext>(builder.Services);
+            new FluentRestBuilderEntityFrameworkCoreConfiguration<TContext>(builder.Services);
 
         /// <summary>
         /// Register the Entity Framework Core related pipes.
@@ -22,11 +22,11 @@ namespace FluentRestBuilder
         /// <typeparam name="TContext">The database context.</typeparam>
         /// <param name="builder">The FluentRestBuilder configuration instance.</param>
         /// <returns>The given FluentRestBuilder configuration instance.</returns>
-        public static IFluentRestBuilder AddEntityFrameworkCorePipes<TContext>(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderConfiguration AddEntityFrameworkCorePipes<TContext>(
+            this IFluentRestBuilderConfiguration builder)
             where TContext : DbContext
         {
-            new FluentRestBuilderCoreEntityFrameworkCore<TContext>(builder.Services)
+            new FluentRestBuilderEntityFrameworkCoreConfiguration<TContext>(builder.Services)
                 .RegisterDeletionPipe()
                 .RegisterInputEntryAccessPipe()
                 .RegisterInsertionPipe()

@@ -14,8 +14,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static IFluentRestBuilderCore RegisterActionPipe(
-            this IFluentRestBuilderCore builder)
+        public static IFluentRestBuilderCoreConfiguration RegisterActionPipe(
+            this IFluentRestBuilderCoreConfiguration builder)
         {
             builder.Services.TryAddSingleton(
                 typeof(IActionPipeFactory<>), typeof(ActionPipeFactory<>));

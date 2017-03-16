@@ -34,7 +34,7 @@ namespace FluentRestBuilder.Test.Sources.Source
         [Fact]
         public async Task TestFromController()
         {
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterSource()
                 .Services
                 .BuildServiceProvider();

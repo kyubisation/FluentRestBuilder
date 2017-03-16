@@ -21,7 +21,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.InputEntryAccess
         public InputEntryAccessPipeTest()
         {
             this.database = new PersistantDatabase();
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterSingleOrDefaultPipe()
                 .RegisterActionPipe()
                 .RegisterDbContext<MockDbContext>()

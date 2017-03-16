@@ -25,10 +25,10 @@ namespace FluentRestBuilder
         /// <param name="builder">The FluentRestBuilder configuration instance.</param>
         /// <returns>The given FluentRestBuilder configuration instance.</returns>
         // ReSharper disable once InconsistentNaming
-        public static IFluentRestBuilder AddHAL(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderConfiguration AddHAL(
+            this IFluentRestBuilderConfiguration builder)
         {
-            new FluentRestBuilderCore(builder.Services)
+            new FluentRestBuilderCoreConfiguration(builder.Services)
                 .RegisterCollectionMappingPipe();
             return builder;
         }
@@ -43,8 +43,8 @@ namespace FluentRestBuilder
         /// </summary>
         /// <param name="builder">The FluentRestBuilder configuration instance.</param>
         /// <returns>The provided FluentRestBuilder configuration instance.</returns>
-        public static IFluentRestBuilder UseActionContextAccessorForUrlHelper(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderConfiguration UseActionContextAccessorForUrlHelper(
+            this IFluentRestBuilderConfiguration builder)
         {
             UseActionContextAccessorForUrlHelper(builder.Services);
             return builder;
@@ -60,8 +60,8 @@ namespace FluentRestBuilder
         /// </summary>
         /// <param name="builder">The FluentRestBuilderCore configuration instance.</param>
         /// <returns>The provided FluentRestBuilderCore configuration instance.</returns>
-        public static IFluentRestBuilderCore UseActionContextAccessorForUrlHelper(
-            this IFluentRestBuilderCore builder)
+        public static IFluentRestBuilderCoreConfiguration UseActionContextAccessorForUrlHelper(
+            this IFluentRestBuilderCoreConfiguration builder)
         {
             UseActionContextAccessorForUrlHelper(builder.Services);
             return builder;
@@ -83,8 +83,8 @@ namespace FluentRestBuilder
         /// The factory function to create a <see cref="RestMapper{TInput,TOutput}"/>.
         /// </param>
         /// <returns>The provided FluentRestBuilder configuration instance.</returns>
-        public static IFluentRestBuilder AddRestMapper<TInput, TOutput>(
-            this IFluentRestBuilder builder,
+        public static IFluentRestBuilderConfiguration AddRestMapper<TInput, TOutput>(
+            this IFluentRestBuilderConfiguration builder,
             Func<IServiceProvider, RestMapper<TInput, TOutput>> factory)
             where TOutput : RestEntity
         {
@@ -103,8 +103,8 @@ namespace FluentRestBuilder
         /// <param name="builder">The FluentRestBuilder configuration instance.</param>
         /// <param name="mapping">The mapping function.</param>
         /// <returns>The provided FluentRestBuilder configuration instance.</returns>
-        public static IFluentRestBuilder AddRestMapper<TInput, TOutput>(
-            this IFluentRestBuilder builder, Func<TInput, TOutput> mapping)
+        public static IFluentRestBuilderConfiguration AddRestMapper<TInput, TOutput>(
+            this IFluentRestBuilderConfiguration builder, Func<TInput, TOutput> mapping)
             where TOutput : RestEntity
         {
             AddRestMapper(builder.Services, mapping);
@@ -127,8 +127,8 @@ namespace FluentRestBuilder
         /// The factory function to create a <see cref="RestMapper{TInput,TOutput}"/>.
         /// </param>
         /// <returns>The provided FluentRestBuilderCore configuration instance.</returns>
-        public static IFluentRestBuilderCore AddRestMapper<TInput, TOutput>(
-            this IFluentRestBuilderCore builder,
+        public static IFluentRestBuilderCoreConfiguration AddRestMapper<TInput, TOutput>(
+            this IFluentRestBuilderCoreConfiguration builder,
             Func<IServiceProvider, RestMapper<TInput, TOutput>> factory)
             where TOutput : RestEntity
         {
@@ -147,8 +147,8 @@ namespace FluentRestBuilder
         /// <param name="builder">The FluentRestBuilderCore configuration instance.</param>
         /// <param name="mapping">The mapping function.</param>
         /// <returns>The provided FluentRestBuilderCore configuration instance.</returns>
-        public static IFluentRestBuilderCore AddRestMapper<TInput, TOutput>(
-            this IFluentRestBuilderCore builder, Func<TInput, TOutput> mapping)
+        public static IFluentRestBuilderCoreConfiguration AddRestMapper<TInput, TOutput>(
+            this IFluentRestBuilderCoreConfiguration builder, Func<TInput, TOutput> mapping)
             where TOutput : RestEntity
         {
             AddRestMapper(builder.Services, mapping);

@@ -22,7 +22,7 @@ namespace FluentRestBuilder.Caching.Test.Pipes.MemoryCacheInputStorage
 
         public MemoryCacheInputStoragePipeTest()
         {
-            this.provider = new FluentRestBuilderCore(new ServiceCollection())
+            this.provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterMemoryCacheInputStoragePipe()
                 .Services
                 .AddSingleton<IMemoryCache>(p => this.cache)

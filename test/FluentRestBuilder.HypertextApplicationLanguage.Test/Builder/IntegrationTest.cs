@@ -17,7 +17,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Builder
         {
             const string embed1 = "test";
             const string embed2 = "test1";
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .AddRestMapper(p => RestMapper<Target, TargetResponse>.Create(
                     p,
                     target => new TargetResponse

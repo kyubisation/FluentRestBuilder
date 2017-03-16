@@ -16,8 +16,8 @@ namespace FluentRestBuilder
 
     public static partial class Integration
     {
-        public static IFluentRestBuilderCore RegisterCreatedEntityResult(
-            this IFluentRestBuilderCore builder)
+        public static IFluentRestBuilderCoreConfiguration RegisterCreatedEntityResult(
+            this IFluentRestBuilderCoreConfiguration builder)
         {
             builder.Services.TryAddSingleton(
                 typeof(ICreatedEntityResultFactory<>), typeof(CreatedEntityResultFactory<>));

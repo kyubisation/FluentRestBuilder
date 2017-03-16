@@ -1,4 +1,4 @@
-﻿// <copyright file="FluentRestBuilderCoreEntityFrameworkCore.cs" company="Kyubisation">
+﻿// <copyright file="FluentRestBuilderEntityFrameworkCoreConfiguration.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -11,10 +11,10 @@ namespace FluentRestBuilder.EntityFrameworkCore.Builder
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Storage;
 
-    public class FluentRestBuilderCoreEntityFrameworkCore<TContext> : IFluentRestBuilderCoreEntityFrameworkCore
+    public class FluentRestBuilderEntityFrameworkCoreConfiguration<TContext> : IFluentRestBuilderEntityFrameworkCoreConfiguration
         where TContext : DbContext
     {
-        public FluentRestBuilderCoreEntityFrameworkCore(IServiceCollection services)
+        public FluentRestBuilderEntityFrameworkCoreConfiguration(IServiceCollection services)
         {
             this.Services = services;
             this.Services

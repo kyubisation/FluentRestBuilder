@@ -19,7 +19,8 @@ namespace FluentRestBuilder
         /// </summary>
         /// <param name="builder">The MVC builder.</param>
         /// <returns>The FluentRestBuilderCore configuration instance.</returns>
-        public static IFluentRestBuilderCore AddFluentRestBuilderCore(this IMvcBuilder builder) =>
+        public static IFluentRestBuilderCoreConfiguration AddFluentRestBuilderCore(
+            this IMvcBuilder builder) =>
             builder.Services.AddFluentRestBuilderCore();
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace FluentRestBuilder
         /// </summary>
         /// <param name="builder">The MVC core builder.</param>
         /// <returns>The FluentRestBuilderCore configuration instance.</returns>
-        public static IFluentRestBuilderCore AddFluentRestBuilderCore(
+        public static IFluentRestBuilderCoreConfiguration AddFluentRestBuilderCore(
             this IMvcCoreBuilder builder) =>
             builder.Services.AddFluentRestBuilderCore();
 
@@ -38,16 +39,17 @@ namespace FluentRestBuilder
         /// </summary>
         /// <param name="collection">The service collection.</param>
         /// <returns>The FluentRestBuilderCore configuration instance.</returns>
-        public static IFluentRestBuilderCore AddFluentRestBuilderCore(
+        public static IFluentRestBuilderCoreConfiguration AddFluentRestBuilderCore(
             this IServiceCollection collection) =>
-            new FluentRestBuilderCore(collection);
+            new FluentRestBuilderCoreConfiguration(collection);
 
         /// <summary>
         /// Registers FluentRestBuilder.
         /// </summary>
         /// <param name="builder">The MVC builder.</param>
         /// <returns>The FluentRestBuilder configuration instance.</returns>
-        public static IFluentRestBuilder AddFluentRestBuilder(this IMvcBuilder builder) =>
+        public static IFluentRestBuilderConfiguration AddFluentRestBuilder(
+            this IMvcBuilder builder) =>
             builder.Services.AddFluentRestBuilder();
 
         /// <summary>
@@ -55,7 +57,8 @@ namespace FluentRestBuilder
         /// </summary>
         /// <param name="builder">The MVC core builder.</param>
         /// <returns>The FluentRestBuilder configuration instance.</returns>
-        public static IFluentRestBuilder AddFluentRestBuilder(this IMvcCoreBuilder builder) =>
+        public static IFluentRestBuilderConfiguration AddFluentRestBuilder(
+            this IMvcCoreBuilder builder) =>
             builder.Services.AddFluentRestBuilder();
 
         /// <summary>
@@ -63,8 +66,9 @@ namespace FluentRestBuilder
         /// </summary>
         /// <param name="collection">The service collection.</param>
         /// <returns>The FluentRestBuilder configuration instance.</returns>
-        public static IFluentRestBuilder AddFluentRestBuilder(this IServiceCollection collection) =>
-            new FluentRestBuilder(collection);
+        public static IFluentRestBuilderConfiguration AddFluentRestBuilder(
+            this IServiceCollection collection) =>
+            new FluentRestBuilderConfiguration(collection);
 
         /// <summary>
         /// Registers the <see cref="IHttpContextAccessor"/> to be used as the access for the
@@ -79,8 +83,8 @@ namespace FluentRestBuilder
         /// </remarks>
         /// <param name="builder">The FluentRestBuilderCore configuration instance.</param>
         /// <returns>The provided FluentRestBuilderCore configuration instance.</returns>
-        public static IFluentRestBuilderCore UseHttpContextAccessor(
-            this IFluentRestBuilderCore builder)
+        public static IFluentRestBuilderCoreConfiguration UseHttpContextAccessor(
+            this IFluentRestBuilderCoreConfiguration builder)
         {
             UseHttpContextAccessor(builder.Services);
             return builder;
@@ -99,7 +103,8 @@ namespace FluentRestBuilder
         /// </remarks>
         /// <param name="builder">The FluentRestBuilder configuration instance.</param>
         /// <returns>The provided FluentRestBuilder configuration instance.</returns>
-        public static IFluentRestBuilder UseHttpContextAccessor(this IFluentRestBuilder builder)
+        public static IFluentRestBuilderConfiguration UseHttpContextAccessor(
+            this IFluentRestBuilderConfiguration builder)
         {
             UseHttpContextAccessor(builder.Services);
             return builder;

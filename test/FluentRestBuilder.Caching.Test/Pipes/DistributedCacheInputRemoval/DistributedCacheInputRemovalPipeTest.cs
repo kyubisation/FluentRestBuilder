@@ -25,7 +25,7 @@ namespace FluentRestBuilder.Caching.Test.Pipes.DistributedCacheInputRemoval
 
         public DistributedCacheInputRemovalPipeTest()
         {
-            this.provider = new FluentRestBuilderCore(new ServiceCollection())
+            this.provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterDistributedCacheInputRemovalPipe()
                 .Services
                 .AddSingleton<IDistributedCache>(p => this.cache)

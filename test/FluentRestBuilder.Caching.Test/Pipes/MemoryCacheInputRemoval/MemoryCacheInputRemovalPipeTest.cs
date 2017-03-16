@@ -22,7 +22,7 @@ namespace FluentRestBuilder.Caching.Test.Pipes.MemoryCacheInputRemoval
 
         public MemoryCacheInputRemovalPipeTest()
         {
-            this.provider = new FluentRestBuilderCore(new ServiceCollection())
+            this.provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterMemoryCacheInputRemovalPipe()
                 .Services
                 .AddSingleton<IMemoryCache>(p => this.cache)

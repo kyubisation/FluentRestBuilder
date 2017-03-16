@@ -25,7 +25,7 @@ namespace FluentRestBuilder.Test.Pipes.SingleOrDefault
         public SingleOrDefaultPipeTest()
         {
             this.database = new PersistantDatabase();
-            this.provider = new FluentRestBuilderCore(new ServiceCollection())
+            this.provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterSingleOrDefaultPipe()
                 .Services
                 .BuildServiceProvider();

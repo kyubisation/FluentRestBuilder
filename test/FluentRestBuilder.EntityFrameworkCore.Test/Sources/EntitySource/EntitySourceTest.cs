@@ -21,7 +21,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Sources.EntitySource
         public EntitySourceTest()
         {
             this.database = new PersistantDatabase();
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterDbContext<MockDbContext>()
                 .RegisterEntitySource()
                 .Services

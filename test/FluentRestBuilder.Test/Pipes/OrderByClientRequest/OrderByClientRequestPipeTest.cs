@@ -25,7 +25,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
         public OrderByClientRequestPipeTest()
         {
             this.database = new PersistantDatabase();
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterSource()
                 .RegisterQueryablePipe()
                 .RegisterOrderByClientRequestPipe()

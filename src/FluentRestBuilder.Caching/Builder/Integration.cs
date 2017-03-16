@@ -14,10 +14,10 @@ namespace FluentRestBuilder
         /// </summary>
         /// <param name="builder">The FluentRestBuilder configuration instance.</param>
         /// <returns>The given FluentRestBuilder configuration instance.</returns>
-        public static IFluentRestBuilder AddCachingPipes(
-            this IFluentRestBuilder builder)
+        public static IFluentRestBuilderConfiguration AddCachingPipes(
+            this IFluentRestBuilderConfiguration builder)
         {
-            new FluentRestBuilderCore(builder.Services)
+            new FluentRestBuilderCoreConfiguration(builder.Services)
                 .RegisterDistributedCacheInputStoragePipe()
                 .RegisterDistributedCacheInputRemovalPipe()
                 .RegisterDistributedCacheInputBridgePipe()

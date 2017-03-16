@@ -20,7 +20,7 @@ namespace FluentRestBuilder.Test.Results.Accepted
 
         public AcceptedResultTest()
         {
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterSource()
                 .RegisterAcceptedResult()
                 .Services

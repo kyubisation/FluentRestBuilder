@@ -20,7 +20,7 @@ namespace FluentRestBuilder.Test.Results.NoContent
 
         public NoContentResultTest()
         {
-            var provider = new FluentRestBuilderCore(new ServiceCollection())
+            var provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterSource()
                 .RegisterNoContentResult()
                 .Services

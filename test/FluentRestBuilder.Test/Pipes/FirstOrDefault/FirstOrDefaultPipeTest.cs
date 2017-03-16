@@ -23,7 +23,7 @@ namespace FluentRestBuilder.Test.Pipes.FirstOrDefault
         public FirstOrDefaultPipeTest()
         {
             this.database = new PersistantDatabase();
-            this.provider = new FluentRestBuilderCore(new ServiceCollection())
+            this.provider = new FluentRestBuilderCoreConfiguration(new ServiceCollection())
                 .RegisterFirstOrDefaultPipe()
                 .Services
                 .BuildServiceProvider();
