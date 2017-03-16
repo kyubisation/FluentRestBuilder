@@ -24,7 +24,7 @@ namespace FluentRestBuilder
             builder.Services.TryAddScoped(
                 typeof(IAllowedOptionsBuilder<>),
                 typeof(AllowedOptionsBuilder<>));
-            builder.Services.TryAddSingleton<IHttpVerbMap, HttpVerbMap>();
+            builder.Services.TryAddSingleton<IHttpVerbDictionary, HttpVerbDictionary>();
             return builder;
         }
 

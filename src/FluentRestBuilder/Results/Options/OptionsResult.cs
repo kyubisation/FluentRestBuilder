@@ -15,17 +15,17 @@ namespace FluentRestBuilder.Results.Options
         where TInput : class
     {
         private readonly Func<TInput, IEnumerable<HttpVerb>> verbGeneration;
-        private readonly IHttpVerbMap httpVerbMap;
+        private readonly IHttpVerbDictionary httpVerbDictionary;
 
         public OptionsResult(
             Func<TInput, IEnumerable<HttpVerb>> verbGeneration,
-            IHttpVerbMap httpVerbMap,
+            IHttpVerbDictionary httpVerbDictionary,
             ILogger<OptionsResult<TInput>> logger,
             IOutputPipe<TInput> parent)
             : base(logger, parent)
         {
             this.verbGeneration = verbGeneration;
-            this.httpVerbMap = httpVerbMap;
+            this.httpVerbDictionary = httpVerbDictionary;
         }
 
         protected override IActionResult CreateResult(TInput source)
@@ -37,7 +37,7 @@ namespace FluentRestBuilder.Results.Options
         private string BuildAllowedOptions(TInput input)
         {
             return this.verbGeneration(input)
-                .Select(v => this.httpVerbMap[v])
+                .Select(v => this.httpVerbDictionary[v])
                 .Aggregate(
                     new StringBuilder("OPTIONS"),
                     (current, next) => current.Append($", {next}"))

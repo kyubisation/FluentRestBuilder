@@ -12,20 +12,20 @@ namespace FluentRestBuilder.Results.Options
         where TInput : class
     {
         private readonly ILogger<OptionsResult<TInput>> logger;
-        private readonly IHttpVerbMap httpVerbMap;
+        private readonly IHttpVerbDictionary httpVerbDictionary;
 
         public OptionsResultFactory(
-            IHttpVerbMap httpVerbMap,
+            IHttpVerbDictionary httpVerbDictionary,
             ILogger<OptionsResult<TInput>> logger = null)
         {
             this.logger = logger;
-            this.httpVerbMap = httpVerbMap;
+            this.httpVerbDictionary = httpVerbDictionary;
         }
 
         public ResultBase<TInput> Create(
             Func<TInput, IEnumerable<HttpVerb>> verbGeneration,
             IOutputPipe<TInput> parent) =>
             new OptionsResult<TInput>(
-                verbGeneration, this.httpVerbMap, this.logger, parent);
+                verbGeneration, this.httpVerbDictionary, this.logger, parent);
     }
 }
