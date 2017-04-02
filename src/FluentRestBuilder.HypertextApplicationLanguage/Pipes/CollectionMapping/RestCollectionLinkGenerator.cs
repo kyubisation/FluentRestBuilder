@@ -85,7 +85,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
             {
                 Scheme = this.request.Scheme,
                 Host = hostComponents[0],
-                Path = this.request.Path
+                Path = this.request.Path,
             };
 
             if (hostComponents.Length == 2)

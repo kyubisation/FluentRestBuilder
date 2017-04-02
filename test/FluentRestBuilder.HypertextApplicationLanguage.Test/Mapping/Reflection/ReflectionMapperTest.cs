@@ -20,7 +20,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Mapping.Reflection
                 Id2 = 2,
                 Id3 = 3,
                 Id4 = 4,
-                Name = "name"
+                Name = "name",
             };
             var target = mapper.Map(source);
             Assert.Equal(source.Id, target.Id);

@@ -1,4 +1,4 @@
-// <copyright file="Integration.cs" company="Kyubisation">
+﻿// <copyright file="Integration.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 

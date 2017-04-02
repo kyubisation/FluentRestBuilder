@@ -16,8 +16,8 @@ namespace FluentRestBuilder.Mocks.HttpContextStorage
             {
                 Request =
                 {
-                    Query = QueryCollection.Empty
-                }
+                    Query = QueryCollection.Empty,
+                },
             };
         }
     }

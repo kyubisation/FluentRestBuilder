@@ -19,7 +19,7 @@ namespace FluentRestBuilder.Mocks
             this.scope = provider.CreateScope();
             this.ControllerContext.HttpContext = new DefaultHttpContext
             {
-                RequestServices = this.scope.ServiceProvider
+                RequestServices = this.scope.ServiceProvider,
             };
             this.Url = new UrlHelper(this.ControllerContext);
         }

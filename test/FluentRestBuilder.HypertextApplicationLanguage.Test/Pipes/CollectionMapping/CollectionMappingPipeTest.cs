@@ -1,4 +1,4 @@
-// <copyright file="CollectionMappingPipeTest.cs" company="Kyubisation">
+﻿// <copyright file="CollectionMappingPipeTest.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 

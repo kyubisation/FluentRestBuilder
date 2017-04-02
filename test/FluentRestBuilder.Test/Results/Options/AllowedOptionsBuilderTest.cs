@@ -23,8 +23,8 @@ namespace FluentRestBuilder.Test.Results.Options
             {
                 Value = new DefaultHttpContext
                 {
-                    User = new MockPrincipal()
-                }
+                    User = new MockPrincipal(),
+                },
             };
             this.builder = new AllowedOptionsBuilder<Entity>(httpContextStorage);
         }

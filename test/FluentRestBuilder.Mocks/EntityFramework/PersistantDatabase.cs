@@ -26,7 +26,7 @@ namespace FluentRestBuilder.Mocks.EntityFramework
                     {
                         FirstId = keys.Item1,
                         SecondId = keys.Item2,
-                        Name = $"Name {keys.Item1} {keys.Item2}"
+                        Name = $"Name {keys.Item1} {keys.Item2}",
                     })
                     .ToList();
                 multiKeyEntities.ForEach(e => context.Add(e));
@@ -49,9 +49,9 @@ namespace FluentRestBuilder.Mocks.EntityFramework
                     .Select(k => new Child
                     {
                         Id = ++childCounter,
-                        Name = $"child name {i} {k}"
+                        Name = $"child name {i} {k}",
                     })
-                    .ToList()
+                    .ToList(),
             });
         }
 
@@ -72,7 +72,7 @@ namespace FluentRestBuilder.Mocks.EntityFramework
                 Name = $"Name {i}",
                 Description = $"Description {i}",
                 Rate = 0.11 + i,
-                CreatedOn = new DateTime(2017, 1, i, 0, 0, 0)
+                CreatedOn = new DateTime(2017, 1, i, 0, 0, 0),
             });
         }
 
@@ -81,7 +81,7 @@ namespace FluentRestBuilder.Mocks.EntityFramework
             {
                 Id = id,
                 Name = name,
-                Description = description
+                Description = description,
             };
 
         private List<TEntity> CreateEntities<TEntity>(int amount, Func<int, TEntity> factory)

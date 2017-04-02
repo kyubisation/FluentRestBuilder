@@ -1,4 +1,4 @@
-// <copyright file="IQueryableSourcePipeFactory.cs" company="Kyubisation">
+﻿// <copyright file="IQueryableSourcePipeFactory.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 

@@ -1,6 +1,6 @@
-﻿ // <copyright file="Integration.cs" company="Kyubisation">
- // Copyright (c) Kyubisation. All rights reserved.
- // </copyright>
+﻿// <copyright file="Integration.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
 
 // ReSharper disable once CheckNamespace
 namespace FluentRestBuilder

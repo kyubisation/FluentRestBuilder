@@ -68,7 +68,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
             var orderByRequests = new List<OrderByRequest>
             {
                 new OrderByRequest("p1", OrderByDirection.Ascending),
-                new OrderByRequest("-p2", "p2", OrderByDirection.Descending)
+                new OrderByRequest("-p2", "p2", OrderByDirection.Descending),
             };
             var orderBy = orderByRequests.Select(o => o.OriginalProperty)
                 .Aggregate((current, next) => $"{current},{next}");

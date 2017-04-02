@@ -25,7 +25,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Builder
                         Id = target.Id,
                         Id2 = target.Id2,
                         Id3 = target.Id3,
-                        Id4 = target.Id4
+                        Id4 = target.Id4,
                     }).Embed(embed1, embed1))
                 .Services
                 .BuildServiceProvider();

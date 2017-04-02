@@ -23,7 +23,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Mapping
             {
                 Id = 1,
                 Name = "name",
-                Description = "description"
+                Description = "description",
             };
             var response = mapper.Map(entity);
             Assert.Equal(entity.Id, response.Id);
@@ -69,7 +69,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Mapping
                 {
                     Id = e.Id,
                     Name = e.Name,
-                    Description = e.Description
+                    Description = e.Description,
                 },
                 new ScopedStorage<IUrlHelper> { Value = new UrlHelperMock() },
                 new LinkAggregator());
