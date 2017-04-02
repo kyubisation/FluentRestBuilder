@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A5FEDE24-9A04-4DEF-B7A0-EC3086FDD55B}"
 EndProject
@@ -11,29 +11,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		appveyor.yml = appveyor.yml
 		Build.ps1 = Build.ps1
 		build.sh = build.sh
+		FluentRestBuilder.ruleset = FluentRestBuilder.ruleset
 		global.json = global.json
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6BA317BE-1AB0-4A3E-BE16-1D58061D047E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder", "src\FluentRestBuilder\FluentRestBuilder.xproj", "{C0257CFB-D867-4C2E-A36C-977C8F90868F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRestBuilder", "src\FluentRestBuilder\FluentRestBuilder.csproj", "{C0257CFB-D867-4C2E-A36C-977C8F90868F}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.EntityFrameworkCore", "src\FluentRestBuilder.EntityFrameworkCore\FluentRestBuilder.EntityFrameworkCore.xproj", "{BC2DFEA2-1BD3-4AA6-A80E-55F2A66D59F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRestBuilder.EntityFrameworkCore", "src\FluentRestBuilder.EntityFrameworkCore\FluentRestBuilder.EntityFrameworkCore.csproj", "{BC2DFEA2-1BD3-4AA6-A80E-55F2A66D59F1}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.Test", "test\FluentRestBuilder.Test\FluentRestBuilder.Test.xproj", "{C0B072B7-8184-4957-969A-1FA6D6ABF217}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRestBuilder.Test", "test\FluentRestBuilder.Test\FluentRestBuilder.Test.csproj", "{C0B072B7-8184-4957-969A-1FA6D6ABF217}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.EntityFrameworkCore.Test", "test\FluentRestBuilder.EntityFrameworkCore.Test\FluentRestBuilder.EntityFrameworkCore.Test.xproj", "{BCD5D0E1-EAE8-4138-A401-1C728C66A768}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRestBuilder.EntityFrameworkCore.Test", "test\FluentRestBuilder.EntityFrameworkCore.Test\FluentRestBuilder.EntityFrameworkCore.Test.csproj", "{BCD5D0E1-EAE8-4138-A401-1C728C66A768}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.HypertextApplicationLanguage", "src\FluentRestBuilder.HypertextApplicationLanguage\FluentRestBuilder.HypertextApplicationLanguage.xproj", "{43C14424-FEC1-4D36-A521-41C0981A891D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRestBuilder.HypertextApplicationLanguage", "src\FluentRestBuilder.HypertextApplicationLanguage\FluentRestBuilder.HypertextApplicationLanguage.csproj", "{43C14424-FEC1-4D36-A521-41C0981A891D}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.HypertextApplicationLanguage.Test", "test\FluentRestBuilder.HypertextApplicationLanguage.Test\FluentRestBuilder.HypertextApplicationLanguage.Test.xproj", "{D6F7BB23-3696-4092-BFF1-F86C83535297}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRestBuilder.HypertextApplicationLanguage.Test", "test\FluentRestBuilder.HypertextApplicationLanguage.Test\FluentRestBuilder.HypertextApplicationLanguage.Test.csproj", "{D6F7BB23-3696-4092-BFF1-F86C83535297}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.Caching", "src\FluentRestBuilder.Caching\FluentRestBuilder.Caching.xproj", "{9D2901DB-6066-4B8B-95E2-F1C10E97BE2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRestBuilder.Caching", "src\FluentRestBuilder.Caching\FluentRestBuilder.Caching.csproj", "{9D2901DB-6066-4B8B-95E2-F1C10E97BE2E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.Caching.Test", "test\FluentRestBuilder.Caching.Test\FluentRestBuilder.Caching.Test.xproj", "{D29725D4-9FF2-4561-BC8B-1F5A7067D1D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRestBuilder.Caching.Test", "test\FluentRestBuilder.Caching.Test\FluentRestBuilder.Caching.Test.csproj", "{D29725D4-9FF2-4561-BC8B-1F5A7067D1D6}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FluentRestBuilder.Mocks", "test\FluentRestBuilder.Mocks\FluentRestBuilder.Mocks.xproj", "{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRestBuilder.Mocks", "test\FluentRestBuilder.Mocks\FluentRestBuilder.Mocks.csproj", "{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

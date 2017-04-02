@@ -1,4 +1,4 @@
-// <copyright file="OptionsResultFactory.cs" company="Kyubisation">
+﻿// <copyright file="OptionsResultFactory.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
