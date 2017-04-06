@@ -1,20 +1,9 @@
 language: csharp
 sudo: required
 dist: trusty
-dotnet: 1.0.0-preview2-003131
-env:  
-  - CLI_VERSION=latest
-addons:  
-  apt:
-    packages:
-    - gettext
-    - libcurl4-openssl-dev
-    - libicu-dev
-    - libssl-dev
-    - libunwind8
-    - zlib1g
-mono:
-  - 4.2.3
+solution: FluentRestBuilder.sln
+mono: none
+dotnet: 1.0.1
 os:  
   - linux
   - osx
@@ -25,7 +14,8 @@ branches:
     - /^feature\/.*$/
     - /^release\/.*$/
     - /^hotfix\/.*$/
-before_install:  
-  - if test "$TRAVIS_OS_NAME" == "osx"; then brew update; mkdir -p /usr/local/lib; fi
 script:
-  - ./build.sh
+  - dotnet restore
+  - dotnet build
+  - find ./test/ -iname "*.Test.csproj" -execdir dotnet test \;
+  - find ./src/ -iname "*.csproj" -execdir dotnet pack -c Release --version-suffix="ci-$TRAVIS_BUILD_NUMBER" \;
