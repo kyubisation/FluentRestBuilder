@@ -2,6 +2,10 @@ language: csharp
 sudo: required
 dist: trusty
 solution: FluentRestBuilder.sln
+env:
+  global:
+    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+    - DOTNET_CLI_TELEMETRY_OPTOUT: 1
 mono: latest
 dotnet: 1.0.1
 os:  
@@ -16,6 +20,6 @@ branches:
     - /^hotfix\/.*$/
 script:
   - dotnet restore
-  - dotnet build
-  - find ./test/ -iname "*.Test.csproj" -execdir dotnet test \;
-  - find ./src/ -iname "*.csproj" -execdir dotnet pack -c Release --version-suffix="ci-$TRAVIS_BUILD_NUMBER" \;
+  - dotnet build -f netstandard1.6
+  - find ./test/ -iname "*.Test.csproj" -execdir dotnet test -f netstandard1.6 \;
+  - find ./src/ -iname "*.csproj" -execdir dotnet pack -f netstandard1.6 -c Release --version-suffix="ci-$TRAVIS_BUILD_NUMBER" \;
