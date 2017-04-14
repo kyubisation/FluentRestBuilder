@@ -21,7 +21,7 @@ configuration:
   - Release
 test:
   assemblies:
-    - test\**\bin\Debug\*.Test.dll
+    - test\**\bin\Debug\*\*.Test.dll
 artifacts:
   - path: src\**\bin\$(configuration)\*.nupkg
     name: NuGet
