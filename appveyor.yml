@@ -12,6 +12,8 @@ environment:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 before_build:
   - cmd: dotnet restore
+test_script:
+  - cmd: forfiles /m *.Test.csproj /s /c "cmd /c dotnet test @file"
 matrix:
   fast_finish: true
 nuget:
@@ -19,9 +21,6 @@ nuget:
 configuration:
   - Debug
   - Release
-test:
-  assemblies:
-    - test\**\bin\Debug\*\*.Test.dll
 artifacts:
   - path: src\**\bin\$(configuration)\*.nupkg
     name: NuGet
