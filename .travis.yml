@@ -19,7 +19,7 @@ branches:
     - /^release\/.*$/
     - /^hotfix\/.*$/
 script:
-  - sed -i 's/net452;//g' */*/*.csproj
+  - sed -e 's/net452;//g' -i .backup */*/*.csproj
   - dotnet restore
   - dotnet build
   - find ./test/ -iname "*.Test.csproj" -execdir dotnet test \;
