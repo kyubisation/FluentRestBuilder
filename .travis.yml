@@ -19,7 +19,7 @@ branches:
     - /^hotfix\/.*$/
 script:
   - sed -e 's/net452;//g' -i .backup */*/*.csproj
-  - sed -e 's/(Id="SA(1633|1412)") Action="(Warning|Error)"/\1 Action="Hidden"/g' -i .backup FluentRestBuilder.ruleset
+  - sed -r 's/(Id="SA(1633|1412)") Action="(Warning|Error)"/\1 Action="Hidden"/g' -i .backup FluentRestBuilder.ruleset
   - dotnet restore
   - dotnet build
   - find ./test/ -iname "*.Test.csproj" -execdir dotnet test \;
