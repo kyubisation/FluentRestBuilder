@@ -19,7 +19,8 @@ branches:
     - /^hotfix\/.*$/
 script:
   - find . -type f -name '*.csproj' -exec sed -i.bak 's/net452;//' {} +
-  - sed -E 's/(Id="SA(1633|1412)") Action="(Warning|Error)"/\1 Action="Hidden"/g' -i.bak FluentRestBuilder.ruleset
+  - sed -e 's/Id="SA1633" Action="Error"/Id="SA1633" Action="Hidden"/' -i.bak FluentRestBuilder.ruleset
+  - sed -e 's/Id="SA1412" Action="Warning"/Id="SA1412" Action="Hidden"/' -i.bak FluentRestBuilder.ruleset
   - dotnet restore
   - dotnet build
   - find ./test/ -iname "*.Test.csproj" -exec dotnet test {} \;
