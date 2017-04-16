@@ -19,8 +19,8 @@ branches:
     - /^hotfix\/.*$/
 script:
   - sed -e 's/net452;//g' -i .backup */*/*.csproj
-  - sed -r 's/(Id="SA(1633|1412)") Action="(Warning|Error)"/\1 Action="Hidden"/g' -i .backup FluentRestBuilder.ruleset
+  - sed -E 's/(Id="SA(1633|1412)") Action="(Warning|Error)"/\1 Action="Hidden"/g' -i .backup FluentRestBuilder.ruleset
   - dotnet restore
   - dotnet build
-  - find ./test/ -iname "*.Test.csproj" -execdir dotnet test \;
-  - find ./src/ -iname "*.csproj" -execdir dotnet pack -c Release --version-suffix="ci" \;
+  - find ./test/ -iname "*.Test.csproj" -exec dotnet test {} \;
+  - find ./src/ -iname "*.csproj" -exec dotnet pack {} -c Release --version-suffix="ci" \;
