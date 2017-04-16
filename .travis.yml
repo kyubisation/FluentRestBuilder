@@ -1,5 +1,4 @@
 language: csharp
-sudo: required
 dist: trusty
 solution: FluentRestBuilder.sln
 env:
@@ -20,7 +19,8 @@ branches:
     - /^hotfix\/.*$/
 script:
   - sed -e 's/net452;//g' -i .backup */*/*.csproj
+  - sed -e 's/(Id="SA(1633|1412)") Action="(Warning|Error)"/\1 Action="Hidden"/g' -i .backup FluentRestBuilder.ruleset
   - dotnet restore
   - dotnet build
   - find ./test/ -iname "*.Test.csproj" -execdir dotnet test \;
-  - find ./src/ -iname "*.csproj" -execdir dotnet pack -c Release --version-suffix="ci-$TRAVIS_BUILD_NUMBER" \;
+  - find ./src/ -iname "*.csproj" -execdir dotnet pack -c Release --version-suffix="ci" \;
