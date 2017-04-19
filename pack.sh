@@ -1,0 +1,1 @@
+find ./src/ -iname "*.csproj" -exec dotnet pack {} -c Release --version-suffix="ci" \;

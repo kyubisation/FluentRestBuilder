@@ -18,10 +18,8 @@ branches:
     - /^release\/.*$/
     - /^hotfix\/.*$/
 script:
-  - find . -type f -name '*.csproj' -exec sed -i.bak 's/net452;//' {} +
-  - sed -e 's/Id="SA1633" Action="Error"/Id="SA1633" Action="Hidden"/' -i.bak FluentRestBuilder.ruleset
-  - sed -e 's/Id="SA1412" Action="Warning"/Id="SA1412" Action="Hidden"/' -i.bak FluentRestBuilder.ruleset
+  - ./patch.sh
   - dotnet restore
   - dotnet build
-  - find ./test/ -iname "*.Test.csproj" -exec dotnet test {} \;
-  - find ./src/ -iname "*.csproj" -exec dotnet pack {} -c Release --version-suffix="ci" \;
+  - ./test.sh
+  - ./pack.sh
