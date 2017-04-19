@@ -14,6 +14,8 @@ before_build:
   - cmd: dotnet restore
 test_script:
   - cmd: forfiles /m *.Test.csproj /s /c "cmd /c dotnet test @file"
+before_package:
+  - cmd: .\pack.cmd
 matrix:
   fast_finish: true
 nuget:
