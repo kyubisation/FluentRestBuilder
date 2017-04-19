@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>0.0.1-ci</VersionPrefix>
+    <VersionPrefix>0.0.1</VersionPrefix>
     <TargetFrameworks>net452;netstandard1.6</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>../../FluentRestBuilder.ruleset</CodeAnalysisRuleSet>
