@@ -35,7 +35,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Mapping
             {
                 Id = 1,
                 Name = $"name {nameof(this.TestEmptyCase)}",
-                Description = $"description {nameof(this.TestEmptyCase)}"
+                Description = $"description {nameof(this.TestEmptyCase)}",
             };
             var response = mapping(entity);
             Assert.Equal(entity.Id, response.Id);
@@ -56,7 +56,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Mapping
             {
                 Id = 1,
                 Name = $"name {nameof(this.TestWithEmbedding)}",
-                Description = $"description {nameof(this.TestWithEmbedding)}"
+                Description = $"description {nameof(this.TestWithEmbedding)}",
             };
             var result = mapping(entity);
             Assert.True(result.Embedded.ContainsKey(embedKey));

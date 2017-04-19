@@ -19,7 +19,7 @@ namespace FluentRestBuilder.Caching.Test.DistributedCache
             {
                 Id = 3,
                 Name = "name",
-                Description = "descriptionéö"
+                Description = "descriptionéö",
             };
             var mapper = new JsonMapper<Entity>();
             var bytes = mapper.ToByteArray(entity);

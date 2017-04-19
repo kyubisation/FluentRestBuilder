@@ -1,4 +1,4 @@
-// <copyright file="FirstOrDefaultPipe.cs" company="Kyubisation">
+﻿// <copyright file="FirstOrDefaultPipe.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 

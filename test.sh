@@ -1,0 +1,1 @@
+find ./test/ -iname "*.Test.csproj" -exec dotnet test {} \;

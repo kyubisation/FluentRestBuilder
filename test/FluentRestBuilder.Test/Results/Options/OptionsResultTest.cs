@@ -74,8 +74,8 @@ namespace FluentRestBuilder.Test.Results.Options
             {
                 HttpContext = new DefaultHttpContext
                 {
-                    RequestServices = this.provider
-                }
+                    RequestServices = this.provider,
+                },
             };
             await actionResult.ExecuteResultAsync(actionContext);
             StringValues allowedOptions;

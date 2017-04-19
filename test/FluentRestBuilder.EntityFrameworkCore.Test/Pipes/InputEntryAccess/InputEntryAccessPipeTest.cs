@@ -5,6 +5,7 @@
 namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.InputEntryAccess
 {
     using System;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
     using FluentRestBuilder.Builder;
@@ -95,6 +96,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.InputEntryAccess
             using (var context = this.database.Create())
             {
                 var changedEntity = context.Entities.SingleOrDefault(n => n.Id == source.Id);
+                Debug.Assert(changedEntity != null, "changedEntity != null");
                 changedEntity.Name = nameof(this.TestReload);
                 changedEntity.Description = nameof(this.TestReload);
                 context.SaveChanges();

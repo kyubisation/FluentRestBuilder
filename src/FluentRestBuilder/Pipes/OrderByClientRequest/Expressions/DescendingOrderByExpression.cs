@@ -1,4 +1,4 @@
-// <copyright file="DescendingOrderByExpression.cs" company="Kyubisation">
+﻿// <copyright file="DescendingOrderByExpression.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 

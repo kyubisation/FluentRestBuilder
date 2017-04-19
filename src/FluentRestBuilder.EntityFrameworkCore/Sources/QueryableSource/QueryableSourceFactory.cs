@@ -1,4 +1,4 @@
-// <copyright file="QueryableSourceFactory.cs" company="Kyubisation">
+﻿// <copyright file="QueryableSourceFactory.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -31,7 +31,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.QueryableSource
         public OutputPipe<IQueryable<TOutput>> Create(ControllerBase controller) =>
             new QueryableSource<TOutput>(this.contextStorage, this.logger, this.serviceProvider)
             {
-                Controller = controller
+                Controller = controller,
             };
     }
 }

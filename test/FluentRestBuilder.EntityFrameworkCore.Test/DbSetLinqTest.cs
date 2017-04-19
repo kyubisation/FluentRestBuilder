@@ -46,6 +46,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test
             var result = this.context.Entities
                 .OrderBy(e => e.Name)
                 .ThenBy(e => e.Id)
+                //// ReSharper disable once MultipleOrderBy
                 .OrderByDescending(e => e.Name)
                 .ThenByDescending(e => e.Id)
                 .ToList();

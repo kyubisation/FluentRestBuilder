@@ -30,7 +30,7 @@ namespace FluentRestBuilder.Test.Pipes.ClaimValidation
                 .Services
                 .AddSingleton<IScopedStorage<HttpContext>>(p => new ScopedStorage<HttpContext>
                 {
-                    Value = new DefaultHttpContext { User = this.principal }
+                    Value = new DefaultHttpContext { User = this.principal },
                 })
                 .BuildServiceProvider();
             this.source = new Source<Entity>(new Entity(), provider);

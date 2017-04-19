@@ -1,33 +1,46 @@
-version: '{build}'  
-pull_requests:  
-  do_not_increment_build_number: true
-branches:  
+version: '{build}'
+branches:
   only:
-  - master
-  - dev
-  - /feature\/.*/
-  - /release\/.*/
-  - /hotfix\/.*/
-nuget:  
+    - master
+    - dev
+    - /feature\/.*/
+    - /release\/.*/
+    - /hotfix\/.*/
+image: Visual Studio 2017
+environment:
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+before_build:
+  - cmd: dotnet restore
+test_script:
+  - cmd: .\test.cmd
+before_package:
+  - cmd: .\pack.cmd
+matrix:
+  fast_finish: true
+nuget:
   disable_publish_on_pr: true
-build_script:  
-- ps: .\Build.ps1
-test: off  
-artifacts:  
-- path: .\artifacts\**\*.nupkg
-  name: NuGet
-deploy:  
-- provider: NuGet
-  server: https://www.myget.org/F/fluentrestbuilder-ci/api/v2/package
-  api_key:
-    secure: 5Nf/5WDJ5K0rIMMTMh+sSnN3TdkILOQFgODchMX+g6s1CxHTXFhvkqu3IGkQDND3
-  skip_symbols: true
-  on:
-    branch: dev
-- provider: NuGet
-  name: production
-  api_key:
-    secure: BUxQSmM20ooYPEFDfu7r+DNof1iszp37Znw+LJ60Ska0c3xpwDzjKi9MHsIA5Ith
-  on:
-    branch: master
-    appveyor_repo_tag: true
+configuration:
+  - Debug
+  - Release
+artifacts:
+  - path: src\**\bin\$(configuration)\*.nupkg
+    name: NuGet
+pull_requests:
+  do_not_increment_build_number: true
+deploy:
+  - provider: NuGet
+    server: https://www.myget.org/F/fluentrestbuilder-ci/api/v2/package
+    api_key:
+      secure: 5Nf/5WDJ5K0rIMMTMh+sSnN3TdkILOQFgODchMX+g6s1CxHTXFhvkqu3IGkQDND3
+    skip_symbols: true
+    on:
+      branch: dev
+      configuration: Debug
+  - provider: NuGet
+    name: production
+    api_key:
+      secure: BUxQSmM20ooYPEFDfu7r+DNof1iszp37Znw+LJ60Ska0c3xpwDzjKi9MHsIA5Ith
+    on:
+      appveyor_repo_tag: true
+      configuration: Release

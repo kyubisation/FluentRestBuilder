@@ -87,9 +87,9 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
                             PathBase = PathString.Empty,
                             Path = PathString.Empty,
                             QueryString = QueryString.Empty,
-                            Scheme = "http"
-                        }
-                    }
+                            Scheme = "http",
+                        },
+                    },
                 });
         }
     }

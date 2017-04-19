@@ -25,7 +25,7 @@ namespace FluentRestBuilder.Sources.Source
         public OutputPipe<TOutput> Create(Task<TOutput> output, ControllerBase controller) =>
             new Source<TOutput>(output, this.serviceProvider, this.logger)
             {
-                Controller = controller
+                Controller = controller,
             };
     }
 }

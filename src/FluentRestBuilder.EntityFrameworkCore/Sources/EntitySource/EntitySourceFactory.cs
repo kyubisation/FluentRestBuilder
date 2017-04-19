@@ -33,7 +33,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.EntitySource
                 this.logger,
                 controller.HttpContext.RequestServices)
             {
-                Controller = controller
+                Controller = controller,
             };
     }
 }

@@ -1,4 +1,4 @@
-// <copyright file="QueryableSource.cs" company="Kyubisation">
+﻿// <copyright file="QueryableSource.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 

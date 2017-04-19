@@ -76,8 +76,8 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.QueryableSource
                     Children = new List<Child>
                     {
                         new Child { Id = 1 + (id * 10), Name = "test1" },
-                        new Child { Id = 2 + (id * 10), Name = "test2" }
-                    }
+                        new Child { Id = 2 + (id * 10), Name = "test2" },
+                    },
                 };
                 context.Add(parent);
                 await context.SaveChangesAsync();

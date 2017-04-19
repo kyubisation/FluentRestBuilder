@@ -40,7 +40,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
             var paginationValues = new PaginationValues
             {
                 Offset = paginationRequest.Offset ?? 0,
-                Limit = this.ResolveLimit(paginationRequest)
+                Limit = this.ResolveLimit(paginationRequest),
             };
             await this.CalculateMetaInfo(input, paginationValues);
 

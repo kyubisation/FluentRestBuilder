@@ -68,7 +68,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
                 new FilterRequest("p4", FilterType.LessThan, "p4"),
                 new FilterRequest("p5", FilterType.GreaterThan, "p5"),
                 new FilterRequest("p6", FilterType.LessThanOrEqual, "p6"),
-                new FilterRequest("p7", FilterType.GreaterThanOrEqual, "p7")
+                new FilterRequest("p7", FilterType.GreaterThanOrEqual, "p7"),
             };
             var context = new HttpContextStorage();
             foreach (var filterRequest in filterRequests)

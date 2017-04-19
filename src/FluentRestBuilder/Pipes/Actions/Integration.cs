@@ -1,6 +1,6 @@
-﻿ // <copyright file="Integration.cs" company="Kyubisation">
- // Copyright (c) Kyubisation. All rights reserved.
- // </copyright>
+﻿// <copyright file="Integration.cs" company="Kyubisation">
+// Copyright (c) Kyubisation. All rights reserved.
+// </copyright>
 
 // ReSharper disable once CheckNamespace
 namespace FluentRestBuilder
@@ -33,12 +33,13 @@ namespace FluentRestBuilder
             this IOutputPipe<TInput> pipe, Action<TInput> action)
             where TInput : class
         {
-            Func<TInput, Task> asyncAction = entity =>
+            Task AsyncAction(TInput entity)
             {
                 action(entity);
                 return Task.FromResult(0);
-            };
-            return pipe.Do(asyncAction);
+            }
+
+            return pipe.Do(AsyncAction);
         }
 
         /// <summary>

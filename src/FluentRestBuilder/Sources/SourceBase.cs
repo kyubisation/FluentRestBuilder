@@ -25,10 +25,7 @@ namespace FluentRestBuilder.Sources
 
         public ControllerBase Controller
         {
-            get
-            {
-                return this.controller;
-            }
+            get => this.controller;
 
             set
             {

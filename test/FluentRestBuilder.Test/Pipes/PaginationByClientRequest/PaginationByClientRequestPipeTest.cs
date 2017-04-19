@@ -73,7 +73,7 @@ namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
             var options = new PaginationOptions
             {
                 MaxLimit = 5,
-                DefaultLimit = 10
+                DefaultLimit = 10,
             };
             var source = this.controller.FromSource(this.context.Entities);
             Assert.Throws<InvalidOperationException>(

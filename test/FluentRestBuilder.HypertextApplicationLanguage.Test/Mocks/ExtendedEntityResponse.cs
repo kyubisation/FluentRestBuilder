@@ -17,7 +17,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Mocks
             {
                 new LinkToSelf(new Link($"/{entity.Id}")),
                 new NamedLink("asdf", new Link("/asdf")),
-                new NamedLink("qwer", new Link("/qwer"))
+                new NamedLink("qwer", new Link("/qwer")),
             };
         }
     }

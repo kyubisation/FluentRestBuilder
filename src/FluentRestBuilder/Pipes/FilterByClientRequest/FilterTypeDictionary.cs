@@ -23,7 +23,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
                 [">="] = FilterType.GreaterThanOrEqual,
                 ["<"] = FilterType.LessThan,
                 [">"] = FilterType.GreaterThan,
-                ["="] = FilterType.Equals
+                ["="] = FilterType.Equals,
             };
         }
     }

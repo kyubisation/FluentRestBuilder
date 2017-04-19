@@ -21,7 +21,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Storage
 
         public DbContext Value
         {
-            get { return this.lazyContext.Value; }
+            get => this.lazyContext.Value;
             set { this.lazyContext = new Lazy<DbContext>(() => value); }
         }
     }

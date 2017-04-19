@@ -39,7 +39,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Links
             var namedLinks = new[]
             {
                 new NamedLink(name, new Link("/")),
-                new NamedLink(name, new Link("/asdf"))
+                new NamedLink(name, new Link("/asdf")),
             };
             var result = this.linkAggregator.BuildLinks(namedLinks);
             Assert.Equal(1, result.Count);
@@ -57,7 +57,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Links
             {
                 new LinkToSelf(new Link("/")),
                 new NamedLink(name, new Link("/qwer")),
-                new NamedLink(name, new Link("/asdf"))
+                new NamedLink(name, new Link("/asdf")),
             };
             var result = this.linkAggregator.BuildLinks(namedLinks);
             Assert.Equal(2, result.Count);

@@ -20,7 +20,7 @@ namespace FluentRestBuilder.Mocks
             new ActionContext
             {
                 HttpContext = new DefaultHttpContext(),
-                RouteData = new RouteData()
+                RouteData = new RouteData(),
             };
     }
 }
