@@ -10,7 +10,6 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
     using System.Threading.Tasks;
     using Builder;
     using FluentRestBuilder.Pipes.FilterByClientRequest;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;
