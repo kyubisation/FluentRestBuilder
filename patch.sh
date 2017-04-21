@@ -1,5 +1,5 @@
 # dotnet does not support net4*, so we remove it as a target
-find . -type f -name '*.csproj' -exec sed -i.bak 's/net452;//' {} +
+find . -type f -name '*.csproj' -exec sed -i.bak 's/net461;//' {} +
 
 # The generated *.AssemblyInfo.cs causes StyleCop Analyzers to complain
 # https://github.com/DotNetAnalyzers/StyleCopAnalyzers/issues/2314
