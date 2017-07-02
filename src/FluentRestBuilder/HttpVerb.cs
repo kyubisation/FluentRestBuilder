@@ -10,6 +10,6 @@ namespace FluentRestBuilder
         Get,
         Put,
         Patch,
-        Delete
+        Delete,
     }
 }

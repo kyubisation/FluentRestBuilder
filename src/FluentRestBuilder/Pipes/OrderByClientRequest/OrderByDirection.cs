@@ -8,6 +8,6 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
     {
         None,
         Ascending,
-        Descending
+        Descending,
     }
 }

@@ -12,7 +12,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes
     using Mocks.EntityFramework;
     using Xunit;
 
-    public class AsyncQueryableTransformerTest
+    public class AsyncQueryableTransformerTest : IDisposable
     {
         private readonly PersistantDatabase database;
         private readonly IQueryableTransformer<Entity> transformer;

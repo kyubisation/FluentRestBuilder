@@ -12,6 +12,6 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
         GreaterThan,
         GreaterThanOrEqual,
         LessThan,
-        LessThanOrEqual
+        LessThanOrEqual,
     }
 }

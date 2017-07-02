@@ -48,7 +48,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Mapping.Reflection
                 .Intersect(targetProperties, new SimilarPropertyComparer())
                 .ToList();
             Assert.Equal(4, result.Count);
-            Assert.All(result, p => Assert.True(p.Name.StartsWith("Id")));
+            Assert.All(result, p => Assert.StartsWith("Id", p.Name));
         }
 
         [Fact]
