@@ -29,8 +29,9 @@ namespace FluentRestBuilder.Mocks.EntityFramework
                         Name = $"Name {keys.Item1} {keys.Item2}",
                     })
                     .ToList();
-                multiKeyEntities.ForEach(e => context.Add(e));
-                context.SaveChanges();
+                multiKeyEntities
+                    .Aggregate((DbContext)context, (current, next) => current.Add(next).Context)
+                    .SaveChanges();
                 return multiKeyEntities;
             }
         }
@@ -93,8 +94,9 @@ namespace FluentRestBuilder.Mocks.EntityFramework
                 var entities = Enumerable.Range(newId, amount)
                     .Select(factory)
                     .ToList();
-                entities.ForEach(e => context.Add(e));
-                context.SaveChanges();
+                entities
+                    .Aggregate((DbContext)context, (current, next) => current.Add(next).Context)
+                    .SaveChanges();
                 return entities;
             }
         }
