@@ -57,13 +57,13 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
             var mappedEntities = entities
                 .Select(e => this.mapping(e))
                 .ToList();
-            this.restEntityCollection.Embedded.Add("items", mappedEntities);
+            this.restEntityCollection._embedded.Add("items", mappedEntities);
         }
 
         private void GenerateLinks()
         {
             var links = this.linkGenerator.GenerateLinks(this.paginationMetaInfoStorage.Value);
-            this.restEntityCollection.Links = this.linkAggregator.BuildLinks(links);
+            this.restEntityCollection._links = this.linkAggregator.BuildLinks(links);
         }
     }
 }

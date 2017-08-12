@@ -10,8 +10,8 @@ namespace FluentRestBuilder.HypertextApplicationLanguage
     {
         public RestEntityCollection()
         {
-            this.Links = new Dictionary<string, object>();
-            this.Embedded = new Dictionary<string, object>();
+            this._links = new Dictionary<string, object>();
+            this._embedded = new Dictionary<string, object>();
         }
     }
 }

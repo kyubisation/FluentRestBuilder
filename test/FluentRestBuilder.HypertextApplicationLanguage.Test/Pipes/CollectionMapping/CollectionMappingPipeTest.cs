@@ -48,8 +48,8 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
                 .MapToRestCollection(e => e.Name)
                 .ToObjectResultOrDefault();
             Assert.NotNull(result);
-            Assert.Contains("items", result.Embedded.Keys);
-            Assert.IsAssignableFrom<IEnumerable<string>>(result.Embedded["items"]);
+            Assert.Contains("items", result._embedded.Keys);
+            Assert.IsAssignableFrom<IEnumerable<string>>(result._embedded["items"]);
         }
 
         private class MockLinkGenerator : IRestCollectionLinkGenerator
