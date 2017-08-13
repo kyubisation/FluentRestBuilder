@@ -31,9 +31,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Sources.EntitySource
                 predicate,
                 this.contextStorage,
                 this.logger,
-                controller.HttpContext.RequestServices)
-            {
-                Controller = controller,
-            };
+                controller.HttpContext.RequestServices);
     }
 }
