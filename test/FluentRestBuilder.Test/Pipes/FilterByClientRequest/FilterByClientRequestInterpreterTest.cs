@@ -40,7 +40,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
             var interpreter = new FilterByClientRequestInterpreter(
                 new HttpContextStorage().SetValue(Property, Filter), new FilterTypeDictionary());
             var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
-            Assert.Equal(1, result.Count);
+            Assert.Single(result);
             var request = result.First();
             Assert.Equal(FilterType.Equals, request.FilterType);
             Assert.Equal(Property, request.Property);
@@ -98,7 +98,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
                 new HttpContextStorage().SetValue(Property, $"{filterPrefix}{Filter}"),
                 new FilterTypeDictionary());
             var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
-            Assert.Equal(1, result.Count);
+            Assert.Single(result);
             var request = result.First();
             Assert.Equal(expectedType, request.FilterType);
             Assert.Equal(Property, request.Property);

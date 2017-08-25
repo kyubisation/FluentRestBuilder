@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Mocks
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Routing;
     using Microsoft.Extensions.DependencyInjection;
+    using Storage;
 
     public class MockController : ControllerBase, IDisposable
     {
@@ -22,6 +23,20 @@ namespace FluentRestBuilder.Mocks
                 RequestServices = this.scope.ServiceProvider,
             };
             this.Url = new UrlHelper(this.ControllerContext);
+        }
+
+        public MockController SetupUrlHelperStorage()
+        {
+            var storage = this.scope.ServiceProvider.GetService<IScopedStorage<IUrlHelper>>();
+            storage.Value = this.Url;
+            return this;
+        }
+
+        public MockController SetupHttpContextStorage()
+        {
+            var storage = this.scope.ServiceProvider.GetService<IScopedStorage<HttpContext>>();
+            storage.Value = this.HttpContext;
+            return this;
         }
 
         public void Dispose()

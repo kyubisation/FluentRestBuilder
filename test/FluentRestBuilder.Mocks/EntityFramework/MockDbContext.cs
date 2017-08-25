@@ -4,6 +4,7 @@
 
 namespace FluentRestBuilder.Mocks.EntityFramework
 {
+    using System;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -29,10 +30,8 @@ namespace FluentRestBuilder.Mocks.EntityFramework
 
         public DbSet<OtherEntity> OtherEntities { get; set; }
 
-        public static DbContextOptions<MockDbContext> ConfigureInMemoryContextOptions()
+        public static DbContextOptions<MockDbContext> ConfigureInMemoryContextOptions(string name = null)
         {
-            var builder = new DbContextOptionsBuilder<MockDbContext>();
-
             // Create a fresh service provider, and therefore a fresh
             // InMemory database instance.
             var serviceProvider = new ServiceCollection()
@@ -41,7 +40,8 @@ namespace FluentRestBuilder.Mocks.EntityFramework
 
             // Create a new options instance telling the context to use an
             // InMemory database and the new service provider.
-            return builder.UseInMemoryDatabase()
+            var builder = new DbContextOptionsBuilder<MockDbContext>();
+            return builder.UseInMemoryDatabase(name ?? Guid.NewGuid().ToString())
                    .UseInternalServiceProvider(serviceProvider)
                    .Options;
         }

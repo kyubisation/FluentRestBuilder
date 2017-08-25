@@ -40,7 +40,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
                 new HttpContextStorage().SetOrderByValue(Property));
             var result = interpreter.ParseRequestQuery(new[] { Property })
                 .ToList();
-            Assert.Equal(1, result.Count);
+            Assert.Single(result);
             var request = result.First();
             Assert.Equal(Property, request.Property);
             Assert.Equal(Property, request.OriginalProperty);
@@ -55,7 +55,7 @@ namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
                 new HttpContextStorage().SetOrderByValue(orderByProperty));
             var result = interpreter.ParseRequestQuery(new[] { Property })
                 .ToList();
-            Assert.Equal(1, result.Count);
+            Assert.Single(result);
             var request = result.First();
             Assert.Equal(Property, request.Property);
             Assert.Equal(orderByProperty, request.OriginalProperty);

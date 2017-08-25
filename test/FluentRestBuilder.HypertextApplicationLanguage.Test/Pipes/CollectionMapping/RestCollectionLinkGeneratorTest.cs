@@ -20,7 +20,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
             var generator = this.Create();
             var result = generator.GenerateLinks(null)
                 .ToList();
-            Assert.Equal(1, result.Count);
+            Assert.Single(result);
             var first = result.First();
             Assert.IsType<LinkToSelf>(first);
         }
@@ -31,7 +31,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
             var generator = this.Create();
             var result = generator.GenerateLinks(new PaginationMetaInfo(1, 0, 1))
                 .ToList();
-            Assert.Equal(1, result.Count);
+            Assert.Single(result);
             var first = result.First();
             Assert.IsType<LinkToSelf>(first);
         }

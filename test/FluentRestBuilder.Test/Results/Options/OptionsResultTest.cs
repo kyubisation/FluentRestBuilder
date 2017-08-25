@@ -29,7 +29,9 @@ namespace FluentRestBuilder.Test.Results.Options
                 .Services
                 .AddSingleton<ILoggerFactory, LoggerFactory>()
                 .BuildServiceProvider();
-            this.controller = new MockController(this.provider);
+            this.controller = new MockController(this.provider)
+                .SetupHttpContextStorage()
+                .SetupUrlHelperStorage();
         }
 
         public void Dispose()

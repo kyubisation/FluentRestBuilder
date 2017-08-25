@@ -11,6 +11,7 @@ namespace FluentRestBuilder.Caching.Test.Pipes.DistributedCacheInputStorage
     using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
     using Mocks;
     using Mocks.EntityFramework;
     using Sources.Source;
@@ -21,7 +22,9 @@ namespace FluentRestBuilder.Caching.Test.Pipes.DistributedCacheInputStorage
         private const string Key = "key";
         private readonly IServiceProvider provider;
         private readonly MemoryDistributedCache cache =
-            new MemoryDistributedCache(new MemoryCache(new MemoryCacheOptions()));
+            new MemoryDistributedCache(
+                new OptionsWrapper<MemoryDistributedCacheOptions>(
+                    new MemoryDistributedCacheOptions()));
 
         public DistributedCacheInputStoragePipeTest()
         {

@@ -42,7 +42,7 @@ namespace FluentRestBuilder.Test.Results.Options
             var result = this.builder.IsGetAllowed((p, e) => true)
                 .GenerateAllowedVerbs(new Entity())
                 .ToList();
-            Assert.Equal(1, result.Count);
+            Assert.Single(result);
             Assert.Contains(HttpVerb.Get, result);
         }
 
