@@ -8,6 +8,14 @@ namespace FluentRestBuilder
 
     public static class Check
     {
+        public static void IsNull(object value, string argumentName)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(argumentName);
+            }
+        }
+
         public static void IsPipeAttached(object value)
         {
             if (value == null)
