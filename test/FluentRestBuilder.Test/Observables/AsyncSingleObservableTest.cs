@@ -19,7 +19,7 @@ namespace FluentRestBuilder.Test.Observables
             collection.AddTransient<SingleObservableTest>();
             var single = new AsyncSingleObservable<string>(
                 () => string.Empty, collection.BuildServiceProvider());
-            var instance = single.GetService<SingleObservableTest>();
+            var instance = single.ServiceProvider.GetService<SingleObservableTest>();
             Assert.NotNull(instance);
         }
 
@@ -58,9 +58,9 @@ namespace FluentRestBuilder.Test.Observables
         public async Task TestException()
         {
             var single = new AsyncSingleObservable<string>(
-                (Func<string>)(() => throw new Exception()),
+                (Func<string>)(() => throw new InvalidOperationException()),
                 new ServiceCollection().BuildServiceProvider());
-            await Assert.ThrowsAsync<Exception>(async () => await single);
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await single);
         }
     }
 }

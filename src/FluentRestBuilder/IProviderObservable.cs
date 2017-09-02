@@ -6,7 +6,8 @@ namespace FluentRestBuilder
 {
     using System;
 
-    public interface IProviderObservable<out T> : IServiceProvider, IObservable<T>
+    public interface IProviderObservable<out T> : IObservable<T>
     {
+        IServiceProvider ServiceProvider { get; }
     }
 }

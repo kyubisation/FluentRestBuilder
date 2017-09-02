@@ -13,18 +13,17 @@ namespace FluentRestBuilder.Observables
     {
         private readonly object gate = new object();
         private readonly Func<Task<T>> valueFactory;
-        private readonly IServiceProvider serviceProvider;
         private ImmutableList<IObserver<T>> observers = ImmutableList<IObserver<T>>.Empty;
         private Task<T> valueTask;
         private bool isDone;
         private bool isDisposed;
 
-        public AsyncSingleObservable(Func<Task<T>> valueTaskFactory, IServiceProvider serviceProvider)
+        public AsyncSingleObservable(
+            Func<Task<T>> valueTaskFactory, IServiceProvider serviceProvider)
         {
+            this.ServiceProvider = serviceProvider;
             Check.IsNull(valueTaskFactory, nameof(valueTaskFactory));
-            Check.IsNull(serviceProvider, nameof(serviceProvider));
             this.valueFactory = valueTaskFactory;
-            this.serviceProvider = serviceProvider;
         }
 
         public AsyncSingleObservable(Func<T> valueFactory, IServiceProvider serviceProvider)
@@ -39,6 +38,8 @@ namespace FluentRestBuilder.Observables
             Check.IsNull(lazyValue, nameof(lazyValue));
         }
 
+        public IServiceProvider ServiceProvider { get; }
+
         public void Dispose()
         {
             lock (this.gate)
@@ -48,9 +49,6 @@ namespace FluentRestBuilder.Observables
                 this.valueTask = null;
             }
         }
-
-        object IServiceProvider.GetService(Type serviceType) =>
-            this.serviceProvider.GetService(serviceType);
 
         IDisposable IObservable<T>.Subscribe(IObserver<T> observer)
         {

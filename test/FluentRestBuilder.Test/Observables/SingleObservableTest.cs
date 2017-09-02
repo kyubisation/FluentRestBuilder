@@ -28,7 +28,7 @@ namespace FluentRestBuilder.Test.Observables
             collection.AddTransient<SingleObservableTest>();
             var single = new SingleObservable<string>(
                 string.Empty, collection.BuildServiceProvider());
-            var instance = single.GetService<SingleObservableTest>();
+            var instance = single.ServiceProvider.GetService<SingleObservableTest>();
             Assert.NotNull(instance);
         }
     }
