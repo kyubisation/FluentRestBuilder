@@ -37,7 +37,7 @@ namespace FluentRestBuilder.Test.Observables
         {
             const string expected = "expected";
             var single = new AsyncSingleObservable<string>(
-                () => new Task<string>(() => expected),
+                async () => await Task.FromResult(expected),
                 new ServiceCollection().BuildServiceProvider());
             Assert.Equal(expected, await single);
         }

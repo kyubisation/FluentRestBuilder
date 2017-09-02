@@ -83,12 +83,8 @@ namespace FluentRestBuilder.Observables
                 return;
             }
 
-            this.valueTask = this.valueFactory();
+            this.valueTask = Task.Run(this.valueFactory);
             this.valueTask.ContinueWith(this.OnTaskCompletion);
-            if (this.valueTask.Status == TaskStatus.Created)
-            {
-                this.valueTask.Start();
-            }
         }
 
         private void OnTaskCompletion(Task<T> task)
@@ -103,13 +99,12 @@ namespace FluentRestBuilder.Observables
             if (this.valueTask.Exception == null)
             {
                 observer.OnNext(this.valueTask.Result);
+                observer.OnCompleted();
             }
             else
             {
                 observer.OnError(this.UnwrapExceptionFromTask());
             }
-
-            observer.OnCompleted();
         }
 
         private Exception UnwrapExceptionFromTask()
