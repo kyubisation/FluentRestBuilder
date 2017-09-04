@@ -8,6 +8,7 @@ namespace FluentRestBuilder.Test.Observables
     using System.Threading.Tasks;
     using FluentRestBuilder.Observables;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
     using Xunit;
 
     public class AsyncSingleObservableTest
@@ -28,7 +29,7 @@ namespace FluentRestBuilder.Test.Observables
         {
             const string expected = "expected";
             var single = new AsyncSingleObservable<string>(
-                () => expected, new ServiceCollection().BuildServiceProvider());
+                () => expected, new EmptyServiceProvider());
             Assert.Equal(expected, await single);
         }
 
@@ -38,7 +39,7 @@ namespace FluentRestBuilder.Test.Observables
             const string expected = "expected";
             var single = new AsyncSingleObservable<string>(
                 async () => await Task.FromResult(expected),
-                new ServiceCollection().BuildServiceProvider());
+                new EmptyServiceProvider());
             Assert.Equal(expected, await single);
         }
 
@@ -47,8 +48,7 @@ namespace FluentRestBuilder.Test.Observables
         {
             const string expected = "expected";
             var lazy = new Lazy<string>(() => expected);
-            var single = new AsyncSingleObservable<string>(
-                lazy, new ServiceCollection().BuildServiceProvider());
+            var single = new AsyncSingleObservable<string>(lazy, new EmptyServiceProvider());
             Assert.False(lazy.IsValueCreated);
             Assert.Equal(expected, await single);
             Assert.True(lazy.IsValueCreated);
@@ -59,7 +59,7 @@ namespace FluentRestBuilder.Test.Observables
         {
             var single = new AsyncSingleObservable<string>(
                 (Func<string>)(() => throw new InvalidOperationException()),
-                new ServiceCollection().BuildServiceProvider());
+                new EmptyServiceProvider());
             await Assert.ThrowsAsync<InvalidOperationException>(async () => await single);
         }
     }

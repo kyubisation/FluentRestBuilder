@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Test.Operators
     using FluentRestBuilder.Observables;
     using FluentRestBuilder.Operators;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
     using Xunit;
 
     public class DoOperatorTest
@@ -20,7 +21,7 @@ namespace FluentRestBuilder.Test.Operators
             var value = string.Empty;
 
             var observable = new SingleObservable<string>(
-                    expected, new ServiceCollection().BuildServiceProvider())
+                    expected, new EmptyServiceProvider())
                 .Do(s => value = s);
             Assert.Equal(expected, await observable);
             Assert.Equal(expected, value);
@@ -30,7 +31,7 @@ namespace FluentRestBuilder.Test.Operators
         public async Task TestException()
         {
             var observable = new SingleObservable<string>(
-                    string.Empty, new ServiceCollection().BuildServiceProvider())
+                    string.Empty, new EmptyServiceProvider())
                 .Do(s => throw new InvalidOperationException());
             await Assert.ThrowsAsync<InvalidOperationException>(async () => await observable);
         }

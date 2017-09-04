@@ -5,12 +5,15 @@
 namespace FluentRestBuilder.Operators
 {
     using System;
+    using System.Collections.Immutable;
+    using System.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
+    using Disposables;
 
-    public abstract class Operator<TSource, TTarget> : IProviderObservable<TTarget>, IDisposable
+    public abstract class Operator<TSource, TTarget> : IProviderObservable<TTarget>
     {
         private readonly IProviderObservable<TSource> observable;
-        private IDisposable subscription;
 
         protected Operator(IProviderObservable<TSource> observable)
         {
@@ -23,55 +26,154 @@ namespace FluentRestBuilder.Operators
 
         public IDisposable Subscribe(IObserver<TTarget> observer)
         {
-            var operatorObserver = this.Create(observer);
-            this.subscription = this.observable.Subscribe(operatorObserver);
-            return this;
+            var disposableCollection = new DisposableCollection();
+            var operatorObserver = this.Create(observer, disposableCollection);
+            var subscription = this.observable.Subscribe(operatorObserver);
+            disposableCollection.Add(subscription);
+            return disposableCollection;
         }
 
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        protected abstract IObserver<TSource> Create(
+            IObserver<TTarget> observer, IDisposable disposable);
 
-        protected virtual void Dispose(bool disposing)
+        protected abstract class SafeAsyncObserver : Observer
         {
-            if (!disposing)
+            private Task valueTask = Task.CompletedTask;
+            private ImmutableList<TSource> values = ImmutableList<TSource>.Empty;
+            private bool isDone;
+            private Exception exception;
+
+            protected SafeAsyncObserver(IObserver<TTarget> child, IDisposable disposable)
+                : base(child, disposable)
             {
-                return;
             }
 
-            Interlocked.Exchange(ref this.subscription, null)?.Dispose();
+            public override void OnNext(TSource value)
+            {
+                if (this.isDone || this.exception != null)
+                {
+                    return;
+                }
+
+                this.values = this.values.Add(value);
+                if (this.valueTask.IsCompleted)
+                {
+                    this.valueTask = Task.Run(this.RunSafeOnNext);
+                }
+            }
+
+            public override void OnError(Exception error)
+            {
+                this.exception = error;
+                if (this.values.IsEmpty)
+                {
+                    base.OnError(error);
+                }
+            }
+
+            public override void OnCompleted()
+            {
+                this.isDone = true;
+                if (this.values.IsEmpty)
+                {
+                    base.OnCompleted();
+                }
+            }
+
+            protected abstract Task SafeOnNext(TSource value);
+
+            protected void EmitError(Exception error)
+            {
+                this.values = ImmutableList<TSource>.Empty;
+                this.OnError(error);
+            }
+
+            private async Task RunSafeOnNext()
+            {
+                while (!this.values.IsEmpty)
+                {
+                    await this.RunNextValue();
+                }
+
+                if (this.exception != null)
+                {
+                    base.OnError(this.exception);
+                }
+                else if (this.isDone)
+                {
+                    base.OnCompleted();
+                }
+            }
+
+            private async Task RunNextValue()
+            {
+                try
+                {
+                    var value = this.values.First();
+                    await this.SafeOnNext(value);
+                    this.values = this.values.RemoveAt(0);
+                }
+                catch (Exception e)
+                {
+                    this.EmitError(e);
+                }
+            }
         }
 
-        protected abstract IObserver<TSource> Create(IObserver<TTarget> observer);
-
-        protected abstract class Observer : IObserver<TSource>
+        protected abstract class SafeObserver : Observer
         {
-            private readonly IObserver<TTarget> child;
-            private readonly IDisposable @operator;
+            protected SafeObserver(IObserver<TTarget> child, IDisposable disposable)
+                : base(child, disposable)
+            {
+            }
 
-            protected Observer(IObserver<TTarget> child, Operator<TSource, TTarget> @operator = null)
+            public override void OnNext(TSource value)
+            {
+                try
+                {
+                    this.SafeOnNext(value);
+                }
+                catch (Exception e)
+                {
+                    this.OnError(e);
+                }
+            }
+
+            protected abstract void SafeOnNext(TSource value);
+        }
+
+        protected abstract class Observer : IObserver<TSource>, IDisposable
+        {
+            private IObserver<TTarget> child;
+            private IDisposable disposable;
+
+            protected Observer(IObserver<TTarget> child, IDisposable disposable)
             {
                 this.child = child;
-                this.@operator = @operator;
+                this.disposable = disposable;
             }
 
             public abstract void OnNext(TSource value);
 
-            public void OnError(Exception error)
+            public virtual void OnError(Exception error)
             {
-                this.child.OnError(error);
-                this.@operator?.Dispose();
+                this.child?.OnError(error);
+                this.Dispose();
             }
 
             public virtual void OnCompleted()
             {
-                this.child.OnCompleted();
-                this.@operator?.Dispose();
+                this.child?.OnCompleted();
+                this.Dispose();
             }
 
-            protected void EmitNext(TTarget value) => this.child.OnNext(value);
+            public void Dispose()
+            {
+                Interlocked.Exchange(ref this.disposable, null)?.Dispose();
+                this.child = null;
+            }
+
+            protected void EmitNext(TTarget value) => this.child?.OnNext(value);
         }
     }
 }

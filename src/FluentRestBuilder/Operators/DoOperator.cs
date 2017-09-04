@@ -31,33 +31,27 @@ namespace FluentRestBuilder.Operators
                 this.action = action;
             }
 
-            protected override IObserver<TFrom> Create(IObserver<TFrom> observer) =>
-                new DoObserver(this.action, observer, this);
+            protected override IObserver<TFrom> Create(
+                IObserver<TFrom> observer, IDisposable disposable) =>
+                new DoObserver(this.action, observer, disposable);
 
-            private sealed class DoObserver : Observer
+            private sealed class DoObserver : SafeObserver
             {
                 private readonly Action<TFrom> action;
 
                 public DoObserver(
                     Action<TFrom> action,
                     IObserver<TFrom> child,
-                    Operator<TFrom, TFrom> @operator)
-                    : base(child, @operator)
+                    IDisposable disposable)
+                    : base(child, disposable)
                 {
                     this.action = action;
                 }
 
-                public override void OnNext(TFrom value)
+                protected override void SafeOnNext(TFrom value)
                 {
-                    try
-                    {
-                        this.action(value);
-                        this.EmitNext(value);
-                    }
-                    catch (Exception e)
-                    {
-                        this.OnError(e);
-                    }
+                    this.action(value);
+                    this.EmitNext(value);
                 }
             }
         }

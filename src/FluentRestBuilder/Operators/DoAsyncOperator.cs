@@ -33,51 +33,27 @@ namespace FluentRestBuilder.Operators
                 this.action = action;
             }
 
-            protected override IObserver<TSource> Create(IObserver<TSource> observer) =>
-                new DoAsyncObserver(this.action, observer, this);
+            protected override IObserver<TSource> Create(
+                IObserver<TSource> observer, IDisposable disposable) =>
+                new DoAsyncObserver(this.action, observer, disposable);
 
-            private sealed class DoAsyncObserver : Observer
+            private sealed class DoAsyncObserver : SafeAsyncObserver
             {
                 private readonly Func<TSource, Task> action;
-                private Task continuationTask;
 
                 public DoAsyncObserver(
                     Func<TSource, Task> action,
                     IObserver<TSource> child,
-                    Operator<TSource, TSource> @operator)
-                    : base(child, @operator)
+                    IDisposable disposable)
+                    : base(child, disposable)
                 {
                     this.action = action;
                 }
 
-                public override void OnNext(TSource value)
+                protected override async Task SafeOnNext(TSource value)
                 {
-                    var task = Task.Run(() => this.action(value));
-                    this.continuationTask = task.ContinueWith(t => this.OnTaskDone(t, value));
-                }
-
-                public override void OnCompleted()
-                {
-                    if (this.continuationTask != null)
-                    {
-                        this.continuationTask.ContinueWith(t => base.OnCompleted());
-                    }
-                    else
-                    {
-                        base.OnCompleted();
-                    }
-                }
-
-                private void OnTaskDone(Task task, TSource value)
-                {
-                    if (task.Exception != null)
-                    {
-                        this.OnError(task.Exception.InnerException);
-                    }
-                    else
-                    {
-                        this.EmitNext(value);
-                    }
+                    await this.action(value);
+                    this.EmitNext(value);
                 }
             }
         }

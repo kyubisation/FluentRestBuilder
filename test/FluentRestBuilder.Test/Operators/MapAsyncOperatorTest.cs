@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Test.Operators
     using FluentRestBuilder.Observables;
     using FluentRestBuilder.Operators;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
     using Xunit;
 
     public class MapAsyncOperatorTest
@@ -21,7 +22,7 @@ namespace FluentRestBuilder.Test.Operators
             const string expected = first + append;
 
             var observable = new SingleObservable<string>(
-                    first, new ServiceCollection().BuildServiceProvider())
+                    first, new EmptyServiceProvider())
                 .MapAsync(async s =>
                 {
                     await Task.Delay(100);
@@ -34,7 +35,7 @@ namespace FluentRestBuilder.Test.Operators
         public async Task TestException()
         {
             var observable = new SingleObservable<string>(
-                    string.Empty, new ServiceCollection().BuildServiceProvider())
+                    string.Empty, new EmptyServiceProvider())
                 .MapAsync<string, string>(async s =>
                 {
                     await Task.Delay(100);

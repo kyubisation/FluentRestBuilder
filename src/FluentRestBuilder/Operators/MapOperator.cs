@@ -34,33 +34,27 @@ namespace FluentRestBuilder
                 this.mapping = mapping;
             }
 
-            protected override IObserver<TSource> Create(IObserver<TTarget> observer) =>
-                new MapObserver(this.mapping, observer, this);
+            protected override IObserver<TSource> Create(
+                IObserver<TTarget> observer, IDisposable disposable) =>
+                new MapObserver(this.mapping, observer, disposable);
 
-            private sealed class MapObserver : Observer
+            private sealed class MapObserver : SafeObserver
             {
                 private readonly Func<TSource, TTarget> mapping;
 
                 public MapObserver(
                     Func<TSource, TTarget> mapping,
                     IObserver<TTarget> child,
-                    Operator<TSource, TTarget> @operator)
-                    : base(child, @operator)
+                    IDisposable disposable)
+                    : base(child, disposable)
                 {
                     this.mapping = mapping;
                 }
 
-                public override void OnNext(TSource value)
+                protected override void SafeOnNext(TSource value)
                 {
-                    try
-                    {
-                        var newValue = this.mapping(value);
-                        this.EmitNext(newValue);
-                    }
-                    catch (Exception e)
-                    {
-                        this.OnError(e);
-                    }
+                    var newValue = this.mapping(value);
+                    this.EmitNext(newValue);
                 }
             }
         }

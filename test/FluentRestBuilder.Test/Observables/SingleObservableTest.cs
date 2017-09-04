@@ -5,9 +5,9 @@
 namespace FluentRestBuilder.Test.Observables
 {
     using System.Threading.Tasks;
-    using FluentRestBuilder;
     using FluentRestBuilder.Observables;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
     using Xunit;
 
     public class SingleObservableTest
@@ -17,7 +17,7 @@ namespace FluentRestBuilder.Test.Observables
         {
             const string expected = "result";
             var single = new SingleObservable<string>(
-                expected, new ServiceCollection().BuildServiceProvider());
+                expected, new EmptyServiceProvider());
             Assert.Equal(expected, await single);
         }
 

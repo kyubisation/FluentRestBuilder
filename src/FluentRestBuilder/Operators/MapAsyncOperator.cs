@@ -33,51 +33,27 @@ namespace FluentRestBuilder.Operators
                 this.mapping = mapping;
             }
 
-            protected override IObserver<TSource> Create(IObserver<TTarget> observer) =>
-                new MapAsyncObserver(this.mapping, observer, this);
+            protected override IObserver<TSource> Create(
+                IObserver<TTarget> observer, IDisposable disposable) =>
+                new MapAsyncObserver(this.mapping, observer, disposable);
 
-            private sealed class MapAsyncObserver : Observer
+            private sealed class MapAsyncObserver : SafeAsyncObserver
             {
                 private readonly Func<TSource, Task<TTarget>> mapping;
-                private Task continuationTask;
 
                 public MapAsyncObserver(
                     Func<TSource, Task<TTarget>> mapping,
                     IObserver<TTarget> child,
-                    Operator<TSource, TTarget> @operator)
-                    : base(child, @operator)
+                    IDisposable disposable)
+                    : base(child, disposable)
                 {
                     this.mapping = mapping;
                 }
 
-                public override void OnNext(TSource value)
+                protected override async Task SafeOnNext(TSource value)
                 {
-                    var task = Task.Run(() => this.mapping(value));
-                    this.continuationTask = task.ContinueWith(this.OnTaskDone);
-                }
-
-                public override void OnCompleted()
-                {
-                    if (this.continuationTask != null)
-                    {
-                        this.continuationTask.ContinueWith(t => base.OnCompleted());
-                    }
-                    else
-                    {
-                        base.OnCompleted();
-                    }
-                }
-
-                private void OnTaskDone(Task<TTarget> task)
-                {
-                    if (task.Exception != null)
-                    {
-                        this.OnError(task.Exception.InnerException);
-                    }
-                    else
-                    {
-                        this.EmitNext(task.Result);
-                    }
+                    var newValue = await this.mapping(value);
+                    this.EmitNext(newValue);
                 }
             }
         }
