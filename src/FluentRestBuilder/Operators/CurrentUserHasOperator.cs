@@ -1,4 +1,4 @@
-﻿// <copyright file="PrincipalHasAsyncOperator.cs" company="Kyubisation">
+﻿// <copyright file="CurrentUserHasOperator.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -6,18 +6,16 @@ namespace FluentRestBuilder.Operators
 {
     using System;
     using System.Security.Claims;
-    using System.Threading.Tasks;
     using Exceptions;
     using Filters;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Storage;
 
-    public static class PrincipalHasAsyncOperator
+    public static class CurrentUserHasOperator
     {
         /// <summary>
-        /// Emits an error if the asynchronous principal (the current user) check fails.
-        /// Otherwise emits the value.
+        /// Emits an error if the check fails. Otherwise emits the value.
         /// <para>Requires usage of <see cref="HttpContextProviderAttribute"/>.</para>
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
@@ -25,19 +23,19 @@ namespace FluentRestBuilder.Operators
         /// <param name="principalCheck">The principal check function.</param>
         /// <param name="errorFactory">The error factory method.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> PrincipalHasAsync<TSource>(
+        public static IProviderObservable<TSource> CurrentUserHas<TSource>(
             this IProviderObservable<TSource> observable,
-            Func<ClaimsPrincipal, TSource, Task<bool>> principalCheck,
+            Func<ClaimsPrincipal, TSource, bool> principalCheck,
             Func<TSource, object> errorFactory = null) =>
-            new PrincipalHasAsyncObservable<TSource>(principalCheck, errorFactory, observable);
+            new CurrentUserHasObservable<TSource>(principalCheck, errorFactory, observable);
 
-        private sealed class PrincipalHasAsyncObservable<TSource> : Operator<TSource, TSource>
+        private sealed class CurrentUserHasObservable<TSource> : Operator<TSource, TSource>
         {
-            private readonly Func<ClaimsPrincipal, TSource, Task<bool>> principalCheck;
+            private readonly Func<ClaimsPrincipal, TSource, bool> principalCheck;
             private readonly Func<TSource, object> errorFactory;
 
-            public PrincipalHasAsyncObservable(
-                Func<ClaimsPrincipal, TSource, Task<bool>> principalCheck,
+            public CurrentUserHasObservable(
+                Func<ClaimsPrincipal, TSource, bool> principalCheck,
                 Func<TSource, object> errorFactory,
                 IProviderObservable<TSource> observable)
                 : base(observable)
@@ -51,7 +49,7 @@ namespace FluentRestBuilder.Operators
                 IObserver<TSource> observer, IDisposable disposable)
             {
                 var httpContext = this.ServiceProvider.GetService<IScopedStorage<HttpContext>>();
-                return new PrincipalHasAsyncObserver(
+                return new CurrentUserHasObserver(
                     httpContext.Value?.User,
                     this.principalCheck,
                     this.errorFactory,
@@ -59,15 +57,15 @@ namespace FluentRestBuilder.Operators
                     disposable);
             }
 
-            private sealed class PrincipalHasAsyncObserver : SafeAsyncObserver
+            private sealed class CurrentUserHasObserver : SafeObserver
             {
                 private readonly ClaimsPrincipal principal;
-                private readonly Func<ClaimsPrincipal, TSource, Task<bool>> principalCheck;
+                private readonly Func<ClaimsPrincipal, TSource, bool> principalCheck;
                 private readonly Func<TSource, object> errorFactory;
 
-                public PrincipalHasAsyncObserver(
+                public CurrentUserHasObserver(
                     ClaimsPrincipal principal,
-                    Func<ClaimsPrincipal, TSource, Task<bool>> principalCheck,
+                    Func<ClaimsPrincipal, TSource, bool> principalCheck,
                     Func<TSource, object> errorFactory,
                     IObserver<TSource> child,
                     IDisposable disposable)
@@ -79,9 +77,9 @@ namespace FluentRestBuilder.Operators
                     this.errorFactory = errorFactory;
                 }
 
-                protected override async Task SafeOnNext(TSource value)
+                protected override void SafeOnNext(TSource value)
                 {
-                    var isValid = await this.principalCheck(this.principal, value);
+                    var isValid = this.principalCheck(this.principal, value);
                     if (isValid)
                     {
                         this.EmitNext(value);

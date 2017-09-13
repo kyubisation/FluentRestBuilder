@@ -1,4 +1,4 @@
-﻿// <copyright file="PrincipalHasAsyncOperatorTest.cs" company="Kyubisation">
+﻿// <copyright file="CurrentUserHasOperatorTest.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -15,7 +15,7 @@ namespace FluentRestBuilder.Test.Operators
     using Storage;
     using Xunit;
 
-    public class PrincipalHasAsyncOperatorTest
+    public class CurrentUserHasOperatorTest
     {
         [Fact]
         public async Task TestValidCase()
@@ -28,11 +28,7 @@ namespace FluentRestBuilder.Test.Operators
                     p => p.AddClaim(claimType, expected)));
             var observable = new SingleObservable<string>(
                 expected, collection.BuildServiceProvider())
-                .PrincipalHasAsync(async (p, i) =>
-                {
-                    await Task.Delay(100);
-                    return p.HasClaim(claimType, expected);
-                });
+                .CurrentUserHas((p, i) => p.HasClaim(claimType, expected));
             Assert.Equal(expected, await observable);
         }
 
@@ -44,11 +40,7 @@ namespace FluentRestBuilder.Test.Operators
             collection.AddTransient(s => CreateHttpContextWithPrincipal());
             var observable = new SingleObservable<string>(
                 expected, collection.BuildServiceProvider())
-                .PrincipalHasAsync(async (p, i) =>
-                {
-                    await Task.Delay(100);
-                    return p.HasClaim("claim", expected);
-                });
+                .CurrentUserHas((p, i) => p.HasClaim("claim", expected));
             var exception = await Assert.ThrowsAsync<ValidationException>(
                 async () => await observable);
             Assert.Equal(StatusCodes.Status403Forbidden, exception.StatusCode);
@@ -58,15 +50,11 @@ namespace FluentRestBuilder.Test.Operators
         public void TestProvider()
         {
             var collection = new ServiceCollection();
-            collection.AddTransient<PrincipalHasOperatorTest>();
+            collection.AddTransient<CurrentUserHasOperatorTest>();
             var observable = new SingleObservable<string>(
                     string.Empty, collection.BuildServiceProvider())
-                .PrincipalHasAsync(async (p, i) =>
-                {
-                    await Task.Delay(100);
-                    return p.HasClaim("claim", string.Empty);
-                });
-            var instance = observable.ServiceProvider.GetService<PrincipalHasOperatorTest>();
+                .CurrentUserHas((p, s) => s == string.Empty);
+            var instance = observable.ServiceProvider.GetService<CurrentUserHasOperatorTest>();
             Assert.NotNull(instance);
         }
 
