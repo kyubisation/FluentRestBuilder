@@ -15,7 +15,9 @@ namespace FluentRestBuilder.Operators
     public static class CurrentUserHasOperator
     {
         /// <summary>
-        /// Emits an error if the check fails. Otherwise emits the value.
+        /// If the check returns <c>false</c>, <see cref="ValidationException"/>
+        /// is emitted as an error with the status code 403 (Forbidden).
+        /// Otherwise the given value is emitted.
         /// <para>Requires usage of <see cref="HttpContextProviderAttribute"/>.</para>
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>

@@ -10,7 +10,9 @@ namespace FluentRestBuilder.Operators
     public static class InvalidWhenOperator
     {
         /// <summary>
-        /// Emits an error if the validation check fails. Otherwise emits the value.
+        /// If the check returns <c>true</c>, <see cref="ValidationException"/>
+        /// is emitted as an error with the given status code.
+        /// Otherwise the given value is emitted.
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>

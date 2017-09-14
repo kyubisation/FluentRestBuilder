@@ -1,4 +1,4 @@
-﻿// <copyright file="CurrentUserHasClaimAliases.cs" company="Kyubisation">
+﻿// <copyright file="ForbiddenWhenAliases.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -6,86 +6,74 @@ namespace FluentRestBuilder.Operators
 {
     using System;
     using Exceptions;
-    using Filters;
+    using Microsoft.AspNetCore.Http;
 
-    public static class CurrentUserHasClaimAliases
+    public static class ForbiddenWhenAliases
     {
         /// <summary>
-        /// If the check returns <c>false</c>, <see cref="ValidationException"/>
+        /// If the check returns <c>true</c>, <see cref="ValidationException"/>
         /// is emitted as an error with the status code 403 (Forbidden).
         /// Otherwise the given value is emitted.
-        /// <para>Requires usage of <see cref="HttpContextProviderAttribute"/>.</para>
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
-        /// <param name="claimType">The claim type.</param>
-        /// <param name="claim">The claim.</param>
+        /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="errorFactory">The error factory method.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> CurrentUserHasClaim<TSource>(
+        public static IProviderObservable<TSource> ForbiddenWhen<TSource>(
             this IProviderObservable<TSource> observable,
-            string claimType,
-            string claim,
+            Func<TSource, bool> invalidCheck,
             Func<TSource, object> errorFactory = null) =>
-            observable.CurrentUserHas((p, s) => p.HasClaim(claimType, claim), errorFactory);
+            observable.InvalidWhen(invalidCheck, StatusCodes.Status403Forbidden, errorFactory);
 
         /// <summary>
-        /// If the check returns <c>false</c>, <see cref="ValidationException"/>
+        /// If the check returns <c>true</c>, <see cref="ValidationException"/>
         /// is emitted as an error with the status code 403 (Forbidden).
         /// Otherwise the given value is emitted.
-        /// <para>Requires usage of <see cref="HttpContextProviderAttribute"/>.</para>
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
-        /// <param name="claimType">The claim type.</param>
-        /// <param name="claim">The claim.</param>
+        /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="error">The error to be used on a failed check.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> CurrentUserHasClaim<TSource>(
+        public static IProviderObservable<TSource> ForbiddenWhen<TSource>(
             this IProviderObservable<TSource> observable,
-            string claimType,
-            string claim,
+            Func<TSource, bool> invalidCheck,
             object error) =>
-            observable.CurrentUserHas((p, s) => p.HasClaim(claimType, claim), s => error);
+            observable.InvalidWhen(invalidCheck, StatusCodes.Status403Forbidden, s => error);
 
         /// <summary>
-        /// If the check returns <c>false</c>, <see cref="ValidationException"/>
+        /// If the check returns <c>true</c>, <see cref="ValidationException"/>
         /// is emitted as an error with the status code 403 (Forbidden).
         /// Otherwise the given value is emitted.
-        /// <para>Requires usage of <see cref="HttpContextProviderAttribute"/>.</para>
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
-        /// <param name="claimType">The claim type.</param>
-        /// <param name="claimFactory">The claim factory.</param>
+        /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="errorFactory">The error factory method.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> CurrentUserHasClaim<TSource>(
+        public static IProviderObservable<TSource> ForbiddenWhen<TSource>(
             this IProviderObservable<TSource> observable,
-            string claimType,
-            Func<TSource, string> claimFactory,
+            Func<bool> invalidCheck,
             Func<TSource, object> errorFactory = null) =>
-            observable.CurrentUserHas(
-                (p, s) => p.HasClaim(claimType, claimFactory(s)), errorFactory);
+            observable.InvalidWhen(
+                s => invalidCheck(), StatusCodes.Status403Forbidden, errorFactory);
 
         /// <summary>
-        /// If the check returns <c>false</c>, <see cref="ValidationException"/>
+        /// If the check returns <c>true</c>, <see cref="ValidationException"/>
         /// is emitted as an error with the status code 403 (Forbidden).
         /// Otherwise the given value is emitted.
-        /// <para>Requires usage of <see cref="HttpContextProviderAttribute"/>.</para>
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
-        /// <param name="claimType">The claim type.</param>
-        /// <param name="claimFactory">The claim factory.</param>
+        /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="error">The error to be used on a failed check.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> CurrentUserHasClaim<TSource>(
+        public static IProviderObservable<TSource> ForbiddenWhen<TSource>(
             this IProviderObservable<TSource> observable,
-            string claimType,
-            Func<TSource, string> claimFactory,
+            Func<bool> invalidCheck,
             object error) =>
-            observable.CurrentUserHas(
-                (p, s) => p.HasClaim(claimType, claimFactory(s)), s => error);
+            observable.InvalidWhen(
+                s => invalidCheck(), StatusCodes.Status403Forbidden, s => error);
     }
 }
