@@ -15,7 +15,6 @@ namespace FluentRestBuilder.Builder
                 .RegisterSource()
                 .RegisterLazySource()
                 .RegisterActionPipe()
-                .RegisterEntityValidationPipe()
                 .RegisterFilterByClientRequestPipe()
                 .RegisterFirstOrDefaultPipe()
                 .RegisterMappingPipe()
