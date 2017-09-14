@@ -2,14 +2,16 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Operators
+// ReSharper disable once CheckNamespace
+namespace FluentRestBuilder
 {
     using System;
     using System.Security.Claims;
-    using Exceptions;
     using Filters;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
+    using Operators;
+    using Operators.Exceptions;
     using Storage;
 
     public static class CurrentUserHasOperator

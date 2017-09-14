@@ -2,10 +2,12 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Operators
+// ReSharper disable once CheckNamespace
+namespace FluentRestBuilder
 {
     using System;
-    using Exceptions;
+    using Operators;
+    using Operators.Exceptions;
 
     public static class InvalidWhenOperator
     {

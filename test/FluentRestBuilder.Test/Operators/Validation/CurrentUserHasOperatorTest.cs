@@ -2,12 +2,11 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Operators
+namespace FluentRestBuilder.Test.Operators.Validation
 {
     using System;
     using System.Threading.Tasks;
     using FluentRestBuilder.Observables;
-    using FluentRestBuilder.Operators;
     using FluentRestBuilder.Operators.Exceptions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;

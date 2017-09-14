@@ -1,19 +1,20 @@
-﻿// <copyright file="ForbiddenWhenAsyncAliases.cs" company="Kyubisation">
+﻿// <copyright file="BadRequestWhenAliases.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Operators
+// ReSharper disable once CheckNamespace
+namespace FluentRestBuilder
 {
     using System;
-    using System.Threading.Tasks;
-    using Exceptions;
     using Microsoft.AspNetCore.Http;
+    using Operators;
+    using Operators.Exceptions;
 
-    public static class ForbiddenWhenAsyncAliases
+    public static class BadRequestWhenAliases
     {
         /// <summary>
         /// If the check returns <c>true</c>, <see cref="ValidationException"/>
-        /// is emitted as an error with the status code 403 (Forbidden).
+        /// is emitted as an error with the status code 400 (Bad Request).
         /// Otherwise the given value is emitted.
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
@@ -21,15 +22,15 @@ namespace FluentRestBuilder.Operators
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="errorFactory">The error factory method.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> ForbiddenWhenAsync<TSource>(
+        public static IProviderObservable<TSource> BadRequestWhen<TSource>(
             this IProviderObservable<TSource> observable,
-            Func<TSource, Task<bool>> invalidCheck,
+            Func<TSource, bool> invalidCheck,
             Func<TSource, object> errorFactory = null) =>
-            observable.InvalidWhenAsync(invalidCheck, StatusCodes.Status403Forbidden, errorFactory);
+            observable.InvalidWhen(invalidCheck, StatusCodes.Status400BadRequest, errorFactory);
 
         /// <summary>
         /// If the check returns <c>true</c>, <see cref="ValidationException"/>
-        /// is emitted as an error with the status code 403 (Forbidden).
+        /// is emitted as an error with the status code 400 (Bad Request).
         /// Otherwise the given value is emitted.
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
@@ -37,15 +38,15 @@ namespace FluentRestBuilder.Operators
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="error">The error to be used on a failed check.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> ForbiddenWhenAsync<TSource>(
+        public static IProviderObservable<TSource> BadRequestWhen<TSource>(
             this IProviderObservable<TSource> observable,
-            Func<TSource, Task<bool>> invalidCheck,
+            Func<TSource, bool> invalidCheck,
             object error) =>
-            observable.InvalidWhenAsync(invalidCheck, StatusCodes.Status403Forbidden, s => error);
+            observable.InvalidWhen(invalidCheck, StatusCodes.Status400BadRequest, s => error);
 
         /// <summary>
         /// If the check returns <c>true</c>, <see cref="ValidationException"/>
-        /// is emitted as an error with the status code 403 (Forbidden).
+        /// is emitted as an error with the status code 400 (Bad Request).
         /// Otherwise the given value is emitted.
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
@@ -53,16 +54,16 @@ namespace FluentRestBuilder.Operators
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="errorFactory">The error factory method.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> ForbiddenWhenAsync<TSource>(
+        public static IProviderObservable<TSource> BadRequestWhen<TSource>(
             this IProviderObservable<TSource> observable,
-            Func<Task<bool>> invalidCheck,
+            Func<bool> invalidCheck,
             Func<TSource, object> errorFactory = null) =>
-            observable.InvalidWhenAsync(
-                s => invalidCheck(), StatusCodes.Status403Forbidden, errorFactory);
+            observable.InvalidWhen(
+                s => invalidCheck(), StatusCodes.Status400BadRequest, errorFactory);
 
         /// <summary>
         /// If the check returns <c>true</c>, <see cref="ValidationException"/>
-        /// is emitted as an error with the status code 403 (Forbidden).
+        /// is emitted as an error with the status code 400 (Bad Request).
         /// Otherwise the given value is emitted.
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
@@ -70,11 +71,11 @@ namespace FluentRestBuilder.Operators
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="error">The error to be used on a failed check.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> ForbiddenWhenAsync<TSource>(
+        public static IProviderObservable<TSource> BadRequestWhen<TSource>(
             this IProviderObservable<TSource> observable,
-            Func<Task<bool>> invalidCheck,
+            Func<bool> invalidCheck,
             object error) =>
-            observable.InvalidWhenAsync(
-                s => invalidCheck(), StatusCodes.Status403Forbidden, s => error);
+            observable.InvalidWhen(
+                s => invalidCheck(), StatusCodes.Status400BadRequest, s => error);
     }
 }

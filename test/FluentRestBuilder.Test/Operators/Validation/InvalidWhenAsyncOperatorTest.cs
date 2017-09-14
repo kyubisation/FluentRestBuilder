@@ -1,26 +1,29 @@
-﻿// <copyright file="InvalidWhenOperatorTest.cs" company="Kyubisation">
+﻿// <copyright file="InvalidWhenAsyncOperatorTest.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Operators
+namespace FluentRestBuilder.Test.Operators.Validation
 {
-    using System;
     using System.Threading.Tasks;
     using FluentRestBuilder.Observables;
-    using FluentRestBuilder.Operators;
     using FluentRestBuilder.Operators.Exceptions;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;
     using Xunit;
 
-    public class InvalidWhenOperatorTest
+    public class InvalidWhenAsyncOperatorTest
     {
         [Fact]
         public async Task TestValidCase()
         {
             const string expected = "expected";
             var observable = new SingleObservable<string>(expected, new EmptyServiceProvider())
-                .InvalidWhen(s => false, 400);
+                .InvalidWhenAsync(
+                    async s =>
+                    {
+                        await Task.Delay(100);
+                        return false;
+                    }, 400);
             Assert.Equal(expected, await observable);
         }
 
@@ -30,7 +33,12 @@ namespace FluentRestBuilder.Test.Operators
             const string expected = "expected";
             const int statusCode = 400;
             var observable = new SingleObservable<string>(expected, new EmptyServiceProvider())
-                .InvalidWhen(s => true, statusCode);
+                .InvalidWhenAsync(
+                    async s =>
+                    {
+                        await Task.Delay(100);
+                        return true;
+                    }, statusCode);
             var exception = await Assert.ThrowsAsync<ValidationException>(async () => await observable);
             Assert.Equal(statusCode, exception.StatusCode);
         }
@@ -39,11 +47,11 @@ namespace FluentRestBuilder.Test.Operators
         public void TestProvider()
         {
             var collection = new ServiceCollection();
-            collection.AddTransient<InvalidWhenOperatorTest>();
+            collection.AddTransient<InvalidWhenAsyncOperatorTest>();
             var observable = new SingleObservable<string>(
                     string.Empty, collection.BuildServiceProvider())
-                .InvalidWhen(s => s == string.Empty, 400);
-            var instance = observable.ServiceProvider.GetService<InvalidWhenOperatorTest>();
+                .InvalidWhenAsync(s => Task.FromResult(false), 400);
+            var instance = observable.ServiceProvider.GetService<InvalidWhenAsyncOperatorTest>();
             Assert.NotNull(instance);
         }
     }

@@ -1,18 +1,19 @@
-﻿// <copyright file="GoneWhenAliases.cs" company="Kyubisation">
+﻿// <copyright file="NotFoundWhenAliases.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Operators
+// ReSharper disable once CheckNamespace
+namespace FluentRestBuilder
 {
     using System;
-    using Exceptions;
     using Microsoft.AspNetCore.Http;
+    using Operators.Exceptions;
 
-    public static class GoneWhenAliases
+    public static class NotFoundWhenAliases
     {
         /// <summary>
         /// If the check returns <c>true</c>, <see cref="ValidationException"/>
-        /// is emitted as an error with the status code 410 (Gone).
+        /// is emitted as an error with the status code 404 (Not Found).
         /// Otherwise the given value is emitted.
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
@@ -20,15 +21,15 @@ namespace FluentRestBuilder.Operators
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="errorFactory">The error factory method.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> GoneWhen<TSource>(
+        public static IProviderObservable<TSource> NotFoundWhen<TSource>(
             this IProviderObservable<TSource> observable,
             Func<TSource, bool> invalidCheck,
             Func<TSource, object> errorFactory = null) =>
-            observable.InvalidWhen(invalidCheck, StatusCodes.Status410Gone, errorFactory);
+            observable.InvalidWhen(invalidCheck, StatusCodes.Status404NotFound, errorFactory);
 
         /// <summary>
         /// If the check returns <c>true</c>, <see cref="ValidationException"/>
-        /// is emitted as an error with the status code 410 (Gone).
+        /// is emitted as an error with the status code 404 (Not Found).
         /// Otherwise the given value is emitted.
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
@@ -36,15 +37,15 @@ namespace FluentRestBuilder.Operators
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="error">The error to be used on a failed check.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> GoneWhen<TSource>(
+        public static IProviderObservable<TSource> NotFoundWhen<TSource>(
             this IProviderObservable<TSource> observable,
             Func<TSource, bool> invalidCheck,
             object error) =>
-            observable.InvalidWhen(invalidCheck, StatusCodes.Status410Gone, s => error);
+            observable.InvalidWhen(invalidCheck, StatusCodes.Status404NotFound, s => error);
 
         /// <summary>
         /// If the check returns <c>true</c>, <see cref="ValidationException"/>
-        /// is emitted as an error with the status code 410 (Gone).
+        /// is emitted as an error with the status code 404 (Not Found).
         /// Otherwise the given value is emitted.
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
@@ -52,16 +53,16 @@ namespace FluentRestBuilder.Operators
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="errorFactory">The error factory method.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> GoneWhen<TSource>(
+        public static IProviderObservable<TSource> NotFoundWhen<TSource>(
             this IProviderObservable<TSource> observable,
             Func<bool> invalidCheck,
             Func<TSource, object> errorFactory = null) =>
             observable.InvalidWhen(
-                s => invalidCheck(), StatusCodes.Status410Gone, errorFactory);
+                s => invalidCheck(), StatusCodes.Status404NotFound, errorFactory);
 
         /// <summary>
         /// If the check returns <c>true</c>, <see cref="ValidationException"/>
-        /// is emitted as an error with the status code 410 (Gone).
+        /// is emitted as an error with the status code 404 (Not Found).
         /// Otherwise the given value is emitted.
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
@@ -69,11 +70,11 @@ namespace FluentRestBuilder.Operators
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="error">The error to be used on a failed check.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TSource> GoneWhen<TSource>(
+        public static IProviderObservable<TSource> NotFoundWhen<TSource>(
             this IProviderObservable<TSource> observable,
             Func<bool> invalidCheck,
             object error) =>
             observable.InvalidWhen(
-                s => invalidCheck(), StatusCodes.Status410Gone, s => error);
+                s => invalidCheck(), StatusCodes.Status404NotFound, s => error);
     }
 }
