@@ -16,7 +16,7 @@ namespace FluentRestBuilder
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{List}"/>.</returns>
         public static IProviderObservable<List<TSource>> ToList<TSource>(
             this IProviderObservable<IEnumerable<TSource>> observable) =>
             observable.Map(s => s.ToList());
