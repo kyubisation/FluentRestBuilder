@@ -21,12 +21,7 @@ namespace FluentRestBuilder.Builder
                 .RegisterPaginationByClientRequestPipe()
                 .RegisterQueryablePipe()
                 .RegisterSearchByClientRequestPipe()
-                .RegisterSingleOrDefaultPipe()
-                .RegisterAcceptedResult()
-                .RegisterCreatedEntityResult()
-                .RegisterNoContentResult()
-                .RegisterOkResult()
-                .RegisterOptionsResultPipe();
+                .RegisterSingleOrDefaultPipe();
         }
 
         public IServiceCollection Services { get; }
