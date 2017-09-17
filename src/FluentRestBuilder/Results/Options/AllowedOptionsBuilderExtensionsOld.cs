@@ -1,4 +1,4 @@
-﻿// <copyright file="AllowedOptionsBuilderExtensions.cs" company="Kyubisation">
+﻿// <copyright file="AllowedOptionsBuilderExtensionsOld.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -9,7 +9,7 @@ namespace FluentRestBuilder
     using System.Security.Claims;
     using Results.Options;
 
-    public static class AllowedOptionsBuilderExtensions
+    public static class AllowedOptionsBuilderExtensionsOld
     {
         public static IAllowedOptionsBuilder<TInput> IsAllowedForAll<TInput>(
                 this IAllowedOptionsBuilder<TInput> builder,
