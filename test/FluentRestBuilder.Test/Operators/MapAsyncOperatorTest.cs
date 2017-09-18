@@ -6,10 +6,7 @@ namespace FluentRestBuilder.Test.Operators
 {
     using System;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Observables;
-    using FluentRestBuilder.Operators;
     using Microsoft.Extensions.DependencyInjection;
-    using Mocks;
     using Xunit;
 
     public class MapAsyncOperatorTest
@@ -21,8 +18,7 @@ namespace FluentRestBuilder.Test.Operators
             const string append = "append";
             const string expected = first + append;
 
-            var observable = new SingleObservable<string>(
-                    first, new EmptyServiceProvider())
+            var observable = Observable.Single(first)
                 .MapAsync(async s =>
                 {
                     await Task.Delay(100);
@@ -34,8 +30,7 @@ namespace FluentRestBuilder.Test.Operators
         [Fact]
         public async Task TestException()
         {
-            var observable = new SingleObservable<string>(
-                    string.Empty, new EmptyServiceProvider())
+            var observable = Observable.Single(string.Empty)
                 .MapAsync<string, string>(async s =>
                 {
                     await Task.Delay(100);
@@ -47,10 +42,10 @@ namespace FluentRestBuilder.Test.Operators
         [Fact]
         public void TestProvider()
         {
-            var collection = new ServiceCollection();
-            collection.AddTransient<MapAsyncOperatorTest>();
-            var observable = new SingleObservable<string>(
-                    string.Empty, collection.BuildServiceProvider())
+            var serviceProvider = new ServiceCollection()
+                .AddTransient<MapAsyncOperatorTest>()
+                .BuildServiceProvider();
+            var observable = Observable.Single(string.Empty, serviceProvider)
                 .MapAsync<string, string>(s => throw new InvalidOperationException());
             var instance = observable.ServiceProvider.GetService<MapAsyncOperatorTest>();
             Assert.NotNull(instance);

@@ -6,10 +6,7 @@ namespace FluentRestBuilder.Test.Operators
 {
     using System;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Observables;
-    using FluentRestBuilder.Operators;
     using Microsoft.Extensions.DependencyInjection;
-    using Mocks;
     using Xunit;
 
     public class DoAsyncOperatorTest
@@ -20,7 +17,7 @@ namespace FluentRestBuilder.Test.Operators
             const string expected = "expected";
             var value = string.Empty;
 
-            var observable = new SingleObservable<string>(expected, new EmptyServiceProvider())
+            var observable = Observable.Single(expected)
                 .DoAsync(async s =>
                 {
                     await Task.Delay(100);
@@ -33,7 +30,7 @@ namespace FluentRestBuilder.Test.Operators
         [Fact]
         public async Task TestException()
         {
-            var observable = new SingleObservable<string>(string.Empty, new EmptyServiceProvider())
+            var observable = Observable.Single(string.Empty)
                 .DoAsync(async s =>
                 {
                     await Task.Delay(100);
@@ -47,8 +44,7 @@ namespace FluentRestBuilder.Test.Operators
         {
             var collection = new ServiceCollection();
             collection.AddTransient<DoAsyncOperatorTest>();
-            var observable = new SingleObservable<string>(
-                    string.Empty, collection.BuildServiceProvider())
+            var observable = Observable.Single(string.Empty, collection.BuildServiceProvider())
                 .DoAsync(async s =>
                 {
                     await Task.Delay(100);

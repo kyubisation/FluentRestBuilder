@@ -6,9 +6,7 @@ namespace FluentRestBuilder.Test.Observables
 {
     using System;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Observables;
     using Microsoft.Extensions.DependencyInjection;
-    using Mocks;
     using Xunit;
 
     public class AsyncSingleObservableTest
@@ -16,10 +14,10 @@ namespace FluentRestBuilder.Test.Observables
         [Fact]
         public void TestProvider()
         {
-            var collection = new ServiceCollection();
-            collection.AddTransient<SingleObservableTest>();
-            var single = new AsyncSingleObservable<string>(
-                () => string.Empty, collection.BuildServiceProvider());
+            var serviceProvider = new ServiceCollection()
+                .AddTransient<SingleObservableTest>()
+                .BuildServiceProvider();
+            var single = Observable.AsyncSingle(() => string.Empty, serviceProvider);
             var instance = single.ServiceProvider.GetService<SingleObservableTest>();
             Assert.NotNull(instance);
         }
@@ -28,8 +26,7 @@ namespace FluentRestBuilder.Test.Observables
         public async Task TestFunc()
         {
             const string expected = "expected";
-            var single = new AsyncSingleObservable<string>(
-                () => expected, new EmptyServiceProvider());
+            var single = Observable.AsyncSingle(() => expected);
             Assert.Equal(expected, await single);
         }
 
@@ -37,9 +34,7 @@ namespace FluentRestBuilder.Test.Observables
         public async Task TestTask()
         {
             const string expected = "expected";
-            var single = new AsyncSingleObservable<string>(
-                async () => await Task.FromResult(expected),
-                new EmptyServiceProvider());
+            var single = Observable.AsyncSingle(async () => await Task.FromResult(expected));
             Assert.Equal(expected, await single);
         }
 
@@ -48,7 +43,7 @@ namespace FluentRestBuilder.Test.Observables
         {
             const string expected = "expected";
             var lazy = new Lazy<string>(() => expected);
-            var single = new AsyncSingleObservable<string>(lazy, new EmptyServiceProvider());
+            var single = Observable.AsyncSingle(lazy);
             Assert.False(lazy.IsValueCreated);
             Assert.Equal(expected, await single);
             Assert.True(lazy.IsValueCreated);
@@ -57,9 +52,8 @@ namespace FluentRestBuilder.Test.Observables
         [Fact]
         public async Task TestException()
         {
-            var single = new AsyncSingleObservable<string>(
-                (Func<string>)(() => throw new InvalidOperationException()),
-                new EmptyServiceProvider());
+            var single = Observable.AsyncSingle(
+                (Func<string>)(() => throw new InvalidOperationException()));
             await Assert.ThrowsAsync<InvalidOperationException>(async () => await single);
         }
     }

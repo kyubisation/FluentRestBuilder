@@ -6,10 +6,7 @@ namespace FluentRestBuilder.Test.Operators
 {
     using System;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Observables;
-    using FluentRestBuilder.Operators;
     using Microsoft.Extensions.DependencyInjection;
-    using Mocks;
     using Xunit;
 
     public class DoOperatorTest
@@ -20,8 +17,7 @@ namespace FluentRestBuilder.Test.Operators
             const string expected = "expected";
             var value = string.Empty;
 
-            var observable = new SingleObservable<string>(
-                    expected, new EmptyServiceProvider())
+            var observable = Observable.Single(expected)
                 .Do(s => value = s);
             Assert.Equal(expected, await observable);
             Assert.Equal(expected, value);
@@ -30,8 +26,7 @@ namespace FluentRestBuilder.Test.Operators
         [Fact]
         public async Task TestException()
         {
-            var observable = new SingleObservable<string>(
-                    string.Empty, new EmptyServiceProvider())
+            var observable = Observable.Single(string.Empty)
                 .Do(s => throw new InvalidOperationException());
             await Assert.ThrowsAsync<InvalidOperationException>(async () => await observable);
         }
@@ -39,10 +34,10 @@ namespace FluentRestBuilder.Test.Operators
         [Fact]
         public void TestProvider()
         {
-            var collection = new ServiceCollection();
-            collection.AddTransient<DoOperatorTest>();
-            var observable = new SingleObservable<string>(
-                    string.Empty, collection.BuildServiceProvider())
+            var serviceProvider = new ServiceCollection()
+                .AddTransient<DoOperatorTest>()
+                .BuildServiceProvider();
+            var observable = Observable.Single(string.Empty, serviceProvider)
                 .Do(s => throw new InvalidOperationException());
             var instance = observable.ServiceProvider.GetService<DoOperatorTest>();
             Assert.NotNull(instance);

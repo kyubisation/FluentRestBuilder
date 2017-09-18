@@ -5,10 +5,8 @@
 namespace FluentRestBuilder.Test.Operators.Validation
 {
     using System.Threading.Tasks;
-    using FluentRestBuilder.Observables;
     using FluentRestBuilder.Operators.Exceptions;
     using Microsoft.Extensions.DependencyInjection;
-    using Mocks;
     using Xunit;
 
     public class InvalidWhenAsyncOperatorTest
@@ -17,7 +15,7 @@ namespace FluentRestBuilder.Test.Operators.Validation
         public async Task TestValidCase()
         {
             const string expected = "expected";
-            var observable = new SingleObservable<string>(expected, new EmptyServiceProvider())
+            var observable = Observable.Single(expected)
                 .InvalidWhenAsync(
                     async s =>
                     {
@@ -32,7 +30,7 @@ namespace FluentRestBuilder.Test.Operators.Validation
         {
             const string expected = "expected";
             const int statusCode = 400;
-            var observable = new SingleObservable<string>(expected, new EmptyServiceProvider())
+            var observable = Observable.Single(expected)
                 .InvalidWhenAsync(
                     async s =>
                     {
@@ -46,10 +44,10 @@ namespace FluentRestBuilder.Test.Operators.Validation
         [Fact]
         public void TestProvider()
         {
-            var collection = new ServiceCollection();
-            collection.AddTransient<InvalidWhenAsyncOperatorTest>();
-            var observable = new SingleObservable<string>(
-                    string.Empty, collection.BuildServiceProvider())
+            var serviceProvider = new ServiceCollection()
+                .AddTransient<InvalidWhenAsyncOperatorTest>()
+                .BuildServiceProvider();
+            var observable = Observable.Single(string.Empty, serviceProvider)
                 .InvalidWhenAsync(s => Task.FromResult(false), 400);
             var instance = observable.ServiceProvider.GetService<InvalidWhenAsyncOperatorTest>();
             Assert.NotNull(instance);

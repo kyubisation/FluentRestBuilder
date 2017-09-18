@@ -5,10 +5,8 @@
 namespace FluentRestBuilder.Test.Operators.Validation
 {
     using System.Threading.Tasks;
-    using FluentRestBuilder.Observables;
     using FluentRestBuilder.Operators.Exceptions;
     using Microsoft.Extensions.DependencyInjection;
-    using Mocks;
     using Xunit;
 
     public class InvalidWhenOperatorTest
@@ -17,7 +15,7 @@ namespace FluentRestBuilder.Test.Operators.Validation
         public async Task TestValidCase()
         {
             const string expected = "expected";
-            var observable = new SingleObservable<string>(expected, new EmptyServiceProvider())
+            var observable = Observable.Single(expected)
                 .InvalidWhen(s => false, 400);
             Assert.Equal(expected, await observable);
         }
@@ -27,7 +25,7 @@ namespace FluentRestBuilder.Test.Operators.Validation
         {
             const string expected = "expected";
             const int statusCode = 400;
-            var observable = new SingleObservable<string>(expected, new EmptyServiceProvider())
+            var observable = Observable.Single(expected)
                 .InvalidWhen(s => true, statusCode);
             var exception = await Assert.ThrowsAsync<ValidationException>(async () => await observable);
             Assert.Equal(statusCode, exception.StatusCode);
@@ -36,10 +34,10 @@ namespace FluentRestBuilder.Test.Operators.Validation
         [Fact]
         public void TestProvider()
         {
-            var collection = new ServiceCollection();
-            collection.AddTransient<InvalidWhenOperatorTest>();
-            var observable = new SingleObservable<string>(
-                    string.Empty, collection.BuildServiceProvider())
+            var serviceProvider = new ServiceCollection()
+                .AddTransient<InvalidWhenOperatorTest>()
+                .BuildServiceProvider();
+            var observable = Observable.Single(string.Empty, serviceProvider)
                 .InvalidWhen(s => s == string.Empty, 400);
             var instance = observable.ServiceProvider.GetService<InvalidWhenOperatorTest>();
             Assert.NotNull(instance);

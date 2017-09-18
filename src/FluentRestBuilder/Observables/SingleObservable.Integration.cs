@@ -6,22 +6,21 @@
 namespace FluentRestBuilder
 {
     using Microsoft.AspNetCore.Mvc;
-    using Observables;
 
     public static partial class Integration
     {
         /// <summary>
         /// Create an observable which emits the given value.
         /// </summary>
-        /// <typeparam name="T">The type of the given value.</typeparam>
+        /// <typeparam name="TSource">The type of the given value.</typeparam>
         /// <param name="controller">The MVC controller.</param>
         /// <param name="value">The value.</param>
-        /// <returns>An instance of <see cref="SingleObservable{T}"/>.</returns>
-        public static SingleObservable<T> CreateSingle<T>(
-            this ControllerBase controller, T value)
+        /// <returns>An instance of <see cref="IProviderObservable{T}"/>.</returns>
+        public static IProviderObservable<TSource> CreateSingle<TSource>(
+            this ControllerBase controller, TSource value)
         {
             Check.IsNull(controller, nameof(controller));
-            return new SingleObservable<T>(value, controller.HttpContext.RequestServices);
+            return Observable.Single(value, controller.HttpContext.RequestServices);
         }
     }
 }

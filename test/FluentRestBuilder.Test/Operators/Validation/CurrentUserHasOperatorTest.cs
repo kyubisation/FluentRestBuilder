@@ -6,7 +6,6 @@ namespace FluentRestBuilder.Test.Operators.Validation
 {
     using System;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Observables;
     using FluentRestBuilder.Operators.Exceptions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
@@ -21,12 +20,11 @@ namespace FluentRestBuilder.Test.Operators.Validation
         {
             const string expected = "expected";
             const string claimType = "claim";
-            var collection = new ServiceCollection();
-            collection.AddTransient(
-                s => CreateHttpContextWithPrincipal(
-                    p => p.AddClaim(claimType, expected)));
-            var observable = new SingleObservable<string>(
-                expected, collection.BuildServiceProvider())
+            var serviceProvider = new ServiceCollection()
+                .AddTransient(
+                    s => CreateHttpContextWithPrincipal(p => p.AddClaim(claimType, expected)))
+                .BuildServiceProvider();
+            var observable = Observable.Single(expected, serviceProvider)
                 .CurrentUserHas((p, i) => p.HasClaim(claimType, expected));
             Assert.Equal(expected, await observable);
         }
@@ -35,10 +33,10 @@ namespace FluentRestBuilder.Test.Operators.Validation
         public async Task TestInvalidCase()
         {
             const string expected = "expected";
-            var collection = new ServiceCollection();
-            collection.AddTransient(s => CreateHttpContextWithPrincipal());
-            var observable = new SingleObservable<string>(
-                expected, collection.BuildServiceProvider())
+            var serviceProvider = new ServiceCollection()
+                .AddTransient(s => CreateHttpContextWithPrincipal())
+                .BuildServiceProvider();
+            var observable = Observable.Single(expected, serviceProvider)
                 .CurrentUserHas((p, i) => p.HasClaim("claim", expected));
             var exception = await Assert.ThrowsAsync<ValidationException>(
                 async () => await observable);
@@ -48,10 +46,10 @@ namespace FluentRestBuilder.Test.Operators.Validation
         [Fact]
         public void TestProvider()
         {
-            var collection = new ServiceCollection();
-            collection.AddTransient<CurrentUserHasOperatorTest>();
-            var observable = new SingleObservable<string>(
-                    string.Empty, collection.BuildServiceProvider())
+            var serviceProvider = new ServiceCollection()
+                .AddTransient<CurrentUserHasOperatorTest>()
+                .BuildServiceProvider();
+            var observable = Observable.Single(string.Empty, serviceProvider)
                 .CurrentUserHas((p, s) => s == string.Empty);
             var instance = observable.ServiceProvider.GetService<CurrentUserHasOperatorTest>();
             Assert.NotNull(instance);
