@@ -8,7 +8,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMa
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Builder;
+    using Builder;
     using FluentRestBuilder.Mocks;
     using FluentRestBuilder.Mocks.EntityFramework;
     using FluentRestBuilder.Pipes;

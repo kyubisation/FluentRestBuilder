@@ -10,8 +10,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Converters
     {
         public FilterConversionResult<bool> Parse(string filter)
         {
-            bool result;
-            if (bool.TryParse(filter, out result) || TryParse(filter, out result))
+            if (bool.TryParse(filter, out var result) || TryParse(filter, out result))
             {
                 return new FilterConversionSuccess<bool>(result);
             }

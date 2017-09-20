@@ -21,7 +21,7 @@ namespace FluentRestBuilder
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="statusCode">The status code of the error.</param>
         /// <param name="error">The error to be used on a failed check.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> InvalidWhenAsync<TSource>(
             this IProviderObservable<TSource> observable,
             Func<TSource, Task<bool>> invalidCheck,
@@ -39,7 +39,7 @@ namespace FluentRestBuilder
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="statusCode">The status code of the error.</param>
         /// <param name="errorFactory">The error factory method.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> InvalidWhenAsync<TSource>(
             this IProviderObservable<TSource> observable,
             Func<Task<bool>> invalidCheck,
@@ -57,7 +57,7 @@ namespace FluentRestBuilder
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="statusCode">The status code of the error.</param>
         /// <param name="error">The error to be used on a failed check.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> InvalidWhenAsync<TSource>(
             this IProviderObservable<TSource> observable,
             Func<Task<bool>> invalidCheck,

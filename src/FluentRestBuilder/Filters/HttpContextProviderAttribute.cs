@@ -14,8 +14,7 @@ namespace FluentRestBuilder.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var controller = context.Controller as ControllerBase;
-            if (controller == null)
+            if (!(context.Controller is ControllerBase controller))
             {
                 throw new FilterRequiresControllerException();
             }

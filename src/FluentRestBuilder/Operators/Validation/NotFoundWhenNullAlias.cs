@@ -19,7 +19,7 @@ namespace FluentRestBuilder
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
         /// <param name="errorFactory">The error factory method.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> NotFoundWhenNull<TSource>(
             this IProviderObservable<TSource> observable,
             Func<TSource, object> errorFactory = null) =>

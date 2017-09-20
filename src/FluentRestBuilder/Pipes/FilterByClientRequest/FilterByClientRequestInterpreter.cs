@@ -39,8 +39,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest
 
         private FilterRequest ResolveFilterRequest(string supportedFilter)
         {
-            StringValues filterValues;
-            return this.queryCollection.TryGetValue(supportedFilter, out filterValues)
+            return this.queryCollection.TryGetValue(supportedFilter, out var filterValues)
                 ? this.InterpretFilterRequest(supportedFilter, filterValues) : null;
         }
 

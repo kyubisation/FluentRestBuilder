@@ -20,11 +20,8 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
 
         public abstract Expression<Func<TEntity, bool>> Resolve(FilterType type, string filter);
 
-        protected Expression<Func<TEntity, bool>> ResolveForType(FilterType type, TFilter filter)
-        {
-            Func<TFilter, Expression<Func<TEntity, bool>>> expressionCreator;
-            return this.filterDictionary.TryGetValue(type, out expressionCreator)
+        protected Expression<Func<TEntity, bool>> ResolveForType(FilterType type, TFilter filter) =>
+            this.filterDictionary.TryGetValue(type, out var expressionCreator)
                 ? expressionCreator(filter) : null;
-        }
     }
 }

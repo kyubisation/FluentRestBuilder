@@ -92,6 +92,7 @@ namespace FluentRestBuilder.Test.Pipes.FilterByClientRequest
         }
 
         // ReSharper disable once UnusedParameter.Local
+        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
         private void TestSingleFilterCase(string filterPrefix, FilterType expectedType)
         {
             var interpreter = new FilterByClientRequestInterpreter(

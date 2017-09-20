@@ -21,7 +21,7 @@ namespace FluentRestBuilder
         /// <param name="observable">The parent observable.</param>
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="errorFactory">The error factory method.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> NotFoundWhenAsync<TSource>(
             this IProviderObservable<TSource> observable,
             Func<TSource, Task<bool>> invalidCheck,
@@ -37,7 +37,7 @@ namespace FluentRestBuilder
         /// <param name="observable">The parent observable.</param>
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="error">The error to be used on a failed check.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> NotFoundWhenAsync<TSource>(
             this IProviderObservable<TSource> observable,
             Func<TSource, Task<bool>> invalidCheck,
@@ -53,7 +53,7 @@ namespace FluentRestBuilder
         /// <param name="observable">The parent observable.</param>
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="errorFactory">The error factory method.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> NotFoundWhenAsync<TSource>(
             this IProviderObservable<TSource> observable,
             Func<Task<bool>> invalidCheck,
@@ -70,7 +70,7 @@ namespace FluentRestBuilder
         /// <param name="observable">The parent observable.</param>
         /// <param name="invalidCheck">The invalidCheck function.</param>
         /// <param name="error">The error to be used on a failed check.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> NotFoundWhenAsync<TSource>(
             this IProviderObservable<TSource> observable,
             Func<Task<bool>> invalidCheck,

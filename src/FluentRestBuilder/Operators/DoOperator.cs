@@ -13,44 +13,44 @@ namespace FluentRestBuilder
         /// <summary>
         /// Perform an action on the received value.
         /// </summary>
-        /// <typeparam name="TFrom">The type of the value.</typeparam>
+        /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
         /// <param name="action">The action to be performed.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
-        public static IProviderObservable<TFrom> Do<TFrom>(
-            this IProviderObservable<TFrom> observable,
-            Action<TFrom> action) =>
-            new DoObservable<TFrom>(action, observable);
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
+        public static IProviderObservable<TSource> Do<TSource>(
+            this IProviderObservable<TSource> observable,
+            Action<TSource> action) =>
+            new DoObservable<TSource>(action, observable);
 
-        private sealed class DoObservable<TFrom> : Operator<TFrom, TFrom>
+        private sealed class DoObservable<TSource> : Operator<TSource, TSource>
         {
-            private readonly Action<TFrom> action;
+            private readonly Action<TSource> action;
 
-            public DoObservable(Action<TFrom> action, IProviderObservable<TFrom> observable)
+            public DoObservable(Action<TSource> action, IProviderObservable<TSource> observable)
                 : base(observable)
             {
                 Check.IsNull(action, nameof(action));
                 this.action = action;
             }
 
-            protected override IObserver<TFrom> Create(
-                IObserver<TFrom> observer, IDisposable disposable) =>
+            protected override IObserver<TSource> Create(
+                IObserver<TSource> observer, IDisposable disposable) =>
                 new DoObserver(this.action, observer, disposable);
 
             private sealed class DoObserver : SafeObserver
             {
-                private readonly Action<TFrom> action;
+                private readonly Action<TSource> action;
 
                 public DoObserver(
-                    Action<TFrom> action,
-                    IObserver<TFrom> child,
+                    Action<TSource> action,
+                    IObserver<TSource> child,
                     IDisposable disposable)
                     : base(child, disposable)
                 {
                     this.action = action;
                 }
 
-                protected override void SafeOnNext(TFrom value)
+                protected override void SafeOnNext(TSource value)
                 {
                     this.action(value);
                     this.EmitNext(value);

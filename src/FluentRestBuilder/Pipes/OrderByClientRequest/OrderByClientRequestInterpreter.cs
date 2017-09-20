@@ -23,8 +23,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest
 
         public IEnumerable<OrderByRequest> ParseRequestQuery(ICollection<string> supportedOrderBys)
         {
-            StringValues orderByValues;
-            if (!this.queryCollection.TryGetValue(this.OrderByQueryArgumentKey, out orderByValues))
+            if (!this.queryCollection.TryGetValue(this.OrderByQueryArgumentKey, out var orderByValues))
             {
                 return Enumerable.Empty<OrderByRequest>();
             }

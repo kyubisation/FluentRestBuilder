@@ -48,8 +48,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
         private Expression<Func<TEntity, bool>> BuildFilter(FilterType type, TFilter filter)
         {
             var dictionary = this.filterBuilder(filter);
-            Expression<Func<TEntity, bool>> filterExpression;
-            return dictionary.TryGetValue(type, out filterExpression) ? filterExpression : null;
+            return dictionary.TryGetValue(type, out var filterExpression) ? filterExpression : null;
         }
 
         private Expression<Func<TEntity, bool>> CheckForExistingFilterOnError(FilterType type)

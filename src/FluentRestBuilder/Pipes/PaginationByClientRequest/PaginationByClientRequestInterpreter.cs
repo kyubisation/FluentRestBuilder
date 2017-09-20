@@ -6,7 +6,6 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 {
     using System.Text.RegularExpressions;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Primitives;
     using Storage;
 
     public class PaginationByClientRequestInterpreter : IPaginationByClientRequestInterpreter
@@ -44,11 +43,9 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 
         private int? ParseQueryValue(string key)
         {
-            StringValues stringValue;
-            int value;
-            if (!this.queryCollection.TryGetValue(key, out stringValue)
+            if (!this.queryCollection.TryGetValue(key, out var stringValue)
                 || string.IsNullOrEmpty(stringValue.ToString())
-                || !int.TryParse(stringValue.ToString(), out value)
+                || !int.TryParse(stringValue.ToString(), out var value)
                 || value < 1)
             {
                 return null;
@@ -59,8 +56,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 
         private PaginationRequest ParseHeaderRange()
         {
-            StringValues rangeValue;
-            if (!this.requestHeader.TryGetValue("Range", out rangeValue))
+            if (!this.requestHeader.TryGetValue("Range", out var rangeValue))
             {
                 return null;
             }

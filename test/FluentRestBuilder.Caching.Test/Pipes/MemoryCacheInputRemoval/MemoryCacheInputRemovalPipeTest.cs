@@ -47,8 +47,7 @@ namespace FluentRestBuilder.Caching.Test.Pipes.MemoryCacheInputRemoval
                 .RemoveFromMemoryCache(Key)
                 .ToMockResultPipe()
                 .Execute();
-            object value;
-            Assert.False(this.cache.TryGetValue(Key, out value));
+            Assert.False(this.cache.TryGetValue(Key, out _));
         }
     }
 }

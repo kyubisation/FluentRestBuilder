@@ -17,7 +17,7 @@ namespace FluentRestBuilder
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
         /// <param name="action">The action function.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> DoAsync<TSource>(
             this IProviderObservable<TSource> observable,
             Func<TSource, Task> action) =>

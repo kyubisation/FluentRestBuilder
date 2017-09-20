@@ -18,7 +18,7 @@ namespace FluentRestBuilder
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> SingleOrDefault<TSource>(
             this IProviderObservable<IQueryable<TSource>> observable) =>
             observable.Map(s => s.SingleOrDefault());
@@ -31,7 +31,7 @@ namespace FluentRestBuilder
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
         /// <param name="predicate">A function to test each element for a condition.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> SingleOrDefault<TSource>(
             this IProviderObservable<IQueryable<TSource>> observable,
             Expression<Func<TSource, bool>> predicate) =>

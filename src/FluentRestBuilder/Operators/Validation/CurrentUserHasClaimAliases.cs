@@ -22,7 +22,7 @@ namespace FluentRestBuilder
         /// <param name="claimType">The claim type.</param>
         /// <param name="claim">The claim.</param>
         /// <param name="errorFactory">The error factory method.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> CurrentUserHasClaim<TSource>(
             this IProviderObservable<TSource> observable,
             string claimType,
@@ -41,7 +41,7 @@ namespace FluentRestBuilder
         /// <param name="claimType">The claim type.</param>
         /// <param name="claim">The claim.</param>
         /// <param name="error">The error to be used on a failed check.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> CurrentUserHasClaim<TSource>(
             this IProviderObservable<TSource> observable,
             string claimType,
@@ -60,7 +60,7 @@ namespace FluentRestBuilder
         /// <param name="claimType">The claim type.</param>
         /// <param name="claimFactory">The claim factory.</param>
         /// <param name="errorFactory">The error factory method.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> CurrentUserHasClaim<TSource>(
             this IProviderObservable<TSource> observable,
             string claimType,
@@ -80,7 +80,7 @@ namespace FluentRestBuilder
         /// <param name="claimType">The claim type.</param>
         /// <param name="claimFactory">The claim factory.</param>
         /// <param name="error">The error to be used on a failed check.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> CurrentUserHasClaim<TSource>(
             this IProviderObservable<TSource> observable,
             string claimType,

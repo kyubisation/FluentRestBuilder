@@ -22,8 +22,7 @@ namespace FluentRestBuilder.Pipes.SearchByClientRequest
         public string ParseRequestQuery()
         {
             var queryCollection = this.httpContextStorage.Value.Request.Query;
-            StringValues search;
-            return queryCollection.TryGetValue(this.SearchQueryArgumentKey, out search)
+            return queryCollection.TryGetValue(this.SearchQueryArgumentKey, out var search)
                 && !string.IsNullOrEmpty(search)
                 ? search.ToString() : null;
         }

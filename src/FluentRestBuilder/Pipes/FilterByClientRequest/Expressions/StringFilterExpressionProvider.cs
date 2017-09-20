@@ -21,8 +21,7 @@ namespace FluentRestBuilder.Pipes.FilterByClientRequest.Expressions
         public Expression<Func<TEntity, bool>> Resolve(FilterType type, string filter)
         {
             var dictionary = this.filterBuilder(filter);
-            Expression<Func<TEntity, bool>> filterExpression;
-            return dictionary.TryGetValue(type, out filterExpression) ? filterExpression : null;
+            return dictionary.TryGetValue(type, out var filterExpression) ? filterExpression : null;
         }
     }
 }

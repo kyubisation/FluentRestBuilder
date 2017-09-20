@@ -17,7 +17,7 @@ namespace FluentRestBuilder
         /// <typeparam name="TTarget">The type of the output.</typeparam>
         /// <param name="observable">The parent observable.</param>
         /// <param name="mapping">The mapping function.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TTarget> Map<TSource, TTarget>(
             this IProviderObservable<TSource> observable,
             Func<TSource, TTarget> mapping) =>

@@ -26,7 +26,7 @@ namespace FluentRestBuilder
         /// <param name="observable">The parent observable.</param>
         /// <param name="principalCheck">The principal check function.</param>
         /// <param name="errorFactory">The error factory method.</param>
-        /// <returns>An instance of <see cref="IProviderObservable{TFrom}"/>.</returns>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> CurrentUserHas<TSource>(
             this IProviderObservable<TSource> observable,
             Func<ClaimsPrincipal, TSource, bool> principalCheck,
