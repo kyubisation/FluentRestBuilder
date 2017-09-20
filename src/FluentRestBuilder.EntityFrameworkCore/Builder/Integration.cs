@@ -27,7 +27,6 @@ namespace FluentRestBuilder
             where TContext : DbContext
         {
             new FluentRestBuilderEntityFrameworkCoreConfiguration<TContext>(builder.Services)
-                .RegisterInputEntryAccessPipe()
                 .RegisterQueryableSourcePipe()
                 .RegisterQueryableSource()
                 .RegisterEntitySource();
