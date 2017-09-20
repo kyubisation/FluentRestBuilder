@@ -27,11 +27,8 @@ namespace FluentRestBuilder
             where TContext : DbContext
         {
             new FluentRestBuilderEntityFrameworkCoreConfiguration<TContext>(builder.Services)
-                .RegisterDeletionPipe()
                 .RegisterInputEntryAccessPipe()
-                .RegisterInsertionPipe()
                 .RegisterQueryableSourcePipe()
-                .RegisterUpdatePipe()
                 .RegisterQueryableSource()
                 .RegisterEntitySource();
             return builder;
