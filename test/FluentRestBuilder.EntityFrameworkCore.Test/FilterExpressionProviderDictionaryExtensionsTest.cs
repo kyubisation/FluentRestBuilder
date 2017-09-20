@@ -2,16 +2,16 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.EntityFrameworkCore.Test.Pipes.FilterByClientRequest.Expressions
+namespace FluentRestBuilder.EntityFrameworkCore.Test
 {
     using System;
     using System.Globalization;
     using System.Linq;
-    using FluentRestBuilder.Pipes.FilterByClientRequest;
-    using FluentRestBuilder.Pipes.FilterByClientRequest.Converters;
-    using FluentRestBuilder.Pipes.FilterByClientRequest.Expressions;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks.EntityFramework;
+    using Pipes.FilterByClientRequest;
+    using Pipes.FilterByClientRequest.Converters;
+    using Pipes.FilterByClientRequest.Expressions;
     using Xunit;
 
     public class FilterExpressionProviderDictionaryExtensionsTest
