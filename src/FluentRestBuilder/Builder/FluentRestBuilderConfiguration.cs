@@ -18,8 +18,7 @@ namespace FluentRestBuilder.Builder
                 .RegisterMappingPipe()
                 .RegisterOrderByClientRequestPipe()
                 .RegisterPaginationByClientRequestPipe()
-                .RegisterQueryablePipe()
-                .RegisterSearchByClientRequestPipe();
+                .RegisterQueryablePipe();
         }
 
         public IServiceCollection Services { get; }

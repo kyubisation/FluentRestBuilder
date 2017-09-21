@@ -2,9 +2,9 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Pipes.SearchByClientRequest
+namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
 {
-    using FluentRestBuilder.Pipes.SearchByClientRequest;
+    using FluentRestBuilder.Operators.ClientRequest.Interpreters;
     using Mocks.HttpContextStorage;
     using Xunit;
 

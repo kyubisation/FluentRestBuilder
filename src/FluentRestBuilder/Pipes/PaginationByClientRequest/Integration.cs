@@ -13,7 +13,6 @@ namespace FluentRestBuilder
     using Pipes.FilterByClientRequest;
     using Pipes.OrderByClientRequest;
     using Pipes.PaginationByClientRequest;
-    using Pipes.SearchByClientRequest;
 
     public static partial class Integration
     {
@@ -36,7 +35,7 @@ namespace FluentRestBuilder
         ///
         /// WARNING: Do not use this pipe before the
         /// <see cref="FilterByClientRequestPipe{TInput}"/>, the
-        /// <see cref="SearchByClientRequestPipe{TInput}"/> or the
+        /// SearchByClientRequestPipe{TInput} or the
         /// <see cref="OrderByClientRequestPipe{TInput}"/>! This would result in
         /// erroneous pagination logic.
         /// </summary>
