@@ -14,7 +14,6 @@ namespace FluentRestBuilder.Builder
             new FluentRestBuilderCoreConfiguration(this.Services)
                 .RegisterSource()
                 .RegisterLazySource()
-                .RegisterActionPipe()
                 .RegisterFilterByClientRequestPipe()
                 .RegisterMappingPipe()
                 .RegisterOrderByClientRequestPipe()
