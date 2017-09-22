@@ -11,7 +11,6 @@ namespace FluentRestBuilder
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Pipes;
     using Pipes.FilterByClientRequest;
-    using Pipes.OrderByClientRequest;
     using Pipes.PaginationByClientRequest;
 
     public static partial class Integration
@@ -36,7 +35,7 @@ namespace FluentRestBuilder
         /// WARNING: Do not use this pipe before the
         /// <see cref="FilterByClientRequestPipe{TInput}"/>, the
         /// SearchByClientRequestPipe{TInput} or the
-        /// <see cref="OrderByClientRequestPipe{TInput}"/>! This would result in
+        /// OrderByClientRequestPipe{TInput}! This would result in
         /// erroneous pagination logic.
         /// </summary>
         /// <typeparam name="TInput">The input type.</typeparam>

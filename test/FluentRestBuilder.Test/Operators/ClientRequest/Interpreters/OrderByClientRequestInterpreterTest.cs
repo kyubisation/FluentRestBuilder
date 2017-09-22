@@ -2,11 +2,12 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest
+namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
 {
     using System.Collections.Generic;
     using System.Linq;
-    using FluentRestBuilder.Pipes.OrderByClientRequest;
+    using FluentRestBuilder.Operators.ClientRequest;
+    using FluentRestBuilder.Operators.ClientRequest.Interpreters;
     using Mocks;
     using Mocks.HttpContextStorage;
     using Xunit;

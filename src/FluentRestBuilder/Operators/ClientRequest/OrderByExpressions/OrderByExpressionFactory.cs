@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.OrderByClientRequest.Expressions
+namespace FluentRestBuilder.Operators.ClientRequest.OrderByExpressions
 {
     using System;
     using System.Linq.Expressions;

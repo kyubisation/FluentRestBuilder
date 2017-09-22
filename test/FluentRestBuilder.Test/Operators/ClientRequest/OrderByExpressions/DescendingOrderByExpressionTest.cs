@@ -2,11 +2,11 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Pipes.OrderByClientRequest.Expressions
+namespace FluentRestBuilder.Test.Operators.ClientRequest.OrderByExpressions
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Pipes.OrderByClientRequest.Expressions;
+    using FluentRestBuilder.Operators.ClientRequest.OrderByExpressions;
     using Microsoft.EntityFrameworkCore;
     using Mocks;
     using Mocks.EntityFramework;

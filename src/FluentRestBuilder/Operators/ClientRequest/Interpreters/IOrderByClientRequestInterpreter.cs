@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.OrderByClientRequest
+namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 {
     using System.Collections.Generic;
 

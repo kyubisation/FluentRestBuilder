@@ -2,12 +2,11 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.OrderByClientRequest
+namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 {
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Primitives;
     using Storage;
 
     public class OrderByClientRequestInterpreter : IOrderByClientRequestInterpreter

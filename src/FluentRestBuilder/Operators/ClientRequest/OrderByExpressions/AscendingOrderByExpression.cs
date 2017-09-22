@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.OrderByClientRequest.Expressions
+namespace FluentRestBuilder.Operators.ClientRequest.OrderByExpressions
 {
     using System;
     using System.Linq;
@@ -18,7 +18,7 @@ namespace FluentRestBuilder.Pipes.OrderByClientRequest.Expressions
         }
 
         public IOrderedQueryable<TEntity> OrderBy(IQueryable<TEntity> queryable) =>
-            queryable.OrderBy(this.orderBy);
+            Queryable.OrderBy(queryable, this.orderBy);
 
         public IOrderedQueryable<TEntity> ThenBy(IOrderedQueryable<TEntity> queryable) =>
             queryable.ThenBy(this.orderBy);
