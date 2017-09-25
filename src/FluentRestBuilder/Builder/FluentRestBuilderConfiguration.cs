@@ -15,8 +15,7 @@ namespace FluentRestBuilder.Builder
                 .RegisterSource()
                 .RegisterLazySource()
                 .RegisterFilterByClientRequestPipe()
-                .RegisterMappingPipe()
-                .RegisterQueryablePipe();
+                .RegisterMappingPipe();
         }
 
         public IServiceCollection Services { get; }
