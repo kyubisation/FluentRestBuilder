@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.PaginationByClientRequest
+namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 {
     using System.ComponentModel;
     using System.Linq;
@@ -25,7 +25,7 @@ namespace FluentRestBuilder.Pipes.PaginationByClientRequest
 
         public override string ToString()
         {
-            var properties = TypeDescriptor.GetProperties(this)
+            var properties = TypeDescriptor.GetProperties((object)this)
                 .Cast<PropertyDescriptor>()
                 .Select(p => $"{p.Name}: {p.GetValue(this)}")
                 .Aggregate((current, next) => $"{current}, {next}");

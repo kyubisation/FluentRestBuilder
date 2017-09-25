@@ -11,6 +11,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
     using HypertextApplicationLanguage;
     using Links;
     using Microsoft.Extensions.Logging;
+    using Operators.ClientRequest;
 
     public class CollectionMappingPipeFactory<TInput, TOutput> :
         ICollectionMappingPipeFactory<TInput, TOutput>

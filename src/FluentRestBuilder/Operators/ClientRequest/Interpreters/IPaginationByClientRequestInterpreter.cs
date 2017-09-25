@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.PaginationByClientRequest
+namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 {
     public interface IPaginationByClientRequestInterpreter
     {

@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes.PaginationByClientRequest
+namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 {
     using System.Text.RegularExpressions;
     using Microsoft.AspNetCore.Http;

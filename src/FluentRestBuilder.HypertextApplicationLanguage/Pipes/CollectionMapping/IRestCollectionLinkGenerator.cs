@@ -5,8 +5,8 @@
 namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
 {
     using System.Collections.Generic;
-    using FluentRestBuilder.Pipes;
     using Links;
+    using Operators.ClientRequest;
 
     public interface IRestCollectionLinkGenerator
     {

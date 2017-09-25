@@ -5,11 +5,11 @@
 namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMapping
 {
     using System.Linq;
-    using FluentRestBuilder.Pipes;
     using FluentRestBuilder.Storage;
     using HypertextApplicationLanguage.Links;
     using HypertextApplicationLanguage.Pipes.CollectionMapping;
     using Microsoft.AspNetCore.Http;
+    using Operators.ClientRequest;
     using Xunit;
 
     public class RestCollectionLinkGeneratorTest

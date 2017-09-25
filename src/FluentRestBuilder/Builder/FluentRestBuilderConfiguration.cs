@@ -16,7 +16,6 @@ namespace FluentRestBuilder.Builder
                 .RegisterLazySource()
                 .RegisterFilterByClientRequestPipe()
                 .RegisterMappingPipe()
-                .RegisterPaginationByClientRequestPipe()
                 .RegisterQueryablePipe();
         }
 

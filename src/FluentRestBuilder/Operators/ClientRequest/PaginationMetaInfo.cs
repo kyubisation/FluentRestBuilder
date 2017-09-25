@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Pipes
+namespace FluentRestBuilder.Operators.ClientRequest
 {
     public class PaginationMetaInfo
     {

@@ -2,9 +2,9 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Pipes.PaginationByClientRequest
+namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
 {
-    using FluentRestBuilder.Pipes.PaginationByClientRequest;
+    using FluentRestBuilder.Operators.ClientRequest.Interpreters;
     using Mocks.HttpContextStorage;
     using Xunit;
 
