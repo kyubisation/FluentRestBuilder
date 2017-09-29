@@ -12,9 +12,8 @@ namespace FluentRestBuilder.Builder
         {
             this.Services = services;
             new FluentRestBuilderCoreConfiguration(this.Services)
-                .RegisterSource()
                 .RegisterLazySource()
-                .RegisterMappingPipe();
+                .RegisterSource();
         }
 
         public IServiceCollection Services { get; }
