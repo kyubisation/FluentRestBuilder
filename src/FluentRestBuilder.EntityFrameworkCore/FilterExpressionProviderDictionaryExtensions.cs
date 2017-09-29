@@ -8,7 +8,7 @@ namespace FluentRestBuilder
     using System;
     using System.Linq.Expressions;
     using Microsoft.EntityFrameworkCore;
-    using Pipes.FilterByClientRequest.Expressions;
+    using Operators.ClientRequest.FilterExpressions;
 
     public static class FilterExpressionProviderDictionaryExtensions
     {
@@ -19,7 +19,7 @@ namespace FluentRestBuilder
         /// <param name="dictionary">The expression provider dictionary.</param>
         /// <param name="propertySelector">The field/property selection.</param>
         /// <returns>
-        /// Itself, an <see cref="FilterExpressionProviderDictionary{TInput}"/> instance.
+        /// Itself, an <see cref="FilterExpressionProviderDictionary{TEntity}"/> instance.
         /// </returns>
         public static FilterExpressionProviderDictionary<TInput> AddEqualAndContainsStringFilter<TInput>(
             this FilterExpressionProviderDictionary<TInput> dictionary,

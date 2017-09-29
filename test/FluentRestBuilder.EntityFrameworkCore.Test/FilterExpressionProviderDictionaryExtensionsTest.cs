@@ -7,11 +7,11 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test
     using System;
     using System.Globalization;
     using System.Linq;
+    using FluentRestBuilder.Operators.ClientRequest.FilterConverters;
+    using FluentRestBuilder.Operators.ClientRequest.FilterExpressions;
+    using FluentRestBuilder.Operators.ClientRequest.Interpreters;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks.EntityFramework;
-    using Pipes.FilterByClientRequest;
-    using Pipes.FilterByClientRequest.Converters;
-    using Pipes.FilterByClientRequest.Expressions;
     using Xunit;
 
     public class FilterExpressionProviderDictionaryExtensionsTest
