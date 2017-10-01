@@ -16,20 +16,6 @@ namespace FluentRestBuilder
     public static partial class Integration
     {
         /// <summary>
-        /// Registers the Hypertext Application Language pipes.
-        /// </summary>
-        /// <param name="builder">The FluentRestBuilder configuration instance.</param>
-        /// <returns>The given FluentRestBuilder configuration instance.</returns>
-        // ReSharper disable once InconsistentNaming
-        public static IFluentRestBuilderConfiguration AddHAL(
-            this IFluentRestBuilderConfiguration builder)
-        {
-            new FluentRestBuilderCoreConfiguration(builder.Services)
-                .RegisterCollectionMappingPipe();
-            return builder;
-        }
-
-        /// <summary>
         /// Registers the <see cref="IActionContextAccessor"/> to be used to create an instance
         /// of <see cref="IUrlHelper"/>.
         /// By default the controller extension methods to create the sources use the

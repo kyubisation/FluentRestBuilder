@@ -2,12 +2,11 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Pipes.CollectionMapping
+namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Links
 {
     using System.Linq;
     using FluentRestBuilder.Storage;
     using HypertextApplicationLanguage.Links;
-    using HypertextApplicationLanguage.Pipes.CollectionMapping;
     using Microsoft.AspNetCore.Http;
     using Operators.ClientRequest;
     using Xunit;

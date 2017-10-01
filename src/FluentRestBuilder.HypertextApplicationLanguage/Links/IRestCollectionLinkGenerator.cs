@@ -2,10 +2,9 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.HypertextApplicationLanguage.Pipes.CollectionMapping
+namespace FluentRestBuilder.HypertextApplicationLanguage.Links
 {
     using System.Collections.Generic;
-    using Links;
     using Operators.ClientRequest;
 
     public interface IRestCollectionLinkGenerator
