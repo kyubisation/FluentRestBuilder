@@ -13,7 +13,7 @@ namespace FluentRestBuilder
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Storage;
 
-    public static partial class Integration
+    public static class Integration
     {
         /// <summary>
         /// Registers the <see cref="IActionContextAccessor"/> to be used to create an instance
@@ -28,31 +28,9 @@ namespace FluentRestBuilder
         public static IFluentRestBuilderConfiguration UseActionContextAccessorForUrlHelper(
             this IFluentRestBuilderConfiguration builder)
         {
-            UseActionContextAccessorForUrlHelper(builder.Services);
+            builder.Services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            builder.Services.AddScoped<IScopedStorage<IUrlHelper>, UrlHelperStorage>();
             return builder;
-        }
-
-        /// <summary>
-        /// Registers the <see cref="IActionContextAccessor"/> to be used to create an instance
-        /// of <see cref="IUrlHelper"/>.
-        /// By default the controller extension methods to create the sources use the
-        /// <see cref="IUrlHelper"/> provided by the controller.
-        /// This is only necessary if you want to use pipes that require the
-        /// <see cref="IUrlHelper"/> and want to create sources without a controller.
-        /// </summary>
-        /// <param name="builder">The FluentRestBuilderCore configuration instance.</param>
-        /// <returns>The provided FluentRestBuilderCore configuration instance.</returns>
-        public static IFluentRestBuilderCoreConfiguration UseActionContextAccessorForUrlHelper(
-            this IFluentRestBuilderCoreConfiguration builder)
-        {
-            UseActionContextAccessorForUrlHelper(builder.Services);
-            return builder;
-        }
-
-        private static void UseActionContextAccessorForUrlHelper(IServiceCollection services)
-        {
-            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddScoped<IScopedStorage<IUrlHelper>, UrlHelperStorage>();
         }
     }
 }

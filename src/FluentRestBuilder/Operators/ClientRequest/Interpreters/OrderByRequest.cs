@@ -29,7 +29,7 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 
         public override string ToString()
         {
-            var properties = TypeDescriptor.GetProperties((object)this)
+            var properties = TypeDescriptor.GetProperties(this)
                 .Cast<PropertyDescriptor>()
                 .Select(p => $"{p.Name}: {p.GetValue(this)}")
                 .Aggregate((current, next) => $"{current}, {next}");

@@ -18,7 +18,7 @@ namespace FluentRestBuilder.Operators.ClientRequest.OrderByExpressions
         }
 
         public IOrderedQueryable<TEntity> OrderBy(IQueryable<TEntity> queryable) =>
-            Queryable.OrderBy(queryable, this.orderBy);
+            queryable.OrderBy(this.orderBy);
 
         public IOrderedQueryable<TEntity> ThenBy(IOrderedQueryable<TEntity> queryable) =>
             queryable.ThenBy(this.orderBy);

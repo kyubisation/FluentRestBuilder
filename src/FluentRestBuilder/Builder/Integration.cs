@@ -14,36 +14,6 @@ namespace FluentRestBuilder
     public static partial class Integration
     {
         /// <summary>
-        /// Registers FluentRestBuilder core.
-        /// Does not register any pipe.
-        /// </summary>
-        /// <param name="builder">The MVC builder.</param>
-        /// <returns>The FluentRestBuilderCore configuration instance.</returns>
-        public static IFluentRestBuilderCoreConfiguration AddFluentRestBuilderCore(
-            this IMvcBuilder builder) =>
-            builder.Services.AddFluentRestBuilderCore();
-
-        /// <summary>
-        /// Registers FluentRestBuilder core.
-        /// Does not register any pipe.
-        /// </summary>
-        /// <param name="builder">The MVC core builder.</param>
-        /// <returns>The FluentRestBuilderCore configuration instance.</returns>
-        public static IFluentRestBuilderCoreConfiguration AddFluentRestBuilderCore(
-            this IMvcCoreBuilder builder) =>
-            builder.Services.AddFluentRestBuilderCore();
-
-        /// <summary>
-        /// Registers FluentRestBuilder core.
-        /// Does not register any pipe.
-        /// </summary>
-        /// <param name="collection">The service collection.</param>
-        /// <returns>The FluentRestBuilderCore configuration instance.</returns>
-        public static IFluentRestBuilderCoreConfiguration AddFluentRestBuilderCore(
-            this IServiceCollection collection) =>
-            new FluentRestBuilderCoreConfiguration(collection);
-
-        /// <summary>
         /// Registers FluentRestBuilder.
         /// </summary>
         /// <param name="builder">The MVC builder.</param>
@@ -81,39 +51,14 @@ namespace FluentRestBuilder
         /// <remarks>
         /// The ASP.NET Core Identity package registers <see cref="IHttpContextAccessor"/>.
         /// </remarks>
-        /// <param name="builder">The FluentRestBuilderCore configuration instance.</param>
-        /// <returns>The provided FluentRestBuilderCore configuration instance.</returns>
-        public static IFluentRestBuilderCoreConfiguration UseHttpContextAccessor(
-            this IFluentRestBuilderCoreConfiguration builder)
-        {
-            UseHttpContextAccessor(builder.Services);
-            return builder;
-        }
-
-        /// <summary>
-        /// Registers the <see cref="IHttpContextAccessor"/> to be used as the access for the
-        /// <see cref="HttpContext"/>.
-        /// By default the controller extension methods to create the sources use the
-        /// <see cref="HttpContext"/> provided by the controller.
-        /// This is only necessary if you want to use pipes that require the
-        ///  <see cref="HttpContext"/> and want to create sources without a controller.
-        /// </summary>
-        /// <remarks>
-        /// The ASP.NET Core Identity package registers <see cref="IHttpContextAccessor"/>.
-        /// </remarks>
         /// <param name="builder">The FluentRestBuilder configuration instance.</param>
         /// <returns>The provided FluentRestBuilder configuration instance.</returns>
         public static IFluentRestBuilderConfiguration UseHttpContextAccessor(
             this IFluentRestBuilderConfiguration builder)
         {
-            UseHttpContextAccessor(builder.Services);
+            builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddScoped<IScopedStorage<HttpContext>, HttpContextStorage>();
             return builder;
-        }
-
-        private static void UseHttpContextAccessor(IServiceCollection services)
-        {
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IScopedStorage<HttpContext>, HttpContextStorage>();
         }
     }
 }

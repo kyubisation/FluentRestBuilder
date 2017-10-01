@@ -11,7 +11,6 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Links
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.AspNetCore.WebUtilities;
-    using Microsoft.Extensions.Primitives;
     using Operators.ClientRequest;
 
     public class RestCollectionLinkGenerator : IRestCollectionLinkGenerator
@@ -29,7 +28,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Links
 
         public IEnumerable<NamedLink> GenerateLinks(PaginationMetaInfo paginationMetaInfo)
         {
-            yield return new LinkToSelf(new Link(UriHelper.GetDisplayUrl(this.request)));
+            yield return new LinkToSelf(new Link(this.request.GetDisplayUrl()));
 
             if (paginationMetaInfo == null)
             {
@@ -74,7 +73,9 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Links
 
         private string CreatePageLink(int offset, int limit)
         {
-            var queryParameters = Enumerable.ToDictionary<KeyValuePair<string, StringValues>, string, string>(this.request.Query, q => q.Key, q => q.Value.ToString(), StringComparer.OrdinalIgnoreCase);
+            var queryParameters = this.request.Query
+                .ToDictionary(
+                    q => q.Key, q => q.Value.ToString(), StringComparer.OrdinalIgnoreCase);
             queryParameters[this.OffsetQueryArgumentKey] = offset.ToString();
             queryParameters[this.LimitQueryArgumentKey] = limit.ToString();
 
@@ -88,7 +89,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Links
 
             if (hostComponents.Length == 2)
             {
-                uriBuilder.Port = Convert.ToInt32((string)hostComponents[1]);
+                uriBuilder.Port = Convert.ToInt32(hostComponents[1]);
             }
 
             return QueryHelpers.AddQueryString(uriBuilder.Uri.AbsoluteUri, queryParameters);

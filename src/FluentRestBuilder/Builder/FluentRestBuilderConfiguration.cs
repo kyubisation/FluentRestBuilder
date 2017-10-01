@@ -5,13 +5,15 @@
 namespace FluentRestBuilder.Builder
 {
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Storage;
 
     public class FluentRestBuilderConfiguration : IFluentRestBuilderConfiguration
     {
         public FluentRestBuilderConfiguration(IServiceCollection services)
         {
             this.Services = services;
-            new FluentRestBuilderCoreConfiguration(this.Services);
+            this.Services.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
         }
 
         public IServiceCollection Services { get; }

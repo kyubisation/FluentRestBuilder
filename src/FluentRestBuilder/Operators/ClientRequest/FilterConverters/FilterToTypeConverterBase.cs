@@ -21,7 +21,8 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterConverters
         public FilterConversionResult<TFilter> Parse(string filter)
         {
             var result = default(TFilter);
-            if (Enumerable.Any<CultureInfo>(this.cultureInfoConversionPriorityCollection, cultureInfo => this.TryParse(filter, cultureInfo, out result)))
+            if (this.cultureInfoConversionPriorityCollection
+                .Any(cultureInfo => this.TryParse(filter, cultureInfo, out result)))
             {
                 return new FilterConversionSuccess<TFilter>(result);
             }

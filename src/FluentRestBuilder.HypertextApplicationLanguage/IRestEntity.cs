@@ -2,6 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
+// ReSharper disable InconsistentNaming
 namespace FluentRestBuilder.HypertextApplicationLanguage
 {
     using System.Collections.Generic;

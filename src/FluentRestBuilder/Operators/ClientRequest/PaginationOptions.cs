@@ -17,8 +17,8 @@ namespace FluentRestBuilder.Operators.ClientRequest
             if (this.MaxLimit < this.DefaultLimit)
             {
                 throw new InvalidOperationException(
-                    $"${nameof(PaginationOptions.MaxLimit)} must not be " +
-                    $"smaller than ${nameof(PaginationOptions.DefaultLimit)}!");
+                    $"${nameof(this.MaxLimit)} must not be " +
+                    $"smaller than ${nameof(this.DefaultLimit)}!");
             }
         }
     }
