@@ -25,7 +25,7 @@ namespace FluentRestBuilder
         public static IProviderObservable<TSource> CacheInMemoryCache<TSource>(
             this IProviderObservable<TSource> observable,
             object key,
-            Func<TSource, MemoryCacheEntryOptions> optionsFactory) =>
+            Func<TSource, MemoryCacheEntryOptions> optionsFactory = null) =>
             new CacheInMemoryObservable<TSource>(key, optionsFactory, observable);
 
         private sealed class CacheInMemoryObservable<TSource> : IProviderObservable<TSource>
@@ -57,11 +57,20 @@ namespace FluentRestBuilder
                 var memoryCache = this.ServiceProvider.GetService<IMemoryCache>();
                 return memoryCache.TryGetValue(this.key, out TSource value)
                     ? Observable.Single(value)
-                    : this.observable.Do(s =>
-                    {
-                        var options = this.optionsFactory(s);
-                        memoryCache.Set(this.key, s, options);
-                    });
+                    : this.observable.Do(s => this.StoreInCache(s, memoryCache));
+            }
+
+            private void StoreInCache(TSource value, IMemoryCache memoryCache)
+            {
+                var options = this.optionsFactory?.Invoke(value);
+                if (options == null)
+                {
+                    memoryCache.Set(this.key, value);
+                }
+                else
+                {
+                    memoryCache.Set(this.key, value, options);
+                }
             }
         }
     }
