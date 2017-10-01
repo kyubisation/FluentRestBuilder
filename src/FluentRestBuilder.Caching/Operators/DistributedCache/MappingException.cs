@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Caching.DistributedCache
+namespace FluentRestBuilder.Caching.Operators.DistributedCache
 {
     using System;
 

@@ -2,10 +2,10 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Caching.Test.DistributedCache
+namespace FluentRestBuilder.Caching.Test.Operators.DistributedCache
 {
     using System.Text;
-    using Caching.DistributedCache;
+    using Caching.Operators.DistributedCache;
     using Mocks;
     using Mocks.EntityFramework;
     using Xunit;
