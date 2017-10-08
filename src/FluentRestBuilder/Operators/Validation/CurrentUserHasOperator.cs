@@ -81,19 +81,16 @@ namespace FluentRestBuilder
                     this.errorFactory = errorFactory;
                 }
 
-                protected override void SafeOnNext(TSource value)
+                protected override TSource SafeOnNext(TSource value)
                 {
-                    var isValid = this.principalCheck(this.principal, value);
-                    if (isValid)
+                    if (this.principalCheck(this.principal, value))
                     {
-                        this.EmitNext(value);
+                        return value;
                     }
-                    else
-                    {
-                        var error = this.errorFactory?.Invoke(value);
-                        this.OnError(
-                            new ValidationException(StatusCodes.Status403Forbidden, error));
-                    }
+
+                    var error = this.errorFactory?.Invoke(value);
+                    this.OnError(new ValidationException(StatusCodes.Status403Forbidden, error));
+                    return default(TSource);
                 }
             }
         }

@@ -50,10 +50,10 @@ namespace FluentRestBuilder
                     this.action = action;
                 }
 
-                protected override void SafeOnNext(TSource value)
+                protected override TSource SafeOnNext(TSource value)
                 {
                     this.action(value);
-                    this.EmitNext(value);
+                    return value;
                 }
             }
         }

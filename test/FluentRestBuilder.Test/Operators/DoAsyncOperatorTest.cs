@@ -6,6 +6,7 @@ namespace FluentRestBuilder.Test.Operators
 {
     using System;
     using System.Threading.Tasks;
+    using FluentRestBuilder.Mocks;
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;
 
@@ -42,16 +43,11 @@ namespace FluentRestBuilder.Test.Operators
         [Fact]
         public void TestProvider()
         {
-            var collection = new ServiceCollection();
-            collection.AddTransient<DoAsyncOperatorTest>();
-            var observable = Observable.Single(string.Empty, collection.BuildServiceProvider())
-                .DoAsync(async s =>
-                {
-                    await Task.Delay(100);
-                    throw new InvalidOperationException();
-                });
-            var instance = observable.ServiceProvider.GetService<DoAsyncOperatorTest>();
-            Assert.NotNull(instance);
+            TestHelper.AssertProvider<string>(o => o.DoAsync(async s =>
+            {
+                await Task.Delay(100);
+                throw new InvalidOperationException();
+            }));
         }
     }
 }

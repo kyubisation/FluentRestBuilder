@@ -4,9 +4,6 @@
 
 namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 {
-    using System.ComponentModel;
-    using System.Linq;
-
     public class PaginationRequest
     {
         public PaginationRequest()
@@ -23,13 +20,6 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 
         public int? Limit { get; set; }
 
-        public override string ToString()
-        {
-            var properties = TypeDescriptor.GetProperties(this)
-                .Cast<PropertyDescriptor>()
-                .Select(p => $"{p.Name}: {p.GetValue(this)}")
-                .Aggregate((current, next) => $"{current}, {next}");
-            return $"{nameof(PaginationRequest)} {{{properties}}}";
-        }
+        public override string ToString() => Stringifier.Convert(this);
     }
 }

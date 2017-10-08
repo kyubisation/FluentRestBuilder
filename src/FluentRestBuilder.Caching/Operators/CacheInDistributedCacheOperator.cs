@@ -74,7 +74,7 @@ namespace FluentRestBuilder
             {
                 var distributedCache = this.ServiceProvider.GetService<IDistributedCache>();
                 var bytes = await distributedCache.GetAsync(this.key, token);
-                if (bytes == null || bytes.Length != 0)
+                if (bytes == null || bytes.Length == 0)
                 {
                     return this.observable
                         .DoAsync(async s => await this.StoreInCache(s, distributedCache, token));

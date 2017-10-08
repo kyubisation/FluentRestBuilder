@@ -71,11 +71,7 @@ namespace FluentRestBuilder.Operators.ActionResult
                     }
                 }
 
-                protected override void SafeOnNext(TSource value)
-                {
-                    var actionResult = this.mapping(value);
-                    this.EmitNext(actionResult);
-                }
+                protected override IActionResult SafeOnNext(TSource value) => this.mapping(value);
 
                 private static IActionResult ToActionResult(ValidationException exception)
                 {

@@ -50,11 +50,53 @@ namespace FluentRestBuilder.Test.Observables
         }
 
         [Fact]
+        public async Task TestDisposing()
+        {
+            const string expected = "expected";
+            var single = Observable.AsyncSingle(() => expected);
+            Assert.Equal(expected, await single);
+            var disposable = (IDisposable)single;
+            disposable.Dispose();
+            await Assert.ThrowsAsync<ObjectDisposedException>(async () => await single);
+        }
+
+        [Fact]
+        public async Task TestSequentialAwait()
+        {
+            const string expected = "expected";
+            var single = Observable.AsyncSingle(() => expected);
+            Assert.Equal(expected, await single);
+            Assert.Equal(expected, await single);
+        }
+
+        [Fact]
         public async Task TestException()
         {
             var single = Observable.AsyncSingle(
                 (Func<string>)(() => throw new InvalidOperationException()));
             await Assert.ThrowsAsync<InvalidOperationException>(async () => await single);
+        }
+
+        [Fact]
+        public async Task TestUnsubscription()
+        {
+            const string expected = "expected";
+            var taskSource = new TaskCompletionSource<string>();
+            var single = Observable.AsyncSingle(async () => await taskSource.Task);
+            var disposable = single.Subscribe(new MockObserver<string>());
+            disposable.Dispose();
+            disposable.Dispose();
+            taskSource.SetResult(expected);
+            Assert.Equal(expected, await single);
+        }
+
+        private sealed class MockObserver<TSource> : IObserver<TSource>
+        {
+            public void OnCompleted() => throw new InvalidOperationException();
+
+            public void OnError(Exception error) => throw new InvalidOperationException();
+
+            public void OnNext(TSource value) => throw new InvalidOperationException();
         }
     }
 }

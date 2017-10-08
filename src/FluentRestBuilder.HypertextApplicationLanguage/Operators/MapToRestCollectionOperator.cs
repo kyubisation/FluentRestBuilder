@@ -100,12 +100,12 @@ namespace FluentRestBuilder
                     this.paginationMetaInfoStorage = paginationMetaInfoStorage;
                 }
 
-                protected override void SafeOnNext(IEnumerable<TSource> value)
+                protected override RestEntityCollection SafeOnNext(IEnumerable<TSource> value)
                 {
                     var restEntityCollection = new RestEntityCollection();
                     this.GenerateEmbeddedEntities(restEntityCollection, value);
                     this.GenerateLinks(restEntityCollection);
-                    this.EmitNext(restEntityCollection);
+                    return restEntityCollection;
                 }
 
                 private void GenerateEmbeddedEntities(

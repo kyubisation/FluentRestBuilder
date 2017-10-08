@@ -72,18 +72,16 @@ namespace FluentRestBuilder
                     this.errorFactory = errorFactory;
                 }
 
-                protected override void SafeOnNext(TSource value)
+                protected override TSource SafeOnNext(TSource value)
                 {
-                    var isInvalid = this.invalidCheck(value);
-                    if (isInvalid)
+                    if (!this.invalidCheck(value))
                     {
-                        var error = this.errorFactory?.Invoke(value);
-                        this.OnError(new ValidationException(this.statusCode, error));
+                        return value;
                     }
-                    else
-                    {
-                        this.EmitNext(value);
-                    }
+
+                    var error = this.errorFactory?.Invoke(value);
+                    this.OnError(new ValidationException(this.statusCode, error));
+                    return default(TSource);
                 }
             }
         }

@@ -2,20 +2,33 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Operators.ClientRequest
+// ReSharper disable once CheckNamespace
+namespace FluentRestBuilder
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using FilterExpressions;
-    using Interpreters;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
+    using Operators;
+    using Operators.ClientRequest.FilterExpressions;
+    using Operators.ClientRequest.Interpreters;
     using Storage;
 
     public static class ApplyFilterByClientRequestOperator
     {
+        /// <summary>
+        /// Apply filter logic to the received <see cref="IQueryable{T}"/>.
+        /// <para>
+        /// Matches the query parameters with the keys of the given filter dictionary.
+        /// Implement <see cref="IFilterByClientRequestInterpreter"/> for custom behavior.
+        /// </para>
+        /// </summary>
+        /// <typeparam name="TSource">The type of the value.</typeparam>
+        /// <param name="observable">The parent observable.</param>
+        /// <param name="filterDictionary">A dictionary of available filters.</param>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<IQueryable<TSource>> ApplyFilterByClientRequest<TSource>(
             this IProviderObservable<IQueryable<TSource>> observable,
             IDictionary<string, IFilterExpressionProvider<TSource>> filterDictionary) =>
@@ -40,10 +53,7 @@ namespace FluentRestBuilder.Operators.ClientRequest
                     .GetService<IFilterByClientRequestInterpreter>()
                     ?? this.CreateDefaultInterpreter();
                 return new ApplyFilterByClientRequestObserver(
-                    this.filterDictionary,
-                    interpreter,
-                    observer,
-                    disposable);
+                    this.filterDictionary, interpreter, observer, disposable);
             }
 
             private IFilterByClientRequestInterpreter CreateDefaultInterpreter()
@@ -69,11 +79,10 @@ namespace FluentRestBuilder.Operators.ClientRequest
                     this.interpreter = interpreter;
                 }
 
-                protected override void SafeOnNext(IQueryable<TSource> value)
+                protected override IQueryable<TSource> SafeOnNext(IQueryable<TSource> value)
                 {
                     var filterRequests = this.interpreter.ParseRequestQuery(this.filterDictionary.Keys);
-                    var queryable = this.ApplyFilters(filterRequests, value);
-                    this.EmitNext(queryable);
+                    return this.ApplyFilters(filterRequests, value);
                 }
 
                 private IQueryable<TSource> ApplyFilters(

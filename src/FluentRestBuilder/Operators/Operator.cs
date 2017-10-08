@@ -80,7 +80,7 @@ namespace FluentRestBuilder.Operators
                 }
             }
 
-            protected abstract Task SafeOnNext(TSource value);
+            protected abstract Task<TTarget> SafeOnNext(TSource value);
 
             protected void EmitError(Exception error)
             {
@@ -110,7 +110,8 @@ namespace FluentRestBuilder.Operators
                 try
                 {
                     var value = this.values.First();
-                    await this.SafeOnNext(value);
+                    var result = await this.SafeOnNext(value);
+                    this.EmitNext(result);
                     this.values = this.values.RemoveAt(0);
                 }
                 catch (Exception e)
@@ -131,7 +132,8 @@ namespace FluentRestBuilder.Operators
             {
                 try
                 {
-                    this.SafeOnNext(value);
+                    var next = this.SafeOnNext(value);
+                    this.EmitNext(next);
                 }
                 catch (Exception e)
                 {
@@ -139,7 +141,7 @@ namespace FluentRestBuilder.Operators
                 }
             }
 
-            protected abstract void SafeOnNext(TSource value);
+            protected abstract TTarget SafeOnNext(TSource value);
         }
 
         protected abstract class Observer : IObserver<TSource>, IDisposable

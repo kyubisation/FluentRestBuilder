@@ -87,7 +87,7 @@ namespace FluentRestBuilder
                     this.paginationMetaInfoStorage = paginationMetaInfoStorage;
                 }
 
-                protected override void SafeOnNext(IQueryable<TSource> value)
+                protected override IQueryable<TSource> SafeOnNext(IQueryable<TSource> value)
                 {
                     var paginationRequest = this.interpreter.ParseRequestQuery();
                     var paginationValues = new PaginationValues
@@ -97,10 +97,9 @@ namespace FluentRestBuilder
                     };
                     this.CalculateMetaInfo(value, paginationValues);
 
-                    var queryable = value
+                    return value
                         .Skip(paginationValues.Offset)
                         .Take(paginationValues.Limit);
-                    this.EmitNext(queryable);
                 }
 
                 private int ResolveLimit(PaginationRequest request)

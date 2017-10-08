@@ -55,10 +55,11 @@ namespace FluentRestBuilder
                 public override void OnError(Exception error) =>
                     base.OnError(error.ConvertToValidationExceptionIfConcurrencyException());
 
-                protected override async Task SafeOnNext(TSource value)
+                protected override async Task<TSource> SafeOnNext(TSource value)
                 {
                     this.context.Remove(value);
                     await this.context.SaveChangesAsync();
+                    return value;
                 }
             }
         }

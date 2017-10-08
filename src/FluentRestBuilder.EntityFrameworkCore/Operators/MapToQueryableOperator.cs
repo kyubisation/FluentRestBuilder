@@ -66,11 +66,8 @@ namespace FluentRestBuilder
                     this.context = context;
                 }
 
-                protected override void SafeOnNext(TSource value)
-                {
-                    var queryable = this.mapping(value, this.context);
-                    this.EmitNext(queryable);
-                }
+                protected override IQueryable<TTarget> SafeOnNext(TSource value) =>
+                    this.mapping(value, this.context);
             }
         }
     }

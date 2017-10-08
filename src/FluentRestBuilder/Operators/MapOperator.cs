@@ -51,11 +51,7 @@ namespace FluentRestBuilder
                     this.mapping = mapping;
                 }
 
-                protected override void SafeOnNext(TSource value)
-                {
-                    var newValue = this.mapping(value);
-                    this.EmitNext(newValue);
-                }
+                protected override TTarget SafeOnNext(TSource value) => this.mapping(value);
             }
         }
     }

@@ -4,9 +4,6 @@
 
 namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 {
-    using System.ComponentModel;
-    using System.Linq;
-
     public class OrderByRequest
     {
         public OrderByRequest(string originalProperty, string property, OrderByDirection direction)
@@ -27,13 +24,6 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 
         public OrderByDirection Direction { get; }
 
-        public override string ToString()
-        {
-            var properties = TypeDescriptor.GetProperties(this)
-                .Cast<PropertyDescriptor>()
-                .Select(p => $"{p.Name}: {p.GetValue(this)}")
-                .Aggregate((current, next) => $"{current}, {next}");
-            return $"{nameof(OrderByRequest)} {{{properties}}}";
-        }
+        public override string ToString() => Stringifier.Convert(this);
     }
 }

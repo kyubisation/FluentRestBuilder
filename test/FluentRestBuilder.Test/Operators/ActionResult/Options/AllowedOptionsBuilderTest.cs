@@ -30,7 +30,7 @@ namespace FluentRestBuilder.Test.Operators.ActionResult.Options
         [Fact]
         public void TestSingleChecks()
         {
-            var result = this.builder.IsGetAllowed((p, e) => true)
+            var result = this.builder.IsGetAllowed(e => true)
                 .GenerateAllowedVerbs(new Entity())
                 .ToList();
             Assert.Single(result);
@@ -40,7 +40,7 @@ namespace FluentRestBuilder.Test.Operators.ActionResult.Options
         [Fact]
         public void TestMultipleChecks()
         {
-            var result = this.builder.IsGetAllowed((p, e) => true)
+            var result = this.builder.IsGetAllowed(e => true)
                 .IsPostAllowed((p, e) => true)
                 .GenerateAllowedVerbs(new Entity())
                 .ToList();

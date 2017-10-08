@@ -63,10 +63,11 @@ namespace FluentRestBuilder
                     this.context = context;
                 }
 
-                protected override void SafeOnNext(TSource value)
+                protected override TSource SafeOnNext(TSource value)
                 {
                     var entityEntry = this.context.Entry(value);
                     this.action(entityEntry);
+                    return value;
                 }
             }
         }

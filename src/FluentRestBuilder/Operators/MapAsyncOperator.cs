@@ -52,11 +52,8 @@ namespace FluentRestBuilder
                     this.mapping = mapping;
                 }
 
-                protected override async Task SafeOnNext(TSource value)
-                {
-                    var newValue = await this.mapping(value);
-                    this.EmitNext(newValue);
-                }
+                protected override async Task<TTarget> SafeOnNext(TSource value) =>
+                    await this.mapping(value);
             }
         }
     }

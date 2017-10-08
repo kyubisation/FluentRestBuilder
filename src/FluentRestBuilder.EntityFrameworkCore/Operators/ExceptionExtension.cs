@@ -9,9 +9,9 @@ namespace FluentRestBuilder.EntityFrameworkCore.Operators
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
 
-    public static class ExceptionExtension
+    internal static class ExceptionExtension
     {
-        public static Exception ConvertToValidationExceptionIfConcurrencyException(
+        internal static Exception ConvertToValidationExceptionIfConcurrencyException(
             this Exception exception) =>
             exception is DbUpdateConcurrencyException concurrencyException
                 ? new ValidationException(StatusCodes.Status409Conflict, concurrencyException.Message)

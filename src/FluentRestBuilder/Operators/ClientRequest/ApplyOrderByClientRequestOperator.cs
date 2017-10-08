@@ -84,18 +84,11 @@ namespace FluentRestBuilder
                     this.interpreter = interpreter;
                 }
 
-                protected override void SafeOnNext(IQueryable<TSource> value)
+                protected override IQueryable<TSource> SafeOnNext(IQueryable<TSource> value)
                 {
                     var orderByExpressions = this.ResolveOrderBySequence();
-                    if (orderByExpressions.Count == 0)
-                    {
-                        this.EmitNext(value);
-                    }
-                    else
-                    {
-                        var queryable = this.ApplyOrderBy(orderByExpressions, value);
-                        this.EmitNext(queryable);
-                    }
+                    return orderByExpressions.Count == 0
+                        ? value : this.ApplyOrderBy(orderByExpressions, value);
                 }
 
                 private List<IOrderByExpression<TSource>> ResolveOrderBySequence() =>

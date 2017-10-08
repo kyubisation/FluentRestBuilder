@@ -78,17 +78,16 @@ namespace FluentRestBuilder
                     this.interpreter = interpreter;
                 }
 
-                protected override void SafeOnNext(IQueryable<TSource> value)
+                protected override IQueryable<TSource> SafeOnNext(IQueryable<TSource> value)
                 {
                     var searchString = this.interpreter.ParseRequestQuery();
                     if (string.IsNullOrEmpty(searchString))
                     {
-                        this.EmitNext(value);
-                        return;
+                        return value;
                     }
 
                     var expression = this.searchExpression(searchString);
-                    this.EmitNext(value.Where(expression));
+                    return value.Where(expression);
                 }
             }
         }

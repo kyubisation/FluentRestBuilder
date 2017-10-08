@@ -10,11 +10,7 @@ namespace FluentRestBuilder.Mocks
     {
         public static CultureInfo AssignAsCurrentUiCulture(this CultureInfo cultureInfo)
         {
-#if NET452
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr-FR");
-#else
-            CultureInfo.CurrentUICulture = new CultureInfo("fr-FR");
-#endif
+            CultureInfo.CurrentUICulture = cultureInfo;
             return cultureInfo;
         }
     }

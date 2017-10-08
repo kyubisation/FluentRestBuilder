@@ -52,10 +52,10 @@ namespace FluentRestBuilder
                     this.action = action;
                 }
 
-                protected override async Task SafeOnNext(TSource value)
+                protected override async Task<TSource> SafeOnNext(TSource value)
                 {
                     await this.action(value);
-                    this.EmitNext(value);
+                    return value;
                 }
             }
         }
