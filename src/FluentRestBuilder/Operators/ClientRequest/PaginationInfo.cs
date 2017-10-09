@@ -1,12 +1,12 @@
-﻿// <copyright file="PaginationMetaInfo.cs" company="Kyubisation">
+﻿// <copyright file="PaginationInfo.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
 namespace FluentRestBuilder.Operators.ClientRequest
 {
-    public class PaginationMetaInfo
+    public class PaginationInfo
     {
-        public PaginationMetaInfo(
+        public PaginationInfo(
             int total,
             int offset,
             int limit)

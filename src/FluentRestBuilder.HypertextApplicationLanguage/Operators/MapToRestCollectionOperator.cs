@@ -7,9 +7,9 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using HypertextApplicationLanguage;
     using HypertextApplicationLanguage.Links;
+    using HypertextApplicationLanguage.Operators;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Operators;
@@ -21,19 +21,19 @@ namespace FluentRestBuilder
         /// <summary>
         /// Maps the entries of the received <see cref="IEnumerable{T}"/>
         /// according to the given mapping function and wraps the result
-        /// in an <see cref="RestEntityCollection"/>.
+        /// in an <see cref="IRestEntity"/>.
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <typeparam name="TTarget">The type of the mapping result.</typeparam>
         /// <param name="observable">The parent observable.</param>
         /// <param name="mapping">The mapping function.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
-        public static IProviderObservable<RestEntityCollection> MapToRestCollection<TSource, TTarget>(
+        public static IProviderObservable<IRestEntity> MapToRestCollection<TSource, TTarget>(
             this IProviderObservable<IEnumerable<TSource>> observable, Func<TSource, TTarget> mapping) =>
             new MapToRestCollectionObservable<TSource, TTarget>(mapping, observable);
 
         private sealed class MapToRestCollectionObservable<TSource, TTarget>
-            : Operator<IEnumerable<TSource>, RestEntityCollection>
+            : Operator<IEnumerable<TSource>, IRestEntity>
         {
             private readonly Func<TSource, TTarget> mapping;
 
@@ -46,82 +46,64 @@ namespace FluentRestBuilder
             }
 
             protected override IObserver<IEnumerable<TSource>> Create(
-                IObserver<RestEntityCollection> observer, IDisposable disposable)
+                IObserver<IRestEntity> observer, IDisposable disposable)
             {
-                var linkGenerator = this.ResolveLinkGenerator();
-                var linkAggregator = this.ResolveLinkAggregator();
-                var paginationMetaInfoStorage = this.ServiceProvider
-                    .GetService<IScopedStorage<PaginationMetaInfo>>();
+                var generator = this.ResolveRestCollectionGenerator();
+                var paginationInfoStorage = this.ServiceProvider
+                    .GetService<IScopedStorage<PaginationInfo>>();
                 return new MapToRestCollectionObserver(
-                    this.mapping,
-                    linkGenerator,
-                    linkAggregator,
-                    paginationMetaInfoStorage,
-                    observer,
-                    disposable);
+                    this.mapping, generator, paginationInfoStorage, observer, disposable);
             }
 
-            private IRestCollectionLinkGenerator ResolveLinkGenerator()
+            private IRestCollectionGenerator<TSource, TTarget> ResolveRestCollectionGenerator()
             {
-                var linkGenerator = this.ServiceProvider
-                    .GetService<IRestCollectionLinkGenerator>();
-                if (linkGenerator != null)
+                var generator = this.ServiceProvider
+                    .GetService<IRestCollectionGenerator<TSource, TTarget>>();
+                if (generator != null)
                 {
-                    return linkGenerator;
+                    return generator;
+                }
+
+                var linkHelper = this.ResolveLinkHelper();
+                return new RestCollectionGenerator<TSource, TTarget>(linkHelper);
+            }
+
+            private ILinkHelper ResolveLinkHelper()
+            {
+                var linkHelper = this.ServiceProvider
+                    .GetService<ILinkHelper>();
+                if (linkHelper != null)
+                {
+                    return linkHelper;
                 }
 
                 var httpContextStorage = this.ServiceProvider
                     .GetService<IScopedStorage<HttpContext>>();
-                return new RestCollectionLinkGenerator(httpContextStorage);
+                return new LinkHelper(httpContextStorage);
             }
-
-            private ILinkAggregator ResolveLinkAggregator() =>
-                this.ServiceProvider.GetService<ILinkAggregator>() ?? new LinkAggregator();
 
             private sealed class MapToRestCollectionObserver : SafeObserver
             {
                 private readonly Func<TSource, TTarget> mapping;
-                private readonly IRestCollectionLinkGenerator linkGenerator;
-                private readonly ILinkAggregator linkAggregator;
-                private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
+                private readonly IRestCollectionGenerator<TSource, TTarget> restCollectionGenerator;
+                private readonly IScopedStorage<PaginationInfo> paginationInfoStorage;
 
                 public MapToRestCollectionObserver(
                     Func<TSource, TTarget> mapping,
-                    IRestCollectionLinkGenerator linkGenerator,
-                    ILinkAggregator linkAggregator,
-                    IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
-                    IObserver<RestEntityCollection> child,
+                    IRestCollectionGenerator<TSource, TTarget> restCollectionGenerator,
+                    IScopedStorage<PaginationInfo> paginationInfoStorage,
+                    IObserver<IRestEntity> child,
                     IDisposable disposable)
                     : base(child, disposable)
                 {
                     this.mapping = mapping;
-                    this.linkGenerator = linkGenerator;
-                    this.linkAggregator = linkAggregator;
-                    this.paginationMetaInfoStorage = paginationMetaInfoStorage;
+                    this.restCollectionGenerator = restCollectionGenerator;
+                    this.paginationInfoStorage = paginationInfoStorage;
                 }
 
-                protected override RestEntityCollection SafeOnNext(IEnumerable<TSource> value)
-                {
-                    var restEntityCollection = new RestEntityCollection();
-                    this.GenerateEmbeddedEntities(restEntityCollection, value);
-                    this.GenerateLinks(restEntityCollection);
-                    return restEntityCollection;
-                }
-
-                private void GenerateEmbeddedEntities(
-                    IRestEntity restEntityCollection, IEnumerable<TSource> entities)
-                {
-                    var mappedEntities = entities
-                        .Select(e => this.mapping(e))
-                        .ToList();
-                    restEntityCollection._embedded.Add("items", mappedEntities);
-                }
-
-                private void GenerateLinks(IRestEntity restEntityCollection)
-                {
-                    var links = this.linkGenerator.GenerateLinks(this.paginationMetaInfoStorage.Value);
-                    restEntityCollection._links = this.linkAggregator.BuildLinks(links);
-                }
+                protected override IRestEntity SafeOnNext(IEnumerable<TSource> value) =>
+                    this.restCollectionGenerator.CreateCollection(
+                        value, this.mapping, this.paginationInfoStorage.Value);
             }
         }
     }

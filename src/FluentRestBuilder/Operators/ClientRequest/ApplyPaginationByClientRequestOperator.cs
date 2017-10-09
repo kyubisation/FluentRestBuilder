@@ -55,10 +55,10 @@ namespace FluentRestBuilder
                 var interpreter = this.ServiceProvider
                     .GetService<IPaginationByClientRequestInterpreter>()
                     ?? this.CreateDefaultInterpreter();
-                var paginationMetaInfoStorage = this.ServiceProvider
-                    .GetService<IScopedStorage<PaginationMetaInfo>>();
+                var paginationInfoStorage = this.ServiceProvider
+                    .GetService<IScopedStorage<PaginationInfo>>();
                 return new ApplyPaginationByClientRequestObserver(
-                    this.options, interpreter, paginationMetaInfoStorage, observer, disposable);
+                    this.options, interpreter, paginationInfoStorage, observer, disposable);
             }
 
             private IPaginationByClientRequestInterpreter CreateDefaultInterpreter()
@@ -72,19 +72,19 @@ namespace FluentRestBuilder
             {
                 private readonly PaginationOptions options;
                 private readonly IPaginationByClientRequestInterpreter interpreter;
-                private readonly IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage;
+                private readonly IScopedStorage<PaginationInfo> paginationInfoStorage;
 
                 public ApplyPaginationByClientRequestObserver(
                     PaginationOptions options,
                     IPaginationByClientRequestInterpreter interpreter,
-                    IScopedStorage<PaginationMetaInfo> paginationMetaInfoStorage,
+                    IScopedStorage<PaginationInfo> paginationInfoStorage,
                     IObserver<IQueryable<TSource>> child,
                     IDisposable disposable)
                     : base(child, disposable)
                 {
                     this.options = options;
                     this.interpreter = interpreter;
-                    this.paginationMetaInfoStorage = paginationMetaInfoStorage;
+                    this.paginationInfoStorage = paginationInfoStorage;
                 }
 
                 protected override IQueryable<TSource> SafeOnNext(IQueryable<TSource> value)
@@ -112,7 +112,7 @@ namespace FluentRestBuilder
                     IQueryable<TSource> queryable, PaginationValues paginationValues)
                 {
                     var count = queryable.Count();
-                    this.paginationMetaInfoStorage.Value = new PaginationMetaInfo(
+                    this.paginationInfoStorage.Value = new PaginationInfo(
                         count, paginationValues.Offset, paginationValues.Limit);
                 }
 

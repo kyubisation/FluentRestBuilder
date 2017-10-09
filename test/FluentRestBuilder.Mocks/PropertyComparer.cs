@@ -10,19 +10,36 @@ namespace FluentRestBuilder.Mocks
 
     public class PropertyComparer<TComparable> : EqualityComparer<TComparable>
     {
-        private readonly PropertyInfo[] properties;
+        private readonly List<PropertyInfo> properties;
 
         public PropertyComparer()
         {
-            this.properties = typeof(TComparable).GetProperties(BindingFlags.Public);
+            this.properties = typeof(TComparable)
+                .GetRuntimeProperties()
+                .Where(p => p.GetGetMethod(true).IsPublic)
+                .ToList();
         }
 
         public override bool Equals(TComparable x, TComparable y) =>
-            this.properties.All(i => i.GetValue(x) == i.GetValue(y));
+            this.properties.All(i => Equals(i, x, y));
 
         public override int GetHashCode(TComparable obj) =>
             this.properties
-                .Aggregate(string.Empty, (current, next) => $"{current}:{next}")
+                .Select(p => $"{p.Name}: ${p.GetValue(obj)}")
+                .Aggregate(
+                    $"{typeof(TComparable).Name} {{",
+                    (current, next) => $"{current}, {next}",
+                    r => $"{r}}}")
                 .GetHashCode();
+
+        private static bool Equals(PropertyInfo info, TComparable x, TComparable y)
+        {
+            if (!info.PropertyType.IsValueType && info.PropertyType != typeof(string))
+            {
+                return true;
+            }
+
+            return info.GetValue(x)?.Equals(info.GetValue(y)) ?? info.GetValue(y) == null;
+        }
     }
 }

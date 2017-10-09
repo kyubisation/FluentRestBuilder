@@ -17,7 +17,7 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <Description>Entity Framework Core pipes for FluentRestBuilder.</Description>
+    <Description>Entity Framework Core operators for FluentRestBuilder.</Description>
     <Authors>Kyubisation</Authors>
     <Copyright>Copyright © 2017 FluentRestBuilder</Copyright>
     <PackageTags>mvc;rest;ef;entityframework</PackageTags>

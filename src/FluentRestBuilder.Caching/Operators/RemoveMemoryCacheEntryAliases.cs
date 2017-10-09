@@ -37,10 +37,6 @@ namespace FluentRestBuilder
         /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> RemoveMemoryCacheEntry<TSource>(
             this IProviderObservable<TSource> observable, object key) =>
-            observable.Do(s =>
-            {
-                var memoryCache = observable.ServiceProvider.GetService<IMemoryCache>();
-                memoryCache.Remove(key);
-            });
+            observable.RemoveMemoryCacheEntry(s => key);
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="LinkAggregator.cs" company="Kyubisation">
+﻿// <copyright file="LinkExtension.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -7,9 +7,9 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Links
     using System.Collections.Generic;
     using System.Linq;
 
-    public class LinkAggregator : ILinkAggregator
+    public static class LinkExtension
     {
-        public IDictionary<string, object> BuildLinks(IEnumerable<NamedLink> links) =>
+        public static IDictionary<string, object> BuildLinks(this IEnumerable<NamedLink> links) =>
             links?.GroupBy(l => l.Name)
                 .ToDictionary(g => g.Key, ToSingleOrList);
 

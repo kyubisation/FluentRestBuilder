@@ -2,12 +2,14 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Operators.ActionResult
+// ReSharper disable once CheckNamespace
+namespace FluentRestBuilder
 {
     using System;
-    using Exceptions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Operators;
+    using Operators.Exceptions;
 
     public static class ToActionResultOperator
     {

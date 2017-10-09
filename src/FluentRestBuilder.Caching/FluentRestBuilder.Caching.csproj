@@ -17,7 +17,7 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <Description>Caching pipes for FluentRestBuilder.</Description>
+    <Description>Caching operators for FluentRestBuilder.</Description>
     <Authors>Kyubisation</Authors>
     <Copyright>Copyright © 2017 FluentRestBuilder</Copyright>
     <PackageTags>mvc;rest;cache;caching</PackageTags>

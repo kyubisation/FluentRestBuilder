@@ -1,4 +1,4 @@
-﻿// <copyright file="LinkAggregatorTest.cs" company="Kyubisation">
+﻿// <copyright file="LinkExtensionTest.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -9,14 +9,12 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Links
     using HypertextApplicationLanguage.Links;
     using Xunit;
 
-    public class LinkAggregatorTest
+    public class LinkExtensionTest
     {
-        private readonly LinkAggregator linkAggregator = new LinkAggregator();
-
         [Fact]
         public void TestEmptyAggregation()
         {
-            var result = this.linkAggregator.BuildLinks(Enumerable.Empty<NamedLink>());
+            var result = Enumerable.Empty<NamedLink>().BuildLinks();
             Assert.Empty(result);
         }
 
@@ -24,7 +22,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Links
         public void TestSingleLinkAggregation()
         {
             var self = new LinkToSelf(new Link("/"));
-            var result = this.linkAggregator.BuildLinks(new[] { self });
+            var result = new[] { self }.BuildLinks();
             Assert.Equal(1, result.Count);
             Assert.True(result.ContainsKey(self.Name));
             var link = result[self.Name];
@@ -41,7 +39,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Links
                 new NamedLink(name, new Link("/")),
                 new NamedLink(name, new Link("/asdf")),
             };
-            var result = this.linkAggregator.BuildLinks(namedLinks);
+            var result = namedLinks.BuildLinks();
             Assert.Equal(1, result.Count);
             Assert.True(result.ContainsKey(name));
             var links = result[name];
@@ -59,7 +57,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Links
                 new NamedLink(name, new Link("/qwer")),
                 new NamedLink(name, new Link("/asdf")),
             };
-            var result = this.linkAggregator.BuildLinks(namedLinks);
+            var result = namedLinks.BuildLinks();
             Assert.Equal(2, result.Count);
             Assert.True(result.ContainsKey(name));
             var links = result[name];

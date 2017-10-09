@@ -38,10 +38,6 @@ namespace FluentRestBuilder
         /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<TSource> RemoveDistributedCacheEntry<TSource>(
             this IProviderObservable<TSource> observable, string key) =>
-            observable.DoAsync(async s =>
-            {
-                var distributedCache = observable.ServiceProvider.GetService<IDistributedCache>();
-                await distributedCache.RemoveAsync(key);
-            });
+            observable.RemoveDistributedCacheEntry(s => key);
     }
 }

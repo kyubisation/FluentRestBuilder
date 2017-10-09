@@ -5,7 +5,9 @@
 namespace FluentRestBuilder.Test.Operators.ActionResult
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using System.Threading.Tasks;
     using FluentRestBuilder.Operators.ActionResult;
     using Microsoft.AspNetCore.Mvc;
@@ -14,6 +16,10 @@ namespace FluentRestBuilder.Test.Operators.ActionResult
 
     public class ToActionResultOperatorTest
     {
+        public static IEnumerable<object[]> ClientRequestErrorStatusCodes() =>
+            Enumerable.Range(400, 10)
+                .Select(f => new object[] { f });
+
         [Fact]
         public async Task TestOkOperator()
         {
@@ -27,32 +33,32 @@ namespace FluentRestBuilder.Test.Operators.ActionResult
             Assert.Equal(expected, objectResult.Value);
         }
 
-        [Fact]
-        public async Task TestValidationFailureWithError()
+        [Theory]
+        [MemberData(nameof(ClientRequestErrorStatusCodes))]
+        public async Task TestValidationFailureWithError(int statusCode)
         {
             const string error = "error";
-            const int statusCode = 400;
             var observable = Observable.Single("expected")
                 .InvalidWhen(s => true, statusCode, error)
                 .ToActionResult(s => new OkObjectResult(s));
             var result = await observable;
-            Assert.IsType<BadRequestObjectResult>(result);
-            var objectResult = result as BadRequestObjectResult;
+            Assert.IsAssignableFrom<ObjectResult>(result);
+            var objectResult = result as ObjectResult;
             Debug.Assert(objectResult != null, nameof(objectResult) + " != null");
             Assert.Equal(statusCode, objectResult.StatusCode);
             Assert.Equal(error, objectResult.Value);
         }
 
-        [Fact]
-        public async Task TestValidationFailureWithoutError()
+        [Theory]
+        [MemberData(nameof(ClientRequestErrorStatusCodes))]
+        public async Task TestValidationFailureWithoutError(int statusCode)
         {
-            const int statusCode = 400;
             var observable = Observable.Single("expected")
                 .InvalidWhen(s => true, statusCode)
                 .ToActionResult(s => new OkObjectResult(s));
             var result = await observable;
-            Assert.IsType<BadRequestResult>(result);
-            var objectResult = result as BadRequestResult;
+            Assert.IsAssignableFrom<StatusCodeResult>(result);
+            var objectResult = result as StatusCodeResult;
             Debug.Assert(objectResult != null, nameof(objectResult) + " != null");
             Assert.Equal(statusCode, objectResult.StatusCode);
         }

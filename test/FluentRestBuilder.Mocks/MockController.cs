@@ -7,6 +7,8 @@ namespace FluentRestBuilder.Mocks
     using System;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Routing;
+    using Microsoft.AspNetCore.Routing;
 
     public class MockController : ControllerBase
     {
@@ -16,7 +18,11 @@ namespace FluentRestBuilder.Mocks
             {
                 RequestServices = serviceProvider,
             };
-            this.Url = new UrlHelperMock();
+            this.Url = new UrlHelper(new ActionContext
+            {
+                HttpContext = new DefaultHttpContext(),
+                RouteData = new RouteData(),
+            });
         }
     }
 }

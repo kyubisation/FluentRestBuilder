@@ -18,10 +18,10 @@ namespace FluentRestBuilder
         /// <summary>
         /// Registers the <see cref="IActionContextAccessor"/> to be used to create an instance
         /// of <see cref="IUrlHelper"/>.
-        /// By default the controller extension methods to create the sources use the
+        /// By default the controller extension methods to create the observables use the
         /// <see cref="IUrlHelper"/> provided by the controller.
-        /// This is only necessary if you want to use pipes that require the
-        /// <see cref="IUrlHelper"/> and want to create sources without a controller.
+        /// This is only necessary if you want to use operators that require the
+        /// <see cref="IUrlHelper"/> and want to create observables without a controller.
         /// </summary>
         /// <param name="builder">The FluentRestBuilder configuration instance.</param>
         /// <returns>The provided FluentRestBuilder configuration instance.</returns>
