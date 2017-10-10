@@ -18,7 +18,7 @@ namespace FluentRestBuilder
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
-        public static IProviderObservable<List<TSource>> FirstAsync<TSource>(
+        public static IProviderObservable<List<TSource>> ToListAsync<TSource>(
             this IProviderObservable<IQueryable<TSource>> observable) =>
             observable.MapAsync(async s => await s.ToListAsync());
     }
