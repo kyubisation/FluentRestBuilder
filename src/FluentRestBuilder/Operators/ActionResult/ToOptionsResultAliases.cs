@@ -11,7 +11,6 @@ namespace FluentRestBuilder
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
-    using Operators.ActionResult;
     using Operators.ActionResult.Options;
     using Operators.Exceptions;
     using Storage;

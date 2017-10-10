@@ -9,7 +9,6 @@ namespace FluentRestBuilder.Test.Operators.ActionResult
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Operators.ActionResult;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using Xunit;

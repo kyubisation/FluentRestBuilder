@@ -7,7 +7,6 @@ namespace FluentRestBuilder
 {
     using System;
     using Microsoft.AspNetCore.Mvc;
-    using Operators.ActionResult;
     using Operators.Exceptions;
 
     public static class ToCreatedAtRouteResultAliases

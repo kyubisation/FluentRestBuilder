@@ -90,6 +90,7 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest
 
         private sealed class MockPaginationByClientRequestInterpreter : IPaginationByClientRequestInterpreter
         {
+            // ReSharper disable once MemberCanBePrivate.Local
             public PaginationRequest Request { get; set; } = new PaginationRequest();
 
             public PaginationRequest ParseRequestQuery() => this.Request;

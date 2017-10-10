@@ -4,11 +4,8 @@
 
 namespace FluentRestBuilder.Test.Filters
 {
-    using System.Collections.Generic;
     using FluentRestBuilder.Filters;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;
     using Storage;

@@ -31,7 +31,7 @@ namespace FluentRestBuilder.Test.Disposables
 
         private sealed class Disposable : IDisposable
         {
-            public bool IsDisposed { get; set; }
+            public bool IsDisposed { get; private set; }
 
             public void Dispose()
             {

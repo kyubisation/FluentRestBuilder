@@ -6,7 +6,6 @@
 namespace FluentRestBuilder
 {
     using Microsoft.AspNetCore.Mvc;
-    using Operators.ActionResult;
     using Operators.Exceptions;
 
     public static class ToNoContentResultAlias

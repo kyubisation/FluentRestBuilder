@@ -8,7 +8,6 @@ namespace FluentRestBuilder.Test.Operators.ActionResult.Options
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
     using Xunit;
 
     public class OptionsResultTest

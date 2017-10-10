@@ -6,8 +6,7 @@ namespace FluentRestBuilder.Test.Operators
 {
     using System;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Mocks;
-    using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
     using Xunit;
 
     public class DoAsyncOperatorTest

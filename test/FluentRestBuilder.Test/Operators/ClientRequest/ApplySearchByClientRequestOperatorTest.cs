@@ -43,6 +43,7 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest
 
         private sealed class MockSearchByClientRequestInterpreter : ISearchByClientRequestInterpreter
         {
+            // ReSharper disable once MemberCanBePrivate.Local
             public string SearchString { get; set; }
 
             public string ParseRequestQuery() => this.SearchString;
