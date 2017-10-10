@@ -40,6 +40,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRestBuilder.Caching.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRestBuilder.Mocks", "test\FluentRestBuilder.Mocks\FluentRestBuilder.Mocks.csproj", "{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRestBuilder.Mocks.Test", "test\FluentRestBuilder.Mocks.Test\FluentRestBuilder.Mocks.Test.csproj", "{472C1016-158F-4B9B-BDAB-5CB618895ABC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{472C1016-158F-4B9B-BDAB-5CB618895ABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{472C1016-158F-4B9B-BDAB-5CB618895ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{472C1016-158F-4B9B-BDAB-5CB618895ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{472C1016-158F-4B9B-BDAB-5CB618895ABC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,5 +102,6 @@ Global
 		{9D2901DB-6066-4B8B-95E2-F1C10E97BE2E} = {A5FEDE24-9A04-4DEF-B7A0-EC3086FDD55B}
 		{D29725D4-9FF2-4561-BC8B-1F5A7067D1D6} = {6BA317BE-1AB0-4A3E-BE16-1D58061D047E}
 		{DBC8E79B-DA24-4422-AE36-4DEB0A76A45B} = {6BA317BE-1AB0-4A3E-BE16-1D58061D047E}
+		{472C1016-158F-4B9B-BDAB-5CB618895ABC} = {6BA317BE-1AB0-4A3E-BE16-1D58061D047E}
 	EndGlobalSection
 EndGlobal
