@@ -32,11 +32,13 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
             Assert.Empty(result);
         }
 
-        [Fact]
-        public void TestEquals()
+        [Theory]
+        [InlineData(Property)]
+        [InlineData("property")]
+        public void TestEquals(string propertyParameter)
         {
             var interpreter = new FilterByClientRequestInterpreter(
-                new HttpContextStorage().SetValue(Property, Filter));
+                new HttpContextStorage().SetValue(propertyParameter, Filter));
             var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
             Assert.Single(result);
             var request = result.First();

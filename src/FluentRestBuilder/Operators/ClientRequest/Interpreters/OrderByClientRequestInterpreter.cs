@@ -22,7 +22,8 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 
         public IEnumerable<OrderByRequest> ParseRequestQuery(ICollection<string> supportedOrderBys)
         {
-            if (!this.queryCollection.TryGetValue(this.OrderByQueryArgumentKey, out var orderByValues))
+            if (!this.queryCollection
+                .TryGetValue(this.OrderByQueryArgumentKey, out var orderByValues))
             {
                 return Enumerable.Empty<OrderByRequest>();
             }

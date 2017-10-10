@@ -8,12 +8,10 @@ namespace FluentRestBuilder
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Operators;
     using Operators.ClientRequest.Interpreters;
     using Operators.ClientRequest.OrderByExpressions;
-    using Storage;
 
     public static class ApplyOrderByClientRequestOperator
     {
@@ -55,17 +53,9 @@ namespace FluentRestBuilder
                 IObserver<IQueryable<TSource>> observer, IDisposable disposable)
             {
                 var interpreter = this.ServiceProvider
-                    .GetService<IOrderByClientRequestInterpreter>()
-                    ?? this.CreateDefaultInterpreter();
+                    .GetService<IOrderByClientRequestInterpreter>();
                 return new ApplyOrderByClientRequestObserver(
                     this.orderByExpressionsDictionary, interpreter, observer, disposable);
-            }
-
-            private IOrderByClientRequestInterpreter CreateDefaultInterpreter()
-            {
-                var httpContextStorage = this.ServiceProvider
-                    .GetService<IScopedStorage<HttpContext>>();
-                return new OrderByClientRequestInterpreter(httpContextStorage);
             }
 
             private sealed class ApplyOrderByClientRequestObserver : SafeObserver

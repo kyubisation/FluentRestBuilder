@@ -6,6 +6,7 @@ namespace FluentRestBuilder.Builder
 {
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Operators.ClientRequest.Interpreters;
     using Storage;
 
     public class FluentRestBuilderConfiguration : IFluentRestBuilderConfiguration
@@ -14,6 +15,14 @@ namespace FluentRestBuilder.Builder
         {
             this.Services = services;
             this.Services.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
+            this.Services.TryAddScoped<
+                IFilterByClientRequestInterpreter, FilterByClientRequestInterpreter>();
+            this.Services.TryAddScoped<
+                IOrderByClientRequestInterpreter, OrderByClientRequestInterpreter>();
+            this.Services.TryAddScoped<
+                IPaginationByClientRequestInterpreter, PaginationByClientRequestInterpreter>();
+            this.Services.TryAddScoped<
+                ISearchByClientRequestInterpreter, SearchByClientRequestInterpreter>();
         }
 
         public IServiceCollection Services { get; }

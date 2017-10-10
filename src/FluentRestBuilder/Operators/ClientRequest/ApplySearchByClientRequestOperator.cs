@@ -8,11 +8,9 @@ namespace FluentRestBuilder
     using System;
     using System.Linq;
     using System.Linq.Expressions;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Operators;
     using Operators.ClientRequest.Interpreters;
-    using Storage;
 
     public static class ApplySearchByClientRequestOperator
     {
@@ -49,17 +47,9 @@ namespace FluentRestBuilder
                 IObserver<IQueryable<TSource>> observer, IDisposable disposable)
             {
                 var interpreter = this.ServiceProvider
-                    .GetService<ISearchByClientRequestInterpreter>()
-                    ?? this.CreateDefaultInterpreter();
+                    .GetService<ISearchByClientRequestInterpreter>();
                 return new ApplySearchByClientRequestObserver(
                     this.searchExpression, interpreter, observer, disposable);
-            }
-
-            private ISearchByClientRequestInterpreter CreateDefaultInterpreter()
-            {
-                var httpContextStorage = this.ServiceProvider
-                    .GetService<IScopedStorage<HttpContext>>();
-                return new SearchByClientRequestInterpreter(httpContextStorage);
             }
 
             private sealed class ApplySearchByClientRequestObserver : SafeObserver

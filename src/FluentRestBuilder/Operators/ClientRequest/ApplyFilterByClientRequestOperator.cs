@@ -9,12 +9,10 @@ namespace FluentRestBuilder
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Operators;
     using Operators.ClientRequest.FilterExpressions;
     using Operators.ClientRequest.Interpreters;
-    using Storage;
 
     public static class ApplyFilterByClientRequestOperator
     {
@@ -50,17 +48,9 @@ namespace FluentRestBuilder
                 IObserver<IQueryable<TSource>> observer, IDisposable disposable)
             {
                 var interpreter = this.ServiceProvider
-                    .GetService<IFilterByClientRequestInterpreter>()
-                    ?? this.CreateDefaultInterpreter();
+                    .GetService<IFilterByClientRequestInterpreter>();
                 return new ApplyFilterByClientRequestObserver(
                     this.filterDictionary, interpreter, observer, disposable);
-            }
-
-            private IFilterByClientRequestInterpreter CreateDefaultInterpreter()
-            {
-                var httpContextStorage = this.ServiceProvider
-                    .GetService<IScopedStorage<HttpContext>>();
-                return new FilterByClientRequestInterpreter(httpContextStorage);
             }
 
             private sealed class ApplyFilterByClientRequestObserver : SafeObserver

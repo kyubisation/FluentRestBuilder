@@ -7,7 +7,6 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Linq;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Operators;
     using Operators.ClientRequest;
@@ -53,19 +52,11 @@ namespace FluentRestBuilder
                 IObserver<IQueryable<TSource>> observer, IDisposable disposable)
             {
                 var interpreter = this.ServiceProvider
-                    .GetService<IPaginationByClientRequestInterpreter>()
-                    ?? this.CreateDefaultInterpreter();
+                    .GetService<IPaginationByClientRequestInterpreter>();
                 var paginationInfoStorage = this.ServiceProvider
                     .GetService<IScopedStorage<PaginationInfo>>();
                 return new ApplyPaginationByClientRequestObserver(
                     this.options, interpreter, paginationInfoStorage, observer, disposable);
-            }
-
-            private IPaginationByClientRequestInterpreter CreateDefaultInterpreter()
-            {
-                var httpContextStorage = this.ServiceProvider
-                    .GetService<IScopedStorage<HttpContext>>();
-                return new PaginationByClientRequestInterpreter(httpContextStorage);
             }
 
             private sealed class ApplyPaginationByClientRequestObserver : SafeObserver
