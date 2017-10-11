@@ -59,11 +59,11 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Operators
             Assert.Null(result.Limit);
             Assert.Null(result.Offset);
             Assert.Null(result.Total);
-            Assert.Single(result._links);
-            Assert.Equal(Link.Self, result._links.Keys.Single());
+            Assert.Single(result.Links);
+            Assert.Equal(Link.Self, result.Links.Keys.Single());
             Assert.Equal(
                 entities.Select(e => new EntityResponse(e)),
-                result._embedded.Values.Single() as IEnumerable<EntityResponse>,
+                result.Embedded.Values.Single() as IEnumerable<EntityResponse>,
                 new PropertyComparer<EntityResponse>());
         }
 
@@ -80,11 +80,11 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Operators
             Assert.Equal(this.paginationInfoStorage.Value.Limit, result.Limit);
             Assert.Equal(this.paginationInfoStorage.Value.Offset, result.Offset);
             Assert.Equal(this.paginationInfoStorage.Value.Total, result.Total);
-            Assert.True(result._links.Count > 1);
-            Assert.Contains(Link.Self, result._links.Keys);
+            Assert.True(result.Links.Count > 1);
+            Assert.Contains(Link.Self, result.Links.Keys);
             Assert.Equal(
                 entities.Select(e => new EntityResponse(e)),
-                result._embedded.Values.Single() as IEnumerable<EntityResponse>,
+                result.Embedded.Values.Single() as IEnumerable<EntityResponse>,
                 new PropertyComparer<EntityResponse>());
         }
     }

@@ -7,12 +7,28 @@ namespace FluentRestBuilder.HypertextApplicationLanguage
 {
     using System.Collections.Generic;
 
-#pragma warning disable SA1300 // Element should begin with upper-case letter
     public interface IRestEntity
     {
-        IDictionary<string, object> _links { get; set; }
+        /// <summary>
+        /// Gets or sets the links in relation to the current resource.
+        /// <para>
+        /// This is expected to serialize to "_links".
+        /// If Newtonsoft.Json is used for serialization, use
+        /// [JsonProperty("_links", NullValueHandling = NullValueHandling.Ignore)]
+        /// for this property.
+        /// </para>
+        /// </summary>
+        IDictionary<string, object> Links { get; set; }
 
-        IDictionary<string, object> _embedded { get; set; }
+        /// <summary>
+        /// Gets or sets the embedded resources for the current resource.
+        /// <para>
+        /// This is expected to serialize to "_embedded".
+        /// If Newtonsoft.Json is used for serialization, use
+        /// [JsonProperty("_embedded", NullValueHandling = NullValueHandling.Ignore)]
+        /// for this property.
+        /// </para>
+        /// </summary>
+        IDictionary<string, object> Embedded { get; set; }
     }
-#pragma warning restore SA1300 // Element should begin with upper-case letter
 }

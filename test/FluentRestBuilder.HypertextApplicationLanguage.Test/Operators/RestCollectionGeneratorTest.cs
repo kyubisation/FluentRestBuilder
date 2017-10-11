@@ -21,8 +21,8 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Operators
         {
             var result = this.Create()
                 .CreateCollection(Enumerable.Empty<Entity>(), e => new EntityResponse(e));
-            Assert.Single(result._links);
-            Assert.Contains(Link.Self, result._links.Keys);
+            Assert.Single(result.Links);
+            Assert.Contains(Link.Self, result.Links.Keys);
         }
 
         [Fact]
@@ -33,8 +33,8 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Operators
                 Enumerable.Empty<Entity>(),
                 e => new EntityResponse(e),
                 new PaginationInfo(1, 0, 1));
-            Assert.Single(result._links);
-            Assert.Contains(Link.Self, result._links.Keys);
+            Assert.Single(result.Links);
+            Assert.Contains(Link.Self, result.Links.Keys);
         }
 
         [Fact]
@@ -45,10 +45,10 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Operators
                     Enumerable.Empty<Entity>(),
                     e => new EntityResponse(e),
                     new PaginationInfo(2, 0, 1));
-            Assert.Equal(3, result._links.Count);
-            Assert.Contains(Link.Self, result._links.Keys);
-            Assert.Contains("next", result._links.Keys);
-            Assert.Contains("last", result._links.Keys);
+            Assert.Equal(3, result.Links.Count);
+            Assert.Contains(Link.Self, result.Links.Keys);
+            Assert.Contains("next", result.Links.Keys);
+            Assert.Contains("last", result.Links.Keys);
         }
 
         [Fact]
@@ -59,10 +59,10 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Operators
                     Enumerable.Empty<Entity>(),
                     e => new EntityResponse(e),
                     new PaginationInfo(2, 2, 1));
-            Assert.Equal(3, result._links.Count);
-            Assert.Contains(Link.Self, result._links.Keys);
-            Assert.Contains("first", result._links.Keys);
-            Assert.Contains("previous", result._links.Keys);
+            Assert.Equal(3, result.Links.Count);
+            Assert.Contains(Link.Self, result.Links.Keys);
+            Assert.Contains("first", result.Links.Keys);
+            Assert.Contains("previous", result.Links.Keys);
         }
 
         [Fact]
@@ -73,12 +73,12 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Operators
                     Enumerable.Empty<Entity>(),
                     e => new EntityResponse(e),
                     new PaginationInfo(3, 1, 1));
-            Assert.Equal(5, result._links.Count);
-            Assert.Contains(Link.Self, result._links.Keys);
-            Assert.Contains("next", result._links.Keys);
-            Assert.Contains("last", result._links.Keys);
-            Assert.Contains("first", result._links.Keys);
-            Assert.Contains("previous", result._links.Keys);
+            Assert.Equal(5, result.Links.Count);
+            Assert.Contains(Link.Self, result.Links.Keys);
+            Assert.Contains("next", result.Links.Keys);
+            Assert.Contains("last", result.Links.Keys);
+            Assert.Contains("first", result.Links.Keys);
+            Assert.Contains("previous", result.Links.Keys);
         }
 
         private RestCollectionGenerator<Entity, EntityResponse> Create()

@@ -43,8 +43,8 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Operators
         protected virtual IRestEntity CreateCollection() =>
             new RestEntityCollection
             {
-                _embedded = this.GenerateEmbeddedDictionary(),
-                _links = this.GenerateLinks().BuildLinks(),
+                Embedded = this.GenerateEmbeddedDictionary(),
+                Links = this.GenerateLinks().BuildLinks(),
                 Limit = this.Info?.Limit,
                 Total = this.Info?.Total,
                 Offset = this.Info?.Offset,
