@@ -5,6 +5,7 @@
 namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 {
     using System.Collections.Generic;
+    using Requests;
 
     public interface IFilterByClientRequestInterpreter
     {

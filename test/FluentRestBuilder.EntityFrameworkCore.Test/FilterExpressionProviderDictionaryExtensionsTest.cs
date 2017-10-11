@@ -9,7 +9,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test
     using System.Linq;
     using FluentRestBuilder.Operators.ClientRequest.FilterConverters;
     using FluentRestBuilder.Operators.ClientRequest.FilterExpressions;
-    using FluentRestBuilder.Operators.ClientRequest.Interpreters;
+    using FluentRestBuilder.Operators.ClientRequest.Interpreters.Requests;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks.EntityFramework;
     using Xunit;

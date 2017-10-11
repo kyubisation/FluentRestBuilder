@@ -7,6 +7,7 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
     using System.Collections.Generic;
     using System.Linq;
     using FluentRestBuilder.Operators.ClientRequest.Interpreters;
+    using FluentRestBuilder.Operators.ClientRequest.Interpreters.Requests;
     using Mocks;
     using Mocks.HttpContextStorage;
     using Xunit;

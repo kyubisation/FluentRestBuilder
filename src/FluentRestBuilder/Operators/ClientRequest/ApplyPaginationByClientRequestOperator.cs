@@ -11,6 +11,7 @@ namespace FluentRestBuilder
     using Operators;
     using Operators.ClientRequest;
     using Operators.ClientRequest.Interpreters;
+    using Operators.ClientRequest.Interpreters.Requests;
     using Storage;
 
     public static class ApplyPaginationByClientRequestOperator

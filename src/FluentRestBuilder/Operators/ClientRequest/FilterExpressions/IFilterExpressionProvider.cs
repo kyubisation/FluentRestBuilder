@@ -6,7 +6,7 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
 {
     using System;
     using System.Linq.Expressions;
-    using Interpreters;
+    using Interpreters.Requests;
 
     public interface IFilterExpressionProvider<TEntity>
     {

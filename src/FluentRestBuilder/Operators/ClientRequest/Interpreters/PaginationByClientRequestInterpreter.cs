@@ -6,6 +6,7 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 {
     using System.Text.RegularExpressions;
     using Microsoft.AspNetCore.Http;
+    using Requests;
     using Storage;
 
     public class PaginationByClientRequestInterpreter : IPaginationByClientRequestInterpreter

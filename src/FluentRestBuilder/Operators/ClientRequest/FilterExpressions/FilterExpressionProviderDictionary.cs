@@ -8,7 +8,7 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using FilterConverters;
-    using Interpreters;
+    using Interpreters.Requests;
     using Microsoft.Extensions.DependencyInjection;
 
     public class FilterExpressionProviderDictionary<TEntity> : Dictionary<string, IFilterExpressionProvider<TEntity>>

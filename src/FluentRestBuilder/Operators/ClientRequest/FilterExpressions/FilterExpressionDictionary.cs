@@ -7,7 +7,7 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
-    using Interpreters;
+    using Interpreters.Requests;
 
     public class FilterExpressionDictionary<TEntity> : Dictionary<FilterType, Expression<Func<TEntity, bool>>>
     {

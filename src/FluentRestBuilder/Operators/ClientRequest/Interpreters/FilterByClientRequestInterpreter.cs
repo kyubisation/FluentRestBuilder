@@ -7,6 +7,7 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.AspNetCore.Http;
+    using Requests;
     using Storage;
 
     public class FilterByClientRequestInterpreter : IFilterByClientRequestInterpreter

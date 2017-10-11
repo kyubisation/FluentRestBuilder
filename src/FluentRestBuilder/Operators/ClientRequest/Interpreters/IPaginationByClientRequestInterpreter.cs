@@ -4,6 +4,8 @@
 
 namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 {
+    using Requests;
+
     public interface IPaginationByClientRequestInterpreter
     {
         PaginationRequest ParseRequestQuery();

@@ -2,7 +2,7 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
+namespace FluentRestBuilder.Operators.ClientRequest.Interpreters.Requests
 {
     public class FilterRequest
     {

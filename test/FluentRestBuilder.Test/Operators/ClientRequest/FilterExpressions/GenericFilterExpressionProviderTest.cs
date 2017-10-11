@@ -8,7 +8,7 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.FilterExpressions
     using System.Linq.Expressions;
     using FluentRestBuilder.Operators.ClientRequest.FilterConverters;
     using FluentRestBuilder.Operators.ClientRequest.FilterExpressions;
-    using FluentRestBuilder.Operators.ClientRequest.Interpreters;
+    using FluentRestBuilder.Operators.ClientRequest.Interpreters.Requests;
     using Mocks.EntityFramework;
     using Xunit;
 

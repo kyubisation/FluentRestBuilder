@@ -13,6 +13,7 @@ namespace FluentRestBuilder
     using Operators;
     using Operators.ClientRequest.FilterExpressions;
     using Operators.ClientRequest.Interpreters;
+    using Operators.ClientRequest.Interpreters.Requests;
 
     public static class ApplyFilterByClientRequestOperator
     {

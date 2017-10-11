@@ -11,6 +11,7 @@ namespace FluentRestBuilder
     using Microsoft.Extensions.DependencyInjection;
     using Operators;
     using Operators.ClientRequest.Interpreters;
+    using Operators.ClientRequest.Interpreters.Requests;
     using Operators.ClientRequest.OrderByExpressions;
 
     public static class ApplyOrderByClientRequestOperator

@@ -9,6 +9,7 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest
     using System.Threading.Tasks;
     using FluentRestBuilder.Operators.ClientRequest;
     using FluentRestBuilder.Operators.ClientRequest.Interpreters;
+    using FluentRestBuilder.Operators.ClientRequest.Interpreters.Requests;
     using FluentRestBuilder.Operators.ClientRequest.OrderByExpressions;
     using Microsoft.Extensions.DependencyInjection;
     using Mocks;
