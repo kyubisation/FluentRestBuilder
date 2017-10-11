@@ -15,15 +15,19 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
         private readonly Regex rangeRegex =
             new Regex("items=(?<rangeStart>[0-9]+)-(?<rangeEnd>[0-9]+)");
 
-        public PaginationByClientRequestInterpreter(IScopedStorage<HttpContext> httpContextStorage)
+        public PaginationByClientRequestInterpreter(
+            IScopedStorage<HttpContext> httpContextStorage,
+            IJsonPropertyNameResolver jsonPropertyNameResolver)
         {
             this.queryCollection = httpContextStorage.Value.Request.Query;
             this.requestHeader = httpContextStorage.Value.Request.Headers;
+            this.LimitQueryArgumentKey = jsonPropertyNameResolver.Resolve("Limit");
+            this.OffsetQueryArgumentKey = jsonPropertyNameResolver.Resolve("Offset");
         }
 
-        public string LimitQueryArgumentKey { get; set; } = "limit";
+        public string LimitQueryArgumentKey { get; set; }
 
-        public string OffsetQueryArgumentKey { get; set; } = "offset";
+        public string OffsetQueryArgumentKey { get; set; }
 
         public PaginationRequest ParseRequestQuery() =>
             this.ParseQueryString() ?? this.ParseHeaderRange() ?? new PaginationRequest();

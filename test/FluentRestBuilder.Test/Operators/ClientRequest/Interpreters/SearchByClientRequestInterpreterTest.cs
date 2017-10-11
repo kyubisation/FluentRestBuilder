@@ -5,6 +5,7 @@
 namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
 {
     using FluentRestBuilder.Operators.ClientRequest.Interpreters;
+    using Mocks;
     using Mocks.HttpContextStorage;
     using Xunit;
 
@@ -13,7 +14,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         [Fact]
         public void TestNonExistantCase()
         {
-            var interpreter = new SearchByClientRequestInterpreter(new EmptyHttpContextStorage());
+            var interpreter = new SearchByClientRequestInterpreter(
+                new EmptyHttpContextStorage(), new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Null(result);
         }
@@ -22,7 +24,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         public void TestEmptyPageCase()
         {
             var interpreter = new SearchByClientRequestInterpreter(
-                new HttpContextStorage().SetSearchValue(string.Empty));
+                new HttpContextStorage().SetSearchValue(string.Empty),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Null(result);
         }
@@ -32,7 +35,7 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         {
             const string search = "Search";
             var interpreter = new SearchByClientRequestInterpreter(
-                new HttpContextStorage().SetSearchValue(search));
+                new HttpContextStorage().SetSearchValue(search), new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Equal(search, result);
         }

@@ -11,14 +11,19 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 
     public class OrderByClientRequestInterpreter : IOrderByClientRequestInterpreter
     {
+        private readonly IJsonPropertyNameResolver jsonPropertyNameResolver;
         private readonly IQueryCollection queryCollection;
 
-        public OrderByClientRequestInterpreter(IScopedStorage<HttpContext> httpContextStorage)
+        public OrderByClientRequestInterpreter(
+            IScopedStorage<HttpContext> httpContextStorage,
+            IJsonPropertyNameResolver jsonPropertyNameResolver)
         {
+            this.jsonPropertyNameResolver = jsonPropertyNameResolver;
             this.queryCollection = httpContextStorage.Value.Request.Query;
+            this.OrderByQueryArgumentKey = this.jsonPropertyNameResolver.Resolve("Sort");
         }
 
-        public string OrderByQueryArgumentKey { get; set; } = "sort";
+        public string OrderByQueryArgumentKey { get; set; }
 
         public IEnumerable<OrderByRequest> ParseRequestQuery(ICollection<string> supportedOrderBys)
         {
@@ -32,18 +37,23 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
                 .SelectMany(o => o.Split(','))
                 .Select(o => o.Trim())
                 .Where(o => !string.IsNullOrEmpty(o))
-                .Select(this.ParseOrderBy)
-                .Where(o => supportedOrderBys.Contains(o.Property))
+                .Select(o => this.ParseOrderBy(o, supportedOrderBys))
+                .Where(o => o != null)
                 .ToList();
         }
 
-        private OrderByRequest ParseOrderBy(string orderByString)
+        private OrderByRequest ParseOrderBy(string orderByString, IEnumerable<string> supportedOrderBys)
         {
-            return orderByString.StartsWith("-")
-                ? new OrderByRequest(
-                    orderByString, orderByString.TrimStart('-'), OrderByDirection.Descending)
-                : new OrderByRequest(
-                    orderByString, orderByString.TrimStart('+'), OrderByDirection.Ascending);
+            var direction = orderByString.StartsWith("-")
+                ? OrderByDirection.Descending
+                : OrderByDirection.Ascending;
+            var property = orderByString.TrimStart('-', '+');
+            return (
+                from supportedOrderBy
+                in supportedOrderBys
+                where this.jsonPropertyNameResolver.Resolve(supportedOrderBy) == property
+                select new OrderByRequest(orderByString, supportedOrderBy, direction))
+                .FirstOrDefault();
         }
     }
 }

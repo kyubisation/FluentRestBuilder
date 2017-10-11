@@ -19,7 +19,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         [Fact]
         public void TestNonExistantCase()
         {
-            var interpreter = new FilterByClientRequestInterpreter(new EmptyHttpContextStorage());
+            var interpreter = new FilterByClientRequestInterpreter(
+                new EmptyHttpContextStorage(), new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery(new[] { "p1", "p2" });
             Assert.Empty(result);
         }
@@ -27,18 +28,18 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         [Fact]
         public void TestEmptyCase()
         {
-            var interpreter = new FilterByClientRequestInterpreter(new HttpContextStorage());
+            var interpreter = new FilterByClientRequestInterpreter(
+                new HttpContextStorage(), new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery(new[] { "p1", "p2" });
             Assert.Empty(result);
         }
 
-        [Theory]
-        [InlineData(Property)]
-        [InlineData("property")]
-        public void TestEquals(string propertyParameter)
+        [Fact]
+        public void TestEquals()
         {
             var interpreter = new FilterByClientRequestInterpreter(
-                new HttpContextStorage().SetValue(propertyParameter, Filter));
+                new HttpContextStorage().SetValue(Property.ToLower(), Filter),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
             Assert.Single(result);
             var request = result.First();
@@ -80,7 +81,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
                 context.SetValue(filterRequest.Property, $"{prefix}{filterRequest.Filter}");
             }
 
-            var interpreter = new FilterByClientRequestInterpreter(context);
+            var interpreter = new FilterByClientRequestInterpreter(
+                context, new MockPropertyNameResolver());
             var result = interpreter
                 .ParseRequestQuery(filterRequests.Select(r => r.Property).ToList())
                 .ToList();
@@ -95,7 +97,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         private void TestSingleFilterCase(string filterPrefix, FilterType expectedType)
         {
             var interpreter = new FilterByClientRequestInterpreter(
-                new HttpContextStorage().SetValue(Property, $"{filterPrefix}{Filter}"));
+                new HttpContextStorage().SetValue(Property.ToLower(), $"{filterPrefix}{Filter}"),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
             Assert.Single(result);
             var request = result.First();

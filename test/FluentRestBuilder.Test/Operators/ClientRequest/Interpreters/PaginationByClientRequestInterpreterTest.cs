@@ -5,6 +5,7 @@
 namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
 {
     using FluentRestBuilder.Operators.ClientRequest.Interpreters;
+    using Mocks;
     using Mocks.HttpContextStorage;
     using Xunit;
 
@@ -14,7 +15,7 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         public void TestNonExistantCase()
         {
             var interpreter = new PaginationByClientRequestInterpreter(
-                new EmptyHttpContextStorage());
+                new EmptyHttpContextStorage(), new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Null(result.Limit);
             Assert.Null(result.Offset);
@@ -24,7 +25,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         public void TestEmptyPageCase()
         {
             var interpreter = new PaginationByClientRequestInterpreter(
-                new HttpContextStorage().SetOffsetValue(string.Empty));
+                new HttpContextStorage().SetOffsetValue(string.Empty),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Null(result.Limit);
             Assert.Null(result.Offset);
@@ -34,7 +36,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         public void TestEmptyEntriesPerPageCase()
         {
             var interpreter = new PaginationByClientRequestInterpreter(
-                new HttpContextStorage().SetLimitValue(string.Empty));
+                new HttpContextStorage().SetLimitValue(string.Empty),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Null(result.Limit);
             Assert.Null(result.Offset);
@@ -48,7 +51,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         public void NotSupportedOffsetTheory(string page)
         {
             var interpreter = new PaginationByClientRequestInterpreter(
-                new HttpContextStorage().SetOffsetValue(page));
+                new HttpContextStorage().SetOffsetValue(page),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Null(result.Limit);
             Assert.Null(result.Offset);
@@ -62,7 +66,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         public void NotSupportedLimitTheory(string entriesPerPage)
         {
             var interpreter = new PaginationByClientRequestInterpreter(
-                new HttpContextStorage().SetLimitValue(entriesPerPage));
+                new HttpContextStorage().SetLimitValue(entriesPerPage),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Null(result.Limit);
             Assert.Null(result.Offset);
@@ -73,7 +78,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         {
             const int offset = 5;
             var interpreter = new PaginationByClientRequestInterpreter(
-                new HttpContextStorage().SetOffsetValue(offset.ToString()));
+                new HttpContextStorage().SetOffsetValue(offset.ToString()),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Equal(offset, result.Offset);
         }
@@ -83,7 +89,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         {
             const int limit = 5;
             var interpreter = new PaginationByClientRequestInterpreter(
-                new HttpContextStorage().SetLimitValue(limit.ToString()));
+                new HttpContextStorage().SetLimitValue(limit.ToString()),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Equal(limit, result.Limit);
         }
@@ -99,7 +106,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         public void RangeHeaderMalformattedTheory(string rangeValue)
         {
             var interpreter = new PaginationByClientRequestInterpreter(
-                new HttpContextStorage().SetRangeHeader(rangeValue));
+                new HttpContextStorage().SetRangeHeader(rangeValue),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Null(result.Limit);
             Assert.Null(result.Offset);
@@ -111,7 +119,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         public void RangeHeaderTheory(int rangeStart, int rangeEnd, int limit)
         {
             var interpreter = new PaginationByClientRequestInterpreter(
-                new HttpContextStorage().SetRangeHeader($"items={rangeStart}-{rangeEnd}"));
+                new HttpContextStorage().SetRangeHeader($"items={rangeStart}-{rangeEnd}"),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Equal(rangeStart, result.Offset);
             Assert.Equal(limit, result.Limit);
@@ -126,7 +135,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
                 .SetRangeHeader($"items={0}-{29}")
                 .SetOffsetValue(offset.ToString())
                 .SetLimitValue(limit.ToString());
-            var interpreter = new PaginationByClientRequestInterpreter(context);
+            var interpreter = new PaginationByClientRequestInterpreter(
+                context, new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery();
             Assert.Equal(offset, result.Offset);
             Assert.Equal(limit, result.Limit);

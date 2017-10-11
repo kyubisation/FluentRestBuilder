@@ -10,6 +10,7 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
     using FluentRestBuilder.Operators.ClientRequest.Interpreters;
     using Mocks;
     using Mocks.HttpContextStorage;
+    using Newtonsoft.Json.Serialization;
     using Xunit;
 
     public class OrderByClientRequestInterpreterTest
@@ -20,7 +21,7 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         public void TestNonExistantCase()
         {
             var interpreter = new OrderByClientRequestInterpreter(
-                new EmptyHttpContextStorage());
+                new EmptyHttpContextStorage(), new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery(new[] { "p1" });
             Assert.Empty(result);
         }
@@ -29,7 +30,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         public void TestEmptyCase()
         {
             var interpreter = new OrderByClientRequestInterpreter(
-                new HttpContextStorage().SetOrderByValue(string.Empty));
+                new HttpContextStorage().SetOrderByValue(string.Empty),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery(new[] { "p1" });
             Assert.Empty(result);
         }
@@ -38,22 +40,24 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         public void TestAscendingOrder()
         {
             var interpreter = new OrderByClientRequestInterpreter(
-                new HttpContextStorage().SetOrderByValue(Property));
+                new HttpContextStorage().SetOrderByValue(Property.ToLower()),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery(new[] { Property })
                 .ToList();
             Assert.Single(result);
             var request = result.First();
             Assert.Equal(Property, request.Property);
-            Assert.Equal(Property, request.OriginalProperty);
+            Assert.Equal(Property.ToLower(), request.OriginalProperty);
             Assert.Equal(OrderByDirection.Ascending, request.Direction);
         }
 
         [Fact]
         public void TestDescendingOrder()
         {
-            var orderByProperty = $"-{Property}";
+            var orderByProperty = $"-{Property}".ToLower();
             var interpreter = new OrderByClientRequestInterpreter(
-                new HttpContextStorage().SetOrderByValue(orderByProperty));
+                new HttpContextStorage().SetOrderByValue(orderByProperty),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery(new[] { Property })
                 .ToList();
             Assert.Single(result);
@@ -74,7 +78,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
             var orderBy = orderByRequests.Select(o => o.OriginalProperty)
                 .Aggregate((current, next) => $"{current},{next}");
             var interpreter = new OrderByClientRequestInterpreter(
-                new HttpContextStorage().SetOrderByValue(orderBy));
+                new HttpContextStorage().SetOrderByValue(orderBy),
+                new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery(new[] { "p1", "p2" })
                 .ToList();
             Assert.Equal(orderByRequests, result, new PropertyComparer<OrderByRequest>());

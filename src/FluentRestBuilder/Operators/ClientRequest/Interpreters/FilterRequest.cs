@@ -6,12 +6,21 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 {
     public class FilterRequest
     {
-        public FilterRequest(string property, FilterType filterType, string filter)
+        public FilterRequest(
+            string originalProperty, string property, FilterType filterType, string filter)
         {
+            this.OriginalProperty = originalProperty;
             this.Property = property;
             this.FilterType = filterType;
             this.Filter = filter;
         }
+
+        public FilterRequest(string property, FilterType filterType, string filter)
+            : this(property, property, filterType, filter)
+        {
+        }
+
+        public string OriginalProperty { get; }
 
         public string Property { get; }
 

@@ -15,6 +15,7 @@ namespace FluentRestBuilder.Builder
         {
             this.Services = services;
             this.Services.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
+            this.Services.TryAddScoped<IJsonPropertyNameResolver, JsonPropertyNameResolver>();
             this.Services.TryAddScoped<
                 IFilterByClientRequestInterpreter, FilterByClientRequestInterpreter>();
             this.Services.TryAddScoped<

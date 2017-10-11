@@ -11,12 +11,15 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
     {
         private readonly IScopedStorage<HttpContext> httpContextStorage;
 
-        public SearchByClientRequestInterpreter(IScopedStorage<HttpContext> httpContextStorage)
+        public SearchByClientRequestInterpreter(
+            IScopedStorage<HttpContext> httpContextStorage,
+            IJsonPropertyNameResolver jsonPropertyNameResolver)
         {
             this.httpContextStorage = httpContextStorage;
+            this.SearchQueryArgumentKey = jsonPropertyNameResolver.Resolve("Q");
         }
 
-        public string SearchQueryArgumentKey { get; set; } = "q";
+        public string SearchQueryArgumentKey { get; set; }
 
         public string ParseRequestQuery()
         {

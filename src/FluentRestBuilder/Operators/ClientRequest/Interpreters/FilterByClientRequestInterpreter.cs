@@ -23,9 +23,13 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
             };
 
         private readonly IQueryCollection queryCollection;
+        private readonly IJsonPropertyNameResolver jsonPropertyNameResolver;
 
-        public FilterByClientRequestInterpreter(IScopedStorage<HttpContext> httpContextStorage)
+        public FilterByClientRequestInterpreter(
+            IScopedStorage<HttpContext> httpContextStorage,
+            IJsonPropertyNameResolver jsonPropertyNameResolver)
         {
+            this.jsonPropertyNameResolver = jsonPropertyNameResolver;
             this.queryCollection = httpContextStorage.Value.Request.Query;
         }
 
@@ -44,21 +48,24 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 
         private FilterRequest ResolveFilterRequest(string supportedFilter)
         {
-            return this.queryCollection.TryGetValue(supportedFilter, out var filterValues)
-                ? this.InterpretFilterRequest(supportedFilter, filterValues) : null;
+            var filterKey = this.jsonPropertyNameResolver.Resolve(supportedFilter);
+            return this.queryCollection.TryGetValue(filterKey, out var filterValues)
+                ? this.InterpretFilterRequest(filterKey, supportedFilter, filterValues) : null;
         }
 
-        private FilterRequest InterpretFilterRequest(string property, string filter)
+        private FilterRequest InterpretFilterRequest(
+            string originalProperty, string property, string filter)
         {
             foreach (var filterType in FilterTypeMap.Where(f => filter.StartsWith(f.Key)))
             {
                 return new FilterRequest(
+                    originalProperty,
                     property,
                     filterType.Value,
                     filter.Substring(filterType.Key.Length));
             }
 
-            return new FilterRequest(property, FilterType.Equals, filter);
+            return new FilterRequest(originalProperty, property, FilterType.Equals, filter);
         }
     }
 }
