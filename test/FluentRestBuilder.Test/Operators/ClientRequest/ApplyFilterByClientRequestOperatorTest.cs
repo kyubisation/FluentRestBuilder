@@ -47,13 +47,12 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest
         {
             var entities = this.database.CreateEnumeratedEntities(10);
             var entity = entities[3];
-            var filterDictionary = new FilterExpressionProviderDictionary<Entity>(this.provider)
-                .AddFilter(nameof(Entity.Name), (f, d) => d.AddEquals(e => e.Name == f));
             this.interpreter.Add(
                 new FilterRequest(nameof(Entity.Name), FilterType.Equals, entity.Name));
             var resultEntities = await Observable.Single(
                     this.database.Create().Entities, this.provider)
-                .ApplyFilterByClientRequest(filterDictionary)
+                .ApplyFilterByClientRequest(filter => filter
+                    .AddFilter(e => e.Name, (f, d) => d.AddEquals(e => e.Name == f)))
                 .ToList();
             Assert.Single(resultEntities);
             Assert.Equal(entity.Id, resultEntities.Single().Id);

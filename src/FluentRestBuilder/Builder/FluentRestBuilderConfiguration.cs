@@ -4,8 +4,10 @@
 
 namespace FluentRestBuilder.Builder
 {
+    using System;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Operators.ClientRequest.FilterConverters;
     using Operators.ClientRequest.Interpreters;
     using Storage;
 
@@ -15,6 +17,14 @@ namespace FluentRestBuilder.Builder
         {
             this.Services = services;
             this.Services.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
+            this.RegisterInterpreters();
+            this.RegisterFilterConverters();
+        }
+
+        public IServiceCollection Services { get; }
+
+        private void RegisterInterpreters()
+        {
             this.Services.TryAddScoped<IJsonPropertyNameResolver, JsonPropertyNameResolver>();
             this.Services.TryAddScoped<
                 IFilterByClientRequestInterpreter, FilterByClientRequestInterpreter>();
@@ -26,6 +36,20 @@ namespace FluentRestBuilder.Builder
                 ISearchByClientRequestInterpreter, SearchByClientRequestInterpreter>();
         }
 
-        public IServiceCollection Services { get; }
+        private void RegisterFilterConverters()
+        {
+            this.Services.TryAddSingleton<
+                ICultureInfoConversionPriorityCollection, CultureInfoConversionPriorityCollection>();
+            this.Services.TryAddSingleton(
+                typeof(IFilterToTypeConverter<>), typeof(GenericFilterToTypeConverter<>));
+            this.Services.TryAddSingleton<IFilterToTypeConverter<bool>, FilterToBooleanConverter>();
+            this.Services.TryAddSingleton<IFilterToTypeConverter<DateTime>, FilterToDateTimeConverter>();
+            this.Services.TryAddSingleton<IFilterToTypeConverter<decimal>, FilterToDecimalConverter>();
+            this.Services.TryAddSingleton<IFilterToTypeConverter<double>, FilterToDoubleConverter>();
+            this.Services.TryAddSingleton<IFilterToTypeConverter<float>, FilterToFloatConverter>();
+            this.Services.TryAddSingleton<IFilterToTypeConverter<int>, FilterToIntegerConverter>();
+            this.Services.TryAddSingleton<IFilterToTypeConverter<long>, FilterToLongConverter>();
+            this.Services.TryAddSingleton<IFilterToTypeConverter<short>, FilterToShortConverter>();
+        }
     }
 }

@@ -43,6 +43,21 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
         /// <summary>
         /// Add a filter for a field/property with the string type.
         /// Provide a factory function receiving the filter value for this field/property and
+        /// returning a dictionary of supported filter types with appropriate implementation.
+        /// </summary>
+        /// <param name="propertySelector">The field/property selector.</param>
+        /// <param name="builder">The filter factory.</param>
+        /// <returns>
+        /// Itself. An instance of <see cref="FilterExpressionProviderDictionary{TEntity}"/>.
+        /// </returns>
+        public FilterExpressionProviderDictionary<TEntity> AddFilter<TProperty>(
+            Expression<Func<TEntity, TProperty>> propertySelector,
+            Func<string, IDictionary<FilterType, Expression<Func<TEntity, bool>>>> builder) =>
+            this.AddFilter(propertySelector.ToPropertyName(), builder);
+
+        /// <summary>
+        /// Add a filter for a field/property with the string type.
+        /// Provide a factory function receiving the filter value for this field/property and
         /// <see cref="FilterExpressionDictionary{TEntity}"/> to create the appropriate
         /// filter type implementations.
         /// </summary>
@@ -52,21 +67,41 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
         /// Itself. An instance of <see cref="FilterExpressionProviderDictionary{TEntity}"/>.
         /// </returns>
         public FilterExpressionProviderDictionary<TEntity> AddFilter(
-                string property,
-                Func<
-                    string,
-                    FilterExpressionDictionary<TEntity>,
-                    IDictionary<FilterType, Expression<Func<TEntity, bool>>>> builder) =>
+            string property,
+            Func<
+                string,
+                FilterExpressionDictionary<TEntity>,
+                IDictionary<FilterType, Expression<Func<TEntity, bool>>>> builder) =>
             this.AddFilter(property, f => builder(f, new FilterExpressionDictionary<TEntity>()));
+
+        /// <summary>
+        /// Add a filter for a field/property with the string type.
+        /// Provide a factory function receiving the filter value for this field/property and
+        /// <see cref="FilterExpressionDictionary{TEntity}"/> to create the appropriate
+        /// filter type implementations.
+        /// </summary>
+        /// <param name="propertySelector">The field/property selector.</param>
+        /// <param name="builder">The filter factory.</param>
+        /// <returns>
+        /// Itself. An instance of <see cref="FilterExpressionProviderDictionary{TEntity}"/>.
+        /// </returns>
+        public FilterExpressionProviderDictionary<TEntity> AddFilter<TProperty>(
+            Expression<Func<TEntity, TProperty>> propertySelector,
+            Func<
+                string,
+                FilterExpressionDictionary<TEntity>,
+                IDictionary<FilterType, Expression<Func<TEntity, bool>>>> builder) =>
+            this.AddFilter(propertySelector.ToPropertyName(), builder);
 
         /// <summary>
         /// Add a filter for a field/property with a non-string type.
         /// Provide a factory function receiving the filter value for this field/property and
         /// <see cref="FilterExpressionDictionary{TEntity}"/> to create the appropriate
         /// filter type implementations.
-        ///
+        /// <para>
         /// This uses <see cref="IFilterToTypeConverter{TFilter}"/> to parse the filter
         /// value from to client to the given filter type. Most native types are supported.
+        /// </para>
         /// </summary>
         /// <typeparam name="TFilter">The filter type.</typeparam>
         /// <param name="property">The field/property name.</param>
@@ -75,21 +110,47 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
         /// Itself. An instance of <see cref="FilterExpressionProviderDictionary{TEntity}"/>.
         /// </returns>
         public FilterExpressionProviderDictionary<TEntity> AddTypedFilter<TFilter>(
-                string property,
-                Func<
-                    TFilter,
-                    FilterExpressionDictionary<TEntity>,
-                    IDictionary<FilterType, Expression<Func<TEntity, bool>>>> builder) =>
+            string property,
+            Func<
+                TFilter,
+                FilterExpressionDictionary<TEntity>,
+                IDictionary<FilterType, Expression<Func<TEntity, bool>>>> builder) =>
             this.AddTypedFilter<TFilter>(
                 property, f => builder(f, new FilterExpressionDictionary<TEntity>()));
 
         /// <summary>
         /// Add a filter for a field/property with a non-string type.
         /// Provide a factory function receiving the filter value for this field/property and
-        /// returning a dictionary of supported filter types with appropriate implementation.
-        ///
+        /// <see cref="FilterExpressionDictionary{TEntity}"/> to create the appropriate
+        /// filter type implementations.
+        /// <para>
         /// This uses <see cref="IFilterToTypeConverter{TFilter}"/> to parse the filter
         /// value from to client to the given filter type. Most native types are supported.
+        /// </para>
+        /// </summary>
+        /// <typeparam name="TFilter">The filter type.</typeparam>
+        /// <typeparam name="TProperty">The property type.</typeparam>
+        /// <param name="propertySelector">The field/property selector.</param>
+        /// <param name="builder">The filter factory.</param>
+        /// <returns>
+        /// Itself. An instance of <see cref="FilterExpressionProviderDictionary{TEntity}"/>.
+        /// </returns>
+        public FilterExpressionProviderDictionary<TEntity> AddTypedFilter<TFilter, TProperty>(
+            Expression<Func<TEntity, TProperty>> propertySelector,
+            Func<
+                TFilter,
+                FilterExpressionDictionary<TEntity>,
+                IDictionary<FilterType, Expression<Func<TEntity, bool>>>> builder) =>
+            this.AddTypedFilter(propertySelector.ToPropertyName(), builder);
+
+        /// <summary>
+        /// Add a filter for a field/property with a non-string type.
+        /// Provide a factory function receiving the filter value for this field/property and
+        /// returning a dictionary of supported filter types with appropriate implementation.
+        /// <para>
+        /// This uses <see cref="IFilterToTypeConverter{TFilter}"/> to parse the filter
+        /// value from to client to the given filter type. Most native types are supported.
+        /// </para>
         /// </summary>
         /// <typeparam name="TFilter">The filter type.</typeparam>
         /// <param name="property">The field/property name.</param>
@@ -107,5 +168,26 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
             this.Add(property, expressionProvider);
             return this;
         }
+
+        /// <summary>
+        /// Add a filter for a field/property with a non-string type.
+        /// Provide a factory function receiving the filter value for this field/property and
+        /// returning a dictionary of supported filter types with appropriate implementation.
+        /// <para>
+        /// This uses <see cref="IFilterToTypeConverter{TFilter}"/> to parse the filter
+        /// value from to client to the given filter type. Most native types are supported.
+        /// </para>
+        /// </summary>
+        /// <typeparam name="TFilter">The filter type.</typeparam>
+        /// <typeparam name="TProperty">The property type.</typeparam>
+        /// <param name="propertySelector">The field/property selector.</param>
+        /// <param name="builder">The filter factory.</param>
+        /// <returns>
+        /// Itself. An instance of <see cref="FilterExpressionProviderDictionary{TEntity}"/>.
+        /// </returns>
+        public FilterExpressionProviderDictionary<TEntity> AddTypedFilter<TFilter, TProperty>(
+            Expression<Func<TEntity, TProperty>> propertySelector,
+            Func<TFilter, IDictionary<FilterType, Expression<Func<TEntity, bool>>>> builder) =>
+            this.AddTypedFilter(propertySelector.ToPropertyName(), builder);
     }
 }
