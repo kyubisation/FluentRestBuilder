@@ -7,7 +7,6 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using FluentRestBuilder.Operators.ClientRequest;
     using FluentRestBuilder.Operators.ClientRequest.Interpreters;
     using FluentRestBuilder.Operators.ClientRequest.Interpreters.Requests;
     using FluentRestBuilder.Operators.ClientRequest.OrderByExpressions;
@@ -50,7 +49,7 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest
                 .OrderByDescending(e => e.Name)
                 .ToList();
             var orderByDictionary = new OrderByExpressionDictionary<Entity>()
-                .Add(nameof(Entity.Name), e => e.Name);
+                .Add(e => e.Name);
             this.interpreter
                 .Add(new OrderByRequest(nameof(Entity.Name), OrderByDirection.Descending));
             var resultEntities = await Observable.Single(
@@ -75,9 +74,9 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest
                 .ThenBy(e => e.Id)
                 .ToList();
             var orderByDictionary = new OrderByExpressionDictionary<Entity>()
-                .Add(nameof(Entity.Name), e => e.Name)
-                .Add(nameof(Entity.Description), e => e.Description)
-                .Add(nameof(Entity.Id), e => e.Id);
+                .Add(e => e.Name)
+                .Add(e => e.Description)
+                .Add(e => e.Id);
             this.interpreter
                 .Add(new OrderByRequest(nameof(Entity.Description), OrderByDirection.Ascending))
                 .Add(new OrderByRequest(nameof(Entity.Name), OrderByDirection.Descending))

@@ -6,7 +6,6 @@
 namespace FluentRestBuilder
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Extensions.DependencyInjection;
     using Operators.ClientRequest.Interpreters;
@@ -31,9 +30,7 @@ namespace FluentRestBuilder
         /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<IQueryable<TSource>> ApplyOrderByClientRequest<TSource>(
             this IProviderObservable<IQueryable<TSource>> observable,
-            Func<
-                OrderByExpressionDictionary<TSource>,
-                IDictionary<string, IOrderByExpressionFactory<TSource>>> factory)
+            Func<OrderByExpressionDictionary<TSource>, IOrderByExpressionDictionary<TSource>> factory)
         {
             var dictionary = factory(new OrderByExpressionDictionary<TSource>());
             return observable.ApplyOrderByClientRequest(dictionary);
@@ -41,7 +38,7 @@ namespace FluentRestBuilder
 
         /// <summary>
         /// Apply order by logic to the received <see cref="IQueryable{T}"/>.
-        /// Tries to resolve IDictionary&lt;string, IOrderByExpressionFactory&lt;TSource&gt;&gt;
+        /// Tries to resolve <see cref="IOrderByExpressionDictionary{TSource}"/>
         /// via <see cref="IServiceProvider"/>.
         /// <para>
         /// The default query parameter key is "sort".
@@ -57,7 +54,7 @@ namespace FluentRestBuilder
             this IProviderObservable<IQueryable<TSource>> observable)
         {
             var dictionary = observable.ServiceProvider
-                .GetRequiredService<IDictionary<string, IOrderByExpressionFactory<TSource>>>();
+                .GetRequiredService<IOrderByExpressionDictionary<TSource>>();
             return observable.ApplyOrderByClientRequest(dictionary);
         }
     }

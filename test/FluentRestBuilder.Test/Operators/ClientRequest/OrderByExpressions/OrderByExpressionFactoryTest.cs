@@ -1,4 +1,4 @@
-﻿// <copyright file="DescendingOrderByExpressionTest.cs" company="Kyubisation">
+﻿// <copyright file="OrderByExpressionFactoryTest.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -6,13 +6,14 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.OrderByExpressions
 {
     using System.Linq;
     using System.Threading.Tasks;
+    using FluentRestBuilder.Operators.ClientRequest.Interpreters.Requests;
     using FluentRestBuilder.Operators.ClientRequest.OrderByExpressions;
     using Microsoft.EntityFrameworkCore;
     using Mocks;
     using Mocks.EntityFramework;
     using Xunit;
 
-    public class DescendingOrderByExpressionTest
+    public class OrderByExpressionFactoryTest
     {
         private readonly PersistantDatabase database = new PersistantDatabase();
 
@@ -22,7 +23,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.OrderByExpressions
             var entities = this.database.CreateEnumeratedEntities(5)
                 .OrderByDescending(e => e.Id)
                 .ToList();
-            var orderByExpression = new DescendingOrderByExpression<Entity, int>(e => e.Id);
+            var orderByExpression = new OrderByExpressionFactory<Entity, int>(e => e.Id)
+                .Create(OrderByDirection.Descending);
             using (var context = this.database.Create())
             {
                 var result = await orderByExpression
@@ -40,7 +42,8 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.OrderByExpressions
                 .OrderBy(e => e.Name)
                 .ThenByDescending(e => e.Id)
                 .ToList();
-            var orderByExpression = new DescendingOrderByExpression<Entity, int>(e => e.Id);
+            var orderByExpression = new OrderByExpressionFactory<Entity, int>(e => e.Id)
+                .Create(OrderByDirection.Descending);
             using (var context = this.database.Create())
             {
                 var result = await orderByExpression
