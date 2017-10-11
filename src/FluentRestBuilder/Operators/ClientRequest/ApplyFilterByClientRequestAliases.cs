@@ -6,7 +6,6 @@
 namespace FluentRestBuilder
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Extensions.DependencyInjection;
     using Operators.ClientRequest.FilterExpressions;
@@ -29,9 +28,7 @@ namespace FluentRestBuilder
         /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<IQueryable<TSource>> ApplyFilterByClientRequest<TSource>(
             this IProviderObservable<IQueryable<TSource>> observable,
-            Func<
-                FilterExpressionProviderDictionary<TSource>,
-                IDictionary<string, IFilterExpressionProvider<TSource>>> factory)
+            Func<FilterExpressionProviderDictionary<TSource>, IFilterExpressionProviderDictionary<TSource>> factory)
         {
             var filterProvider = new FilterExpressionProviderDictionary<TSource>(
                 observable.ServiceProvider);
@@ -41,7 +38,7 @@ namespace FluentRestBuilder
 
         /// <summary>
         /// Apply filter logic to the received <see cref="IQueryable{T}"/>.
-        /// Tries to resolve IDictionary&lt;string, IFilterExpressionProvider&lt;TSource&gt;&gt;
+        /// Tries to resolve <see cref="IFilterExpressionProviderDictionary{TEntity}"/>
         /// via <see cref="IServiceProvider"/>.
         /// <para>
         /// Matches the query parameters with the keys of the given filter dictionary.
@@ -55,7 +52,7 @@ namespace FluentRestBuilder
             this IProviderObservable<IQueryable<TSource>> observable)
         {
             var filterDictionary = observable.ServiceProvider
-                .GetService<IDictionary<string, IFilterExpressionProvider<TSource>>>();
+                .GetService<IFilterExpressionProviderDictionary<TSource>>();
             return observable.ApplyFilterByClientRequest(filterDictionary);
         }
     }

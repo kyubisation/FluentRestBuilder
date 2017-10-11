@@ -11,12 +11,12 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
     using Interpreters.Requests;
     using Microsoft.Extensions.DependencyInjection;
 
-    public class FilterExpressionProviderDictionary<TEntity> : Dictionary<string, IFilterExpressionProvider<TEntity>>
+    public class FilterExpressionProviderDictionary<TEntity>
+        : Dictionary<string, IFilterExpressionProvider<TEntity>>, IFilterExpressionProviderDictionary<TEntity>
     {
         private readonly IServiceProvider serviceProvider;
 
         public FilterExpressionProviderDictionary(IServiceProvider serviceProvider)
-            : base(StringComparer.OrdinalIgnoreCase)
         {
             this.serviceProvider = serviceProvider;
         }
