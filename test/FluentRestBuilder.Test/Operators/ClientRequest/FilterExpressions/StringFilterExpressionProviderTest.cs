@@ -5,7 +5,6 @@
 namespace FluentRestBuilder.Test.Operators.ClientRequest.FilterExpressions
 {
     using System.Linq;
-    using FluentRestBuilder.Operators.ClientRequest.FilterConverters;
     using FluentRestBuilder.Operators.ClientRequest.FilterExpressions;
     using FluentRestBuilder.Operators.ClientRequest.Interpreters.Requests;
     using Mocks;
