@@ -6,12 +6,15 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters.Requests
 {
     public enum FilterType
     {
-        None,
+        Default,
         Equals,
         Contains,
         GreaterThan,
         GreaterThanOrEqual,
         LessThan,
         LessThanOrEqual,
+        StartsWith,
+        EndsWith,
+        NotEqual,
     }
 }

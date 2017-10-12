@@ -43,17 +43,17 @@ namespace FluentRestBuilder.Mocks.EntityFramework
             return this.CreateEntities(
                 amount,
                 i => new Parent
-            {
-                Id = i,
-                Name = $"name{i}",
-                Children = Enumerable.Range(1, random.Next(3, 5))
+                {
+                    Id = i,
+                    Name = $"name{i}",
+                    Children = Enumerable.Range(1, random.Next(3, 5))
                     .Select(k => new Child
                     {
                         Id = ++childCounter,
                         Name = $"child name {i} {k}",
                     })
                     .ToList(),
-            });
+                });
         }
 
         public List<Entity> CreateEnumeratedEntities(int amount) =>
@@ -68,13 +68,16 @@ namespace FluentRestBuilder.Mocks.EntityFramework
             return this.CreateEntities(
                 amount,
                 i => new OtherEntity
-            {
-                Id = i,
-                Name = $"Name {i}",
-                Description = $"Description {i}",
-                Rate = 0.11 + i,
-                CreatedOn = new DateTime(2017, 1, i, 0, 0, 0),
-            });
+                {
+                    Id = i,
+                    Name = $"Name {i}",
+                    Description = $"Description {i}",
+                    Rate = 0.11 + i,
+                    CreatedOn = new DateTime(2017, 1, i, 0, 0, 0),
+                    IntValue = i % 2 == 0 ? default(int?) : i * 2,
+                    Active = i % 2 == 0,
+                    Status = (new bool?[] { null, false, true })[i % 3],
+                });
         }
 
         private static Entity CreateEntity(int id, string name, string description) =>

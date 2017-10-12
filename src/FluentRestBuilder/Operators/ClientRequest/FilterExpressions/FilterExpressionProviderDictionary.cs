@@ -23,6 +23,77 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
 
         /// <summary>
         /// Add a filter for a field/property with the string type.
+        /// Configures Equals, NotEqual, Contains, StartsWith and EndsWith filters
+        /// with Contains being the default.
+        /// </summary>
+        /// <param name="propertySelector">The field/property selector.</param>
+        /// <returns>
+        /// Itself. An instance of <see cref="FilterExpressionProviderDictionary{TEntity}"/>.
+        /// </returns>
+        public FilterExpressionProviderDictionary<TEntity> AddStringFilter(
+            Expression<Func<TEntity, string>> propertySelector)
+        {
+            var property = propertySelector.ToPropertyName();
+            var expressionProvider = new StringFilterExpressionProvider<TEntity>(property);
+            this.Add(property, expressionProvider);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a filter for a field/property with a numeric type.
+        /// Configures Equals, NotEqual, GreaterThan, GreaterThanOrEqual, LessThan and
+        /// LessThanOrEqual filters with Equals being the default.
+        /// </summary>
+        /// <param name="propertySelector">The field/property selector.</param>
+        /// <returns>
+        /// Itself. An instance of <see cref="FilterExpressionProviderDictionary{TEntity}"/>.
+        /// </returns>
+        public FilterExpressionProviderDictionary<TEntity> AddNumericFilter<TNumeric>(
+            Expression<Func<TEntity, TNumeric>> propertySelector)
+        {
+            var property = propertySelector.ToPropertyName();
+            var converter = this.serviceProvider.GetService<IFilterToTypeConverter<TNumeric>>();
+            var expressionProvider = new NumericFilterExpressionProvider<TEntity, TNumeric>(
+                property, converter);
+            this.Add(property, expressionProvider);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a filter for a field/property with a datetime type.
+        /// Configures Equals, NotEqual, GreaterThan, GreaterThanOrEqual, LessThan and
+        /// LessThanOrEqual filters with Equals being the default.
+        /// </summary>
+        /// <param name="propertySelector">The field/property selector.</param>
+        /// <returns>
+        /// Itself. An instance of <see cref="FilterExpressionProviderDictionary{TEntity}"/>.
+        /// </returns>
+        public FilterExpressionProviderDictionary<TEntity> AddDateTimeFilter<TDateTime>(
+            Expression<Func<TEntity, TDateTime>> propertySelector)
+            where TDateTime : struct =>
+            this.AddNumericFilter(propertySelector);
+
+        /// <summary>
+        /// Add a filter for a field/property with a boolean type.
+        /// Configures Equals and NotEqual with Equals being the default.
+        /// </summary>
+        /// <param name="propertySelector">The field/property selector.</param>
+        /// <returns>
+        /// Itself. An instance of <see cref="FilterExpressionProviderDictionary{TEntity}"/>.
+        /// </returns>
+        public FilterExpressionProviderDictionary<TEntity> AddBooleanFilter<TBoolean>(
+            Expression<Func<TEntity, TBoolean>> propertySelector)
+        {
+            var property = propertySelector.ToPropertyName();
+            var converter = this.serviceProvider.GetService<IFilterToTypeConverter<TBoolean>>();
+            var expressionProvider = new BooleanFilterExpressionProvider<TEntity, TBoolean>(
+                property, converter);
+            this.Add(property, expressionProvider);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a filter for a field/property with the string type.
         /// Provide a factory function receiving the filter value for this field/property and
         /// returning a dictionary of supported filter types with appropriate implementation.
         /// </summary>
@@ -129,14 +200,13 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
         /// </para>
         /// </summary>
         /// <typeparam name="TFilter">The filter type.</typeparam>
-        /// <typeparam name="TProperty">The property type.</typeparam>
         /// <param name="propertySelector">The field/property selector.</param>
         /// <param name="builder">The filter factory.</param>
         /// <returns>
         /// Itself. An instance of <see cref="FilterExpressionProviderDictionary{TEntity}"/>.
         /// </returns>
-        public FilterExpressionProviderDictionary<TEntity> AddTypedFilter<TFilter, TProperty>(
-            Expression<Func<TEntity, TProperty>> propertySelector,
+        public FilterExpressionProviderDictionary<TEntity> AddTypedFilter<TFilter>(
+            Expression<Func<TEntity, TFilter>> propertySelector,
             Func<
                 TFilter,
                 FilterExpressionDictionary<TEntity>,
@@ -179,14 +249,13 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
         /// </para>
         /// </summary>
         /// <typeparam name="TFilter">The filter type.</typeparam>
-        /// <typeparam name="TProperty">The property type.</typeparam>
         /// <param name="propertySelector">The field/property selector.</param>
         /// <param name="builder">The filter factory.</param>
         /// <returns>
         /// Itself. An instance of <see cref="FilterExpressionProviderDictionary{TEntity}"/>.
         /// </returns>
-        public FilterExpressionProviderDictionary<TEntity> AddTypedFilter<TFilter, TProperty>(
-            Expression<Func<TEntity, TProperty>> propertySelector,
+        public FilterExpressionProviderDictionary<TEntity> AddTypedFilter<TFilter>(
+            Expression<Func<TEntity, TFilter>> propertySelector,
             Func<TFilter, IDictionary<FilterType, Expression<Func<TEntity, bool>>>> builder) =>
             this.AddTypedFilter(propertySelector.ToPropertyName(), builder);
     }

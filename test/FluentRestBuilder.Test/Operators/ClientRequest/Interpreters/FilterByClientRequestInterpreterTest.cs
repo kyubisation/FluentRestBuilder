@@ -36,10 +36,24 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
         }
 
         [Fact]
-        public void TestEquals()
+        public void TestDefault()
         {
             var interpreter = new FilterByClientRequestInterpreter(
                 new HttpContextStorage().SetValue(Property.ToLower(), Filter),
+                new MockPropertyNameResolver());
+            var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
+            Assert.Single(result);
+            var request = result.First();
+            Assert.Equal(FilterType.Default, request.FilterType);
+            Assert.Equal(Property, request.Property);
+            Assert.Equal(Filter, request.Filter);
+        }
+
+        [Fact]
+        public void TestEquals()
+        {
+            var interpreter = new FilterByClientRequestInterpreter(
+                new HttpContextStorage().SetValue(Property.ToLower(), $"={Filter}"),
                 new MockPropertyNameResolver());
             var result = interpreter.ParseRequestQuery(new[] { Property }).ToList();
             Assert.Single(result);

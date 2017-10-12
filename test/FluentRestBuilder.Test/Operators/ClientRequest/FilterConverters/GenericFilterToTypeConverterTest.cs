@@ -11,31 +11,29 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.FilterConverters
 
     public class GenericFilterToTypeConverterTest
     {
-        private readonly GenericFilterToTypeConverter<double> provider;
-
-        public GenericFilterToTypeConverterTest()
-        {
-            this.provider = new GenericFilterToTypeConverter<double>(
-                new CultureInfoConversionPriorityCollection());
-        }
-
         [Fact]
         public void TestLocalDoubleConversion()
         {
             const double value = 1.1;
             new CultureInfo("fr-FR").AssignAsCurrentUiCulture();
-            var result = this.provider.Parse(value.ToString(CultureInfo.CurrentUICulture));
-            Assert.True(result.Success);
-            Assert.Equal(value, result.Value);
+            this.AssertConversion(value, value.ToString(CultureInfo.CurrentUICulture));
         }
 
         [Fact]
         public void TestInvariantDoubleConversion()
         {
             const double value = 1.1;
-            var result = this.provider.Parse(value.ToString(CultureInfo.InvariantCulture));
+            this.AssertConversion(value, value.ToString(CultureInfo.InvariantCulture));
+        }
+
+        // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
+        private void AssertConversion<TValue>(TValue expected, string value)
+        {
+            var converter = new GenericFilterToTypeConverter<TValue>(
+                new CultureInfoConversionPriorityCollection());
+            var result = converter.Parse(value);
             Assert.True(result.Success);
-            Assert.Equal(value, result.Value);
+            Assert.Equal(expected, result.Value);
         }
     }
 }

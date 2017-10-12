@@ -21,6 +21,9 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
                 ["<"] = FilterType.LessThan,
                 [">"] = FilterType.GreaterThan,
                 ["="] = FilterType.Equals,
+                ["^="] = FilterType.StartsWith,
+                ["$="] = FilterType.EndsWith,
+                ["!="] = FilterType.NotEqual,
             };
 
         private readonly IQueryCollection queryCollection;
@@ -66,7 +69,7 @@ namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
                     filter.Substring(filterType.Key.Length));
             }
 
-            return new FilterRequest(originalProperty, property, FilterType.Equals, filter);
+            return new FilterRequest(originalProperty, property, FilterType.Default, filter);
         }
     }
 }
