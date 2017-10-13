@@ -24,22 +24,29 @@ namespace FluentRestBuilder.Test.Operators.ClientRequest.FilterExpressions
                 .AddFluentRestBuilder()
                 .Services
                 .BuildServiceProvider();
-            var dictionary = new FilterExpressionProviderDictionary<OtherEntity>(provider)
+            var dictionary1 = new FilterExpressionProviderDictionary<OtherEntity>(provider)
                 .AddStringFilter(e => e.Name)
                 .AddNumericFilter(e => e.Id)
                 .AddNumericFilter(e => e.IntValue)
                 .AddDateTimeFilter(e => e.CreatedOn)
                 .AddBooleanFilter(e => e.Active)
                 .AddBooleanFilter(e => e.Status);
-            Assert.Null(dictionary[nameof(OtherEntity.Name)].Resolve(FilterType.GreaterThan, "0"));
-            var expression = dictionary[nameof(OtherEntity.Name)]
-                .Resolve(FilterType.Contains, "Name");
-            using (var context = this.database.Create())
+            var dictionary2 = new FilterExpressionProviderDictionary<OtherEntity>(provider)
+                .AddPropertyFilters();
+            foreach (var dictionary in new[] { dictionary1, dictionary2 })
             {
-                var resultEntities = context.OtherEntities
-                    .Where(expression)
-                    .ToList();
-                Assert.Equal(entities, resultEntities, new PropertyComparer<OtherEntity>());
+                var emptyExpression = dictionary[nameof(OtherEntity.Name)]
+                    .Resolve(FilterType.GreaterThan, "0");
+                Assert.Null(emptyExpression);
+                var expression = dictionary[nameof(OtherEntity.Name)]
+                    .Resolve(FilterType.Contains, "Name");
+                using (var context = this.database.Create())
+                {
+                    var resultEntities = context.OtherEntities
+                        .Where(expression)
+                        .ToList();
+                    Assert.Equal(entities, resultEntities, new PropertyComparer<OtherEntity>());
+                }
             }
         }
     }
