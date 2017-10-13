@@ -21,6 +21,7 @@
     <Authors>Kyubisation</Authors>
     <Copyright>Copyright © 2017 FluentRestBuilder</Copyright>
     <PackageTags>mvc;rest;cache;caching</PackageTags>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\FluentRestBuilder\FluentRestBuilder.csproj" />

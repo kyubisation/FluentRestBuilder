@@ -21,6 +21,7 @@
     <Authors>Kyubisation</Authors>
     <PackageTags>mvc;rest</PackageTags>
     <Copyright>Copyright © 2017 FluentRestBuilder</Copyright>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.0.0" />
