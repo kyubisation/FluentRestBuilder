@@ -338,27 +338,26 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
             }
             else if (BooleanTypes.Contains(property.PropertyType))
             {
-                this.GetType()
-                    .GetRuntimeMethod(nameof(this.AddBooleanFilter), new[] { typeof(string) })
-                    .MakeGenericMethod(property.PropertyType)
-                    .Invoke(this, new object[] { property.Name });
+                this.InvokeMethod(nameof(this.AddBooleanFilter), property);
             }
             else if (DateTimeTypes.Contains(property.PropertyType))
             {
-                this.GetType()
-                    .GetRuntimeMethod(nameof(this.AddDateTimeFilter), new[] { typeof(string) })
-                    .MakeGenericMethod(property.PropertyType)
-                    .Invoke(this, new object[] { property.Name });
+                this.InvokeMethod(nameof(this.AddDateTimeFilter), property);
             }
             else if (property.PropertyType.IsValueType)
             {
-                this.GetType()
-                    .GetRuntimeMethod(nameof(this.AddNumericFilter), new[] { typeof(string) })
-                    .MakeGenericMethod(property.PropertyType)
-                    .Invoke(this, new object[] { property.Name });
+                this.InvokeMethod(nameof(this.AddNumericFilter), property);
             }
 
             return this;
+        }
+
+        private void InvokeMethod(string method, PropertyInfo property)
+        {
+            this.GetType()
+                .GetRuntimeMethod(method, new[] { typeof(string) })
+                .MakeGenericMethod(property.PropertyType)
+                .Invoke(this, new object[] { property.Name });
         }
     }
 }
