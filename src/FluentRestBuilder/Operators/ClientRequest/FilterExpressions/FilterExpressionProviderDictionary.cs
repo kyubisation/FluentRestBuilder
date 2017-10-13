@@ -32,7 +32,7 @@ namespace FluentRestBuilder.Operators.ClientRequest.FilterExpressions
         }
 
         /// <summary>
-        /// Add a filter for each field/property with a string type or value type.
+        /// Add a filter for each public property with a string type or value type.
         /// Configures default filters for their respective types.
         /// </summary>
         /// <returns>
