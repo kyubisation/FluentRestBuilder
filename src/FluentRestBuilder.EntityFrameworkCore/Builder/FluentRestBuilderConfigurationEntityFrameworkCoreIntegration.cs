@@ -5,6 +5,7 @@
 // ReSharper disable once CheckNamespace
 namespace FluentRestBuilder
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using Builder;
@@ -45,14 +46,8 @@ namespace FluentRestBuilder
             this IFluentRestBuilderConfiguration builder)
             where TContext : DbContext
         {
-            const string methodName = nameof(FluentRestBuilderConfigurationIntegration
-                .ConfigureFiltersAndOrderByExpressionsForEntity);
-            var properties = typeof(TContext).GetRuntimeProperties()
-                .Where(p => p.GetGetMethod(true).IsPublic &&
-                            p.PropertyType.IsGenericType &&
-                            p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>));
-            var method = typeof(FluentRestBuilderConfigurationIntegration)
-                .GetRuntimeMethod(methodName, new[] { typeof(IFluentRestBuilderConfiguration) });
+            var properties = ResolveDbSetProperties<TContext>();
+            var method = ResolveMethod();
             foreach (var property in properties)
             {
                 var entityType = property.PropertyType.GenericTypeArguments
@@ -62,6 +57,23 @@ namespace FluentRestBuilder
             }
 
             return builder;
+        }
+
+        private static IEnumerable<PropertyInfo> ResolveDbSetProperties<TContext>()
+        {
+            return typeof(TContext).GetRuntimeProperties()
+                .Where(p => p.GetGetMethod(true).IsPublic &&
+                            p.PropertyType.IsGenericType &&
+                            p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>))
+                .ToList();
+        }
+
+        private static MethodInfo ResolveMethod()
+        {
+            const string methodName = nameof(FluentRestBuilderConfigurationIntegration
+                .ConfigureFiltersAndOrderByExpressionsForEntity);
+            return typeof(FluentRestBuilderConfigurationIntegration)
+                .GetRuntimeMethod(methodName, new[] { typeof(IFluentRestBuilderConfiguration) });
         }
     }
 }
