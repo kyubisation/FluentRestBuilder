@@ -1,4 +1,4 @@
-﻿// <copyright file="SingleObservable.Integration.cs" company="Kyubisation">
+﻿// <copyright file="SingleObservableIntegration.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -7,7 +7,7 @@ namespace FluentRestBuilder
 {
     using Microsoft.AspNetCore.Mvc;
 
-    public static partial class Integration
+    public static class SingleObservableIntegration
     {
         /// <summary>
         /// Create an observable which emits the given value.

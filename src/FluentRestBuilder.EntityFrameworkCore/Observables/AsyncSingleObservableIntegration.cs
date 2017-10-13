@@ -1,4 +1,4 @@
-﻿// <copyright file="AsyncSingleObservable.Integration.cs" company="Kyubisation">
+﻿// <copyright file="AsyncSingleObservableIntegration.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -13,7 +13,7 @@ namespace FluentRestBuilder
     using Microsoft.Extensions.DependencyInjection;
     using Storage;
 
-    public static partial class Integration
+    public static class AsyncSingleObservableIntegration
     {
         /// <summary>
         /// Create an observable which emits either the entity found via the given predicate

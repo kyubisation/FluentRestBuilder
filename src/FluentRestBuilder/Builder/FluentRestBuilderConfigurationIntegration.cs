@@ -1,4 +1,4 @@
-﻿// <copyright file="Integration.cs" company="Kyubisation">
+﻿// <copyright file="FluentRestBuilderConfigurationIntegration.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -9,9 +9,11 @@ namespace FluentRestBuilder
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Operators.ClientRequest.FilterExpressions;
+    using Operators.ClientRequest.OrderByExpressions;
     using Storage;
 
-    public static partial class Integration
+    public static class FluentRestBuilderConfigurationIntegration
     {
         /// <summary>
         /// Registers FluentRestBuilder.
@@ -58,6 +60,27 @@ namespace FluentRestBuilder
         {
             builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddScoped<IScopedStorage<HttpContext>, HttpContextStorage>();
+            return builder;
+        }
+
+        /// <summary>
+        /// Configures filters and order by expressions for all non-complex properties
+        /// of an entity.
+        /// <para>
+        /// Allows <see cref="ApplyFilterByClientRequestOperator"/> and
+        /// <see cref="ApplyOrderByClientRequestOperator"/> to be used without parameters.
+        /// </para>
+        /// </summary>
+        /// <typeparam name="TEntity">The entity type.</typeparam>
+        /// <param name="builder">The FluentRestBuilder configuration instance.</param>
+        /// <returns>The provided FluentRestBuilder configuration instance.</returns>
+        public static IFluentRestBuilderConfiguration ConfigureFiltersAndOrderByExpressionsForEntity<TEntity>(
+            this IFluentRestBuilderConfiguration builder)
+        {
+            builder.Services.AddSingleton<IOrderByExpressionDictionary<TEntity>>(
+                s => new OrderByExpressionDictionary<TEntity>().AddProperties());
+            builder.Services.AddSingleton<IFilterExpressionProviderDictionary<TEntity>>(
+                s => new FilterExpressionProviderDictionary<TEntity>(s).AddPropertyFilters());
             return builder;
         }
     }

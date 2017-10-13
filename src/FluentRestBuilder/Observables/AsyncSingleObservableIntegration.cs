@@ -1,4 +1,4 @@
-﻿// <copyright file="AsyncSingleObservable.Integration.cs" company="Kyubisation">
+﻿// <copyright file="AsyncSingleObservableIntegration.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -9,7 +9,7 @@ namespace FluentRestBuilder
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
-    public static partial class Integration
+    public static class AsyncSingleObservableIntegration
     {
         /// <summary>
         /// Create an observable which calls the provided factory

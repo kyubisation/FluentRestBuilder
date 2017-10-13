@@ -1,4 +1,4 @@
-﻿// <copyright file="Integration.cs" company="Kyubisation">
+﻿// <copyright file="FluentRestBuilderConfigurationHypertextApplicationLanguageIntegration.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -13,7 +13,7 @@ namespace FluentRestBuilder
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Storage;
 
-    public static class Integration
+    public static class FluentRestBuilderConfigurationHypertextApplicationLanguageIntegration
     {
         /// <summary>
         /// Registers the <see cref="IActionContextAccessor"/> to be used to create an instance
