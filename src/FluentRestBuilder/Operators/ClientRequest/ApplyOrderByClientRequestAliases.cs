@@ -7,6 +7,7 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Linq;
+    using Filters;
     using Microsoft.Extensions.DependencyInjection;
     using Operators.ClientRequest.Interpreters;
     using Operators.ClientRequest.OrderByExpressions;
@@ -21,6 +22,7 @@ namespace FluentRestBuilder
         /// Prefix the property with "-" to sort descending.
         /// Implement <see cref="IOrderByClientRequestInterpreter"/> for custom behavior.
         /// </para>
+        /// <para>Requires <see cref="HttpContextProviderAttribute"/> to be set.</para>
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
@@ -46,6 +48,7 @@ namespace FluentRestBuilder
         /// Prefix the property with "-" to sort descending.
         /// Implement <see cref="IOrderByClientRequestInterpreter"/> for custom behavior.
         /// </para>
+        /// <para>Requires <see cref="HttpContextProviderAttribute"/> to be set.</para>
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>

@@ -7,6 +7,7 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Linq;
+    using Filters;
     using Microsoft.Extensions.DependencyInjection;
     using Operators;
     using Operators.ClientRequest;
@@ -22,6 +23,7 @@ namespace FluentRestBuilder
         /// WARNING: Do not use this before FilterByClientRequest, SearchByClientRequest or
         /// OrderByClientRequest! This would result in erroneous pagination logic.
         /// </para>
+        /// <para>Requires <see cref="HttpContextProviderAttribute"/> to be set.</para>
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>

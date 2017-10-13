@@ -8,6 +8,7 @@ namespace FluentRestBuilder
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using Filters;
     using Microsoft.Extensions.DependencyInjection;
     using Operators;
     using Operators.ClientRequest.Interpreters;
@@ -20,6 +21,7 @@ namespace FluentRestBuilder
         /// The default query parameter key is "q".
         /// Implement <see cref="ISearchByClientRequestInterpreter"/> for custom behavior.
         /// </para>
+        /// <para>Requires <see cref="HttpContextProviderAttribute"/> to be set.</para>
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>

@@ -7,6 +7,7 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Collections.Generic;
+    using Filters;
     using HypertextApplicationLanguage;
     using HypertextApplicationLanguage.Links;
     using HypertextApplicationLanguage.Operators;
@@ -22,6 +23,7 @@ namespace FluentRestBuilder
         /// Maps the entries of the received <see cref="IEnumerable{T}"/>
         /// according to the given mapping function and wraps the result
         /// in an <see cref="IRestEntity"/>.
+        /// <para>Requires <see cref="HttpContextProviderAttribute"/> to be set.</para>
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <typeparam name="TTarget">The type of the mapping result.</typeparam>
