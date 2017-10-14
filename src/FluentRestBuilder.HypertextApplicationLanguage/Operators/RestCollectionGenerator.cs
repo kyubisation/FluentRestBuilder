@@ -60,7 +60,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Operators
 
         protected virtual IEnumerable<NamedLink> GenerateLinks()
         {
-            yield return new LinkToSelf(new Link(this.linkHelper.CurrentUrl()));
+            yield return new LinkToSelf(this.linkHelper.CurrentUrl());
             if (this.Info == null)
             {
                 yield break;
