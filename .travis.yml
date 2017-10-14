@@ -1,6 +1,7 @@
 language: csharp
 mono: none
 dist: trusty
+osx_image: xcode8.1
 solution: FluentRestBuilder.sln
 dotnet: 2.0.0
 os:  

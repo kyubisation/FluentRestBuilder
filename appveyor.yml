@@ -7,6 +7,8 @@ branches:
     - /release\/.*/
     - /hotfix\/.*/
 image: Visual Studio 2017
+before_build:
+  - cmd: dotnet restore
 test_script:
   - cmd: .\test.cmd
 before_package:
