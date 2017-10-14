@@ -1,12 +1,20 @@
 language: csharp
-mono: none
-dist: trusty
-osx_image: xcode8.1
-solution: FluentRestBuilder.sln
-dotnet: 2.0.0
-os:  
-  - linux
-  - osx
+
+matrix:
+  fast_finish: true
+  allow_failures:
+  - os: osx
+
+  include:
+    - os: linux
+      dist: trusty
+      dotnet: 2.0.0
+      mono: none
+    - os: osx
+      osx_image: xcode8.2
+      dotnet: 2.0.0
+      mono: none
+
 branches:  
   only:
     - master
@@ -14,11 +22,6 @@ branches:
     - /^feature\/.*$/
     - /^release\/.*$/
     - /^hotfix\/.*$/
-install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      rvm install ruby-2.3.3;
-      rvm --default use 2.3.3;
-    fi
 script:
   - dotnet build
   - ./test.sh
