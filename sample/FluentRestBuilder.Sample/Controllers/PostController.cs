@@ -36,7 +36,7 @@ namespace FluentRestBuilder.Sample.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PostRequest request) =>
             await this.CreateSingle(request)
-                .BadRequestWhen(() => !this.ModelState.IsValid, this.ModelState)
+                .BadRequestWhenModelStateIsInvalid(this.ModelState)
                 .Map(r => new Post
                 {
                     AuthorId = this.User.GetUserId(),
@@ -50,7 +50,7 @@ namespace FluentRestBuilder.Sample.Controllers
         public async Task<IActionResult> Update([FromBody] PostRequest request, int id) =>
             await this.CreateEntitySingle<Post>(id)
                 .NotFoundWhenNull()
-                .BadRequestWhen(() => !this.ModelState.IsValid, this.ModelState)
+                .BadRequestWhenModelStateIsInvalid(this.ModelState)
                 .Do(p =>
                 {
                     p.Title = request.Title;

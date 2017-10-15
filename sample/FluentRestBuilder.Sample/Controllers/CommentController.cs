@@ -37,7 +37,7 @@ namespace FluentRestBuilder.Sample.Controllers
         public async Task<IActionResult> Update([FromBody] CommentRequest request, int id) =>
             await this.CreateEntitySingle<Comment>(id)
                 .NotFoundWhenNull()
-                .BadRequestWhen(() => !this.ModelState.IsValid, this.ModelState)
+                .BadRequestWhenModelStateIsInvalid(this.ModelState)
                 .Do(p =>
                 {
                     p.Title = request.Title;

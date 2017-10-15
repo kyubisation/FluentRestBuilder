@@ -28,7 +28,7 @@ namespace FluentRestBuilder.Sample.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CommentRequest request, int postId) =>
             await this.CreateSingle(request)
-                .BadRequestWhen(() => !this.ModelState.IsValid, this.ModelState)
+                .BadRequestWhenModelStateIsInvalid(this.ModelState)
                 .Map(r => new Comment
                 {
                     AuthorId = this.User.GetUserId(),
