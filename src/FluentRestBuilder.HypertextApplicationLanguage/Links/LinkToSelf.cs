@@ -10,5 +10,10 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Links
             : base(Link.Self, link)
         {
         }
+
+        public LinkToSelf(string url)
+            : this(new Link(url))
+        {
+        }
     }
 }

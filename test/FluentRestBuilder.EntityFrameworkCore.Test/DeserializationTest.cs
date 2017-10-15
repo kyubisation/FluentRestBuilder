@@ -28,7 +28,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test
         public void DeserializeEmptyObjectJson()
         {
             var result = JsonConvert.DeserializeObject<Dictionary<string, string>>("{}");
-            Assert.Equal(0, result.Count);
+            Assert.Empty(result);
         }
     }
 }

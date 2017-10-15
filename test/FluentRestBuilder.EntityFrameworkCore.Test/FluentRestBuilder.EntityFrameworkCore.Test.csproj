@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netcoreapp1.1</TargetFrameworks>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>../../FluentRestBuilder.ruleset</CodeAnalysisRuleSet>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -11,10 +11,10 @@
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageId>FluentRestBuilder.EntityFrameworkCore.Test</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,20 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="1.1.1" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta001" PrivateAssets="All" ReferenceOutputAssembly="false" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <PackageReference Include="Microsoft.CodeCoverage" Version="1.0.2" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
+    <PackageReference Include="Microsoft.CodeCoverage" Version="1.0.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Include="xunit" Version="2.3.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0-beta4-build3742" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" PrivateAssets="All" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <ItemGroup>

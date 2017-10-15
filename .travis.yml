@@ -1,15 +1,20 @@
 language: csharp
-dist: trusty
-solution: FluentRestBuilder.sln
-env:
-  global:
-    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-    - DOTNET_CLI_TELEMETRY_OPTOUT: 1
-mono: none
-dotnet: 1.0.1
-os:  
-  - linux
-  - osx
+
+matrix:
+  fast_finish: true
+  allow_failures:
+  - os: osx
+
+  include:
+    - os: linux
+      dist: trusty
+      dotnet: 2.0.0
+      mono: none
+    - os: osx
+      osx_image: xcode8.2
+      dotnet: 2.0.0
+      mono: none
+
 branches:  
   only:
     - master
@@ -18,8 +23,6 @@ branches:
     - /^release\/.*$/
     - /^hotfix\/.*$/
 script:
-  - ./patch.sh
-  - dotnet restore
   - dotnet build
   - ./test.sh
-  - ./pack.sh
+  - dotnet pack -c Release --version-suffix="ci"

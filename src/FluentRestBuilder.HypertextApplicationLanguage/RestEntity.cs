@@ -7,7 +7,7 @@ namespace FluentRestBuilder.HypertextApplicationLanguage
     using System.Collections.Generic;
     using Newtonsoft.Json;
 
-    public abstract class RestEntity
+    public abstract class RestEntity : IRestEntity
     {
         [JsonProperty("_links", NullValueHandling = NullValueHandling.Ignore)]
         public IDictionary<string, object> Links { get; set; }

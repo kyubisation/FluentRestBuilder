@@ -8,31 +8,21 @@ namespace FluentRestBuilder.Mocks
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Routing;
-    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.AspNetCore.Routing;
 
-    public class MockController : ControllerBase, IDisposable
+    public class MockController : ControllerBase
     {
-        private IServiceScope scope;
-
-        public MockController(IServiceProvider provider)
+        public MockController(IServiceProvider serviceProvider = null)
         {
-            this.scope = provider.CreateScope();
             this.ControllerContext.HttpContext = new DefaultHttpContext
             {
-                RequestServices = this.scope.ServiceProvider,
+                RequestServices = serviceProvider,
             };
-            this.Url = new UrlHelper(this.ControllerContext);
-        }
-
-        public void Dispose()
-        {
-            if (this.scope == null)
+            this.Url = new UrlHelper(new ActionContext
             {
-                return;
-            }
-
-            this.scope.Dispose();
-            this.scope = null;
+                HttpContext = new DefaultHttpContext(),
+                RouteData = new RouteData(),
+            });
         }
     }
 }

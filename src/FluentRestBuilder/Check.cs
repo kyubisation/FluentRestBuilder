@@ -8,20 +8,11 @@ namespace FluentRestBuilder
 
     public static class Check
     {
-        public static void IsPipeAttached(object value)
+        public static void IsNull(object value, string argumentName)
         {
             if (value == null)
             {
-                throw new NoPipeAttachedException();
-            }
-        }
-
-        public static void IsPipeRegistered(object value, Type pipe)
-        {
-            if (value == null)
-            {
-                throw new InvalidOperationException(
-                    $"{pipe} has not been registered. Has FluentRestBuilder been added?");
+                throw new ArgumentNullException(argumentName);
             }
         }
     }

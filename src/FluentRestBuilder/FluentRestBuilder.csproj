@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <VersionPrefix>1.0.0</VersionPrefix>
-    <TargetFrameworks>net461;netstandard1.6</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>../../FluentRestBuilder.ruleset</CodeAnalysisRuleSet>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -10,33 +10,27 @@
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageId>FluentRestBuilder</PackageId>
-    <PackageProjectUrl>https://github.com/kyubisation/FluentRestBuilder</PackageProjectUrl>
+    <PackageProjectUrl>https://kyubisation.github.io/FluentRestBuilder/</PackageProjectUrl>
     <PackageLicenseUrl>http://www.opensource.org/licenses/mit-license.php</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/kyubisation/FluentRestBuilder</RepositoryUrl>
-    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <Description>A library to build RESTful APIs.</Description>
     <Authors>Kyubisation</Authors>
+    <PackageTags>mvc;rest</PackageTags>
+    <Copyright>Copyright © 2017 FluentRestBuilder</Copyright>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="1.0.3" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.0.2" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta001" PrivateAssets="All" ReferenceOutputAssembly="false" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" PrivateAssets="All" ReferenceOutputAssembly="false" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.4.0" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
   </ItemGroup>
 </Project>

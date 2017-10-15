@@ -29,7 +29,7 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test
                 .OrderByDescending(e => e.Id)
                 .Where(e => e.Id > 5)
                 .ToList();
-            Assert.Equal(0, result.Count);
+            Assert.Empty(result);
         }
 
         [Fact]

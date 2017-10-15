@@ -17,5 +17,11 @@ namespace FluentRestBuilder.Mocks.EntityFramework
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         public double Rate { get; set; }
+
+        public int? IntValue { get; set; }
+
+        public bool Active { get; set; }
+
+        public bool? Status { get; set; }
     }
 }
