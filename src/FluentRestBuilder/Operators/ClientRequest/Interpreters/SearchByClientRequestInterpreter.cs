@@ -4,6 +4,7 @@
 
 namespace FluentRestBuilder.Operators.ClientRequest.Interpreters
 {
+    using Json;
     using Microsoft.AspNetCore.Http;
     using Storage;
 

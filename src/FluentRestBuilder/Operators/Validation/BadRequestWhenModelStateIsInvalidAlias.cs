@@ -7,9 +7,9 @@ namespace FluentRestBuilder
 {
     using System;
     using System.Linq;
+    using Json;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.Extensions.DependencyInjection;
-    using Operators.ClientRequest.Interpreters;
     using Operators.Exceptions;
 
     public static class BadRequestWhenModelStateIsInvalidAlias

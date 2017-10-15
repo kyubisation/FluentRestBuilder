@@ -5,6 +5,7 @@
 namespace FluentRestBuilder.Builder
 {
     using System;
+    using Json;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
     using Operators.ClientRequest.FilterConverters;
@@ -17,6 +18,7 @@ namespace FluentRestBuilder.Builder
         {
             this.Services = services;
             this.Services.TryAddScoped(typeof(IScopedStorage<>), typeof(ScopedStorage<>));
+            this.Services.TryAddScoped<IJsonPropertyNameResolver, JsonPropertyNameResolver>();
             this.RegisterInterpreters();
             this.RegisterFilterConverters();
         }
@@ -25,7 +27,6 @@ namespace FluentRestBuilder.Builder
 
         private void RegisterInterpreters()
         {
-            this.Services.TryAddScoped<IJsonPropertyNameResolver, JsonPropertyNameResolver>();
             this.Services.TryAddScoped<
                 IFilterByClientRequestInterpreter, FilterByClientRequestInterpreter>();
             this.Services.TryAddScoped<

@@ -4,8 +4,8 @@
 
 namespace FluentRestBuilder.Mocks
 {
+    using Json;
     using Newtonsoft.Json.Serialization;
-    using Operators.ClientRequest.Interpreters;
 
     public class MockPropertyNameResolver : IJsonPropertyNameResolver
     {

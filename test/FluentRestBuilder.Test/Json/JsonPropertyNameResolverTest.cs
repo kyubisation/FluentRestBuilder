@@ -2,9 +2,9 @@
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
-namespace FluentRestBuilder.Test.Operators.ClientRequest.Interpreters
+namespace FluentRestBuilder.Test.Json
 {
-    using FluentRestBuilder.Operators.ClientRequest.Interpreters;
+    using FluentRestBuilder.Json;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using Xunit;
