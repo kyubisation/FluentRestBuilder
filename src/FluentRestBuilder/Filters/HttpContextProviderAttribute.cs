@@ -5,7 +5,6 @@
 namespace FluentRestBuilder.Filters
 {
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.Extensions.DependencyInjection;
     using Storage;
@@ -14,14 +13,9 @@ namespace FluentRestBuilder.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (!(context.Controller is ControllerBase controller))
-            {
-                throw new FilterRequiresControllerException();
-            }
-
-            var storage = controller.HttpContext.RequestServices
+            var storage = context.HttpContext.RequestServices
                 .GetRequiredService<IScopedStorage<HttpContext>>();
-            storage.Value = controller.HttpContext;
+            storage.Value = context.HttpContext;
         }
     }
 }
