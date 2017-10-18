@@ -13,7 +13,9 @@ Requires usage of :code:`HttpContextProviderAttribute`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CurrentUserHas<TSource>(
-        this IProviderObservable<TSource> observable, Func<System.Security.Claims.ClaimsPrincipal,TSource,System.Boolean> principalCheck, object error)
+        this IProviderObservable<TSource> observable,
+        Func<System.Security.Claims.ClaimsPrincipal,TSource,System.Boolean> principalCheck,
+        object error)
 
 
 
@@ -28,7 +30,9 @@ Requires usage of :code:`HttpContextProviderAttribute`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CurrentUserHas<TSource>(
-        this IProviderObservable<TSource> observable, Func<System.Security.Claims.ClaimsPrincipal,System.Boolean> principalCheck, Func<TSource,object> errorFactory)
+        this IProviderObservable<TSource> observable,
+        Func<System.Security.Claims.ClaimsPrincipal,System.Boolean> principalCheck,
+        Func<TSource,object> errorFactory)
 
 
 
@@ -43,7 +47,9 @@ Requires usage of :code:`HttpContextProviderAttribute`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CurrentUserHas<TSource>(
-        this IProviderObservable<TSource> observable, Func<System.Security.Claims.ClaimsPrincipal,System.Boolean> principalCheck, object error)
+        this IProviderObservable<TSource> observable,
+        Func<System.Security.Claims.ClaimsPrincipal,System.Boolean> principalCheck,
+        object error)
 
 
 
@@ -58,6 +64,8 @@ Requires usage of :code:`HttpContextProviderAttribute`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CurrentUserHas<TSource>(
-        this IProviderObservable<TSource> observable, Func<System.Security.Claims.ClaimsPrincipal,TSource,System.Boolean> principalCheck, Func<TSource,object> errorFactory)
+        this IProviderObservable<TSource> observable,
+        Func<System.Security.Claims.ClaimsPrincipal,TSource,System.Boolean> principalCheck,
+        Func<TSource,object> errorFactory)
 
 

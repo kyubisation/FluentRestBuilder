@@ -13,7 +13,9 @@ an appropriate :code:`IActionResult`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<Microsoft.AspNetCore.Mvc.IActionResult> ToCreatedAtRouteResult<TSource>(
-        this IProviderObservable<TSource> observable, string routeName, Func<TSource,object> routeValuesFactory)
+        this IProviderObservable<TSource> observable,
+        string routeName,
+        Func<TSource,object> routeValuesFactory)
 
 
 
@@ -28,6 +30,7 @@ an appropriate :code:`IActionResult`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<Microsoft.AspNetCore.Mvc.IActionResult> ToCreatedAtRouteResult<TSource>(
-        this IProviderObservable<TSource> observable, Func<TSource,object> routeValuesFactory)
+        this IProviderObservable<TSource> observable,
+        Func<TSource,object> routeValuesFactory)
 
 

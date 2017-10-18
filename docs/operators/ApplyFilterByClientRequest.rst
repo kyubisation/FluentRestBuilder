@@ -14,7 +14,8 @@ Requires :code:`HttpContextProviderAttribute` to be set.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IQueryable<TSource>> ApplyFilterByClientRequest<TSource>(
-        this IProviderObservable<IQueryable<TSource>> observable, Func<FilterExpressionProviderDictionary<TSource>,IFilterExpressionProviderDictionary<TSource>> factory)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        Func<FilterExpressionProviderDictionary<TSource>,IFilterExpressionProviderDictionary<TSource>> factory)
 
 
 
@@ -48,6 +49,7 @@ Requires :code:`HttpContextProviderAttribute` to be set.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IQueryable<TSource>> ApplyFilterByClientRequest<TSource>(
-        this IProviderObservable<IQueryable<TSource>> observable, IDictionary<string,IFilterExpressionProvider<TSource>> filterDictionary)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        IDictionary<string,IFilterExpressionProvider<TSource>> filterDictionary)
 
 

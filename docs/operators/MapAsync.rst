@@ -9,6 +9,7 @@ Asynchronously map the received value to the desired output.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TTarget> MapAsync<TSource, TTarget>(
-        this IProviderObservable<TSource> observable, Func<TSource,Task<TTarget>> mapping)
+        this IProviderObservable<TSource> observable,
+        Func<TSource,Task<TTarget>> mapping)
 
 

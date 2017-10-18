@@ -10,7 +10,8 @@ in descending order, according to a key.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IOrderedQueryable<TSource>> ThenByDescending<TSource, TKey>(
-        this IProviderObservable<IOrderedQueryable<TSource>> observable, Expression<Func<TSource,TKey>> keySelector)
+        this IProviderObservable<IOrderedQueryable<TSource>> observable,
+        Expression<Func<TSource,TKey>> keySelector)
 
 
 
@@ -22,6 +23,8 @@ in descending order by using a specified comparer.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IOrderedQueryable<TSource>> ThenByDescending<TSource, TKey>(
-        this IProviderObservable<IOrderedQueryable<TSource>> observable, Expression<Func<TSource,TKey>> keySelector, IComparer<TKey> comparer)
+        this IProviderObservable<IOrderedQueryable<TSource>> observable,
+        Expression<Func<TSource,TKey>> keySelector,
+        IComparer<TKey> comparer)
 
 

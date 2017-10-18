@@ -13,6 +13,7 @@ Requires :code:`HttpContextProviderAttribute` to be set.
 .. sourcecode:: csharp
 
     public static IProviderObservable<FluentRestBuilder.HypertextApplicationLanguage.IRestEntity> MapToRestCollection<TSource, TTarget>(
-        this IProviderObservable<IEnumerable<TSource>> observable, Func<TSource,TTarget> mapping)
+        this IProviderObservable<IEnumerable<TSource>> observable,
+        Func<TSource,TTarget> mapping)
 
 

@@ -12,7 +12,9 @@ and the previous chain is skipped.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CacheInMemoryCache<TSource>(
-        this IProviderObservable<TSource> observable, object key, System.DateTimeOffset absoluteExpiration)
+        this IProviderObservable<TSource> observable,
+        object key,
+        System.DateTimeOffset absoluteExpiration)
 
 
 
@@ -26,7 +28,9 @@ and the previous chain is skipped.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CacheInMemoryCache<TSource>(
-        this IProviderObservable<TSource> observable, object key, System.TimeSpan absoluteExpirationRelativeToNow)
+        this IProviderObservable<TSource> observable,
+        object key,
+        System.TimeSpan absoluteExpirationRelativeToNow)
 
 
 
@@ -40,7 +44,9 @@ and the previous chain is skipped.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CacheInMemoryCache<TSource>(
-        this IProviderObservable<TSource> observable, object key, Microsoft.Extensions.Primitives.IChangeToken expirationToken)
+        this IProviderObservable<TSource> observable,
+        object key,
+        Microsoft.Extensions.Primitives.IChangeToken expirationToken)
 
 
 
@@ -54,6 +60,8 @@ and the previous chain is skipped.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CacheInMemoryCache<TSource>(
-        this IProviderObservable<TSource> observable, object key, Func<TSource,Microsoft.Extensions.Caching.Memory.MemoryCacheEntryOptions> optionsFactory)
+        this IProviderObservable<TSource> observable,
+        object key,
+        Func<TSource,Microsoft.Extensions.Caching.Memory.MemoryCacheEntryOptions> optionsFactory)
 
 

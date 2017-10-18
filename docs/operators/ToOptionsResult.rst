@@ -13,7 +13,8 @@ an appropriate :code:`IActionResult`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<Microsoft.AspNetCore.Mvc.IActionResult> ToOptionsResult<TSource>(
-        this IProviderObservable<TSource> observable, Func<TSource,IEnumerable<FluentRestBuilder.HttpVerb>> verbsFactory)
+        this IProviderObservable<TSource> observable,
+        Func<TSource,IEnumerable<FluentRestBuilder.HttpVerb>> verbsFactory)
 
 
 
@@ -30,6 +31,7 @@ Requires usage of :code:`HttpContextProviderAttribute`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<Microsoft.AspNetCore.Mvc.IActionResult> ToOptionsResult<TSource>(
-        this IProviderObservable<TSource> observable, Func<AllowedOptionsBuilder<TSource>,AllowedOptionsBuilder<TSource>> factory)
+        this IProviderObservable<TSource> observable,
+        Func<AllowedOptionsBuilder<TSource>,AllowedOptionsBuilder<TSource>> factory)
 
 

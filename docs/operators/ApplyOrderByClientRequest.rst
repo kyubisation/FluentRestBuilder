@@ -16,7 +16,8 @@ Requires :code:`HttpContextProviderAttribute` to be set.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IQueryable<TSource>> ApplyOrderByClientRequest<TSource>(
-        this IProviderObservable<IQueryable<TSource>> observable, Func<OrderByExpressionDictionary<TSource>,IOrderByExpressionDictionary<TSource>> factory)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        Func<OrderByExpressionDictionary<TSource>,IOrderByExpressionDictionary<TSource>> factory)
 
 
 
@@ -55,6 +56,7 @@ Requires :code:`HttpContextProviderAttribute` to be set.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IQueryable<TSource>> ApplyOrderByClientRequest<TSource>(
-        this IProviderObservable<IQueryable<TSource>> observable, IDictionary<string,IOrderByExpressionFactory<TSource>> orderByExpressions)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        IDictionary<string,IOrderByExpressionFactory<TSource>> orderByExpressions)
 
 

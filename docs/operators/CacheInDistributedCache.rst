@@ -11,7 +11,8 @@ and the previous chain is skipped.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CacheInDistributedCache<TSource>(
-        this IProviderObservable<TSource> observable, string key)
+        this IProviderObservable<TSource> observable,
+        string key)
 
 
 
@@ -25,7 +26,9 @@ and the previous chain is skipped.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CacheInDistributedCache<TSource>(
-        this IProviderObservable<TSource> observable, string key, System.DateTimeOffset absoluteExpiration)
+        this IProviderObservable<TSource> observable,
+        string key,
+        System.DateTimeOffset absoluteExpiration)
 
 
 
@@ -39,7 +42,9 @@ and the previous chain is skipped.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CacheInDistributedCache<TSource>(
-        this IProviderObservable<TSource> observable, string key, System.TimeSpan absoluteExpirationRelativeToNow)
+        this IProviderObservable<TSource> observable,
+        string key,
+        System.TimeSpan absoluteExpirationRelativeToNow)
 
 
 
@@ -53,6 +58,8 @@ and the previous chain is skipped.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CacheInDistributedCache<TSource>(
-        this IProviderObservable<TSource> observable, string key, Func<TSource,Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions> optionsFactory)
+        this IProviderObservable<TSource> observable,
+        string key,
+        Func<TSource,Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions> optionsFactory)
 
 

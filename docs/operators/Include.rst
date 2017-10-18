@@ -14,6 +14,7 @@ after this call.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IIncludableQueryable<TSource,TProperty>> Include<TSource, TProperty>(
-        this IProviderObservable<IQueryable<TSource>> observable, Expression<Func<TSource,TProperty>> navigationPropertyPath)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        Expression<Func<TSource,TProperty>> navigationPropertyPath)
 
 

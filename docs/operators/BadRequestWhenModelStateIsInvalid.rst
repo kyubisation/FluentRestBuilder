@@ -11,6 +11,7 @@ Otherwise the given value is emitted.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> BadRequestWhenModelStateIsInvalid<TSource>(
-        this IProviderObservable<TSource> observable, Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary modelState)
+        this IProviderObservable<TSource> observable,
+        Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary modelState)
 
 

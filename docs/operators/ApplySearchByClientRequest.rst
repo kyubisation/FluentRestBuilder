@@ -14,6 +14,7 @@ Requires :code:`HttpContextProviderAttribute` to be set.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IQueryable<TSource>> ApplySearchByClientRequest<TSource>(
-        this IProviderObservable<IQueryable<TSource>> observable, Func<string,Expression<Func<TSource,System.Boolean>>> searchExpression)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        Func<string,Expression<Func<TSource,System.Boolean>>> searchExpression)
 
 

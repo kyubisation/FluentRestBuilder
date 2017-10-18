@@ -12,6 +12,7 @@ an appropriate :code:`IActionResult`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<Microsoft.AspNetCore.Mvc.IActionResult> ToActionResult<TSource>(
-        this IProviderObservable<TSource> observable, Func<TSource,Microsoft.AspNetCore.Mvc.IActionResult> mapping)
+        this IProviderObservable<TSource> observable,
+        Func<TSource,Microsoft.AspNetCore.Mvc.IActionResult> mapping)
 
 

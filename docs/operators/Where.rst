@@ -9,7 +9,8 @@ Filters a sequence of values based on a predicate.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IQueryable<TSource>> Where<TSource>(
-        this IProviderObservable<IQueryable<TSource>> observable, Expression<Func<TSource,System.Boolean>> predicate)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        Expression<Func<TSource,System.Boolean>> predicate)
 
 
 
@@ -21,6 +22,7 @@ Each element's index is used in the logic of the predicate function.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IQueryable<TSource>> Where<TSource>(
-        this IProviderObservable<IQueryable<TSource>> observable, Expression<Func<TSource,int,System.Boolean>> predicate)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        Expression<Func<TSource,int,System.Boolean>> predicate)
 
 

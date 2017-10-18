@@ -10,6 +10,7 @@ of the received value.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> WithEntityEntryAsync<TSource>(
-        this IProviderObservable<TSource> observable, Func<EntityEntry<TSource>,System.Threading.Tasks.Task> action)
+        this IProviderObservable<TSource> observable,
+        Func<EntityEntry<TSource>,System.Threading.Tasks.Task> action)
 
 

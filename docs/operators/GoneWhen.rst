@@ -11,7 +11,9 @@ Otherwise the given value is emitted.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> GoneWhen<TSource>(
-        this IProviderObservable<TSource> observable, Func<TSource,System.Boolean> invalidCheck, Func<TSource,object> errorFactory)
+        this IProviderObservable<TSource> observable,
+        Func<TSource,System.Boolean> invalidCheck,
+        Func<TSource,object> errorFactory)
 
 
 
@@ -24,7 +26,9 @@ Otherwise the given value is emitted.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> GoneWhen<TSource>(
-        this IProviderObservable<TSource> observable, Func<TSource,System.Boolean> invalidCheck, object error)
+        this IProviderObservable<TSource> observable,
+        Func<TSource,System.Boolean> invalidCheck,
+        object error)
 
 
 
@@ -37,7 +41,9 @@ Otherwise the given value is emitted.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> GoneWhen<TSource>(
-        this IProviderObservable<TSource> observable, Func<System.Boolean> invalidCheck, Func<TSource,object> errorFactory)
+        this IProviderObservable<TSource> observable,
+        Func<System.Boolean> invalidCheck,
+        Func<TSource,object> errorFactory)
 
 
 
@@ -50,6 +56,8 @@ Otherwise the given value is emitted.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> GoneWhen<TSource>(
-        this IProviderObservable<TSource> observable, Func<System.Boolean> invalidCheck, object error)
+        this IProviderObservable<TSource> observable,
+        Func<System.Boolean> invalidCheck,
+        object error)
 
 

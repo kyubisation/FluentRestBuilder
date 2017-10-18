@@ -22,6 +22,7 @@ condition, and throws an exception if more than one such element exists.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> Single<TSource>(
-        this IProviderObservable<IQueryable<TSource>> observable, Expression<Func<TSource,System.Boolean>> predicate)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        Expression<Func<TSource,System.Boolean>> predicate)
 
 

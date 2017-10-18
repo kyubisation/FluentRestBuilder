@@ -11,7 +11,10 @@ Otherwise the given value is emitted.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> InvalidWhenAsync<TSource>(
-        this IProviderObservable<TSource> observable, Func<TSource,Task<System.Boolean>> invalidCheck, int statusCode, object error)
+        this IProviderObservable<TSource> observable,
+        Func<TSource,Task<System.Boolean>> invalidCheck,
+        int statusCode,
+        object error)
 
 
 
@@ -24,7 +27,10 @@ Otherwise the given value is emitted.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> InvalidWhenAsync<TSource>(
-        this IProviderObservable<TSource> observable, Func<Task<System.Boolean>> invalidCheck, int statusCode, Func<TSource,object> errorFactory)
+        this IProviderObservable<TSource> observable,
+        Func<Task<System.Boolean>> invalidCheck,
+        int statusCode,
+        Func<TSource,object> errorFactory)
 
 
 
@@ -37,7 +43,10 @@ Otherwise the given value is emitted.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> InvalidWhenAsync<TSource>(
-        this IProviderObservable<TSource> observable, Func<Task<System.Boolean>> invalidCheck, int statusCode, object error)
+        this IProviderObservable<TSource> observable,
+        Func<Task<System.Boolean>> invalidCheck,
+        int statusCode,
+        object error)
 
 
 
@@ -50,6 +59,9 @@ Otherwise the given value is emitted.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> InvalidWhenAsync<TSource>(
-        this IProviderObservable<TSource> observable, Func<TSource,Task<System.Boolean>> invalidCheck, int statusCode, Func<TSource,object> errorFactory)
+        this IProviderObservable<TSource> observable,
+        Func<TSource,Task<System.Boolean>> invalidCheck,
+        int statusCode,
+        Func<TSource,object> errorFactory)
 
 

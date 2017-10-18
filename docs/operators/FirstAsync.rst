@@ -20,6 +20,7 @@ Emits the first element of a sequence that satisfies a specified condition.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> FirstAsync<TSource>(
-        this IProviderObservable<IQueryable<TSource>> observable, Expression<Func<TSource,System.Boolean>> predicate)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        Expression<Func<TSource,System.Boolean>> predicate)
 
 

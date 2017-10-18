@@ -11,7 +11,8 @@ Use the :code:`Set`<TSource>` method to select the appropriate
 .. sourcecode:: csharp
 
     public static IProviderObservable<IQueryable<TTarget>> MapToQueryable<TSource, TTarget>(
-        this IProviderObservable<TSource> observable, Func<Microsoft.EntityFrameworkCore.DbContext,IQueryable<TTarget>> mapping)
+        this IProviderObservable<TSource> observable,
+        Func<Microsoft.EntityFrameworkCore.DbContext,IQueryable<TTarget>> mapping)
 
 
 
@@ -24,6 +25,7 @@ Use the :code:`Set`<TSource>` method to select the appropriate
 .. sourcecode:: csharp
 
     public static IProviderObservable<IQueryable<TTarget>> MapToQueryable<TSource, TTarget>(
-        this IProviderObservable<TSource> observable, Func<TSource,Microsoft.EntityFrameworkCore.DbContext,IQueryable<TTarget>> mapping)
+        this IProviderObservable<TSource> observable,
+        Func<TSource,Microsoft.EntityFrameworkCore.DbContext,IQueryable<TTarget>> mapping)
 
 

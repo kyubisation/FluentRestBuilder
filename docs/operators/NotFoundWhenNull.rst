@@ -11,6 +11,7 @@ Otherwise the given value is emitted.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> NotFoundWhenNull<TSource>(
-        this IProviderObservable<TSource> observable, Func<TSource,object> errorFactory)
+        this IProviderObservable<TSource> observable,
+        Func<TSource,object> errorFactory)
 
 

@@ -9,7 +9,8 @@ Sorts the elements of a sequence in descending order according to a key.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IOrderedQueryable<TSource>> OrderByDescending<TSource, TKey>(
-        this IProviderObservable<IQueryable<TSource>> observable, Expression<Func<TSource,TKey>> keySelector)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        Expression<Func<TSource,TKey>> keySelector)
 
 
 
@@ -20,6 +21,8 @@ Sorts the elements of a sequence in descending order by using a specified compar
 .. sourcecode:: csharp
 
     public static IProviderObservable<IOrderedQueryable<TSource>> OrderByDescending<TSource, TKey>(
-        this IProviderObservable<IQueryable<TSource>> observable, Expression<Func<TSource,TKey>> keySelector, IComparer<TKey> comparer)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        Expression<Func<TSource,TKey>> keySelector,
+        IComparer<TKey> comparer)
 
 

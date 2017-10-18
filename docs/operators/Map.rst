@@ -9,6 +9,7 @@ Map the received value to the desired output.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TTarget> Map<TSource, TTarget>(
-        this IProviderObservable<TSource> observable, Func<TSource,TTarget> mapping)
+        this IProviderObservable<TSource> observable,
+        Func<TSource,TTarget> mapping)
 
 

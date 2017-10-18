@@ -22,6 +22,7 @@ specified condition or a default value if no such element is found.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> FirstOrDefaultAsync<TSource>(
-        this IProviderObservable<IQueryable<TSource>> observable, Expression<Func<TSource,System.Boolean>> predicate)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        Expression<Func<TSource,System.Boolean>> predicate)
 
 

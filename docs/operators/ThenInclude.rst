@@ -10,6 +10,7 @@ related type that was just included.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IIncludableQueryable<TSource,TProperty>> ThenInclude<TSource, TPreviousProperty, TProperty>(
-        this IProviderObservable<IIncludableQueryable<TSource,TPreviousProperty>> observable, Expression<Func<TPreviousProperty,TProperty>> navigationPropertyPath)
+        this IProviderObservable<IIncludableQueryable<TSource,TPreviousProperty>> observable,
+        Expression<Func<TPreviousProperty,TProperty>> navigationPropertyPath)
 
 

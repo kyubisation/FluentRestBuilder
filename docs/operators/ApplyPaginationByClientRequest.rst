@@ -14,6 +14,7 @@ Requires :code:`HttpContextProviderAttribute` to be set.
 .. sourcecode:: csharp
 
     public static IProviderObservable<IQueryable<TSource>> ApplyPaginationByClientRequest<TSource>(
-        this IProviderObservable<IQueryable<TSource>> observable, FluentRestBuilder.Operators.ClientRequest.PaginationOptions options)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        FluentRestBuilder.Operators.ClientRequest.PaginationOptions options)
 
 

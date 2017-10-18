@@ -9,6 +9,7 @@ Perform an action with the :code:`EntityEntry<TSource>` of the received value.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> WithEntityEntry<TSource>(
-        this IProviderObservable<TSource> observable, Action<EntityEntry<TSource>> action)
+        this IProviderObservable<TSource> observable,
+        Action<EntityEntry<TSource>> action)
 
 

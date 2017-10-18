@@ -13,7 +13,10 @@ Requires usage of :code:`HttpContextProviderAttribute`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CurrentUserHasClaim<TSource>(
-        this IProviderObservable<TSource> observable, string claimType, string claim, Func<TSource,object> errorFactory)
+        this IProviderObservable<TSource> observable,
+        string claimType,
+        string claim,
+        Func<TSource,object> errorFactory)
 
 
 
@@ -28,7 +31,10 @@ Requires usage of :code:`HttpContextProviderAttribute`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CurrentUserHasClaim<TSource>(
-        this IProviderObservable<TSource> observable, string claimType, string claim, object error)
+        this IProviderObservable<TSource> observable,
+        string claimType,
+        string claim,
+        object error)
 
 
 
@@ -43,7 +49,10 @@ Requires usage of :code:`HttpContextProviderAttribute`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CurrentUserHasClaim<TSource>(
-        this IProviderObservable<TSource> observable, string claimType, Func<TSource,string> claimFactory, Func<TSource,object> errorFactory)
+        this IProviderObservable<TSource> observable,
+        string claimType,
+        Func<TSource,string> claimFactory,
+        Func<TSource,object> errorFactory)
 
 
 
@@ -58,6 +67,9 @@ Requires usage of :code:`HttpContextProviderAttribute`.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CurrentUserHasClaim<TSource>(
-        this IProviderObservable<TSource> observable, string claimType, Func<TSource,string> claimFactory, object error)
+        this IProviderObservable<TSource> observable,
+        string claimType,
+        Func<TSource,string> claimFactory,
+        object error)
 
 

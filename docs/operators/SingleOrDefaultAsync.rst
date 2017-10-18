@@ -24,6 +24,7 @@ method throws an exception if more than one element satisfies the condition.
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> SingleOrDefaultAsync<TSource>(
-        this IProviderObservable<IQueryable<TSource>> observable, Expression<Func<TSource,System.Boolean>> predicate)
+        this IProviderObservable<IQueryable<TSource>> observable,
+        Expression<Func<TSource,System.Boolean>> predicate)
 
 
