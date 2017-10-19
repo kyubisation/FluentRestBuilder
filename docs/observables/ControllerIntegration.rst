@@ -22,6 +22,11 @@ These use the service provider from the controller, so
 
 **FluentRestBuilder.EntityFrameworkCore**
 
+In order for these to work, the entity framework :code:`DbContext` has
+to be registered for FluentRestBuilder.
+
+See :ref:`getting-started-label` for an example.
+
 .. sourcecode:: csharp
 
     public static IProviderObservable<TSource> CreateEntitySingle<TSource>(

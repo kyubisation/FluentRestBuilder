@@ -1,3 +1,5 @@
+.. _getting-started-label:
+
 Getting Started
 ===============
 

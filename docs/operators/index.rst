@@ -1,6 +1,10 @@
 ﻿Operators
 =========
 
+Operators can be used with observables or other operators. They are a combination
+of observer and observable. This means that the description for :ref:`observables-label`
+also applies.
+
 .. include:: ApplyFilterByClientRequest.rst
 .. include:: ApplyOrderByClientRequest.rst
 .. include:: ApplyPaginationByClientRequest.rst
