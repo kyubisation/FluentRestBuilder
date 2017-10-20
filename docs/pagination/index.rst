@@ -37,25 +37,26 @@ Filter Interpreter
 The default filter interpreter parses the query paramters of a request.
 The interpreter (not the operator) supports the following filter types:
 
-============================================== ==================================
-Prefix (The filter value must start with this) Type
-
-============================================== ==================================
-                                               Default (Depends on configuration)
-~                                              Contains
-<=                                             LessThanOrEqual
->=                                             GreaterThanOrEqual
-<                                              LessThan
->                                              GreaterThan
-=                                              Equals
-^=                                             StartsWith
-$=                                             EndsWith
-!=                                             NotEqual
-============================================== ==================================
+============================================== =================================== ===============
+Prefix (The filter value must start with this) Type                                Example
+============================================== =================================== ===============
+*No prefix*                                    Default (Depends on configuration)  field=search
+~                                              Contains                            field=~search
+<=                                             LessThanOrEqual                     field=<=5
+>=                                             GreaterThanOrEqual                  field=>=5
+<                                              LessThan                            field=<5
+>                                              GreaterThan                         field=>5
+=                                              Equals                              field==search
+^=                                             StartsWith                          field=^=search
+$=                                             EndsWith                            field=$=search
+!=                                             NotEqual                            field=!=search
+============================================== =================================== ===============
 
 This means in order to search for a field value equal to :code:`=`,
 the query parameter value must contain :code:`=%3D` (...&field==%3D&...),
-as the actual search value (:code:`=`) must be encoded.
+as the actual search value (:code:`=`) must be encoded. The reason for this
+is that MVC Core cannot interpret :code:`...&field===&...`, but it can
+interpret :code:`...&field==%3D` or :code:`...&field===a&...`.
 
 In order to implement your own filter interpreter implement
 :code:`FluentRestBuilder.Operators.ClientRequest.Interpreters.IFilterByClientRequestInterpreter`.
