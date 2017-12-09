@@ -40,6 +40,7 @@ namespace FluentRestBuilder.Sample.Controllers
                     Text = request.Text,
                 })
                 .InsertEntity()
+                .Map(c => new CommentResponse(c, this.Url))
                 .ToCreatedAtRouteResult("CommentResource", e => new { id = e.Id });
     }
 }
