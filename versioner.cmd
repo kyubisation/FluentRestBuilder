@@ -1,0 +1,1 @@
+@powershell .\versioner.ps1 -%*

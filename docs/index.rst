@@ -1,17 +1,15 @@
-FluentRestBuilder
-===
+FluentRestBuilder Documentation
+===============================
 
-AppVeyor: [![AppVeyor](https://ci.appveyor.com/api/projects/status/ubv5td4t0xtmql6h?svg=true)](https://ci.appveyor.com/project/kyubisation/fluentrestbuilder)
-Travis:   [![Travis](https://travis-ci.org/kyubisation/FluentRestBuilder.svg?branch=dev)](https://travis-ci.org/kyubisation/FluentRestBuilder)
+`FluentRestBuilder <https://github.com/kyubisation/FluentRestBuilder>`_ is a library to easily
+build RESTful APIs on top of `MVC Core <https://github.com/aspnet/Mvc>`_. 
 
-[Documentation](http://fluentrestbuilder.readthedocs.io/)
-
-FluentRestBuilder aims in helping you build REST APIs on top of ASP.NET Core MVC.
-
+It is based on the IObservable<T> and IObserver<T> interfaces and inspired by the Reactive Extensions (Rx.NET).
+It is however not fully compatible with Rx.NET, as FluentRestBuilder extends the IObservable<T> interface.
 
 The motivation for this library is to reduce boilerplate code where possible, so instead of writing this:
 
-```csharp
+.. sourcecode:: csharp
 
     [Route("posts")]
     public class PostController : ControllerBase
@@ -55,12 +53,10 @@ The motivation for this library is to reduce boilerplate code where possible, so
             return this.Ok(post);
         }
     }
-	
-```
 
 you can simply write the following:
 
-```csharp
+.. sourcecode:: csharp
 
     [Route("posts")]
     public class PostController : ControllerBase
@@ -88,5 +84,13 @@ you can simply write the following:
                 .Map(p => new PostResponse(p, this.Url))
                 .ToOkObjectResult();
     }
-	
-```
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   getting-started/index.rst
+   observables/index.rst
+   operators/index.rst
+   pagination/index.rst
