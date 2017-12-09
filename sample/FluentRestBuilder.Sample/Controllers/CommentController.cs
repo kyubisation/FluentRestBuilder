@@ -44,6 +44,7 @@ namespace FluentRestBuilder.Sample.Controllers
                     p.Text = request.Text;
                 })
                 .SaveChangesAsync()
+                .Map(p => new CommentResponse(p, this.Url))
                 .ToOkObjectResult();
 
         [HttpDelete("{id}")]

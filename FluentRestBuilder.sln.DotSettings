@@ -5,7 +5,7 @@
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/PredefinedNamingRules/=PrivateInstanceFields/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="aaBb" /&gt;</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/PredefinedNamingRules/=PrivateStaticFields/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="aaBb" /&gt;</s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=49B6804F97B3704C8731B893AAE9A7A6/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=49B6804F97B3704C8731B893AAE9A7A6/AbsolutePath/@EntryValue">C:\PrivateProjects\FluentRest\FluentRestBuilder.sln.DotSettings</s:String>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=49B6804F97B3704C8731B893AAE9A7A6/AbsolutePath/@EntryValue">C:\PrivateProjects\FluentRestBuilder\FluentRestBuilder.sln.DotSettings</s:String>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=49B6804F97B3704C8731B893AAE9A7A6/RelativePath/@EntryValue"></s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File49B6804F97B3704C8731B893AAE9A7A6/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File49B6804F97B3704C8731B893AAE9A7A6/DisplayName/@EntryValue">FluentRestBuilder.sln</s:String>

@@ -44,6 +44,7 @@ namespace FluentRestBuilder.Sample.Controllers
                     Content = r.Content,
                 })
                 .InsertEntity()
+                .Map(p => new PostResponse(p, this.Url))
                 .ToCreatedAtRouteResult("PostResource", e => new { id = e.Id });
 
         [HttpPost("{id}")]
@@ -57,6 +58,7 @@ namespace FluentRestBuilder.Sample.Controllers
                     p.Content = request.Content;
                 })
                 .SaveChangesAsync()
+                .Map(p => new PostResponse(p, this.Url))
                 .ToOkObjectResult();
 
         [HttpDelete("{id}")]

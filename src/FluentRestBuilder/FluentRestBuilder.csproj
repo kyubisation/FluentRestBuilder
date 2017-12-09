@@ -10,7 +10,7 @@
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageId>FluentRestBuilder</PackageId>
-    <PackageProjectUrl>https://kyubisation.github.io/FluentRestBuilder/</PackageProjectUrl>
+    <PackageProjectUrl>http://fluentrestbuilder.readthedocs.io/</PackageProjectUrl>
     <PackageLicenseUrl>http://www.opensource.org/licenses/mit-license.php</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/kyubisation/FluentRestBuilder</RepositoryUrl>
