@@ -8,7 +8,6 @@ namespace FluentRestBuilder
     using System;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Operators;
     using Operators.Exceptions;
 
     public static class ToActionResultOperator
@@ -29,86 +28,37 @@ namespace FluentRestBuilder
         public static IProviderObservable<IActionResult> ToActionResult<TSource>(
             this IProviderObservable<TSource> observable,
             Func<TSource, IActionResult> mapping) =>
-            new ToActionResultObservable<TSource>(mapping, observable);
-
-        private sealed class ToActionResultObservable<TSource> : Operator<TSource, IActionResult>
-        {
-            private readonly Func<TSource, IActionResult> mapping;
-
-            public ToActionResultObservable(
-                Func<TSource, IActionResult> mapping, IProviderObservable<TSource> observable)
-                : base(observable)
-            {
-                this.mapping = mapping;
-            }
-
-            protected override IObserver<TSource> Create(
-                IObserver<IActionResult> observer, IDisposable disposable) =>
-                new ToActionResultObserver(this.mapping, observer, disposable);
-
-            private sealed class ToActionResultObserver : SafeObserver
-            {
-                private readonly Func<TSource, IActionResult> mapping;
-
-                public ToActionResultObserver(
-                    Func<TSource, IActionResult> mapping,
-                    IObserver<IActionResult> child,
-                    IDisposable disposable)
-                    : base(child, disposable)
+            observable.Map(mapping)
+                .Catch((ValidationException exception) =>
                 {
-                    this.mapping = mapping;
-                }
-
-                public override void OnError(Exception error)
-                {
-                    if (error is ValidationException validationException)
-                    {
-                        var actionResult = ToActionResult(validationException);
-                        this.EmitNext(actionResult);
-                        this.OnCompleted();
-                    }
-                    else
-                    {
-                        base.OnError(error);
-                    }
-                }
-
-                protected override IActionResult SafeOnNext(TSource value) => this.mapping(value);
-
-                private static IActionResult ToActionResult(ValidationException exception)
-                {
-                    return exception.Error == null
+                    var actionResult = exception.Error == null
                         ? ToStatusResult(exception) : ToObjectResult(exception);
-                }
+                    return Observable.Single(actionResult, observable.ServiceProvider);
+                });
 
-                private static IActionResult ToObjectResult(ValidationException exception)
-                {
-                    switch (exception.StatusCode)
-                    {
-                        case StatusCodes.Status400BadRequest:
-                            return new BadRequestObjectResult(exception.Error);
-                        case StatusCodes.Status404NotFound:
-                            return new NotFoundObjectResult(exception.Error);
-                        default:
-                            return new ObjectResult(exception.Error)
-                            {
-                                StatusCode = exception.StatusCode,
-                            };
-                    }
-                }
+        private static IActionResult ToObjectResult(ValidationException exception)
+        {
+            switch (exception.StatusCode)
+            {
+                case StatusCodes.Status400BadRequest:
+                    return new BadRequestObjectResult(exception.Error);
+                case StatusCodes.Status404NotFound:
+                    return new NotFoundObjectResult(exception.Error);
+                default:
+                    return new ObjectResult(exception.Error) { StatusCode = exception.StatusCode };
+            }
+        }
 
-                private static IActionResult ToStatusResult(ValidationException exception)
-                {
-                    switch (exception.StatusCode)
-                    {
-                        case StatusCodes.Status400BadRequest:
-                            return new BadRequestResult();
-                        case StatusCodes.Status404NotFound:
-                            return new NotFoundResult();
-                        default:
-                            return new StatusCodeResult(exception.StatusCode);
-                    }
-                }
+        private static IActionResult ToStatusResult(ValidationException exception)
+        {
+            switch (exception.StatusCode)
+            {
+                case StatusCodes.Status400BadRequest:
+                    return new BadRequestResult();
+                case StatusCodes.Status404NotFound:
+                    return new NotFoundResult();
+                default:
+                    return new StatusCodeResult(exception.StatusCode);
             }
         }
     }
