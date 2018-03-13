@@ -22,7 +22,19 @@ namespace FluentRestBuilder.Mocks
         {
         }
 
-        private static ActionContext Create() =>
-            new ActionContext(new DefaultHttpContext(), new RouteData(), new ActionDescriptor());
+        public MockActionExecutingContext(ControllerBase controller)
+            : base(
+                Create(controller),
+                new List<IFilterMetadata>(),
+                new Dictionary<string, object>(),
+                controller)
+        {
+        }
+
+        private static ActionContext Create(ControllerBase controller = null) =>
+            new ActionContext(
+                controller?.HttpContext ?? new DefaultHttpContext(),
+                new RouteData(),
+                new ActionDescriptor());
     }
 }
