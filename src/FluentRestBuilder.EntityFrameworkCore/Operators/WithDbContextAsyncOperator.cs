@@ -1,4 +1,4 @@
-﻿// <copyright file="WithEntityEntryAsyncOperator.cs" company="Kyubisation">
+﻿// <copyright file="WithDbContextAsyncOperator.cs" company="Kyubisation">
 // Copyright (c) Kyubisation. All rights reserved.
 // </copyright>
 
@@ -8,33 +8,31 @@ namespace FluentRestBuilder
     using System;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.Extensions.DependencyInjection;
     using Operators;
     using Storage;
 
-    public static class WithEntityEntryAsyncOperator
+    public static class WithDbContextAsyncOperator
     {
         /// <summary>
-        /// Perform an async action with the <see cref="EntityEntry{TEntity}"/>
-        /// of the received value.
+        /// Perform an async action with the <see cref="DbContext"/>.
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
         /// <param name="action">The action to be performed.</param>
         /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
-        public static IProviderObservable<TSource> WithEntityEntryAsync<TSource>(
-            this IProviderObservable<TSource> observable, Func<EntityEntry<TSource>, Task> action)
+        public static IProviderObservable<TSource> WithDbContextAsync<TSource>(
+            this IProviderObservable<TSource> observable, Func<TSource, DbContext, Task> action)
             where TSource : class =>
-            new WithEntityEntryAsyncObservable<TSource>(action, observable);
+            new WithDbContextAsyncObservable<TSource>(action, observable);
 
-        private sealed class WithEntityEntryAsyncObservable<TSource> : Operator<TSource, TSource>
+        private sealed class WithDbContextAsyncObservable<TSource> : Operator<TSource, TSource>
             where TSource : class
         {
-            private readonly Func<EntityEntry<TSource>, Task> action;
+            private readonly Func<TSource, DbContext, Task> action;
 
-            public WithEntityEntryAsyncObservable(
-                Func<EntityEntry<TSource>, Task> action,
+            public WithDbContextAsyncObservable(
+                Func<TSource, DbContext, Task> action,
                 IProviderObservable<TSource> observable)
                 : base(observable)
             {
@@ -45,18 +43,18 @@ namespace FluentRestBuilder
                 IObserver<TSource> observer, IDisposable disposable)
             {
                 var context = this.ServiceProvider.GetService<IScopedStorage<DbContext>>();
-                return new WithEntityEntryAsyncObserver(
-                    this.action, context.Value, observer, disposable);
+                return new WithDbContextAsyncObserver(
+                    this.action, context, observer, disposable);
             }
 
-            private sealed class WithEntityEntryAsyncObserver : SafeAsyncObserver
+            private sealed class WithDbContextAsyncObserver : SafeAsyncObserver
             {
-                private readonly Func<EntityEntry<TSource>, Task> action;
-                private readonly DbContext context;
+                private readonly Func<TSource, DbContext, Task> action;
+                private readonly IScopedStorage<DbContext> context;
 
-                public WithEntityEntryAsyncObserver(
-                    Func<EntityEntry<TSource>, Task> action,
-                    DbContext context,
+                public WithDbContextAsyncObserver(
+                    Func<TSource, DbContext, Task> action,
+                    IScopedStorage<DbContext> context,
                     IObserver<TSource> child,
                     IDisposable disposable)
                     : base(child, disposable)
@@ -67,8 +65,7 @@ namespace FluentRestBuilder
 
                 protected override async Task<TSource> SafeOnNext(TSource value)
                 {
-                    var entityEntry = this.context.Entry(value);
-                    await this.action(entityEntry);
+                    await this.action(value, this.context.Value);
                     return value;
                 }
             }
