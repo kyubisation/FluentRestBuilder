@@ -6,9 +6,11 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Operators
 {
     using System.Linq;
     using System.Threading.Tasks;
+    using EntityFrameworkCore.Operators.Exceptions;
     using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Mocks;
     using Mocks.EntityFramework;
     using Xunit;
 
@@ -41,6 +43,30 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Operators
                 .Entities
                 .Count();
             Assert.Equal(0, count);
+        }
+
+        [Fact]
+        public async Task TestFullWorkflow()
+        {
+            var generatedEntity = this.database
+                .CreateEnumeratedEntities(1)
+                .Single();
+            await Observable.Single(generatedEntity.Id, this.provider)
+                .MapToQueryable((id, context) => context.Set<Entity>().Where(e => e.Id == id))
+                .SingleAsync()
+                .DeleteEntity();
+            using (var context = this.database.Create())
+            {
+                Assert.Empty(context.Entities.Where(e => e.Id == generatedEntity.Id));
+            }
+        }
+
+        [Fact]
+        public async Task TestConcurrencyException()
+        {
+            await Assert.ThrowsAsync<ConflictException>(
+                async () => await Observable.Throw<Entity>(new MockDbUpdateConcurrencyException())
+                    .DeleteEntity());
         }
     }
 }
