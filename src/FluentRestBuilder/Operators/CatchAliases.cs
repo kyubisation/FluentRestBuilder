@@ -44,7 +44,7 @@ namespace FluentRestBuilder
 
         /// <summary>
         /// Catch an exception emitted from the previous observables or operators
-        /// and return a new observable.
+        /// and perform an action with it.
         /// </summary>
         /// <typeparam name="TSource">The type of the value.</typeparam>
         /// <param name="observable">The parent observable.</param>
