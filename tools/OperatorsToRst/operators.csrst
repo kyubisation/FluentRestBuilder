@@ -1,6 +1,0 @@
-﻿Operators
-=========
-
-{% for file in files -%}
-.. include:: {{file}}
-{% endfor -%}

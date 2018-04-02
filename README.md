@@ -9,13 +9,15 @@ Travis:   [![Travis](https://travis-ci.org/kyubisation/FluentRestBuilder.svg?bra
 FluentRestBuilder aims in helping you build REST APIs on top of ASP.NET Core MVC.
 
 
-The motivation for this library is to reduce boilerplate code where possible, so instead of writing this:
+The motivation for this library is to reduce boilerplate code where possible.
 
 ```csharp
 
     [Route("posts")]
     public class PostController : ControllerBase
     {
+		// Without FluentRestBuilder
+		// Will return a 404 StatusResult or a 200 OkObjectResult
         [HttpGet("{id}", Name = "PostResource")]
         public async Task<IActionResult> Get(int id)
         {
@@ -31,6 +33,18 @@ The motivation for this library is to reduce boilerplate code where possible, so
             return this.Ok(result);
         }
 
+		// With FluentRestBuilder
+		// Will return a 404 StatusResult or a 200 OkObjectResult
+        [HttpGet("{id}", Name = "PostResource")]
+        public async Task<IActionResult> Get(int id) =>
+            await this.CreateQueryableSingle<Post>()
+                .Include(p => p.Author)
+                .SingleOrDefaultAsync(p => p.Id == id)
+                .NotFoundWhenNull()
+                .Map(p => new PostResponse(p, this.Url))
+                .ToOkObjectResult();
+
+		// Without FluentRestBuilder
         [HttpPost("{id}")]
         public async Task<IActionResult> Update([FromBody] PostRequest request, int id)
         {
@@ -54,26 +68,8 @@ The motivation for this library is to reduce boilerplate code where possible, so
             var result = new PostResponse(post, this.Url);
             return this.Ok(post);
         }
-    }
-	
-```
 
-you can simply write the following:
-
-```csharp
-
-    [Route("posts")]
-    public class PostController : ControllerBase
-    {
-        [HttpGet("{id}", Name = "PostResource")]
-        public async Task<IActionResult> Get(int id) =>
-            await this.CreateQueryableSingle<Post>()
-                .Include(p => p.Author)
-                .SingleOrDefaultAsync(p => p.Id == id)
-                .NotFoundWhenNull()
-                .Map(p => new PostResponse(p, this.Url))
-                .ToOkObjectResult();
-
+		// With FluentRestBuilder
         [HttpPost("{id}")]
         public async Task<IActionResult> Update([FromBody] PostRequest request, int id) =>
             await this.CreateEntitySingle<Post>(id)
