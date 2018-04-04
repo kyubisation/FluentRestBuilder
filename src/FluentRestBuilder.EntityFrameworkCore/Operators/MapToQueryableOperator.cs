@@ -26,12 +26,10 @@ namespace FluentRestBuilder
         /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
         public static IProviderObservable<IQueryable<TTarget>> MapToQueryable<TSource, TTarget>(
             this IProviderObservable<TSource> observable,
-            Func<TSource, DbContext, IQueryable<TTarget>> mapping)
-            where TSource : class =>
+            Func<TSource, DbContext, IQueryable<TTarget>> mapping) =>
             new MapToQueryableObservable<TSource, TTarget>(mapping, observable);
 
         private sealed class MapToQueryableObservable<TSource, TTarget> : Operator<TSource, IQueryable<TTarget>>
-            where TSource : class
         {
             private readonly Func<TSource, DbContext, IQueryable<TTarget>> mapping;
 
@@ -47,17 +45,17 @@ namespace FluentRestBuilder
                 IObserver<IQueryable<TTarget>> observer, IDisposable disposable)
             {
                 var context = this.ServiceProvider.GetService<IScopedStorage<DbContext>>();
-                return new MapToQueryableObserver(this.mapping, context.Value, observer, disposable);
+                return new MapToQueryableObserver(this.mapping, context, observer, disposable);
             }
 
             private sealed class MapToQueryableObserver : SafeObserver
             {
                 private readonly Func<TSource, DbContext, IQueryable<TTarget>> mapping;
-                private readonly DbContext context;
+                private readonly IScopedStorage<DbContext> context;
 
                 public MapToQueryableObserver(
                     Func<TSource, DbContext, IQueryable<TTarget>> mapping,
-                    DbContext context,
+                    IScopedStorage<DbContext> context,
                     IObserver<IQueryable<TTarget>> child,
                     IDisposable disposable)
                     : base(child, disposable)
@@ -67,7 +65,7 @@ namespace FluentRestBuilder
                 }
 
                 protected override IQueryable<TTarget> SafeOnNext(TSource value) =>
-                    this.mapping(value, this.context);
+                    this.mapping(value, this.context.Value);
             }
         }
     }

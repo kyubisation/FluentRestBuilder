@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <CodeAnalysisRuleSet>../../FluentRestBuilder.ruleset</CodeAnalysisRuleSet>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -15,18 +16,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="operators.csrst" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DotLiquid" Version="2.0.183" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" PrivateAssets="All" ReferenceOutputAssembly="false" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="RazorLight" Version="2.0.0-beta1" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta006" PrivateAssets="All" ReferenceOutputAssembly="false" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="operator.csrst" />
-    <EmbeddedResource Include="operators.csrst" />
+    <EmbeddedResource Include="Templating\operator.cshtml" />
+    <EmbeddedResource Include="Templating\operators.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\FluentRestBuilder.Caching\FluentRestBuilder.Caching.csproj" />

@@ -5,33 +5,35 @@
 namespace OperatorsToRst.Xml
 {
     using System;
+    using System.Linq;
     using System.Text.RegularExpressions;
     using System.Xml.Linq;
 
     public class SummaryConverter
     {
-        private readonly Regex para = new Regex("(<para>|</para>)");
-        private readonly Regex c = new Regex("<c>([^<]+)</c>");
-        private readonly Regex see = new Regex("<see cref=\"([^\"]+)\"[ ]?/>");
-        private readonly Regex systemNewLines = new Regex($"{Environment.NewLine}[ ]*");
-        private readonly Regex multipleNewLines = new Regex("[\n]{2,}");
+        private static readonly Regex Para = new Regex("(<para>|</para>)");
+        private static readonly Regex C = new Regex("<c>([^<]+)</c>");
+        private static readonly Regex See = new Regex("<see cref=\"([^\"]+)\"[ ]?/>");
+        private static readonly Regex SystemNewLines = new Regex($"{Environment.NewLine}[ ]*");
+        private static readonly Regex MultipleNewLines = new Regex("[\n]{2,}");
 
-        public string Convert(XElement element)
-        {
-            var summary = string.Concat(element.Nodes());
-            summary = this.para.Replace(summary, m => "\n\n");
-            summary = this.c.Replace(summary, m => $":code:`{m.Groups[1].Value}`");
-            summary = this.see.Replace(summary, ToCodeSymbol);
-            summary = this.systemNewLines.Replace(summary, m => "\n");
-            return this.multipleNewLines.Replace(summary, m => "\n\n").Trim();
-        }
+        public string Convert(XElement element) =>
+            new Func<string, string>[]
+            {
+                s => Para.Replace(s, m => "\n\n"),
+                s => C.Replace(s, m => $":code:`{m.Groups[1].Value}`"),
+                s => See.Replace(s, ToCodeSymbol),
+                s => SystemNewLines.Replace(s, m => "\n"),
+                s => MultipleNewLines.Replace(s, m => "\n\n"),
+                s => s.Trim(),
+            }.Aggregate(string.Concat(element.Nodes()), (current, next) => next(current));
 
-        private static string ToCodeSymbol(Match match)
-        {
-            var symbol = match.Groups[1].Value;
-            symbol = symbol.Substring(symbol.LastIndexOf('.') + 1);
-            symbol = symbol.Replace("`1", "<TSource>");
-            return $":code:`{symbol}`";
-        }
+        private static string ToCodeSymbol(Match match) =>
+            new Func<string, string>[]
+            {
+                s => s.Substring(s.LastIndexOf('.') + 1),
+                s => s.Replace("`1", "<TSource>"),
+                s => $":code:`{s}`",
+            }.Aggregate(match.Groups[1].Value, (current, next) => next(current));
     }
 }

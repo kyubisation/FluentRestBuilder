@@ -111,7 +111,7 @@ namespace FluentRestBuilder.Operators
                 {
                     var value = this.values.First();
                     var result = await this.SafeOnNext(value);
-                    this.EmitNext(result);
+                    this.Child?.OnNext(result);
                     this.values = this.values.RemoveAt(0);
                 }
                 catch (Exception e)
@@ -133,7 +133,7 @@ namespace FluentRestBuilder.Operators
                 try
                 {
                     var next = this.SafeOnNext(value);
-                    this.EmitNext(next);
+                    this.Child?.OnNext(next);
                 }
                 catch (Exception e)
                 {
@@ -146,36 +146,38 @@ namespace FluentRestBuilder.Operators
 
         protected abstract class Observer : IObserver<TSource>, IDisposable
         {
-            private IObserver<TTarget> child;
             private IDisposable disposable;
 
             protected Observer(IObserver<TTarget> child, IDisposable disposable)
             {
-                this.child = child;
+                this.Child = child;
                 this.disposable = disposable;
             }
+
+            protected IObserver<TTarget> Child { get; private set; }
 
             public abstract void OnNext(TSource value);
 
             public virtual void OnError(Exception error)
             {
-                this.child?.OnError(error);
+                this.Child?.OnError(error);
                 this.Dispose();
             }
 
             public virtual void OnCompleted()
             {
-                this.child?.OnCompleted();
+                this.Child?.OnCompleted();
                 this.Dispose();
             }
 
             public void Dispose()
             {
                 Interlocked.Exchange(ref this.disposable, null)?.Dispose();
-                this.child = null;
+                this.Child = null;
             }
 
-            protected void EmitNext(TTarget value) => this.child?.OnNext(value);
+            [Obsolete("Use the Child attribute instead.")]
+            protected void EmitNext(TTarget value) => this.Child?.OnNext(value);
         }
     }
 }

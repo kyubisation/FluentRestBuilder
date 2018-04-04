@@ -15,6 +15,7 @@ also applies.
 .. include:: BadRequestWhenModelStateIsInvalid.rst
 .. include:: CacheInDistributedCache.rst
 .. include:: CacheInMemoryCache.rst
+.. include:: Catch.rst
 .. include:: CurrentUserHas.rst
 .. include:: CurrentUserHasClaim.rst
 .. include:: DeleteEntity.rst
@@ -63,5 +64,7 @@ also applies.
 .. include:: ToOkObjectResult.rst
 .. include:: ToOptionsResult.rst
 .. include:: Where.rst
+.. include:: WithDbContext.rst
+.. include:: WithDbContextAsync.rst
 .. include:: WithEntityEntry.rst
 .. include:: WithEntityEntryAsync.rst
