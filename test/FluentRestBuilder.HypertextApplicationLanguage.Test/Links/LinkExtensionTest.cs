@@ -19,15 +19,6 @@ namespace FluentRestBuilder.HypertextApplicationLanguage.Test.Links
         }
 
         [Fact]
-        public void TestNull()
-        {
-            IEnumerable<NamedLink> links = null;
-            //// ReSharper disable once ExpressionIsAlwaysNull
-            var result = links.BuildLinks();
-            Assert.Null(result);
-        }
-
-        [Fact]
         public void TestSingleLinkAggregation()
         {
             var self = new LinkToSelf(new Link("/"));

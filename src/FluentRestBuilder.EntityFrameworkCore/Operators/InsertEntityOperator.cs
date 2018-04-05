@@ -5,8 +5,13 @@
 // ReSharper disable once CheckNamespace
 namespace FluentRestBuilder
 {
-    using EntityFrameworkCore.Operators.Exceptions;
+    using System;
+    using System.Threading.Tasks;
+    using EntityFrameworkCore.Operators;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using Operators;
+    using Storage;
 
     public static class InsertEntityOperator
     {
@@ -19,13 +24,44 @@ namespace FluentRestBuilder
         public static IProviderObservable<TSource> InsertEntity<TSource>(
             this IProviderObservable<TSource> observable)
             where TSource : class =>
-            observable.WithDbContextAsync(async (source, context) =>
+            new InsertEntityObservable<TSource>(observable);
+
+        private sealed class InsertEntityObservable<TSource> : Operator<TSource, TSource>
+            where TSource : class
+        {
+            public InsertEntityObservable(IProviderObservable<TSource> observable)
+                : base(observable)
+            {
+            }
+
+            protected override IObserver<TSource> Create(
+                IObserver<TSource> observer, IDisposable disposable)
+            {
+                var context = this.ServiceProvider.GetService<IScopedStorage<DbContext>>();
+                return new InsertEntityObserver(context.Value, observer, disposable);
+            }
+
+            private sealed class InsertEntityObserver : SafeAsyncObserver
+            {
+                private readonly DbContext context;
+
+                public InsertEntityObserver(
+                    DbContext context, IObserver<TSource> child, IDisposable disposable)
+                    : base(child, disposable)
                 {
-                    await context.AddAsync(source);
-                    await context.SaveChangesAsync();
-                })
-                .Catch((DbUpdateConcurrencyException exception) =>
-                    Observable.Throw<TSource>(
-                        new ConflictException(exception), observable.ServiceProvider));
+                    this.context = context;
+                }
+
+                public override void OnError(Exception error) =>
+                    base.OnError(error.ConvertToValidationExceptionIfConcurrencyException());
+
+                protected override async Task<TSource> SafeOnNext(TSource value)
+                {
+                    await this.context.AddAsync(value);
+                    await this.context.SaveChangesAsync();
+                    return value;
+                }
+            }
+        }
     }
 }

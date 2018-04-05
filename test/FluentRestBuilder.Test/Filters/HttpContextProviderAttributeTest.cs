@@ -14,19 +14,26 @@ namespace FluentRestBuilder.Test.Filters
     public class HttpContextProviderAttributeTest
     {
         [Fact]
+        public void TestMissingController()
+        {
+            var context = new MockActionExecutingContext(new object());
+            var filter = new HttpContextProviderAttribute();
+            Assert.Throws<FilterRequiresControllerException>(
+                () => filter.OnActionExecuting(context));
+        }
+
+        [Fact]
         public void TestSettingContext()
         {
-            var serviceProvider = new ServiceCollection()
-                .AddFluentRestBuilder()
-                .Services
-                .BuildServiceProvider()
-                .CreateScope()
-                .ServiceProvider;
-            var controller = new MockController(serviceProvider);
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddFluentRestBuilder();
+            var scope = serviceCollection.BuildServiceProvider()
+                .CreateScope();
+            var controller = new MockController(scope.ServiceProvider);
             var context = new MockActionExecutingContext(controller);
             var filter = new HttpContextProviderAttribute();
             filter.OnActionExecuting(context);
-            var storage = serviceProvider.GetService<IScopedStorage<HttpContext>>();
+            var storage = scope.ServiceProvider.GetService<IScopedStorage<HttpContext>>();
             Assert.Same(controller.HttpContext, storage.Value);
         }
     }

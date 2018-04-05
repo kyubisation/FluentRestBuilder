@@ -6,7 +6,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Operators
 {
     using System.Linq;
     using System.Threading.Tasks;
-    using EntityFrameworkCore.Operators.Exceptions;
     using FluentRestBuilder.Storage;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
@@ -38,14 +37,6 @@ namespace FluentRestBuilder.EntityFrameworkCore.Test.Operators
                 .Set<Entity>()
                 .Single();
             Assert.Equal(entity, resultEntity, new PropertyComparer<Entity>());
-        }
-
-        [Fact]
-        public async Task TestConcurrencyException()
-        {
-            await Assert.ThrowsAsync<ConflictException>(
-                async () => await Observable.Throw<Entity>(new MockDbUpdateConcurrencyException())
-                    .InsertEntity());
         }
     }
 }

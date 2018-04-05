@@ -10,12 +10,13 @@ namespace OperatorsToRst.Xml
     using System.Linq;
     using System.Reflection;
     using System.Xml.Linq;
+    using Extensions;
 
     public class XmlDocContainer
     {
         private readonly Dictionary<Assembly, XElement> files;
 
-        public XmlDocContainer(OperatorMethods operatorMethods)
+        public XmlDocContainer(IEnumerable<IGrouping<string, MethodInfo>> operatorMethods)
         {
             this.files = operatorMethods
                 .Select(g => g.First().DeclaringType.Assembly)
@@ -25,16 +26,13 @@ namespace OperatorsToRst.Xml
 
         public MemberDocumentation MemberDocumentation(MethodInfo method)
         {
-            var methodString = new XmlMethodNameBuilder(method).Name;
+            var methodName = $"M:{method.DeclaringType.FullName}.{method.Name}";
+            var methodString = method.ToString();
             var documentationElement = this.files[method.DeclaringType.Assembly]
-                .Element("members")?
-                .Elements("member")
-                .FirstOrDefault(e => e.Attribute("name")?.Value == methodString);
-            if (documentationElement == null)
-            {
-                throw new InvalidOperationException();
-            }
-
+                    .Element("members")?
+                    .Elements("member").Where(e => e.Attribute("name")?.Value.StartsWith(methodName) == true)
+                .OrderBy(e => methodString.ComputeDistance(e.Attribute("name")?.Value))
+                .First();
             return new MemberDocumentation(documentationElement);
         }
 

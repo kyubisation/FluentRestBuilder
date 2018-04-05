@@ -1,0 +1,15 @@
+﻿{{Name}}
+---------------------------------------------------------------------------
+
+{% for variant in Variants -%}
+
+{{variant.Summary}}
+
+**Package:** {{variant.Package}}
+
+.. sourcecode:: csharp
+
+    {{variant.MethodSignature | WrapSignature}}
+
+
+{% endfor -%}

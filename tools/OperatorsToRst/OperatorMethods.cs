@@ -14,11 +14,21 @@ namespace OperatorsToRst
 
     public class OperatorMethods : IEnumerable<IGrouping<string, MethodInfo>>
     {
+        private static readonly List<Type> FluentRestBuilderTypes = new[]
+            {
+                typeof(DoAsyncOperator),
+                typeof(CacheInDistributedCacheAliases),
+                typeof(DeleteEntityOperator),
+                typeof(MapToRestCollectionOperator),
+            }
+            .SelectMany(t => t.Assembly.ExportedTypes)
+            .ToList();
+
         private readonly IEnumerable<IGrouping<string, MethodInfo>> operatorMethods;
 
-        public OperatorMethods(IEnumerable<Type> fluentRestBuilderTypes)
+        public OperatorMethods()
         {
-            this.operatorMethods = fluentRestBuilderTypes
+            this.operatorMethods = FluentRestBuilderTypes
                 .Where(t => t.IsAbstract && t.IsSealed)
                 .SelectMany(t => t.GetMethods(
                     BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))

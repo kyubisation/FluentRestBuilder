@@ -8,9 +8,7 @@ namespace FluentRestBuilder.Operators.Exceptions
 
     public class ValidationException : Exception
     {
-        public ValidationException(
-            int statusCode, object error = null, Exception innerException = null)
-            : base(ToMessage(statusCode, error), innerException)
+        public ValidationException(int statusCode, object error = null)
         {
             this.StatusCode = statusCode;
             this.Error = error;
@@ -19,8 +17,5 @@ namespace FluentRestBuilder.Operators.Exceptions
         public int StatusCode { get; }
 
         public object Error { get; }
-
-        private static string ToMessage(int statusCode, object error) =>
-            error == null ? $"{statusCode}" : $"{statusCode}: {error}";
     }
 }
