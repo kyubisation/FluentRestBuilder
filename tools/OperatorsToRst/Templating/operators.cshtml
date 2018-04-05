@@ -1,0 +1,14 @@
+﻿@using RazorLight
+@inherits TemplatePage<IEnumerable<String>>
+Operators
+=========
+
+Operators can be used with observables or other operators. They are a combination
+of observer and observable. This means that the description for :ref:`observables-label`
+also applies.
+
+@foreach (var file in Model)
+{
+<text>.. include:: @file
+</text>
+}

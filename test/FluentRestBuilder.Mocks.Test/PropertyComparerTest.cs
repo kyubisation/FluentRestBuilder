@@ -48,6 +48,15 @@ namespace FluentRestBuilder.Mocks.Test
             Assert.NotEqual(entity1, entity2, new PropertyComparer<Comparable>());
         }
 
+        [Fact]
+        public void TestHashCode()
+        {
+            var entity1 = new Comparable { Id = 1, Name = "Name", Description = "Description" };
+            var entity2 = new Comparable { Id = 1, Name = "Name", Description = "Description" };
+            var comparer = new PropertyComparer<Comparable>();
+            Assert.Equal(comparer.GetHashCode(entity1), comparer.GetHashCode(entity2));
+        }
+
         private class Comparable
         {
             // ReSharper disable UnusedAutoPropertyAccessor.Local

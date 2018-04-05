@@ -24,7 +24,7 @@ namespace OperatorsToRst.Extensions
             var sigBuilder = new StringBuilder();
             if (callable == false)
             {
-                sigBuilder.AppendJoin<string>(string.Empty, PrependCallablePart(method));
+                sigBuilder.AppendJoin(string.Empty, PrependCallablePart(method));
             }
 
             sigBuilder.Append(method.Name);
@@ -75,7 +75,7 @@ namespace OperatorsToRst.Extensions
 
                 if (!callable)
                 {
-                    sigBuilder.Append((string)TypeName(param.ParameterType));
+                    sigBuilder.Append(TypeName(param.ParameterType));
                     sigBuilder.Append(' ');
                 }
 
@@ -156,7 +156,7 @@ namespace OperatorsToRst.Extensions
                     sb.Append(',');
                 }
 
-                sb.Append((string)TypeName(t));
+                sb.Append(TypeName(t));
                 first = false;
             }
 

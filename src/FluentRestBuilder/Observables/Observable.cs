@@ -63,6 +63,18 @@ namespace FluentRestBuilder
             Func<Task<TSource>> valueFactory, IServiceProvider serviceProvider = null) =>
             new AsyncSingleObservable<TSource>(valueFactory, serviceProvider ?? EmptyProvider());
 
+        /// <summary>
+        /// Create an observable with the given exception.
+        /// Will emit the provided exception immediately as an error upon subscription.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the expected value.</typeparam>
+        /// <param name="exception">The error.</param>
+        /// <param name="serviceProvider">The service provider.</param>
+        /// <returns>An instance of <see cref="IProviderObservable{TSource}"/>.</returns>
+        public static IProviderObservable<TSource> Throw<TSource>(
+            Exception exception, IServiceProvider serviceProvider = null) =>
+            new ErrorObservable<TSource>(exception, serviceProvider ?? EmptyProvider());
+
         private static IServiceProvider EmptyProvider() =>
             new ServiceCollection().BuildServiceProvider();
     }
